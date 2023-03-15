@@ -20,11 +20,18 @@ $title-bar-height: 32px;
         .app-icon {
             width: 18px;
             height: 18px;
+            pointer-events: none;
+            user-select: none;
         }
 
         .app-title {
             font-size: $text-xs;
             transform: translateY(1px);
+            pointer-events: none;
+            user-select: none;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
         }
     }
 
