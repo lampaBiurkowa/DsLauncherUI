@@ -1,9 +1,15 @@
 import React, { createContext } from "react";
 
-export const UserContext = createContext(null);
+const DefaultValue = {
+  currentUser: null,
+};
+
+export const UserContext = createContext(DefaultValue);
 
 function UserContextProvider({ children }) {
-  return <UserContext.Provider value={null}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={DefaultValue}>{children}</UserContext.Provider>
+  );
 }
 
 export default UserContextProvider;

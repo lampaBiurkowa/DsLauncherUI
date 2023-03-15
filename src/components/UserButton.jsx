@@ -4,30 +4,46 @@ import "../styles/UserButton.scss";
 import { UserContext } from "../contexts/UserContextProvider";
 
 function UserButton({ to }) {
-  const user = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
 
   function getProfilePictureUrl() {
-    if (user != null) {
-      return user.pictureUrl;
+    if (currentUser != null) {
+      return currentUser.pictureUrl;
     }
 
     return "/img/user.png";
   }
 
   function getUsername() {
-    if (user != null) {
-      return `${user.name} ${user.surname}`;
+    if (currentUser != null) {
+      return `${currentUser.name} ${currentUser.surname}`;
     }
 
-    return "Gość";
+    return "Guest";
+  }
+
+  function getHandleOrTip() {
+    if (currentUser != null) {
+      return currentUser.handle;
+    }
+
+    return "Press to log in";
+  }
+
+  function getLink() {
+    if (currentUser != null) {
+      return to;
+    }
+
+    return "/login";
   }
 
   return (
-    <NavLink className="user-button" to={to}>
+    <NavLink className="user-button" to={getLink()}>
       <img src={getProfilePictureUrl()} alt="Profile Picture" />
       <div>
         <a className="user-name">{getUsername()}</a>
-        <a className="user-handle">{user != null && user.handle}</a>
+        <a className="user-handle">{getHandleOrTip()}</a>
       </div>
     </NavLink>
   );
