@@ -21,6 +21,10 @@ function MainPage() {
   return (
     <div className="container">
       <nav>
+        <div className="brand">
+          <img src="/img/icon.png" alt="Dibrysoft logo" />
+          <a>Dibrysoft</a>
+        </div>
         <UserButton to="/profile" />
         <ul>
           <li>

@@ -1,69 +1,39 @@
-@use './default/' as *;
+@use "./default/" as *;
 
 $title-bar-height: 32px;
 
 .title-bar {
-    width: 100%;
-    height: $title-bar-height;
+  width: 100%;
+  height: $title-bar-height;
 
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: stretch;
 
-    .title-area {
-        margin: 0 14px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        
-        .app-icon {
-            width: 18px;
-            height: 18px;
-            pointer-events: none;
-            user-select: none;
-        }
+  .control-btn {
+    width: 46px;
 
-        .app-title {
-            font-size: $text-xs;
-            transform: translateY(1px);
-            pointer-events: none;
-            user-select: none;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
+    background-color: transparent;
+    border: none;
+
+    transition: 0.05s background-color ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
     }
 
-    .control-area {
-        height: 100%;
-        display: flex;
-        
-        .control-btn {
-            width: 46px;
-            
-            background-color: transparent;
-            border: none;
-
-            transition: .05s background-color ease;
-
-            &:hover {
-                background-color: rgba(255, 255, 255, 0.1);
-            }
-            
-            &:active {
-                background-color: rgba(255, 255, 255, 0.2);
-            }
-
-            &.close-btn:hover {
-                background-color: rgb(232, 17, 35);
-
-            }
-
-            path {
-                stroke: white; //e81123
-                fill: transparent;
-            }
-        }
+    &:active {
+      background-color: rgba(255, 255, 255, 0.2);
     }
+
+    &.close-btn:hover {
+      background-color: rgb(232, 17, 35);
+    }
+
+    path {
+      stroke: white; //e81123
+      fill: transparent;
+    }
+  }
 }
