@@ -1,0 +1,36 @@
+@use "../default/" as *;
+
+.update-summary {
+  padding: $padding-md $padding-lg;
+
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: auto 1fr;
+  justify-items: start;
+  align-items: center;
+
+  background-color: $dark-1;
+  border: 1px solid $dark-3;
+  border-radius: $radius-sm;
+  column-gap: $padding-lg;
+
+  i {
+    font-size: $text-xl;
+    grid-row-start: 1;
+    grid-row-end: 3;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 4px;
+    background-color: $dark-3;
+    border-radius: $radius-round;
+    overflow: hidden;
+
+    .progress {
+      width: 75%;
+      height: 100%;
+      background-color: $accent;
+    }
+  }
+}

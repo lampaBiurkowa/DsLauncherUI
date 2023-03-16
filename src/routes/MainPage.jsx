@@ -1,6 +1,8 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import UserButton from "../components/UserButton";
+import Spacer from "../components/Spacer";
+import UpdateSummary from "../components/UpdateSummary";
 import "../styles/layouts/MainPage.scss";
 
 function MainPage() {
@@ -42,6 +44,8 @@ function MainPage() {
             </NavLink>
           </li>
         </ul>
+        <Spacer />
+        <UpdateSummary />
       </nav>
       <main>
         <Outlet />
