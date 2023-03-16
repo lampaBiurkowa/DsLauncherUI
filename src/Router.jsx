@@ -5,6 +5,7 @@ import MainPage from "./routes/MainPage";
 import HomePage from "./routes/HomePage";
 import StorePage from "./routes/StorePage";
 import LibraryPage from "./routes/LibraryPage";
+import SettingsPage from "./routes/SettingsPage";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "/library",
         element: <LibraryPage />,
+      },
+      {
+        path: "/settings",
+        element: <SettingsPage />,
       },
     ],
   },

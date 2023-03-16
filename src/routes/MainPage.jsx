@@ -46,6 +46,10 @@ function MainPage() {
         </ul>
         <Spacer />
         <UpdateSummary />
+        <NavLink to={"/settings"} className={getNavLinkClassName}>
+          <i className="las la-cog"></i>
+          <span>Settings</span>
+        </NavLink>
       </nav>
       <main>
         <Outlet />
