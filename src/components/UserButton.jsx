@@ -42,8 +42,8 @@ function UserButton({ to }) {
     <NavLink className="user-button" to={getLink()}>
       <img src={getProfilePictureUrl()} alt="Profile Picture" />
       <div>
-        <a className="user-name">{getUsername()}</a>
-        <a className="user-handle">{getHandleOrTip()}</a>
+        <span className="user-name">{getUsername()}</span>
+        <span className="user-handle">{getHandleOrTip()}</span>
       </div>
     </NavLink>
   );
