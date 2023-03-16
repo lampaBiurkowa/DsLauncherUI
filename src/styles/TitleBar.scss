@@ -5,6 +5,7 @@ $title-bar-height: 32px;
 .title-bar {
   width: 100%;
   height: $title-bar-height;
+  min-height: $title-bar-height;
 
   display: flex;
   flex-direction: row;

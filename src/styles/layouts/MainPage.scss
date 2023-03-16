@@ -95,6 +95,7 @@
 
   main {
     flex-grow: 1;
+    overflow-y: auto;
 
     background-color: $dark-0;
     border-left: 1px solid $dark-3;
