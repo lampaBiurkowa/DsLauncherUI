@@ -44,7 +44,7 @@ function MainPage() {
             </NavLink>
           </li>
         </ul>
-        <Spacer />
+        <Spacer grow={1} />
         <UpdateSummary />
         <NavLink to={"/settings"} className={getNavLinkClassName}>
           <i className="las la-cog"></i>

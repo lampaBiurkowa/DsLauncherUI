@@ -52,8 +52,7 @@
         "height": 600,
         "minWidth": 1000,
         "minHeight": 400,
-        "decorations": false,
-        "transparent": true
+        "decorations": false
       }
     ]
   }

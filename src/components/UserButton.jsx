@@ -27,7 +27,7 @@ function UserButton({ to }) {
       return currentUser.handle;
     }
 
-    return "Press to log in";
+    return "Log in";
   }
 
   function getLink() {

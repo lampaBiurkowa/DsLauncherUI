@@ -1,5 +1,9 @@
 @use "./default/" as *;
 
+body {
+  background-color: $dark-3;
+}
+
 .app {
   font-family: $font;
   font-size: $text-base;
@@ -13,8 +17,6 @@
   height: calc(100vh - 1px);
   overflow: hidden;
 
-  display: flex;
-  flex-direction: column;
-  align-content: stretch;
-  align-items: stretch;
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
