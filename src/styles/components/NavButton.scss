@@ -36,6 +36,8 @@
   }
 
   &.horizontal {
+    font-size: $text-regular;
+
     .marker {
       height: 3px;
       width: calc(100% - ($padding-lg * 2));
