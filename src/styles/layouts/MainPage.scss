@@ -7,30 +7,11 @@
   display: flex;
   flex-direction: row;
 
-  nav {
-    max-width: 320px;
+  .nav-container {
+    padding: $padding-xl;
+    padding-top: 0;
     min-width: 320px;
-    padding: 0 $padding-xl;
-    padding-bottom: $padding-xl;
-    display: flex;
-    flex-direction: column;
-    row-gap: $padding-lg;
-
-    .brand {
-      padding: $padding-sm;
-      display: flex;
-      align-items: center;
-      column-gap: $padding-md;
-
-      img {
-        width: 40px;
-      }
-
-      a {
-        font-size: $text-xxl;
-        font-weight: $text-medium;
-      }
-    }
+    max-width: 320px;
   }
 
   main {

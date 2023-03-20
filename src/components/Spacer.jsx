@@ -1,6 +1,6 @@
 import React from "react";
 
-function Spacer({ grow = 1, shrink = 0 }) {
+function Spacer({ grow = 1 }) {
   return <div style={{ flexGrow: grow }} />;
 }
 
