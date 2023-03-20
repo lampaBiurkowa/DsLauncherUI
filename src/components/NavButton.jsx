@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { NavbarContext } from "./NavBar";
 import "../styles/components/NavButton.scss";
 
-function NavButton({ to, icon, children }) {
+function NavButton({ to, end, icon, horizontal, children }) {
+  const { isHorizontal } = useContext(NavbarContext);
+
   function getClassName({ isActive, isPending }) {
     let className = "navlink";
 
+    className += isHorizontal ? " horizontal" : "";
     className += isPending ? " pending" : "";
     className += isActive ? " active" : "";
 
@@ -13,9 +17,10 @@ function NavButton({ to, icon, children }) {
   }
 
   return (
-    <NavLink to={to} className={getClassName}>
-      <i className={icon} />
+    <NavLink to={to} className={getClassName} end={end}>
+      {icon && <i className={icon} />}
       {children}
+      {isHorizontal && <div className="marker" />}
     </NavLink>
   );
 }
