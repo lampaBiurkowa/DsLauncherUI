@@ -1,0 +1,61 @@
+@use "../default/" as *;
+
+.navlink {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 12px;
+  padding: $padding-md $padding-lg;
+
+  transition: 0.1s all ease;
+  border-radius: $radius-sm;
+  text-decoration: none;
+  font-size: $text-base;
+
+  &:link {
+    color: $text;
+  }
+
+  &:visited {
+    color: $text;
+  }
+
+  &:hover {
+    background-color: $dark-3;
+  }
+
+  &:active {
+    background-color: lighten($color: $dark-3, $amount: 2);
+  }
+
+  i {
+    font-size: $text-xl;
+  }
+
+  &.active {
+    background: $accent;
+    background: linear-gradient(
+      90deg,
+      rgba(30, 30, 67, 1) 0%,
+      rgba(56, 98, 115, 1) 100%
+    );
+
+    &:hover {
+      background: $accent;
+      background: linear-gradient(
+        90deg,
+        rgba(30, 30, 67, 1) 0%,
+        rgba(56, 98, 115, 1) 100%
+      );
+    }
+
+    &:active {
+      background: $accent;
+      background: linear-gradient(
+        90deg,
+        rgba(30, 30, 67, 1) 0%,
+        rgba(56, 98, 115, 1) 100%
+      );
+    }
+  }
+}
