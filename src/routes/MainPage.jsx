@@ -5,6 +5,7 @@ import UpdateSummary from "../components/UpdateSummary";
 import NavButton from "../components/NavButton";
 import NavBar from "../components/NavBar";
 import "../styles/layouts/MainPage.scss";
+import Logo from "../components/Logo";
 
 // function MainPage() {
 //   return (
@@ -46,10 +47,7 @@ function MainPage() {
     <div className="container">
       <div className="nav-container">
         <NavBar>
-          <div className="brand">
-            <img src="/img/icon.png" alt="Dibrysoft logo" />
-            <a>Dibrysoft</a>
-          </div>
+          <Logo />
           <UserButton to="/profile" />
           <NavButton to="/" icon="las la-home">
             Home
