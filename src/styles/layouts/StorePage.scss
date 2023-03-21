@@ -1,15 +1,6 @@
 @use "../default/" as *;
 
-@keyframes slidein {
-  from {
-    margin-top: $padding-xl;
-    opacity: 0;
-  }
-  to {
-    margin-top: 0;
-    opacity: 1;
-  }
-}
+@include slidein-mixin;
 
 .store-container {
   width: 100%;
@@ -18,5 +9,13 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  gap: 40px;
+
+  animation: slidein 0.2s;
+  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+  .store-nav-container {
+    background: $dark-1;
+    padding: $padding-xs $padding-xs;
+    padding-right: $padding-xl;
+  }
 }

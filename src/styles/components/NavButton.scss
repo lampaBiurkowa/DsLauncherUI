@@ -13,19 +13,6 @@
   font-size: $text-base;
   position: relative;
 
-  .h-underline {
-    height: 3px;
-    width: calc(100% - ($padding-lg * 2));
-    transform: scaleX(0);
-    position: absolute;
-    bottom: calc($padding-md / 2);
-    left: $padding-lg;
-
-    transition: 0.1s transform ease;
-    border-radius: $radius-round;
-    background: red;
-  }
-
   &:link,
   &:visited {
     color: $text;
@@ -36,7 +23,8 @@
   }
 
   &.horizontal {
-    font-size: $text-regular;
+    font-size: $text-sm;
+    font-weight: $text-medium;
 
     .marker {
       height: 3px;

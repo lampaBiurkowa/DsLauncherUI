@@ -1,0 +1,39 @@
+@use "./variables" as *;
+
+input,
+textarea {
+  padding: $padding-xs $padding-md;
+
+  color: inherit;
+  font: inherit;
+  font-size: $text-sm;
+  background: $dark-2;
+  border: 1px solid $dark-3;
+  border-radius: $radius-sm;
+
+  &:focus,
+  &:active {
+    outline: 2px solid $accent-alt;
+  }
+}
+
+button {
+  outline: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: $dark-1;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $text-inactive;
+  border: 3px solid $dark-1;
+  border-radius: $radius-round;
+}

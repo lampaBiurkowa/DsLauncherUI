@@ -1,15 +1,6 @@
 @use "../default/" as *;
 
-@keyframes slidein {
-  from {
-    margin-top: $padding-xl;
-    opacity: 0;
-  }
-  to {
-    margin-top: 0;
-    opacity: 1;
-  }
-}
+@include slidein-mixin;
 
 .home-page {
   width: 100%;

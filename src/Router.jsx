@@ -6,6 +6,9 @@ import HomePage from "./routes/HomePage";
 import StorePage from "./routes/StorePage";
 import LibraryPage from "./routes/LibraryPage";
 import SettingsPage from "./routes/SettingsPage";
+import DiscoverPage from "./routes/DiscoverPage";
+import GamesPage from "./routes/GamesPage";
+import AppsPage from "./routes/AppsPage";
 
 const router = createBrowserRouter([
   {
@@ -21,15 +24,15 @@ const router = createBrowserRouter([
         element: <StorePage />,
         children: [
           {
-            element: <a>Discover</a>,
+            element: <DiscoverPage />,
             index: true,
           },
           {
-            element: <a>Games</a>,
+            element: <GamesPage />,
             path: "/store/games",
           },
           {
-            element: <a>Apps</a>,
+            element: <AppsPage />,
             path: "/store/apps",
           },
         ],
