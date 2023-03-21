@@ -2,9 +2,21 @@
 
 .discover-container {
   padding: $padding-xl;
+  display: flex;
+  flex-direction: column;
+  row-gap: $padding-xl;
+  overflow-y: auto;
 
   h2 {
     font-size: $text-xxl;
     font-weight: $text-bold;
+  }
+
+  .promo-slider {
+    width: 100%;
+    height: 100%;
+
+    border: 1px solid $dark-3;
+    border-radius: $radius-lg;
   }
 }
