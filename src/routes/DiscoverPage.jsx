@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import AspectRatio from "../components/AspectRatio";
+import SliderContainer from "../components/SliderContainer";
 import "../styles/layouts/DiscoverPage.scss";
 
 function DiscoverPage() {
@@ -7,7 +8,7 @@ function DiscoverPage() {
     <div className="discover-container">
       <h2>Discover</h2>
       <AspectRatio aspectRatio={12 / 5}>
-        <section className="promo-slider"></section>
+        <SliderContainer></SliderContainer>
       </AspectRatio>
     </div>
   );
