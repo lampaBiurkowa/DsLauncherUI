@@ -16,4 +16,10 @@
     border-radius: $radius-lg;
     overflow: hidden;
   }
+
+  .top-free {
+    display: flex;
+    flex-direction: row;
+    column-gap: $padding-lg;
+  }
 }
