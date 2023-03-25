@@ -2,7 +2,9 @@
 
 .store-entry {
   width: 180px;
+  min-width: 180px;
   height: 240px;
+  min-height: 240px;
   display: flex;
   flex-direction: column;
   row-gap: $padding-xl;
@@ -21,7 +23,7 @@
     transform: translate(0, -2px);
 
     & .icon-container .icon-shadow {
-      opacity: 1;
+      opacity: 0.5;
     }
   }
 

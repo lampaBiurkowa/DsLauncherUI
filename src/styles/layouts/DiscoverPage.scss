@@ -2,14 +2,14 @@
 
 .discover-container {
   padding: $padding-xl;
-  display: flex;
-  flex-direction: column;
-  row-gap: $padding-xl;
+
   overflow-y: auto;
+  overflow-x: hidden;
 
   h2 {
     font-size: $text-xxl;
     font-weight: $text-bold;
+    margin: $padding-xl 0;
   }
 
   .slider-container {
@@ -19,7 +19,8 @@
 
   .top-free {
     display: flex;
-    flex-direction: row;
     column-gap: $padding-lg;
+    overflow-x: auto;
+    padding: $padding-xs 0;
   }
 }
