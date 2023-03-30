@@ -20,7 +20,6 @@ function DiscoverPage() {
                 name={child.name}
                 desc={child.desc}
                 link={child.link}
-                button={child.button}
                 background={child.background}
               />
             );

@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "./DiscoverCarouselContent.scss";
 
-function DiscoverSliderContent({ name, desc, button, link, background }) {
+function DiscoverSliderContent({ name, desc, link, background }) {
   return (
     <div
       className="discover-slider"
@@ -13,7 +13,7 @@ function DiscoverSliderContent({ name, desc, button, link, background }) {
           <a className="head">{name}</a>
           <a className="desc">{desc}</a>
           <NavLink className="link" to={link}>
-            {button}
+            Zobacz szczegóły
           </NavLink>
         </div>
       </div>
