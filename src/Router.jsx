@@ -1,14 +1,17 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import React from "react";
-import { LoginPage } from "./pages";
-import { MainPage } from "./pages";
-import { HomePage } from "./pages";
-import { StorePage } from "./pages";
-import { LibraryPage } from "./pages";
-import { SettingsPage } from "./pages";
-import { DiscoverPage } from "./pages";
-import { GamesPage } from "./pages";
-import { AppsPage } from "./pages";
+
+import {
+  LoginPage,
+  MainPage,
+  HomePage,
+  StorePage,
+  LibraryPage,
+  SettingsPage,
+  DiscoverPage,
+  GamesPage,
+  AppsPage,
+} from "./pages";
 
 const router = createBrowserRouter([
   {
