@@ -7,7 +7,7 @@ import NavButton from "../../components/nav-bar/NavButton";
 import NavBar from "../../components/nav-bar/NavBar";
 import Logo from "./components/Logo";
 
-import "./styles/MainPage.scss";
+import "./MainPage.scss";
 
 function MainPage() {
   return (

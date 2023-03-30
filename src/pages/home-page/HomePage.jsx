@@ -1,7 +1,7 @@
 import React from "react";
 import NewsEntry from "./components/NewsEntry";
 import RecentApp from "./components/RecentApp";
-import "./styles/HomePage.scss";
+import "./HomePage.scss";
 
 import { recentApps } from "../../assets/data.js";
 

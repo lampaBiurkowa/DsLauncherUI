@@ -5,7 +5,7 @@ import SliderContainer from "@/components/carousel/Carousel";
 import StoreEntry from "@/components/store-entry/StoreEntry";
 import DiscoverSliderContent from "./components/DiscoverCarouselContent";
 
-import "./styles/DiscoverPage.scss";
+import "./DiscoverPage.scss";
 import { promoted, topFree } from "@/assets/data.js";
 
 function DiscoverPage() {

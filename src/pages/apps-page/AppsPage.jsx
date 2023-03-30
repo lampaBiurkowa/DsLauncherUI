@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles/AppsPage.scss";
+import "./AppsPage.scss";
 
 function AppsPage() {
   return (
