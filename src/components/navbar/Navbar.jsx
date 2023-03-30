@@ -1,10 +1,10 @@
 import React, { createContext } from "react";
 import Spacer from "../spacer/Spacer";
-import "./NavBar.scss";
+import "./Navbar.scss";
 
 export const NavbarContext = createContext(null);
 
-function NavBar({ horizontal = false, children }) {
+function Navbar({ horizontal = false, children }) {
   function getClassName() {
     let className = "navbar";
     className += horizontal ? " horizontal" : "";
@@ -30,4 +30,4 @@ function NavBar({ horizontal = false, children }) {
   );
 }
 
-export default NavBar;
+export default Navbar;

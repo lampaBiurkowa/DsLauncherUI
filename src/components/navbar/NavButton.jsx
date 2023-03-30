@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { NavbarContext } from "./NavBar";
+import { NavbarContext } from "./Navbar";
 import "./NavButton.scss";
 
 function NavButton({ to, end, icon, horizontal, children }) {

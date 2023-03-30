@@ -3,8 +3,8 @@ import { Outlet } from "react-router-dom";
 
 import ProfileButton from "./components/ProfileButton";
 import UpdateSummary from "./components/UpdateSummary";
-import NavButton from "../../components/nav-bar/NavButton";
-import NavBar from "../../components/nav-bar/NavBar";
+import NavButton from "../../components/navbar/NavButton";
+import NavBar from "../../components/navbar/Navbar";
 import Logo from "./components/Logo";
 
 import "./MainPage.scss";

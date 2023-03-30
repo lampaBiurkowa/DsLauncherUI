@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import NavBar from "../../components/nav-bar/NavBar";
-import NavButton from "../../components/nav-bar/NavButton";
+import NavBar from "../../components/navbar/Navbar";
+import NavButton from "../../components/navbar/NavButton";
 import "./StorePage.scss";
 
 function StorePage() {
