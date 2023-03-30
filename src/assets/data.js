@@ -46,20 +46,20 @@ export const topFree = [
     name: "Galactic Dissent",
     icon: "https://drive.google.com/uc?id=1EIF1cA5uFqpF6VYTr33uyg9C9xpl4PTb",
     rating: 4.5,
-    price: "Free",
+    platform: ["win", "linux"],
   },
   {
     id: 4,
     name: "Ciorro Runner: Run and jump!",
     icon: "https://drive.google.com/uc?id=1gImwtXyryiZFKggAi_ms_3yRSZak4dc9",
     rating: 3.2,
-    price: "Free",
+    platform: ["win"],
   },
   {
     id: 16,
     name: "Hlyss Translate",
     icon: "https://drive.google.com/uc?id=16RfwEGHHiffr0tTjN4XWzhFo1yYxPMaA",
     rating: 4.8,
-    price: "Free",
+    platform: ["win", "linux", "macos"],
   },
 ];

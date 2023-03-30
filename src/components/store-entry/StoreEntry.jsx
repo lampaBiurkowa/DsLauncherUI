@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "./StoreEntry.scss";
 
-function StoreEntry({ id, name, icon, rating }) {
+function StoreEntry({ id, name, icon, rating, platform }) {
   return (
     <NavLink to={`/store/app/${id}`} className="store-entry">
       <div className="icon-container">
@@ -16,7 +16,12 @@ function StoreEntry({ id, name, icon, rating }) {
         <a className="app-name">{name}</a>
         <div className="app-rating">
           {rating.toPrecision(2)}
-          <i class="las la-star"></i>
+          <i className="las la-star"></i>
+        </div>
+        <div className="platforms">
+          {platform?.includes("win") ? <i className="lab la-windows" /> : ""}
+          {platform?.includes("linux") ? <i className="lab la-linux" /> : ""}
+          {platform?.includes("macos") ? <i className="lab la-apple" /> : ""}
         </div>
       </div>
     </NavLink>

@@ -36,6 +36,7 @@ function DiscoverPage() {
               name={child.name}
               icon={child.icon}
               rating={child.rating}
+              platform={child.platform}
             ></StoreEntry>
           );
         })}
