@@ -35,8 +35,7 @@ function DiscoverPage() {
               id={child.id}
               name={child.name}
               icon={child.icon}
-              rating={child.rating.toPrecision(2)}
-              price={child.price}
+              rating={child.rating}
             ></StoreEntry>
           );
         })}

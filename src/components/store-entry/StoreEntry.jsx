@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "./StoreEntry.scss";
 
-function StoreEntry({ id, name, icon, rating, price }) {
+function StoreEntry({ id, name, icon, rating }) {
   return (
     <NavLink to={`/store/app/${id}`} className="store-entry">
       <div className="icon-container">
@@ -15,10 +15,9 @@ function StoreEntry({ id, name, icon, rating, price }) {
       <div className="app-info">
         <a className="app-name">{name}</a>
         <div className="app-rating">
-          {rating}
+          {rating.toPrecision(2)}
           <i class="las la-star"></i>
         </div>
-        <a className="app-price">{price}</a>
       </div>
     </NavLink>
   );
