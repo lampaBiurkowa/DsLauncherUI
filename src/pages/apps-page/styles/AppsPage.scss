@@ -1,0 +1,10 @@
+@use "/src/styles/" as *;
+
+.apps-container {
+  padding: $padding-xl;
+
+  h2 {
+    font-size: $text-xxl;
+    font-weight: $text-bold;
+  }
+}

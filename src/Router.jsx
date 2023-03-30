@@ -1,14 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import React from "react";
-import LoginPage from "./routes/LoginPage";
-import MainPage from "./routes/MainPage";
-import HomePage from "./routes/HomePage";
-import StorePage from "./routes/StorePage";
-import LibraryPage from "./routes/LibraryPage";
-import SettingsPage from "./routes/SettingsPage";
-import DiscoverPage from "./routes/DiscoverPage";
-import GamesPage from "./routes/GamesPage";
-import AppsPage from "./routes/AppsPage";
+import { LoginPage } from "./pages";
+import { MainPage } from "./pages";
+import { HomePage } from "./pages";
+import { StorePage } from "./pages";
+import { LibraryPage } from "./pages";
+import { SettingsPage } from "./pages";
+import { DiscoverPage } from "./pages";
+import { GamesPage } from "./pages";
+import { AppsPage } from "./pages";
 
 const router = createBrowserRouter([
   {

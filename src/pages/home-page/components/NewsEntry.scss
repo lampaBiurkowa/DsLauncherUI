@@ -1,0 +1,50 @@
+@use "/src/styles/" as *;
+
+.news-entry {
+  padding: $padding-xl;
+  width: 100%;
+
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  grid-template-columns: auto 1fr;
+  column-gap: $padding-lg;
+  row-gap: $padding-xs;
+
+  background-color: transparent;
+  text-align: start;
+  border-radius: $radius-sm;
+  transition: 0.1s background-color ease;
+
+  .cover {
+    width: 160px;
+    aspect-ratio: 16 / 9;
+
+    grid-row-start: 1;
+    grid-row-end: 5;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: $radius-sm;
+  }
+
+  &:hover {
+    background-color: $dark-1;
+    cursor: pointer;
+  }
+
+  h2 {
+    font-size: $text-xl;
+    font-weight: $text-medium;
+  }
+
+  .date {
+    font-size: $text-xs;
+    color: $text-inactive;
+  }
+
+  p {
+    font-size: $text-sm;
+    margin-top: $margin-sm;
+  }
+}

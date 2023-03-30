@@ -1,0 +1,98 @@
+@use "/src/styles/" as *;
+
+.store-entry {
+  width: 180px;
+  min-width: 180px;
+  height: 240px;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  row-gap: $padding-xl;
+
+  background: $dark-1;
+  border: 1px solid $dark-3;
+  border-radius: $radius-sm;
+  overflow: hidden;
+
+  color: $text;
+  text-decoration: none;
+
+  transition: 0.2s transform ease;
+
+  &:hover {
+    transform: translate(0, -2px);
+
+    & .icon-container .icon-shadow {
+      opacity: 0.5;
+    }
+  }
+
+  .icon-container {
+    text-align: center;
+    position: relative;
+    height: 96px;
+    margin-top: $padding-xl;
+
+    .icon-shadow {
+      width: 96px;
+      height: 96px;
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%);
+
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 96px;
+      filter: blur(64px);
+
+      opacity: 0;
+      transition: 0.5s opacity ease;
+      z-index: 0;
+    }
+
+    .icon {
+      width: 96px;
+      height: 96px;
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  }
+
+  .app-info {
+    flex-grow: 1;
+    z-index: 1;
+    padding: $padding-md;
+
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto 1fr;
+
+    background-color: rgba(18, 18, 18, 0.2);
+
+    .app-name {
+      font-size: $text-base;
+      font-weight: $text-medium;
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+
+    .app-rating {
+      align-self: end;
+
+      display: flex;
+      align-items: baseline;
+      gap: $padding-xs;
+
+      font-size: $text-sm;
+      color: $text-inactive;
+    }
+
+    .app-price {
+      align-self: end;
+      justify-self: end;
+      font-size: $text-sm;
+      color: $text-alt;
+    }
+  }
+}
