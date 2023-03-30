@@ -1,7 +1,7 @@
 import React from "react";
 
 import AspectRatio from "@/components/aspect-ratio/AspectRatio";
-import SliderContainer from "@/components/carousel/Carousel";
+import Carousel from "@/components/carousel/Carousel";
 import StoreEntry from "@/components/store-entry/StoreEntry";
 import DiscoverSliderContent from "./components/DiscoverCarouselContent";
 
@@ -12,7 +12,7 @@ function DiscoverPage() {
   return (
     <div className="discover-container">
       <AspectRatio aspectRatio={12 / 5}>
-        <SliderContainer interval={5000}>
+        <Carousel interval={5000}>
           {promoted.map((child, index) => {
             return (
               <DiscoverSliderContent
@@ -24,7 +24,7 @@ function DiscoverPage() {
               />
             );
           })}
-        </SliderContainer>
+        </Carousel>
       </AspectRatio>
       <h2>Top free apps</h2>
       <section className="top-free">
