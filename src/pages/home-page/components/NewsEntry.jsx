@@ -1,16 +1,14 @@
 import React from "react";
 import "./NewsEntry.scss";
 
-function NewsEntry({ title, coverUrl, date }) {
+function NewsEntry({ title, image, date, summary, target }) {
   return (
     <button className="news-entry">
-      <div className="cover" style={{ backgroundImage: `url(${coverUrl})` }} />
+      <div className="cover" style={{ backgroundImage: `url(${image})` }} />
       <h2>{title}</h2>
       <a className="date">{new Date(date).toDateString()}</a>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus
-        aspernatur fugit sunt repudiandae, quo id.
-      </p>
+      <p>{summary}</p>
+      {target ? <span className="target">{target}</span> : ""}
     </button>
   );
 }

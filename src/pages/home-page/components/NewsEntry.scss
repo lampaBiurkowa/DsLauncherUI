@@ -47,4 +47,15 @@
     font-size: $text-sm;
     margin-top: $margin-sm;
   }
+
+  .target {
+    padding: $padding-xs;
+    margin-top: $margin-sm;
+    justify-self: start;
+
+    background: $accent;
+    border-radius: $radius-sm;
+
+    font-size: $text-xs;
+  }
 }

@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NewsEntry from "./components/NewsEntry";
 import RecentApp from "./components/RecentApp";
 import "./HomePage.scss";
 
+import { useGlobalArticles } from "./hooks/useGlobalArticles";
+
 import { recentApps } from "../../assets/data.js";
 
 function HomePage() {
+  const content = useGlobalArticles();
+
   return (
     <div className="home-page">
       {recentApps.length > 0 && (
@@ -25,16 +29,17 @@ function HomePage() {
       <section className="news-section">
         <h1>What's new</h1>
         <div className="news">
-          <NewsEntry
-            title="Title"
-            date="2020-05-12T23:50:21.817Z"
-            coverUrl="https://images.unsplash.com/photo-1536881227204-c9e4ed6437ba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
-          ></NewsEntry>
-          <NewsEntry
-            title="Title"
-            date="2020-05-12T23:50:21.817Z"
-            coverUrl="https://images.unsplash.com/photo-1536881227204-c9e4ed6437ba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
-          ></NewsEntry>
+          {content?.map((child, index) => {
+            return (
+              <NewsEntry
+                key={index}
+                title={child.title}
+                date={child.published}
+                image={child.image}
+                summary={child.summary}
+              />
+            );
+          })}
         </div>
       </section>
     </div>
