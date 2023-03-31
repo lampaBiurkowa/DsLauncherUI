@@ -1,0 +1,52 @@
+//Colors
+$dark-0: rgb(0, 0, 0);
+$dark-1: rgb(4, 4, 4);
+$dark-2: rgb(10, 10, 10);
+$dark-3: rgb(18, 18, 18);
+
+$light-0: rgb(255, 255, 255);
+$light-1: rgb(250, 250, 250);
+$light-2: rgb(240, 240, 240);
+$light-3: rgb(230, 230, 230);
+
+$text: rgb(230, 230, 230);
+$text-alt: rgb(180, 180, 180);
+$text-inactive: rgb(127, 127, 127);
+
+$accent: rgb(30, 30, 67);
+$accent-alt: rgb(56, 98, 115);
+
+//Spacing
+$padding-xs: 4px;
+$padding-sm: 8px;
+$padding-md: 12px;
+$padding-lg: 16px;
+$padding-xl: 20px;
+
+$margin-xs: 4px;
+$margin-sm: 8px;
+$margin-md: 12px;
+$margin-lg: 16px;
+$margin-xl: 20px;
+
+//Radii
+$radius-none: 0px;
+$radius-sm: 4px;
+$radius-lg: 8px;
+$radius-round: 9999px;
+
+//Typography
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap");
+
+$font: "Montserrat", sans-serif;
+
+$text-xs: 0.75rem;
+$text-sm: 0.875rem;
+$text-base: 1rem;
+$text-lg: 1.125rem;
+$text-xl: 1.25rem;
+$text-xxl: 1.5rem;
+
+$text-regular: 400;
+$text-medium: 500;
+$text-bold: 700;

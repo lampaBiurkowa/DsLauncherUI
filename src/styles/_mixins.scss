@@ -1,0 +1,12 @@
+@mixin slidein-mixin {
+  @keyframes slidein {
+    from {
+      margin-top: 20px;
+      opacity: 0;
+    }
+    to {
+      margin-top: 0;
+      opacity: 1;
+    }
+  }
+}

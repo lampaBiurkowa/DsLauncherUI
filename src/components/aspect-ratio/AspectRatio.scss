@@ -1,0 +1,11 @@
+@use "@/styles" as *;
+
+.aspect-ratio-controller {
+  position: relative;
+}
+
+.aspect-ratio-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,49 @@
+@use "@/styles" as *;
+
+.user-button {
+  width: 100%;
+  padding: $padding-sm;
+  margin: $padding-lg 0;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: $padding-md;
+
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  border-radius: $radius-sm;
+  transition: 0.1s background-color ease;
+  text-decoration: none;
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-round;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    .user-name {
+      font-size: $text-base;
+      font-weight: $text-medium;
+    }
+
+    .user-handle {
+      font-size: $text-xs;
+      color: $text-inactive;
+    }
+  }
+
+  &:hover {
+    background-color: $dark-3;
+  }
+
+  &:active {
+    background-color: lighten($color: $dark-3, $amount: 2);
+  }
+}

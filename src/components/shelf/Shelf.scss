@@ -1,0 +1,38 @@
+@use "@/styles" as *;
+
+.shelf {
+  display: flex;
+  flex-direction: column;
+
+  .shelf-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .shelf-controls button {
+      padding: $padding-sm;
+      margin-left: $margin-sm;
+
+      border: 1px solid $dark-3;
+      border-radius: $radius-round;
+      background: $dark-2;
+      font-size: $text-xs;
+      transition: 0.1s background ease;
+
+      &:hover {
+        background: $dark-3;
+        cursor: pointer;
+      }
+
+      &:active {
+        background: lighten($color: $dark-3, $amount: 10%);
+      }
+    }
+  }
+
+  .shelf-items {
+    display: flex;
+    overflow-x: auto;
+    gap: $padding-lg;
+  }
+}

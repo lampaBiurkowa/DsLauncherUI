@@ -1,0 +1,30 @@
+@use "@/styles" as *;
+
+.recent-app {
+  width: 160px;
+  height: 90px;
+
+  background-color: $dark-0;
+  background-position: center;
+  background-size: cover;
+
+  border: 1px solid $dark-3;
+  border-radius: $radius-sm;
+  transition: 0.1s all ease;
+
+  transition: background-size 2s ease-in;
+
+  &:hover {
+    background-color: $dark-1;
+    cursor: pointer;
+
+    a {
+      opacity: 1;
+    }
+  }
+
+  a {
+    opacity: 0;
+    transition: 0.1s opacity ease;
+  }
+}

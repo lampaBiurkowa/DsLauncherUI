@@ -1,11 +1,17 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import React from "react";
-import LoginPage from "./routes/LoginPage";
-import MainPage from "./routes/MainPage";
-import HomePage from "./routes/HomePage";
-import StorePage from "./routes/StorePage";
-import LibraryPage from "./routes/LibraryPage";
-import SettingsPage from "./routes/SettingsPage";
+
+import {
+  LoginPage,
+  MainPage,
+  HomePage,
+  StorePage,
+  LibraryPage,
+  SettingsPage,
+  DiscoverPage,
+  GamesPage,
+  AppsPage,
+} from "./pages";
 
 const router = createBrowserRouter([
   {
@@ -21,15 +27,15 @@ const router = createBrowserRouter([
         element: <StorePage />,
         children: [
           {
-            element: <a>Discover</a>,
+            element: <DiscoverPage />,
             index: true,
           },
           {
-            element: <a>Games</a>,
+            element: <GamesPage />,
             path: "/store/games",
           },
           {
-            element: <a>Apps</a>,
+            element: <AppsPage />,
             path: "/store/apps",
           },
         ],

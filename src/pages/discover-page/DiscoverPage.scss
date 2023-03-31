@@ -1,0 +1,19 @@
+@use "@/styles" as *;
+
+.discover-container {
+  padding: $padding-xl;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  h2 {
+    font-size: $text-xxl;
+    font-weight: $text-bold;
+    margin: $padding-xl 0;
+  }
+
+  .carousel {
+    border-radius: $radius-lg;
+    overflow: hidden;
+  }
+}
