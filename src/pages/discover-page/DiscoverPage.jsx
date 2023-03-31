@@ -4,6 +4,7 @@ import AspectRatio from "@/components/aspect-ratio/AspectRatio";
 import Carousel from "@/components/carousel/Carousel";
 import StoreEntry from "@/components/store-entry/StoreEntry";
 import DiscoverSliderContent from "./components/DiscoverCarouselContent";
+import Shelf from "@/components/shelf/Shelf";
 
 import "./DiscoverPage.scss";
 import { promoted, topFree } from "@/assets/data.js";
@@ -26,8 +27,7 @@ function DiscoverPage() {
           })}
         </Carousel>
       </AspectRatio>
-      <h2>Top free apps</h2>
-      <section className="top-free">
+      <Shelf title="New & updated">
         {topFree.map((child, index) => {
           return (
             <StoreEntry
@@ -40,7 +40,21 @@ function DiscoverPage() {
             ></StoreEntry>
           );
         })}
-      </section>
+      </Shelf>
+      <Shelf title="Top free apps">
+        {topFree.map((child, index) => {
+          return (
+            <StoreEntry
+              key={index}
+              id={child.id}
+              name={child.name}
+              icon={child.icon}
+              rating={child.rating}
+              platform={child.platform}
+            ></StoreEntry>
+          );
+        })}
+      </Shelf>
     </div>
   );
 }

@@ -16,11 +16,4 @@
     border-radius: $radius-lg;
     overflow: hidden;
   }
-
-  .top-free {
-    display: flex;
-    column-gap: $padding-lg;
-    overflow-x: auto;
-    padding: $padding-xs 0;
-  }
 }

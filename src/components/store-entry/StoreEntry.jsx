@@ -13,7 +13,7 @@ function StoreEntry({ id, name, icon, rating, platform }) {
         <img src={icon} className="icon" alt="Application icon" />
       </div>
       <div className="app-info">
-        <a className="app-name">{name}</a>
+        <span className="app-name">{name}</span>
         <div className="app-rating">
           {rating.toPrecision(2)}
           <i className="las la-star"></i>
