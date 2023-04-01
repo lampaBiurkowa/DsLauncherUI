@@ -18,3 +18,16 @@ export async function getGlobalArticles() {
 
   return articles;
 }
+
+export async function getArticle(id) {
+  let { data: article, error } = await supabase
+    .from("articles")
+    .select("*")
+    .eq("id", id);
+
+  if (error) {
+    throw error;
+  }
+
+  return article;
+}
