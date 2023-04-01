@@ -15,6 +15,9 @@
   border-radius: $radius-sm;
   transition: 0.1s background-color ease;
 
+  text-decoration: none;
+  color: $text;
+
   .cover {
     width: 160px;
     aspect-ratio: 16 / 9;

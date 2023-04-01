@@ -33,6 +33,7 @@ function HomePage() {
             return (
               <NewsEntry
                 key={index}
+                id={child.id}
                 title={child.title}
                 date={child.published}
                 image={child.image}
