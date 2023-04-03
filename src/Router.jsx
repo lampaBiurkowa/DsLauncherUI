@@ -16,6 +16,7 @@ import {
   DiscoverPage,
   GamesPage,
   AppsPage,
+  ArticlePage,
 } from "./pages";
 
 const router = createBrowserRouter([
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <HomePage />,
+          },
+          {
+            path: "/home/article/:id",
+            element: <ArticlePage />,
           },
         ],
       },

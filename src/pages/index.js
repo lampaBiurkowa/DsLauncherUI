@@ -1,4 +1,5 @@
 import AppsPage from "./apps-page/AppsPage";
+import ArticlePage from "./article-page/ArticlePage";
 import DiscoverPage from "./discover-page/DiscoverPage";
 import GamesPage from "./games-page/GamesPage";
 import HomePage from "./home-page/HomePage";
@@ -10,6 +11,7 @@ import StorePage from "./store-page/StorePage";
 
 export {
   AppsPage,
+  ArticlePage,
   DiscoverPage,
   GamesPage,
   HomePage,

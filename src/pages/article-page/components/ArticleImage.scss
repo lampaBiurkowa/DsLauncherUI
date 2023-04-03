@@ -1,0 +1,20 @@
+@use "@/styles" as *;
+
+.article-image {
+  width: 100%;
+
+  background: $dark-2;
+  border-radius: $radius-sm;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+  }
+
+  a {
+    display: block;
+    margin: $margin-md;
+    font-size: $text-sm;
+    color: $text-alt;
+  }
+}
