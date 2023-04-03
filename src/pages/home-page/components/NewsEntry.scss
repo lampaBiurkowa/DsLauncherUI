@@ -16,6 +16,7 @@
   transition: 0.1s background-color ease;
 
   text-decoration: none;
+  text-align: justify;
   color: $text;
 
   .cover {
@@ -60,6 +61,7 @@
     bottom: 0;
     right: 0;
     margin: $margin-sm;
+
     border-radius: $radius-sm;
     -webkit-box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 1);
     -moz-box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 1);
