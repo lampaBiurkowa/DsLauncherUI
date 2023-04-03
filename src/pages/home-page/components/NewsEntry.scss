@@ -19,6 +19,8 @@
   color: $text;
 
   .cover {
+    position: relative;
+
     width: 160px;
     aspect-ratio: 16 / 9;
 
@@ -51,14 +53,16 @@
     margin-top: $margin-sm;
   }
 
-  .target {
-    padding: $padding-xs;
-    margin-top: $margin-sm;
-    justify-self: start;
-
-    background: $accent;
+  .target-icon {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    bottom: 0;
+    right: 0;
+    margin: $margin-sm;
     border-radius: $radius-sm;
-
-    font-size: $text-xs;
+    -webkit-box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 1);
   }
 }

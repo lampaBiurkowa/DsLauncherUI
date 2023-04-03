@@ -38,6 +38,7 @@ function HomePage() {
                 date={child.published}
                 image={child.image}
                 summary={child.summary}
+                target={child.target}
               />
             );
           })}

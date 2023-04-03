@@ -8,7 +8,7 @@ const supabase = createClient(
 export async function getGlobalArticles() {
   let { data: articles, error } = await supabase
     .from("articles")
-    .select("id, title, published, image, summary")
+    .select("id, title, published, image, summary, target")
     .is("target", null)
     .order("published", { ascending: false });
 
@@ -30,4 +30,12 @@ export async function getArticle(id) {
   }
 
   return article;
+}
+
+export function getAppIconUrl(appId) {
+  const { data } = supabase.storage
+    .from("products")
+    .getPublicUrl(`${appId}/icon.png`);
+
+  return data.publicUrl;
 }
