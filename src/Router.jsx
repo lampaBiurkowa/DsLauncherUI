@@ -1,4 +1,9 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Outlet,
+  redirect,
+  RouterProvider,
+} from "react-router-dom";
 import React from "react";
 
 import {
@@ -19,8 +24,20 @@ const router = createBrowserRouter([
     element: <MainPage />,
     children: [
       {
-        element: <HomePage />,
         index: true,
+        loader: () => {
+          return redirect("/home");
+        },
+      },
+      {
+        path: "/home",
+        element: <Outlet />,
+        children: [
+          {
+            index: true,
+            element: <HomePage />,
+          },
+        ],
       },
       {
         path: "/store",

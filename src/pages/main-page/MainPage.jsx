@@ -16,7 +16,7 @@ function MainPage() {
         <NavBar>
           <Logo />
           <ProfileButton to="/profile" />
-          <NavButton to="/" icon="las la-home">
+          <NavButton to="/home" icon="las la-home">
             Home
           </NavButton>
           <NavButton to="/store" icon="las la-shopping-cart">
