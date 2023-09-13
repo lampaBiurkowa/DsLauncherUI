@@ -37,6 +37,8 @@ export {
  *
  */
 import {ApiClient} from '../services/ApiClient';
+import {NdibverFileHandler} from '../services/NdibverFileHandler';
+import {DownloadHandler} from '../services/DownloadHandler';
 import {AuthorModel} from '../services/model/AuthorModel';
 import {ChannelMemberModel} from '../services/model/ChannelMemberModel';
 import {ChannelModel} from '../services/model/ChannelModel';
@@ -93,6 +95,8 @@ import {UserApi} from '../services/api/UserApi';
 * @version 1.0
 */
 export {
+    NdibverFileHandler,
+    DownloadHandler,
     /**
      * The ApiClient constructor.
      * @property {module:ApiClient}

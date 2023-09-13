@@ -118,6 +118,36 @@ export class ProductApi {
         authNames, contentTypes, accepts, returnType, callback
       );
     }
+    
+    productGetGet() {
+      return new Promise((resolve, reject) => {
+        let postBody = null;
+        let pathParams = {};
+        let queryParams = {};
+        let headerParams = {};
+        let formParams = {};
+    
+        let authNames = [];
+        let contentTypes = [];
+        let accepts = ['text/plain', 'application/json', 'text/json'];
+        let returnType = [ProductModel];
+    
+        console.log("c")
+        this.apiClient
+          .callApi('/Product/Get', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, (error, data, response) => {
+            if (error) {
+              console.log("a")
+              console.log(error)
+              reject(error);
+            } else {
+              console.log(data)
+              console.log("b")
+              console .log(response)
+              resolve(data);
+            }
+          });
+      });
+    }
     /**
      * Callback function to receive the result of the productGetIdGet operation.
      * @callback moduleapi/ProductApi~productGetIdGetCallback

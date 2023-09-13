@@ -3,14 +3,15 @@ import NewsEntry from "./components/NewsEntry";
 import RecentApp from "./components/RecentApp";
 import "./HomePage.scss";
 
-import { useGlobalArticles } from "./hooks/useGlobalArticles";
+import { useGlobalArticles, useGlobalArticles2 } from "./hooks/useGlobalArticles";
 import { NewsApi } from "../../services/api/NewsApi";
 
 import { recentApps } from "../../assets/data.js";
 
 function HomePage() {
   const content = useGlobalArticles();
-
+  const content2 = useGlobalArticles2();
+  
   return (
     <div className="home-page">
       {recentApps.length > 0 && (
