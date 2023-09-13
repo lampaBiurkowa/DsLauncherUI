@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
-import { getGlobalArticles } from "@/services/supabase";
-
+import { NewsApi } from "../../../services/api/NewsApi";
 export function useGlobalArticles() {
-  const [content, setContent] = useState(null);
+
+  const newsApi = new NewsApi();
+
+  let [content, setContent] = useState(null);
 
   useEffect(() => {
     const getArticles = async () => {
       try {
-        setContent(await getGlobalArticles());
+        setContent(await newsApi.newsGetGet());
       } catch (error) {
         setContent([]);
       }
@@ -18,3 +20,4 @@ export function useGlobalArticles() {
 
   return content;
 }
+

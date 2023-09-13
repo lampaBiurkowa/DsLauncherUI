@@ -34,7 +34,7 @@ export class ApiClient {
          * @type {String}
          * @default /
          */
-        this.basePath = '/'.replace(/\/+$/, '');
+        this.basePath =  'http://127.0.0.1:6544'//'/'.replace(/\/+$/, '');
 
         /**
          * The authentication methods to be included for all API calls.

@@ -4,6 +4,7 @@ import RecentApp from "./components/RecentApp";
 import "./HomePage.scss";
 
 import { useGlobalArticles } from "./hooks/useGlobalArticles";
+import { NewsApi } from "../../services/api/NewsApi";
 
 import { recentApps } from "../../assets/data.js";
 
@@ -35,10 +36,9 @@ function HomePage() {
                 key={index}
                 id={child.id}
                 title={child.title}
-                date={child.published}
+                date={child._date}
                 image={child.image}
-                summary={child.summary}
-                target={child.target}
+                summary={child.content}
               />
             );
           })}
