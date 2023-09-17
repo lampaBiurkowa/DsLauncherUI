@@ -5,12 +5,63 @@ import "./HomePage.scss";
 
 import { useGlobalArticles, useGlobalArticles2 } from "./hooks/useGlobalArticles";
 import { NewsApi } from "../../services/api/NewsApi";
-
 import { recentApps } from "../../assets/data.js";
+
+import { Command } from '@tauri-apps/api/shell'
+
+async function runInstall(appName) {
+    const command = new Command("ndib-get install", ['install', appName, '--json'])
+    command.stdout.on("data", (line) => {
+      const jsonObject = JSON.parse(line);
+      console.log(`${line} ${jsonObject}`);
+      console.log(`${jsonObject.BytesTotal}`);
+      console.log(`${jsonObject.BytesDownloaded}`);
+      console.log(`${jsonObject.Percentage}`);
+    })
+    const child = await command.spawn();
+    console.log("PID: ", child.pid);
+}
+
+async function runStatus(appName) {
+  const command = new Command("ndib-get status", ['status', appName, '--json'])
+  const output  = await command.execute();
+  try
+  {
+    const jsonObject = JSON.parse(output.stdout);
+    console.log(`${output.stdout} ${jsonObject}`);
+    console.log(`${jsonObject.VersionInNdib}`);
+    console.log(`${jsonObject.VersionDescription}`);
+  }
+  catch
+  {
+    console.log("not installed")
+  }
+}
+
+async function runList(updatable) {
+  let command = null;
+  if (updatable)
+    command = new Command("ndib-get list updatable", ['list', '--updatable', '--json'])
+  else
+    command = new Command("ndib-get list all", ['list', '--json'])
+  
+  const output  = await command.execute();
+  const jsonObject = JSON.parse(output.stdout);
+  console.log(`${output.stdout} ${jsonObject}`);
+  console.log(`${jsonObject.Names}`);
+}
+
+
 
 function HomePage() {
   const content = useGlobalArticles();
   const content2 = useGlobalArticles2();
+
+  useEffect(() => {runInstall("app2"); return () =>{ close();}}, [])
+  useEffect(() => {runList(false); return () =>{ close();}}, [])
+  useEffect(() => {runList(true); return () =>{ close();}}, [])
+  useEffect(() => {runStatus("app2"); return () =>{ close();}}, [])
+
   
   return (
     <div className="home-page">

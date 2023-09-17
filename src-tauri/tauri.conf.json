@@ -12,10 +12,34 @@
   },
   "tauri": {
     "allowlist": {
+      "fs": {
+        "scope": ["**"],
+        "all": true
+      },
       "all": false,
       "shell": {
-        "all": false,
-        "open": true
+        "all": true,
+        "scope": [
+          {
+            "name": "ndib-get install",
+            "cmd": "ndib-get",
+            "args": ["install",{ "validator": "\\S+" }, "--json"]
+          },
+          {
+            "name": "ndib-get status",
+            "cmd": "ndib-get",
+            "args": ["status",{ "validator": "\\S+" }, "--json"]
+          },
+          {
+            "name": "ndib-get list all",
+            "cmd": "ndib-get",
+            "args": ["list", "--json"]
+          },
+          {
+            "name": "ndib-get list updatable",
+            "cmd": "ndib-get",
+            "args": ["list", "--updatable", "--json"]
+          }]
       },
       "window": {
         "startDragging": true,
