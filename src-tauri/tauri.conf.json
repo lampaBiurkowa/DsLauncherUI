@@ -23,7 +23,7 @@
           {
             "name": "ndib-get install",
             "cmd": "ndib-get",
-            "args": ["install",{ "validator": "\\S+" }, "--json"]
+            "args": ["install",{ "validator": "\\S+" }, "--json", { "validator": "\\S+" }]
           },
           {
             "name": "ndib-get status",

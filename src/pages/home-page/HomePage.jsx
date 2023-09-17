@@ -9,8 +9,8 @@ import { recentApps } from "../../assets/data.js";
 
 import { Command } from '@tauri-apps/api/shell'
 
-async function runInstall(appName) {
-    const command = new Command("ndib-get install", ['install', appName, '--json'])
+async function runInstall(appName, path) {
+    const command = new Command("ndib-get install", ['install', appName, '--json', `--path=${path}`])
     command.stdout.on("data", (line) => {
       const jsonObject = JSON.parse(line);
       console.log(`${line} ${jsonObject}`);
@@ -57,7 +57,7 @@ function HomePage() {
   const content = useGlobalArticles();
   const content2 = useGlobalArticles2();
 
-  useEffect(() => {runInstall("app2"); return () =>{ close();}}, [])
+  useEffect(() => {runInstall("app2", "C:/test/test1"); return () =>{ close();}}, [])
   useEffect(() => {runList(false); return () =>{ close();}}, [])
   useEffect(() => {runList(true); return () =>{ close();}}, [])
   useEffect(() => {runStatus("app2"); return () =>{ close();}}, [])
