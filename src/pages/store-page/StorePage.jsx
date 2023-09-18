@@ -14,7 +14,11 @@ function StorePage() {
           </NavButton>
           <NavButton to="/store/games">Games</NavButton>
           <NavButton to="/store/apps">Apps</NavButton>
-          <input navend placeholder="Search" style={{ alignSelf: "center" }} />
+          <input
+            navend="true"
+            placeholder="Search"
+            style={{ alignSelf: "center" }}
+          />
         </NavBar>
       </div>
       <Outlet />
