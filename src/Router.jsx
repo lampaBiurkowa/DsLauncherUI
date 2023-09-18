@@ -17,6 +17,7 @@ import {
   GamesPage,
   AppsPage,
   ArticlePage,
+  ProductPage,
 } from "./pages";
 
 const router = createBrowserRouter([
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
           {
             element: <AppsPage />,
             path: "/store/apps",
+          },
+          {
+            element: <ProductPage />,
+            path: "/store/product/:id",
           },
         ],
       },

@@ -1,70 +1,14 @@
 import React, { useEffect, useState } from "react";
+import useArticles from "./hooks/useArticles";
 import NewsEntry from "./components/NewsEntry";
 import RecentApp from "./components/RecentApp";
 import "./HomePage.scss";
 
-import { useGlobalArticles, useGlobalArticles2 } from "./hooks/useGlobalArticles";
-import { NewsApi } from "../../services/api/NewsApi";
 import { recentApps } from "../../assets/data.js";
 
-import { Command } from '@tauri-apps/api/shell'
-
-async function runInstall(appName, path) {
-    const command = Command.sidecar("binaries/ndib-get", ['install', appName, '--json', `--path=${path}`])
-    command.stdout.on("data", (line) => {
-      const jsonObject = JSON.parse(line);
-      console.log(`${line} ${jsonObject}`);
-      console.log(`${jsonObject.BytesTotal}`);
-      console.log(`${jsonObject.BytesDownloaded}`);
-      console.log(`${jsonObject.Percentage}`);
-    })
-    const child = await command.spawn();
-    console.log("PID: ", child.pid);
-}
-
-async function runStatus(appName) {
-  const command = Command.sidecar("binaries/ndib-get", ['status', appName, '--json'])
-  const output  = await command.execute();
-  try
-  {
-    console.log(`${output.stdout}`);
-    const jsonObject = JSON.parse(output.stdout);
-    console.log(`${output.stdout} ${jsonObject}`);
-    console.log(`${jsonObject.VersionInNdib}`);
-    console.log(`${jsonObject.VersionDescription}`);
-  }
-  catch
-  {
-    console.log("not installed")
-  }
-}
-
-async function runList(updatable) {
-  let command = null;
-  if (updatable)
-    command = Command.sidecar("binaries/ndib-get", ['list', '--updatable', '--json'])
-  else
-    command = Command.sidecar("binaries/ndib-get", ['list', '--json'])
-  
-  const output  = await command.execute();
-  console.log(`${output.stdout}`);
-  const jsonObject = JSON.parse(output.stdout);
-  console.log(`${output.stdout} ${jsonObject}`);
-  console.log(`${jsonObject.Names}`);
-}
-
-
-
 function HomePage() {
-  const content = useGlobalArticles();
-  const content2 = useGlobalArticles2();
+  let articles = useArticles();
 
-  useEffect(() => {runInstall("app2", "C:/test/test1"); return () =>{ close();}}, [])
-  useEffect(() => {runList(false); return () =>{ close();}}, [])
-  useEffect(() => {runList(true); return () =>{ close();}}, [])
-  useEffect(() => {runStatus("app2"); return () =>{ close();}}, [])
-
-  
   return (
     <div className="home-page">
       {recentApps.length > 0 && (
@@ -84,15 +28,15 @@ function HomePage() {
       <section className="news-section">
         <h1>What's new</h1>
         <div className="news">
-          {content?.map((child, index) => {
+          {articles?.map((article, index) => {
             return (
               <NewsEntry
                 key={index}
-                id={child.id}
-                title={child.title}
-                date={child._date}
-                image={child.image}
-                summary={child.content}
+                id={article.id}
+                title={article.title}
+                date={article._date}
+                image={article.image}
+                summary={article.content}
               />
             );
           })}

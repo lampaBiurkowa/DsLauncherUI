@@ -25,8 +25,8 @@ function MainPage() {
           <NavButton to="/library" icon="las la-th-large">
             Library
           </NavButton>
-          <UpdateSummary navend />
-          <NavButton to="/settings" icon="las la-cog" navend>
+          <UpdateSummary navend="true" />
+          <NavButton to="/settings" icon="las la-cog" navend="true">
             Settings
           </NavButton>
         </NavBar>

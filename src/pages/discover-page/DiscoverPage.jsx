@@ -41,7 +41,7 @@ function DiscoverPage() {
           );
         })}
       </Shelf>
-      <Shelf title="Top free apps">
+      <Shelf title="MOCNE">
         {topFree.map((child, index) => {
           return (
             <StoreEntry
