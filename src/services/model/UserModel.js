@@ -13,6 +13,7 @@
  *
  */
 import {ApiClient} from '../ApiClient';
+import {DeveloperModel} from './DeveloperModel';
 
 /**
  * The UserModel model module.
@@ -58,6 +59,8 @@ export class UserModel {
         obj.registerDate = ApiClient.convertToType(data['registerDate'], 'Date');
       if (data.hasOwnProperty('surname'))
         obj.surname = ApiClient.convertToType(data['surname'], 'String');
+      if (data.hasOwnProperty('developer'))
+        obj.developer = DeveloperModel.constructFromObject(data['developer']);
     }
     return obj;
   }
@@ -112,4 +115,9 @@ UserModel.prototype.registerDate = undefined;
  * @member {String} surname
  */
 UserModel.prototype.surname = undefined;
+
+/**
+ * @member {module:model/DeveloperModel} developer
+ */
+UserModel.prototype.developer = undefined;
 

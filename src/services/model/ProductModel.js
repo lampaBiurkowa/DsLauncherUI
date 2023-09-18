@@ -13,7 +13,7 @@
  *
  */
 import {ApiClient} from '../ApiClient';
-import {AuthorModel} from './AuthorModel';
+import {DeveloperModel} from './DeveloperModel';
 import {TagModel} from './TagModel';
 
 /**
@@ -42,8 +42,8 @@ export class ProductModel {
       obj = obj || new ProductModel();
       if (data.hasOwnProperty('id'))
         obj.id = ApiClient.convertToType(data['id'], 'Number');
-      if (data.hasOwnProperty('author'))
-        obj.author = AuthorModel.constructFromObject(data['author']);
+      if (data.hasOwnProperty('developer'))
+        obj.developer = DeveloperModel.constructFromObject(data['developer']);
       if (data.hasOwnProperty('description'))
         obj.description = ApiClient.convertToType(data['description'], 'String');
       if (data.hasOwnProperty('name'))
@@ -63,9 +63,9 @@ export class ProductModel {
 ProductModel.prototype.id = undefined;
 
 /**
- * @member {module:model/AuthorModel} author
+ * @member {module:model/DeveloperModel} developer
  */
-ProductModel.prototype.author = undefined;
+ProductModel.prototype.developer = undefined;
 
 /**
  * @member {String} description

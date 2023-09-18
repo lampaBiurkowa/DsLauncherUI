@@ -48,6 +48,8 @@ export class NewsModel {
         obj.image = ApiClient.convertToType(data['image'], 'String');
       if (data.hasOwnProperty('title'))
         obj.title = ApiClient.convertToType(data['title'], 'String');
+      if (data.hasOwnProperty('summary'))
+        obj.summary = ApiClient.convertToType(data['summary'], 'String');
     }
     return obj;
   }
@@ -77,4 +79,9 @@ NewsModel.prototype.image = undefined;
  * @member {String} title
  */
 NewsModel.prototype.title = undefined;
+
+/**
+ * @member {String} summary
+ */
+NewsModel.prototype.summary = undefined;
 

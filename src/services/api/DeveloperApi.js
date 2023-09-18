@@ -13,18 +13,18 @@
  *
  */
 import {ApiClient} from "../ApiClient";
-import {ReviewModel} from '../model/ReviewModel';
+import {DeveloperModel} from '../model/DeveloperModel';
 
 /**
-* Review service.
-* @module api/ReviewApi
+* Developer service.
+* @module api/DeveloperApi
 * @version 1.0
 */
-export class ReviewApi {
+export class DeveloperApi {
 
     /**
-    * Constructs a new ReviewApi. 
-    * @alias module:api/ReviewApi
+    * Constructs a new DeveloperApi. 
+    * @alias module:api/DeveloperApi
     * @class
     * @param {module:ApiClient} [apiClient] Optional API client implementation to use,
     * default to {@link module:ApiClient#instanc
@@ -35,8 +35,8 @@ export class ReviewApi {
     }
 
     /**
-     * Callback function to receive the result of the reviewAddDataPost operation.
-     * @callback moduleapi/ReviewApi~reviewAddDataPostCallback
+     * Callback function to receive the result of the developerAddDataPost operation.
+     * @callback moduleapi/DeveloperApi~developerAddDataPostCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -44,14 +44,14 @@ export class ReviewApi {
 
     /**
      * @param {String} data 
-     * @param {module:api/ReviewApi~reviewAddDataPostCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/DeveloperApi~developerAddDataPostCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    reviewAddDataPost(data, callback) {
+    developerAddDataPost(data, callback) {
       
       let postBody = null;
       // verify the required parameter 'data' is set
       if (data === undefined || data === null) {
-        throw new Error("Missing the required parameter 'data' when calling reviewAddDataPost");
+        throw new Error("Missing the required parameter 'data' when calling developerAddDataPost");
       }
 
       let pathParams = {
@@ -73,24 +73,24 @@ export class ReviewApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/Review/Add/{data}', 'POST',
+        '/Developer/Add/{data}', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
     /**
-     * Callback function to receive the result of the reviewGetGet operation.
-     * @callback moduleapi/ReviewApi~reviewGetGetCallback
+     * Callback function to receive the result of the developerGetGet operation.
+     * @callback moduleapi/DeveloperApi~developerGetGetCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<module:model/ReviewModel>{ data The data returned by the service call.
+     * @param {Array.<module:model/DeveloperModel>{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * @param {module:api/ReviewApi~reviewGetGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/DeveloperApi~developerGetGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    reviewGetGet(callback) {
+    developerGetGet(callback) {
       
       let postBody = null;
 
@@ -110,33 +110,33 @@ export class ReviewApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = [ReviewModel];
+      let returnType = [DeveloperModel];
 
       return this.apiClient.callApi(
-        '/Review/Get', 'GET',
+        '/Developer/Get', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
     /**
-     * Callback function to receive the result of the reviewGetIdGet operation.
-     * @callback moduleapi/ReviewApi~reviewGetIdGetCallback
+     * Callback function to receive the result of the developerGetIdGet operation.
+     * @callback moduleapi/DeveloperApi~developerGetIdGetCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/ReviewModel{ data The data returned by the service call.
+     * @param {module:model/DeveloperModel{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
      * @param {Number} id 
-     * @param {module:api/ReviewApi~reviewGetIdGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/DeveloperApi~developerGetIdGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    reviewGetIdGet(id, callback) {
+    developerGetIdGet(id, callback) {
       
       let postBody = null;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling reviewGetIdGet");
+        throw new Error("Missing the required parameter 'id' when calling developerGetIdGet");
       }
 
       let pathParams = {
@@ -155,37 +155,37 @@ export class ReviewApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = ReviewModel;
+      let returnType = DeveloperModel;
 
       return this.apiClient.callApi(
-        '/Review/Get/{id}', 'GET',
+        '/Developer/Get/{id}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
     /**
-     * Callback function to receive the result of the reviewProductsIdGet operation.
-     * @callback moduleapi/ReviewApi~reviewProductsIdGetCallback
+     * Callback function to receive the result of the developerGetNameGet operation.
+     * @callback moduleapi/DeveloperApi~developerGetNameGetCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<module:model/ReviewModel>{ data The data returned by the service call.
+     * @param {module:model/DeveloperModel{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * @param {Number} id 
-     * @param {module:api/ReviewApi~reviewProductsIdGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {String} name 
+     * @param {module:api/DeveloperApi~developerGetNameGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    reviewProductsIdGet(id, callback) {
+    developerGetNameGet(name, callback) {
       
       let postBody = null;
-      // verify the required parameter 'id' is set
-      if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling reviewProductsIdGet");
+      // verify the required parameter 'name' is set
+      if (name === undefined || name === null) {
+        throw new Error("Missing the required parameter 'name' when calling developerGetNameGet");
       }
 
       let pathParams = {
-        'id': id
+        'name': name
       };
       let queryParams = {
         
@@ -200,10 +200,10 @@ export class ReviewApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = [ReviewModel];
+      let returnType = DeveloperModel;
 
       return this.apiClient.callApi(
-        '/Review/Products/{id}', 'GET',
+        '/Developer/Get/{name}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

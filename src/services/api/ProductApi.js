@@ -79,6 +79,51 @@ export class ProductApi {
       );
     }
     /**
+     * Callback function to receive the result of the productDeveloperIdGet operation.
+     * @callback moduleapi/ProductApi~productDeveloperIdGetCallback
+     * @param {String} error Error message, if any.
+     * @param {Array.<module:model/ProductModel>{ data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} id 
+     * @param {module:api/ProductApi~productDeveloperIdGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     */
+    productDeveloperIdGet(id, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling productDeveloperIdGet");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = [ProductModel];
+
+      return this.apiClient.callApi(
+        '/Product/Developer/{id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
      * Callback function to receive the result of the productGetGet operation.
      * @callback moduleapi/ProductApi~productGetGetCallback
      * @param {String} error Error message, if any.
@@ -117,30 +162,6 @@ export class ProductApi {
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
-    }
-    
-    productGetGet() {
-      return new Promise((resolve, reject) => {
-        let postBody = null;
-        let pathParams = {};
-        let queryParams = {};
-        let headerParams = {};
-        let formParams = {};
-    
-        let authNames = [];
-        let contentTypes = [];
-        let accepts = ['text/plain', 'application/json', 'text/json'];
-        let returnType = [ProductModel];
-    
-        this.apiClient
-          .callApi('/Product/Get', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, (error, data, response) => {
-            if (error) {
-              reject(error);
-            } else {
-              resolve(data);
-            }
-          });
-      });
     }
     /**
      * Callback function to receive the result of the productGetIdGet operation.

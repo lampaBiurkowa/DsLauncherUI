@@ -118,31 +118,6 @@ export class NewsApi {
         authNames, contentTypes, accepts, returnType, callback
       );
     }
-
-    newsGetGet() {
-      return new Promise((resolve, reject) => {
-        let postBody = null;
-        let pathParams = {};
-        let queryParams = {};
-        let headerParams = {};
-        let formParams = {};
-    
-        let authNames = [];
-        let contentTypes = [];
-        let accepts = ['text/plain', 'application/json', 'text/json'];
-        let returnType = [NewsModel];
-    
-        this.apiClient
-          .callApi('/News/Get', 'GET', pathParams, queryParams, headerParams, formParams, postBody, authNames, contentTypes, accepts, returnType, (error, data, response) => {
-            if (error) {
-              reject(error);
-            } else {
-              resolve(data);
-            }
-          });
-      });
-    }
-
     /**
      * Callback function to receive the result of the newsGetIdGet operation.
      * @callback moduleapi/NewsApi~newsGetIdGetCallback
