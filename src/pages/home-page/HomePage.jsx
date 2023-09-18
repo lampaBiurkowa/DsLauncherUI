@@ -3,68 +3,38 @@ import NewsEntry from "./components/NewsEntry";
 import RecentApp from "./components/RecentApp";
 import "./HomePage.scss";
 
-import { useGlobalArticles, useGlobalArticles2 } from "./hooks/useGlobalArticles";
-import { NewsApi } from "../../services/api/NewsApi";
 import { recentApps } from "../../assets/data.js";
-
-import { Command } from '@tauri-apps/api/shell'
+import { Command } from "@tauri-apps/api/shell";
 
 async function runInstall(appName, path) {
-    const command = Command.sidecar("binaries/ndib-get", ['install', appName, '--json', `--path=${path}`])
-    command.stdout.on("data", (line) => {
+  const command = Command.sidecar(
+    "binaries/ndib-get",
+    ["install", appName, "--json", `--path=${path}`],
+    { encoding: "utf-8" }
+  );
+
+  command.stdout.on("data", (line) => {
+    try {
       const jsonObject = JSON.parse(line);
       console.log(`${line} ${jsonObject}`);
       console.log(`${jsonObject.BytesTotal}`);
       console.log(`${jsonObject.BytesDownloaded}`);
       console.log(`${jsonObject.Percentage}`);
-    })
-    const child = await command.spawn();
-    console.log("PID: ", child.pid);
+    } catch {
+      console.log(`Invalid json: "${line}"`);
+    }
+  });
+
+  await command.execute();
 }
-
-async function runStatus(appName) {
-  const command = Command.sidecar("binaries/ndib-get", ['status', appName, '--json'])
-  const output  = await command.execute();
-  try
-  {
-    console.log(`${output.stdout}`);
-    const jsonObject = JSON.parse(output.stdout);
-    console.log(`${output.stdout} ${jsonObject}`);
-    console.log(`${jsonObject.VersionInNdib}`);
-    console.log(`${jsonObject.VersionDescription}`);
-  }
-  catch
-  {
-    console.log("not installed")
-  }
-}
-
-async function runList(updatable) {
-  let command = null;
-  if (updatable)
-    command = Command.sidecar("binaries/ndib-get", ['list', '--updatable', '--json'])
-  else
-    command = Command.sidecar("binaries/ndib-get", ['list', '--json'])
-  
-  const output  = await command.execute();
-  console.log(`${output.stdout}`);
-  const jsonObject = JSON.parse(output.stdout);
-  console.log(`${output.stdout} ${jsonObject}`);
-  console.log(`${jsonObject.Names}`);
-}
-
-
 
 function HomePage() {
-  const content = useGlobalArticles();
-  const content2 = useGlobalArticles2();
+  const content = [];
 
-  useEffect(() => {runInstall("app2", "C:/test/test1"); return () =>{ close();}}, [])
-  useEffect(() => {runList(false); return () =>{ close();}}, [])
-  useEffect(() => {runList(true); return () =>{ close();}}, [])
-  useEffect(() => {runStatus("app2"); return () =>{ close();}}, [])
+  useEffect(() => {
+    runInstall("app2", "C:/test/test1");
+  }, []);
 
-  
   return (
     <div className="home-page">
       {recentApps.length > 0 && (
