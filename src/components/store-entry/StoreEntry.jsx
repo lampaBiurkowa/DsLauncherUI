@@ -4,7 +4,7 @@ import "./StoreEntry.scss";
 
 function StoreEntry({ id, name, icon, rating, platform }) {
   return (
-    <NavLink to={`/store/app/${id}`} className="store-entry">
+    <NavLink to={`/store/product/${id}`} className="store-entry">
       <div className="icon-container">
         <div
           className="icon-shadow"

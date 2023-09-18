@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NewsApi } from "../../../services/api/NewsApi";
+import { NewsApi } from "@/services/api/NewsApi";
 
 const newsApi = new NewsApi();
 
