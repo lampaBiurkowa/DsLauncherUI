@@ -1,39 +1,13 @@
 import React, { useEffect, useState } from "react";
+import useArticles from "./hooks/useArticles";
 import NewsEntry from "./components/NewsEntry";
 import RecentApp from "./components/RecentApp";
 import "./HomePage.scss";
 
 import { recentApps } from "../../assets/data.js";
-import { Command } from "@tauri-apps/api/shell";
-
-async function runInstall(appName, path) {
-  const command = Command.sidecar(
-    "binaries/ndib-get",
-    ["install", appName, "--json", `--path=${path}`],
-    { encoding: "utf-8" }
-  );
-
-  command.stdout.on("data", (line) => {
-    try {
-      const jsonObject = JSON.parse(line);
-      console.log(`${line} ${jsonObject}`);
-      console.log(`${jsonObject.BytesTotal}`);
-      console.log(`${jsonObject.BytesDownloaded}`);
-      console.log(`${jsonObject.Percentage}`);
-    } catch {
-      console.log(`Invalid json: "${line}"`);
-    }
-  });
-
-  await command.execute();
-}
 
 function HomePage() {
-  const content = [];
-
-  useEffect(() => {
-    runInstall("app2", "C:/test/test1");
-  }, []);
+  let articles = useArticles();
 
   return (
     <div className="home-page">
@@ -54,15 +28,15 @@ function HomePage() {
       <section className="news-section">
         <h1>What's new</h1>
         <div className="news">
-          {content?.map((child, index) => {
+          {articles?.map((article, index) => {
             return (
               <NewsEntry
                 key={index}
-                id={child.id}
-                title={child.title}
-                date={child._date}
-                image={child.image}
-                summary={child.content}
+                id={article.id}
+                title={article.title}
+                date={article._date}
+                image={article.image}
+                summary={article.content}
               />
             );
           })}
