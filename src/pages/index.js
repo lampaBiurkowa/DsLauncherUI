@@ -39,7 +39,7 @@ export {
  *
  */
 import { ApiClient } from "../services/ApiClient";
-import { AuthorModel } from "../services/model/AuthorModel";
+import { DeveloperModel } from "../services/model/DeveloperModel";
 import { ChannelMemberModel } from "../services/model/ChannelMemberModel";
 import { ChannelModel } from "../services/model/ChannelModel";
 import { FilesUploadBody } from "../services/model/FilesUploadBody";
@@ -51,6 +51,7 @@ import { ReviewModel } from "../services/model/ReviewModel";
 import { TagModel } from "../services/model/TagModel";
 import { UserModel } from "../services/model/UserModel";
 import { ActivationApi } from "../services/api/ActivationApi";
+import { AuthApi } from "../services/api/AuthApi";
 import { DeveloperApi } from "../services/api/DeveloperApi";
 import { ChannelApi } from "../services/api/ChannelApi";
 import { ChannelMemberApi } from "../services/api/ChannelMemberApi";
@@ -103,9 +104,9 @@ export {
 
   /**
    * The AuthorModel model constructor.
-   * @property {module:model/AuthorModel}
+   * @property {module:model/DeveloperModel}
    */
-  AuthorModel,
+  DeveloperModel,
 
   /**
    * The ChannelMemberModel model constructor.
@@ -171,7 +172,11 @@ export {
    * The ActivationApi service constructor.
    * @property {module:api/ActivationApi}
    */
-  ActivationApi,
+  ActivationApi,  
+  
+  AuthApi,
+
+
 
   /**
    * The AuthorApi service constructor.
