@@ -10,7 +10,7 @@ import { recentApps } from "../../assets/data.js";
 import { Command } from '@tauri-apps/api/shell'
 
 async function runInstall(appName, path) {
-    const command = new Command("ndib-get install", ['install', appName, '--json', `--path=${path}`])
+    const command = Command.sidecar("binaries/ndib-get", ['install', appName, '--json', `--path=${path}`])
     command.stdout.on("data", (line) => {
       const jsonObject = JSON.parse(line);
       console.log(`${line} ${jsonObject}`);
@@ -23,10 +23,11 @@ async function runInstall(appName, path) {
 }
 
 async function runStatus(appName) {
-  const command = new Command("ndib-get status", ['status', appName, '--json'])
+  const command = Command.sidecar("binaries/ndib-get", ['status', appName, '--json'])
   const output  = await command.execute();
   try
   {
+    console.log(`${output.stdout}`);
     const jsonObject = JSON.parse(output.stdout);
     console.log(`${output.stdout} ${jsonObject}`);
     console.log(`${jsonObject.VersionInNdib}`);
@@ -41,11 +42,12 @@ async function runStatus(appName) {
 async function runList(updatable) {
   let command = null;
   if (updatable)
-    command = new Command("ndib-get list updatable", ['list', '--updatable', '--json'])
+    command = Command.sidecar("binaries/ndib-get", ['list', '--updatable', '--json'])
   else
-    command = new Command("ndib-get list all", ['list', '--json'])
+    command = Command.sidecar("binaries/ndib-get", ['list', '--json'])
   
   const output  = await command.execute();
+  console.log(`${output.stdout}`);
   const jsonObject = JSON.parse(output.stdout);
   console.log(`${output.stdout} ${jsonObject}`);
   console.log(`${jsonObject.Names}`);

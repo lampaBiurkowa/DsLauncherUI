@@ -21,25 +21,11 @@
         "all": true,
         "scope": [
           {
-            "name": "ndib-get install",
-            "cmd": "ndib-get",
-            "args": ["install",{ "validator": "\\S+" }, "--json", { "validator": "\\S+" }]
-          },
-          {
-            "name": "ndib-get status",
-            "cmd": "ndib-get",
-            "args": ["status",{ "validator": "\\S+" }, "--json"]
-          },
-          {
-            "name": "ndib-get list all",
-            "cmd": "ndib-get",
-            "args": ["list", "--json"]
-          },
-          {
-            "name": "ndib-get list updatable",
-            "cmd": "ndib-get",
-            "args": ["list", "--updatable", "--json"]
-          }]
+            "name": "binaries/ndib-get",
+            "sidecar": true,
+            "args": true
+          }
+        ]
       },
       "window": {
         "startDragging": true,
@@ -51,6 +37,7 @@
     },
     "bundle": {
       "active": true,
+      "externalBin": ["binaries/ndib-get"],
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
