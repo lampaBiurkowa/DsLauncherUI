@@ -51,7 +51,7 @@ import { ReviewModel } from "../services/model/ReviewModel";
 import { TagModel } from "../services/model/TagModel";
 import { UserModel } from "../services/model/UserModel";
 import { ActivationApi } from "../services/api/ActivationApi";
-import { AuthorApi } from "../services/api/AuthorApi";
+import { DeveloperApi } from "../services/api/DeveloperApi";
 import { ChannelApi } from "../services/api/ChannelApi";
 import { ChannelMemberApi } from "../services/api/ChannelMemberApi";
 import { FilesApi } from "../services/api/FilesApi";
@@ -175,9 +175,9 @@ export {
 
   /**
    * The AuthorApi service constructor.
-   * @property {module:api/AuthorApi}
+   * @property {module:api/DeveloperApi}
    */
-  AuthorApi,
+  DeveloperApi,
 
   /**
    * The ChannelApi service constructor.
