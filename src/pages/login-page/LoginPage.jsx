@@ -35,7 +35,7 @@ function LoginPage() {
           <div className="separator">Create Dibrysoft Account</div>
           <button className="accent outlined">Sign up</button>
         </div>
-        <a className="password-help">Forrgot password?</a>
+        <a className="password-help">Forgot password?</a>
       </div>
     </div>
   );
