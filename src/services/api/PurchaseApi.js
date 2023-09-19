@@ -79,18 +79,18 @@ export class PurchaseApi {
       );
     }
     /**
-     * Callback function to receive the result of the purchaseGetGet operation.
-     * @callback moduleapi/PurchaseApi~purchaseGetGetCallback
+     * Callback function to receive the result of the purchaseGet operation.
+     * @callback moduleapi/PurchaseApi~purchaseGetCallback
      * @param {String} error Error message, if any.
      * @param {Array.<module:model/PurchaseModel>{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * @param {module:api/PurchaseApi~purchaseGetGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/PurchaseApi~purchaseGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    purchaseGetGet(callback) {
+    purchaseGet(callback) {
       
       let postBody = null;
 
@@ -113,14 +113,14 @@ export class PurchaseApi {
       let returnType = [PurchaseModel];
 
       return this.apiClient.callApi(
-        '/Purchase/Get', 'GET',
+        '/Purchase', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
     /**
-     * Callback function to receive the result of the purchaseGetIdGet operation.
-     * @callback moduleapi/PurchaseApi~purchaseGetIdGetCallback
+     * Callback function to receive the result of the purchaseIdGet operation.
+     * @callback moduleapi/PurchaseApi~purchaseIdGetCallback
      * @param {String} error Error message, if any.
      * @param {module:model/PurchaseModel{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -128,15 +128,15 @@ export class PurchaseApi {
 
     /**
      * @param {Number} id 
-     * @param {module:api/PurchaseApi~purchaseGetIdGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/PurchaseApi~purchaseIdGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    purchaseGetIdGet(id, callback) {
+    purchaseIdGet(id, callback) {
       
       let postBody = null;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling purchaseGetIdGet");
+        throw new Error("Missing the required parameter 'id' when calling purchaseIdGet");
       }
 
       let pathParams = {
@@ -158,7 +158,7 @@ export class PurchaseApi {
       let returnType = PurchaseModel;
 
       return this.apiClient.callApi(
-        '/Purchase/Get/{id}', 'GET',
+        '/Purchase/{id}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

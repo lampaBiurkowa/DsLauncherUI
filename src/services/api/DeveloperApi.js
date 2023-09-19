@@ -79,18 +79,18 @@ export class DeveloperApi {
       );
     }
     /**
-     * Callback function to receive the result of the developerGetGet operation.
-     * @callback moduleapi/DeveloperApi~developerGetGetCallback
+     * Callback function to receive the result of the developerGet operation.
+     * @callback moduleapi/DeveloperApi~developerGetCallback
      * @param {String} error Error message, if any.
      * @param {Array.<module:model/DeveloperModel>{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * @param {module:api/DeveloperApi~developerGetGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/DeveloperApi~developerGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    developerGetGet(callback) {
+    developerGet(callback) {
       
       let postBody = null;
 
@@ -113,52 +113,7 @@ export class DeveloperApi {
       let returnType = [DeveloperModel];
 
       return this.apiClient.callApi(
-        '/Developer/Get', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the developerGetIdGet operation.
-     * @callback moduleapi/DeveloperApi~developerGetIdGetCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/DeveloperModel{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * @param {Number} id 
-     * @param {module:api/DeveloperApi~developerGetIdGetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    developerGetIdGet(id, callback) {
-      
-      let postBody = null;
-      // verify the required parameter 'id' is set
-      if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling developerGetIdGet");
-      }
-
-      let pathParams = {
-        'id': id
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
-
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = DeveloperModel;
-
-      return this.apiClient.callApi(
-        '/Developer/Get/{id}', 'GET',
+        '/Developer', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -204,6 +159,51 @@ export class DeveloperApi {
 
       return this.apiClient.callApi(
         '/Developer/Get/{name}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the developerIdGet operation.
+     * @callback moduleapi/DeveloperApi~developerIdGetCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/DeveloperModel{ data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} id 
+     * @param {module:api/DeveloperApi~developerIdGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     */
+    developerIdGet(id, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling developerIdGet");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = DeveloperModel;
+
+      return this.apiClient.callApi(
+        '/Developer/{id}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

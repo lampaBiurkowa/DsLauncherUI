@@ -14,6 +14,7 @@
  */
 import {ApiClient} from "../ApiClient";
 import {ProductModel} from '../model/ProductModel';
+import {RatesData} from '../model/RatesData';
 
 /**
 * Product service.
@@ -124,18 +125,18 @@ export class ProductApi {
       );
     }
     /**
-     * Callback function to receive the result of the productGetGet operation.
-     * @callback moduleapi/ProductApi~productGetGetCallback
+     * Callback function to receive the result of the productGet operation.
+     * @callback moduleapi/ProductApi~productGetCallback
      * @param {String} error Error message, if any.
      * @param {Array.<module:model/ProductModel>{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * @param {module:api/ProductApi~productGetGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProductApi~productGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    productGetGet(callback) {
+    productGet(callback) {
       
       let postBody = null;
 
@@ -158,52 +159,7 @@ export class ProductApi {
       let returnType = [ProductModel];
 
       return this.apiClient.callApi(
-        '/Product/Get', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the productGetIdGet operation.
-     * @callback moduleapi/ProductApi~productGetIdGetCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/ProductModel{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * @param {Number} id 
-     * @param {module:api/ProductApi~productGetIdGetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    productGetIdGet(id, callback) {
-      
-      let postBody = null;
-      // verify the required parameter 'id' is set
-      if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling productGetIdGet");
-      }
-
-      let pathParams = {
-        'id': id
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
-
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = ProductModel;
-
-      return this.apiClient.callApi(
-        '/Product/Get/{id}', 'GET',
+        '/Product', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -249,6 +205,141 @@ export class ProductApi {
 
       return this.apiClient.callApi(
         '/Product/Get/{name}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the productIdGet operation.
+     * @callback moduleapi/ProductApi~productIdGetCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/ProductModel{ data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} id 
+     * @param {module:api/ProductApi~productIdGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     */
+    productIdGet(id, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling productIdGet");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = ProductModel;
+
+      return this.apiClient.callApi(
+        '/Product/{id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the productIdRatesGet operation.
+     * @callback moduleapi/ProductApi~productIdRatesGetCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/RatesData{ data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} id 
+     * @param {module:api/ProductApi~productIdRatesGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     */
+    productIdRatesGet(id, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling productIdRatesGet");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = RatesData;
+
+      return this.apiClient.callApi(
+        '/Product/{id}/Rates', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the productTagTagGet operation.
+     * @callback moduleapi/ProductApi~productTagTagGetCallback
+     * @param {String} error Error message, if any.
+     * @param {Array.<module:model/ProductModel>{ data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {String} tag 
+     * @param {module:api/ProductApi~productTagTagGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     */
+    productTagTagGet(tag, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'tag' is set
+      if (tag === undefined || tag === null) {
+        throw new Error("Missing the required parameter 'tag' when calling productTagTagGet");
+      }
+
+      let pathParams = {
+        'tag': tag
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = [ProductModel];
+
+      return this.apiClient.callApi(
+        '/Product/Tag/{tag}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

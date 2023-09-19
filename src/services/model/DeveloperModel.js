@@ -38,6 +38,8 @@ export class DeveloperModel {
   static constructFromObject(data, obj) {
     if (data) {
       obj = obj || new DeveloperModel();
+      if (data.hasOwnProperty('name'))
+        obj.name = ApiClient.convertToType(data['name'], 'String');
       if (data.hasOwnProperty('description'))
         obj.description = ApiClient.convertToType(data['description'], 'String');
       if (data.hasOwnProperty('website'))
@@ -50,6 +52,11 @@ export class DeveloperModel {
     return obj;
   }
 }
+
+/**
+ * @member {String} name
+ */
+DeveloperModel.prototype.name = undefined;
 
 /**
  * @member {String} description

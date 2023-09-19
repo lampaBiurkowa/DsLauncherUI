@@ -14,7 +14,7 @@
  */
 import {ApiClient} from '../ApiClient';
 import {DeveloperModel} from './DeveloperModel';
-import {TagModel} from './TagModel';
+import {ProductCategory} from './ProductCategory';
 
 /**
  * The ProductModel model module.
@@ -50,8 +50,10 @@ export class ProductModel {
         obj.name = ApiClient.convertToType(data['name'], 'String');
       if (data.hasOwnProperty('price'))
         obj.price = ApiClient.convertToType(data['price'], 'Number');
-      if (data.hasOwnProperty('tag'))
-        obj.tag = TagModel.constructFromObject(data['tag']);
+      if (data.hasOwnProperty('tags'))
+        obj.tags = ApiClient.convertToType(data['tags'], 'String');
+      if (data.hasOwnProperty('category'))
+        obj.category = ProductCategory.constructFromObject(data['category']);
     }
     return obj;
   }
@@ -83,7 +85,12 @@ ProductModel.prototype.name = undefined;
 ProductModel.prototype.price = undefined;
 
 /**
- * @member {module:model/TagModel} tag
+ * @member {String} tags
  */
-ProductModel.prototype.tag = undefined;
+ProductModel.prototype.tags = undefined;
+
+/**
+ * @member {module:model/ProductCategory} category
+ */
+ProductModel.prototype.category = undefined;
 
