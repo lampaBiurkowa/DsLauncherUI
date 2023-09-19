@@ -79,18 +79,18 @@ export class FriendshipApi {
       );
     }
     /**
-     * Callback function to receive the result of the friendshipGetGet operation.
-     * @callback moduleapi/FriendshipApi~friendshipGetGetCallback
+     * Callback function to receive the result of the friendshipGet operation.
+     * @callback moduleapi/FriendshipApi~friendshipGetCallback
      * @param {String} error Error message, if any.
      * @param {Array.<module:model/FriendshipModel>{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * @param {module:api/FriendshipApi~friendshipGetGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/FriendshipApi~friendshipGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    friendshipGetGet(callback) {
+    friendshipGet(callback) {
       
       let postBody = null;
 
@@ -113,14 +113,14 @@ export class FriendshipApi {
       let returnType = [FriendshipModel];
 
       return this.apiClient.callApi(
-        '/Friendship/Get', 'GET',
+        '/Friendship', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
     /**
-     * Callback function to receive the result of the friendshipGetIdGet operation.
-     * @callback moduleapi/FriendshipApi~friendshipGetIdGetCallback
+     * Callback function to receive the result of the friendshipIdGet operation.
+     * @callback moduleapi/FriendshipApi~friendshipIdGetCallback
      * @param {String} error Error message, if any.
      * @param {module:model/FriendshipModel{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -128,15 +128,15 @@ export class FriendshipApi {
 
     /**
      * @param {Number} id 
-     * @param {module:api/FriendshipApi~friendshipGetIdGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/FriendshipApi~friendshipIdGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    friendshipGetIdGet(id, callback) {
+    friendshipIdGet(id, callback) {
       
       let postBody = null;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling friendshipGetIdGet");
+        throw new Error("Missing the required parameter 'id' when calling friendshipIdGet");
       }
 
       let pathParams = {
@@ -158,7 +158,7 @@ export class FriendshipApi {
       let returnType = FriendshipModel;
 
       return this.apiClient.callApi(
-        '/Friendship/Get/{id}', 'GET',
+        '/Friendship/{id}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

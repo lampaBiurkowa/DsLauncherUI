@@ -79,18 +79,18 @@ export class ChannelMemberApi {
       );
     }
     /**
-     * Callback function to receive the result of the channelMemberGetGet operation.
-     * @callback moduleapi/ChannelMemberApi~channelMemberGetGetCallback
+     * Callback function to receive the result of the channelMemberGet operation.
+     * @callback moduleapi/ChannelMemberApi~channelMemberGetCallback
      * @param {String} error Error message, if any.
      * @param {Array.<module:model/ChannelMemberModel>{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * @param {module:api/ChannelMemberApi~channelMemberGetGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ChannelMemberApi~channelMemberGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    channelMemberGetGet(callback) {
+    channelMemberGet(callback) {
       
       let postBody = null;
 
@@ -113,14 +113,14 @@ export class ChannelMemberApi {
       let returnType = [ChannelMemberModel];
 
       return this.apiClient.callApi(
-        '/ChannelMember/Get', 'GET',
+        '/ChannelMember', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
     /**
-     * Callback function to receive the result of the channelMemberGetIdGet operation.
-     * @callback moduleapi/ChannelMemberApi~channelMemberGetIdGetCallback
+     * Callback function to receive the result of the channelMemberIdGet operation.
+     * @callback moduleapi/ChannelMemberApi~channelMemberIdGetCallback
      * @param {String} error Error message, if any.
      * @param {module:model/ChannelMemberModel{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -128,15 +128,15 @@ export class ChannelMemberApi {
 
     /**
      * @param {Number} id 
-     * @param {module:api/ChannelMemberApi~channelMemberGetIdGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ChannelMemberApi~channelMemberIdGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    channelMemberGetIdGet(id, callback) {
+    channelMemberIdGet(id, callback) {
       
       let postBody = null;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling channelMemberGetIdGet");
+        throw new Error("Missing the required parameter 'id' when calling channelMemberIdGet");
       }
 
       let pathParams = {
@@ -158,7 +158,7 @@ export class ChannelMemberApi {
       let returnType = ChannelMemberModel;
 
       return this.apiClient.callApi(
-        '/ChannelMember/Get/{id}', 'GET',
+        '/ChannelMember/{id}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

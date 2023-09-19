@@ -79,18 +79,18 @@ export class PackageApi {
       );
     }
     /**
-     * Callback function to receive the result of the packageGetGet operation.
-     * @callback moduleapi/PackageApi~packageGetGetCallback
+     * Callback function to receive the result of the packageGet operation.
+     * @callback moduleapi/PackageApi~packageGetCallback
      * @param {String} error Error message, if any.
      * @param {Array.<module:model/PackageModel>{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * @param {module:api/PackageApi~packageGetGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/PackageApi~packageGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    packageGetGet(callback) {
+    packageGet(callback) {
       
       let postBody = null;
 
@@ -113,14 +113,14 @@ export class PackageApi {
       let returnType = [PackageModel];
 
       return this.apiClient.callApi(
-        '/Package/Get', 'GET',
+        '/Package', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
     /**
-     * Callback function to receive the result of the packageGetIdGet operation.
-     * @callback moduleapi/PackageApi~packageGetIdGetCallback
+     * Callback function to receive the result of the packageIdGet operation.
+     * @callback moduleapi/PackageApi~packageIdGetCallback
      * @param {String} error Error message, if any.
      * @param {module:model/PackageModel{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -128,15 +128,15 @@ export class PackageApi {
 
     /**
      * @param {Number} id 
-     * @param {module:api/PackageApi~packageGetIdGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/PackageApi~packageIdGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    packageGetIdGet(id, callback) {
+    packageIdGet(id, callback) {
       
       let postBody = null;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling packageGetIdGet");
+        throw new Error("Missing the required parameter 'id' when calling packageIdGet");
       }
 
       let pathParams = {
@@ -158,7 +158,7 @@ export class PackageApi {
       let returnType = PackageModel;
 
       return this.apiClient.callApi(
-        '/Package/Get/{id}', 'GET',
+        '/Package/{id}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

@@ -79,18 +79,18 @@ export class ReviewApi {
       );
     }
     /**
-     * Callback function to receive the result of the reviewGetGet operation.
-     * @callback moduleapi/ReviewApi~reviewGetGetCallback
+     * Callback function to receive the result of the reviewGet operation.
+     * @callback moduleapi/ReviewApi~reviewGetCallback
      * @param {String} error Error message, if any.
      * @param {Array.<module:model/ReviewModel>{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * @param {module:api/ReviewApi~reviewGetGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ReviewApi~reviewGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    reviewGetGet(callback) {
+    reviewGet(callback) {
       
       let postBody = null;
 
@@ -113,14 +113,14 @@ export class ReviewApi {
       let returnType = [ReviewModel];
 
       return this.apiClient.callApi(
-        '/Review/Get', 'GET',
+        '/Review', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
     /**
-     * Callback function to receive the result of the reviewGetIdGet operation.
-     * @callback moduleapi/ReviewApi~reviewGetIdGetCallback
+     * Callback function to receive the result of the reviewIdGet operation.
+     * @callback moduleapi/ReviewApi~reviewIdGetCallback
      * @param {String} error Error message, if any.
      * @param {module:model/ReviewModel{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -128,15 +128,15 @@ export class ReviewApi {
 
     /**
      * @param {Number} id 
-     * @param {module:api/ReviewApi~reviewGetIdGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ReviewApi~reviewIdGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    reviewGetIdGet(id, callback) {
+    reviewIdGet(id, callback) {
       
       let postBody = null;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling reviewGetIdGet");
+        throw new Error("Missing the required parameter 'id' when calling reviewIdGet");
       }
 
       let pathParams = {
@@ -158,7 +158,7 @@ export class ReviewApi {
       let returnType = ReviewModel;
 
       return this.apiClient.callApi(
-        '/Review/Get/{id}', 'GET',
+        '/Review/{id}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

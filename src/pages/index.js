@@ -48,7 +48,7 @@ import { NewsModel } from "../services/model/NewsModel";
 import { ProductModel } from "../services/model/ProductModel";
 import { PurchaseModel } from "../services/model/PurchaseModel";
 import { ReviewModel } from "../services/model/ReviewModel";
-import { TagModel } from "../services/model/TagModel";
+import { RatesData } from "../services/model/RatesData";
 import { UserModel } from "../services/model/UserModel";
 import { ActivationApi } from "../services/api/ActivationApi";
 import { AuthApi } from "../services/api/AuthApi";
@@ -61,7 +61,6 @@ import { NewsApi } from "../services/api/NewsApi";
 import { ProductApi } from "../services/api/ProductApi";
 import { PurchaseApi } from "../services/api/PurchaseApi";
 import { ReviewApi } from "../services/api/ReviewApi";
-import { TagApi } from "../services/api/TagApi";
 import { UserApi } from "../services/api/UserApi";
 
 /**
@@ -158,9 +157,9 @@ export {
 
   /**
    * The TagModel model constructor.
-   * @property {module:model/TagModel}
+   * @property {module:model/RatesData}
    */
-  TagModel,
+  RatesData,
 
   /**
    * The UserModel model constructor.
