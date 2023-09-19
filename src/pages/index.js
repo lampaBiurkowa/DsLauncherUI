@@ -46,6 +46,7 @@ import { FilesUploadBody } from "../services/model/FilesUploadBody";
 import { FriendshipModel } from "../services/model/FriendshipModel";
 import { NewsModel } from "../services/model/NewsModel";
 import { ProductModel } from "../services/model/ProductModel";
+import { ProductCategory } from "../services/model/ProductCategory";
 import { PurchaseModel } from "../services/model/PurchaseModel";
 import { ReviewModel } from "../services/model/ReviewModel";
 import { RatesData } from "../services/model/RatesData";
@@ -174,6 +175,7 @@ export {
   ActivationApi,  
   
   AuthApi,
+  ProductCategory,
 
 
 
