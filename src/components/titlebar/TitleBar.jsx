@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { appWindow } from "@tauri-apps/api/window";
-import "@/styles/TitleBar.scss";
+import "./TitleBar.scss";
 
 let prevMaximized = false;
 

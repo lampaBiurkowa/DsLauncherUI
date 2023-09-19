@@ -30,7 +30,7 @@ function ProductPage() {
           <div className="product-header">
             <h1 className="title">{product?.name}</h1>
             <span className="developer">{product?.developer.name}</span>
-            <button className="buy-button">Buy</button>
+            <button className="buy-button accent large">Buy</button>
             <span className="price">{product?.price}₽</span>
           </div>
         </div>
@@ -75,6 +75,9 @@ function ProductPage() {
             <Review review={review} key={index} />
           ))}
         </div>
+      </section>
+      <section className="details">
+        <h2>Details</h2>
       </section>
     </article>
   );

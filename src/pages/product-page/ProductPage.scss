@@ -46,18 +46,6 @@ article {
 
       .buy-button {
         place-self: end;
-
-        font-size: $text-sm;
-        font-weight: $text-medium;
-        background-color: $accent;
-        border-radius: $radius-sm;
-        padding: $padding-md $padding-xl;
-        transition: 0.1s background ease;
-
-        &:hover {
-          background-color: $accent-alt;
-          cursor: pointer;
-        }
       }
 
       .price {

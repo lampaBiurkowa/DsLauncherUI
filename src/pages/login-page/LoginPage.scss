@@ -1,0 +1,104 @@
+@use "@/styles" as *;
+
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-image: url("/public/img/traingles.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  .login-container {
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+    padding: $padding-xl;
+
+    background-color: $dark-1;
+    border: 1px solid $dark-3;
+    border-radius: $radius-lg;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: $margin-md;
+      margin-top: $margin-xl;
+
+      .textarea-container {
+        display: flex;
+        align-items: center;
+        background-color: $dark-3;
+        border-radius: $radius-sm;
+
+        i {
+          margin: 0 $margin-sm;
+        }
+
+        input {
+          width: 100%;
+          padding: $padding-sm;
+        }
+      }
+
+      .login-controls {
+        display: flex;
+        align-items: start;
+
+        .login-button {
+          align-self: end;
+          font-size: $text-sm;
+          font-weight: $text-medium;
+          background-color: $accent;
+          border-radius: $radius-sm;
+          padding: $padding-md $padding-lg;
+          transition: 0.1s background ease;
+
+          &:hover {
+            background-color: $accent-alt;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .sign-up {
+      display: flex;
+      flex-direction: column;
+      gap: $margin-md;
+      margin-top: calc(2 * $margin-xl);
+
+      .separator {
+        justify-self: stretch;
+        align-items: center;
+        display: flex;
+        gap: $margin-md;
+        color: $text;
+        opacity: 0.7;
+        text-transform: uppercase;
+        font-size: $text-xs;
+
+        &::before,
+        &::after {
+          content: "";
+          height: 1px;
+          background: $text;
+          flex-grow: 1;
+        }
+      }
+    }
+
+    .password-help {
+      margin-top: $margin-xl;
+      font-size: $text-sm;
+      color: $text-alt;
+      align-self: end;
+
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+}

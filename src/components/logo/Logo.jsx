@@ -1,9 +1,9 @@
 import React from "react";
 import "./Logo.scss";
 
-function Logo() {
+function Logo({ className }) {
   return (
-    <div className="logo">
+    <div className={`${className ?? ""} logo`}>
       <img src="/img/icon.png" alt="Dibrysoft logo" />
       <a>Dibrysoft</a>
     </div>

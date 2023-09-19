@@ -1,0 +1,35 @@
+@use "../variables" as *;
+
+label:has(input[type="checkbox"]) {
+  font-size: $text-sm;
+  display: grid;
+  grid-template-columns: 1.5em auto;
+  grid-template-rows: 1.5em;
+  gap: 0.5em;
+  align-items: center;
+
+  & input[type="checkbox"] {
+    width: 100%;
+    height: 100%;
+    background-color: $dark-2;
+    border: 1px solid $dark-3;
+    border-radius: $radius-sm;
+
+    &:checked {
+      background-color: $accent;
+      border-color: transparent;
+
+      &::after {
+        content: url("data:image/svg+xml,<svg viewBox='0 0 10 10' fill='transparent' xmlns='http://www.w3.org/2000/svg'><polyline points='2 5 4 7 8 3' stroke='white'/></svg>");
+      }
+    }
+  }
+
+  &:hover input[type="checkbox"] {
+    background-color: $dark-3;
+
+    &:checked {
+      background-color: $accent-alt;
+    }
+  }
+}

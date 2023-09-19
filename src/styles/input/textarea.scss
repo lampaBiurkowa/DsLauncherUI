@@ -1,0 +1,18 @@
+@use "../variables" as *;
+
+input[type="text"],
+input[type="search"],
+input[type="password"],
+textarea {
+  padding: $padding-xs $padding-md;
+
+  font-size: $text-sm;
+  background: $dark-2;
+  border: 1px solid $dark-3;
+  border-radius: $radius-sm;
+
+  &:focus,
+  &:active {
+    outline: 2px solid $accent-alt;
+  }
+}

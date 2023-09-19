@@ -17,6 +17,7 @@ function StorePage() {
           <input
             navend="true"
             placeholder="Search"
+            type="search"
             style={{ alignSelf: "center" }}
           />
         </NavBar>

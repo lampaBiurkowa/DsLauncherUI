@@ -5,7 +5,7 @@ import ProfileButton from "./components/ProfileButton";
 import UpdateSummary from "./components/UpdateSummary";
 import NavButton from "../../components/navbar/NavButton";
 import NavBar from "../../components/navbar/Navbar";
-import Logo from "./components/Logo";
+import Logo from "../../components/logo/Logo";
 
 import "./MainPage.scss";
 
@@ -14,7 +14,9 @@ function MainPage() {
     <div className="container">
       <div className="nav-container">
         <NavBar>
-          <Logo />
+          <div style={{ padding: "8px 8px 0 8px" }}>
+            <Logo />
+          </div>
           <ProfileButton to="/profile" />
           <NavButton to="/home" icon="las la-home">
             Home
