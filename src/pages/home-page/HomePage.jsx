@@ -36,7 +36,7 @@ function HomePage() {
                 title={article.title}
                 date={article._date}
                 image={article.image}
-                summary={article.content}
+                summary={article.summary}
               />
             );
           })}
