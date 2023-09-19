@@ -1,0 +1,36 @@
+@use "@/styles" as *;
+
+.review-container {
+  background-color: $dark-2;
+  border: 1px solid $dark-3;
+  border-radius: $radius-lg;
+  padding: $padding-md;
+
+  .header {
+    display: flex;
+    gap: $margin-sm;
+    align-items: center;
+
+    .profile-picture {
+      width: 32px;
+      height: 32px;
+      border-radius: $radius-round;
+    }
+
+    .username {
+      font-weight: $text-medium;
+    }
+
+    .published {
+      color: $text-inactive;
+      font-size: $text-sm;
+    }
+  }
+
+  .content {
+    display: block;
+    font-size: $text-sm;
+    margin-top: $margin-md;
+    text-align: justify;
+  }
+}
