@@ -110,7 +110,7 @@ article {
 
   section.reviews {
     display: grid;
-    grid-template-columns: 38.22% 61.77%;
+    grid-template-columns: 38.22% calc(61.77% - $margin-md);
     grid-template-rows: auto auto;
     grid-template-areas: "header header" "summary reviews";
     gap: $margin-md;
@@ -135,6 +135,16 @@ article {
       grid-area: reviews;
       display: flex;
       flex-direction: column;
+    }
+  }
+
+  section.details {
+    margin: 0 $margin-xl;
+
+    h2 {
+      font-size: $text-xxl;
+      font-weight: $text-bold;
+      grid-area: header;
     }
   }
 }
