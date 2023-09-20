@@ -36,8 +36,8 @@ export class ProductApi {
     }
 
     /**
-     * Callback function to receive the result of the productAddDataPost operation.
-     * @callback moduleapi/ProductApi~productAddDataPostCallback
+     * Callback function to receive the result of the productDataPost operation.
+     * @callback moduleapi/ProductApi~productDataPostCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -45,14 +45,14 @@ export class ProductApi {
 
     /**
      * @param {String} data 
-     * @param {module:api/ProductApi~productAddDataPostCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProductApi~productDataPostCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    productAddDataPost(data, callback) {
+    productDataPost(data, callback) {
       
       let postBody = null;
       // verify the required parameter 'data' is set
       if (data === undefined || data === null) {
-        throw new Error("Missing the required parameter 'data' when calling productAddDataPost");
+        throw new Error("Missing the required parameter 'data' when calling productDataPost");
       }
 
       let pathParams = {
@@ -74,7 +74,7 @@ export class ProductApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/Product/Add/{data}', 'POST',
+        '/Product/{data}', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -205,6 +205,50 @@ export class ProductApi {
 
       return this.apiClient.callApi(
         '/Product/Get/{name}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the productIdDelete operation.
+     * @callback moduleapi/ProductApi~productIdDeleteCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} id 
+     * @param {module:api/ProductApi~productIdDeleteCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    productIdDelete(id, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling productIdDelete");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/Product/{id}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

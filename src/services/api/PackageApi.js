@@ -35,8 +35,8 @@ export class PackageApi {
     }
 
     /**
-     * Callback function to receive the result of the packageAddDataPost operation.
-     * @callback moduleapi/PackageApi~packageAddDataPostCallback
+     * Callback function to receive the result of the packageDataPost operation.
+     * @callback moduleapi/PackageApi~packageDataPostCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -44,14 +44,14 @@ export class PackageApi {
 
     /**
      * @param {String} data 
-     * @param {module:api/PackageApi~packageAddDataPostCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/PackageApi~packageDataPostCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    packageAddDataPost(data, callback) {
+    packageDataPost(data, callback) {
       
       let postBody = null;
       // verify the required parameter 'data' is set
       if (data === undefined || data === null) {
-        throw new Error("Missing the required parameter 'data' when calling packageAddDataPost");
+        throw new Error("Missing the required parameter 'data' when calling packageDataPost");
       }
 
       let pathParams = {
@@ -73,7 +73,7 @@ export class PackageApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/Package/Add/{data}', 'POST',
+        '/Package/{data}', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -114,6 +114,50 @@ export class PackageApi {
 
       return this.apiClient.callApi(
         '/Package', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the packageIdDelete operation.
+     * @callback moduleapi/PackageApi~packageIdDeleteCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} id 
+     * @param {module:api/PackageApi~packageIdDeleteCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    packageIdDelete(id, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling packageIdDelete");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/Package/{id}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

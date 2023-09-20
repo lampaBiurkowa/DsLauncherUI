@@ -35,8 +35,8 @@ export class FriendshipApi {
     }
 
     /**
-     * Callback function to receive the result of the friendshipAddDataPost operation.
-     * @callback moduleapi/FriendshipApi~friendshipAddDataPostCallback
+     * Callback function to receive the result of the friendshipDataPost operation.
+     * @callback moduleapi/FriendshipApi~friendshipDataPostCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -44,14 +44,14 @@ export class FriendshipApi {
 
     /**
      * @param {String} data 
-     * @param {module:api/FriendshipApi~friendshipAddDataPostCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/FriendshipApi~friendshipDataPostCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    friendshipAddDataPost(data, callback) {
+    friendshipDataPost(data, callback) {
       
       let postBody = null;
       // verify the required parameter 'data' is set
       if (data === undefined || data === null) {
-        throw new Error("Missing the required parameter 'data' when calling friendshipAddDataPost");
+        throw new Error("Missing the required parameter 'data' when calling friendshipDataPost");
       }
 
       let pathParams = {
@@ -73,7 +73,7 @@ export class FriendshipApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/Friendship/Add/{data}', 'POST',
+        '/Friendship/{data}', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -114,6 +114,50 @@ export class FriendshipApi {
 
       return this.apiClient.callApi(
         '/Friendship', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the friendshipIdDelete operation.
+     * @callback moduleapi/FriendshipApi~friendshipIdDeleteCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} id 
+     * @param {module:api/FriendshipApi~friendshipIdDeleteCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    friendshipIdDelete(id, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling friendshipIdDelete");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/Friendship/{id}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

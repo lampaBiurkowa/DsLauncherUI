@@ -35,8 +35,8 @@ export class ReviewApi {
     }
 
     /**
-     * Callback function to receive the result of the reviewAddDataPost operation.
-     * @callback moduleapi/ReviewApi~reviewAddDataPostCallback
+     * Callback function to receive the result of the reviewDataPost operation.
+     * @callback moduleapi/ReviewApi~reviewDataPostCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -44,14 +44,14 @@ export class ReviewApi {
 
     /**
      * @param {String} data 
-     * @param {module:api/ReviewApi~reviewAddDataPostCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ReviewApi~reviewDataPostCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    reviewAddDataPost(data, callback) {
+    reviewDataPost(data, callback) {
       
       let postBody = null;
       // verify the required parameter 'data' is set
       if (data === undefined || data === null) {
-        throw new Error("Missing the required parameter 'data' when calling reviewAddDataPost");
+        throw new Error("Missing the required parameter 'data' when calling reviewDataPost");
       }
 
       let pathParams = {
@@ -73,7 +73,7 @@ export class ReviewApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/Review/Add/{data}', 'POST',
+        '/Review/{data}', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -114,6 +114,50 @@ export class ReviewApi {
 
       return this.apiClient.callApi(
         '/Review', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the reviewIdDelete operation.
+     * @callback moduleapi/ReviewApi~reviewIdDeleteCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} id 
+     * @param {module:api/ReviewApi~reviewIdDeleteCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    reviewIdDelete(id, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling reviewIdDelete");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/Review/{id}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

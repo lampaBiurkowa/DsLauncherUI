@@ -35,8 +35,8 @@ export class NewsApi {
     }
 
     /**
-     * Callback function to receive the result of the newsAddDataPost operation.
-     * @callback moduleapi/NewsApi~newsAddDataPostCallback
+     * Callback function to receive the result of the newsDataPost operation.
+     * @callback moduleapi/NewsApi~newsDataPostCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -44,14 +44,14 @@ export class NewsApi {
 
     /**
      * @param {String} data 
-     * @param {module:api/NewsApi~newsAddDataPostCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/NewsApi~newsDataPostCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    newsAddDataPost(data, callback) {
+    newsDataPost(data, callback) {
       
       let postBody = null;
       // verify the required parameter 'data' is set
       if (data === undefined || data === null) {
-        throw new Error("Missing the required parameter 'data' when calling newsAddDataPost");
+        throw new Error("Missing the required parameter 'data' when calling newsDataPost");
       }
 
       let pathParams = {
@@ -73,7 +73,7 @@ export class NewsApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/News/Add/{data}', 'POST',
+        '/News/{data}', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -114,6 +114,50 @@ export class NewsApi {
 
       return this.apiClient.callApi(
         '/News', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the newsIdDelete operation.
+     * @callback moduleapi/NewsApi~newsIdDeleteCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} id 
+     * @param {module:api/NewsApi~newsIdDeleteCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    newsIdDelete(id, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling newsIdDelete");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/News/{id}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

@@ -13,18 +13,19 @@
  *
  */
 import {ApiClient} from "../ApiClient";
-import {DeveloperModel} from '../model/DeveloperModel';
+import {GameActivityModel} from '../model/GameActivityModel';
+import {TimeSpan} from '../model/TimeSpan';
 
 /**
-* Developer service.
-* @module api/DeveloperApi
+* GameActivity service.
+* @module api/GameActivityApi
 * @version 1.0
 */
-export class DeveloperApi {
+export class GameActivityApi {
 
     /**
-    * Constructs a new DeveloperApi. 
-    * @alias module:api/DeveloperApi
+    * Constructs a new GameActivityApi. 
+    * @alias module:api/GameActivityApi
     * @class
     * @param {module:ApiClient} [apiClient] Optional API client implementation to use,
     * default to {@link module:ApiClient#instanc
@@ -35,8 +36,8 @@ export class DeveloperApi {
     }
 
     /**
-     * Callback function to receive the result of the developerDataPost operation.
-     * @callback moduleapi/DeveloperApi~developerDataPostCallback
+     * Callback function to receive the result of the gameActivityDataPost operation.
+     * @callback moduleapi/GameActivityApi~gameActivityDataPostCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -44,14 +45,14 @@ export class DeveloperApi {
 
     /**
      * @param {String} data 
-     * @param {module:api/DeveloperApi~developerDataPostCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/GameActivityApi~gameActivityDataPostCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    developerDataPost(data, callback) {
+    gameActivityDataPost(data, callback) {
       
       let postBody = null;
       // verify the required parameter 'data' is set
       if (data === undefined || data === null) {
-        throw new Error("Missing the required parameter 'data' when calling developerDataPost");
+        throw new Error("Missing the required parameter 'data' when calling gameActivityDataPost");
       }
 
       let pathParams = {
@@ -73,24 +74,24 @@ export class DeveloperApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/Developer/{data}', 'POST',
+        '/GameActivity/{data}', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
     /**
-     * Callback function to receive the result of the developerGet operation.
-     * @callback moduleapi/DeveloperApi~developerGetCallback
+     * Callback function to receive the result of the gameActivityGet operation.
+     * @callback moduleapi/GameActivityApi~gameActivityGetCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<module:model/DeveloperModel>{ data The data returned by the service call.
+     * @param {Array.<module:model/GameActivityModel>{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * @param {module:api/DeveloperApi~developerGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/GameActivityApi~gameActivityGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    developerGet(callback) {
+    gameActivityGet(callback) {
       
       let postBody = null;
 
@@ -110,62 +111,17 @@ export class DeveloperApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = [DeveloperModel];
+      let returnType = [GameActivityModel];
 
       return this.apiClient.callApi(
-        '/Developer', 'GET',
+        '/GameActivity', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
     /**
-     * Callback function to receive the result of the developerGetNameGet operation.
-     * @callback moduleapi/DeveloperApi~developerGetNameGetCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/DeveloperModel{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * @param {String} name 
-     * @param {module:api/DeveloperApi~developerGetNameGetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    developerGetNameGet(name, callback) {
-      
-      let postBody = null;
-      // verify the required parameter 'name' is set
-      if (name === undefined || name === null) {
-        throw new Error("Missing the required parameter 'name' when calling developerGetNameGet");
-      }
-
-      let pathParams = {
-        'name': name
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
-
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = DeveloperModel;
-
-      return this.apiClient.callApi(
-        '/Developer/Get/{name}', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the developerIdDelete operation.
-     * @callback moduleapi/DeveloperApi~developerIdDeleteCallback
+     * Callback function to receive the result of the gameActivityIdDelete operation.
+     * @callback moduleapi/GameActivityApi~gameActivityIdDeleteCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -173,14 +129,14 @@ export class DeveloperApi {
 
     /**
      * @param {Number} id 
-     * @param {module:api/DeveloperApi~developerIdDeleteCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/GameActivityApi~gameActivityIdDeleteCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    developerIdDelete(id, callback) {
+    gameActivityIdDelete(id, callback) {
       
       let postBody = null;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling developerIdDelete");
+        throw new Error("Missing the required parameter 'id' when calling gameActivityIdDelete");
       }
 
       let pathParams = {
@@ -202,30 +158,30 @@ export class DeveloperApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/Developer/{id}', 'DELETE',
+        '/GameActivity/{id}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
     /**
-     * Callback function to receive the result of the developerIdGet operation.
-     * @callback moduleapi/DeveloperApi~developerIdGetCallback
+     * Callback function to receive the result of the gameActivityIdGet operation.
+     * @callback moduleapi/GameActivityApi~gameActivityIdGetCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/DeveloperModel{ data The data returned by the service call.
+     * @param {module:model/GameActivityModel{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
      * @param {Number} id 
-     * @param {module:api/DeveloperApi~developerIdGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/GameActivityApi~gameActivityIdGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    developerIdGet(id, callback) {
+    gameActivityIdGet(id, callback) {
       
       let postBody = null;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling developerIdGet");
+        throw new Error("Missing the required parameter 'id' when calling gameActivityIdGet");
       }
 
       let pathParams = {
@@ -244,10 +200,60 @@ export class DeveloperApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = DeveloperModel;
+      let returnType = GameActivityModel;
 
       return this.apiClient.callApi(
-        '/Developer/{id}', 'GET',
+        '/GameActivity/{id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the gameActivityTimeSpentUserIdProductIdGet operation.
+     * @callback moduleapi/GameActivityApi~gameActivityTimeSpentUserIdProductIdGetCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/TimeSpan{ data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} userId 
+     * @param {Number} productId 
+     * @param {module:api/GameActivityApi~gameActivityTimeSpentUserIdProductIdGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     */
+    gameActivityTimeSpentUserIdProductIdGet(userId, productId, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'userId' is set
+      if (userId === undefined || userId === null) {
+        throw new Error("Missing the required parameter 'userId' when calling gameActivityTimeSpentUserIdProductIdGet");
+      }
+      // verify the required parameter 'productId' is set
+      if (productId === undefined || productId === null) {
+        throw new Error("Missing the required parameter 'productId' when calling gameActivityTimeSpentUserIdProductIdGet");
+      }
+
+      let pathParams = {
+        'userId': userId,'productId': productId
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = TimeSpan;
+
+      return this.apiClient.callApi(
+        '/GameActivity/TimeSpent/{userId}/{productId}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

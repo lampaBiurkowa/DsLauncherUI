@@ -37,8 +37,8 @@ export class UserApi {
     }
 
     /**
-     * Callback function to receive the result of the userAddDataPost operation.
-     * @callback moduleapi/UserApi~userAddDataPostCallback
+     * Callback function to receive the result of the userDataPost operation.
+     * @callback moduleapi/UserApi~userDataPostCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -46,14 +46,14 @@ export class UserApi {
 
     /**
      * @param {String} data 
-     * @param {module:api/UserApi~userAddDataPostCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/UserApi~userDataPostCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    userAddDataPost(data, callback) {
+    userDataPost(data, callback) {
       
       let postBody = null;
       // verify the required parameter 'data' is set
       if (data === undefined || data === null) {
-        throw new Error("Missing the required parameter 'data' when calling userAddDataPost");
+        throw new Error("Missing the required parameter 'data' when calling userDataPost");
       }
 
       let pathParams = {
@@ -75,7 +75,7 @@ export class UserApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/User/Add/{data}', 'POST',
+        '/User/{data}', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -341,6 +341,50 @@ export class UserApi {
 
       return this.apiClient.callApi(
         '/User/Get/{name}/Products', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the userIdDelete operation.
+     * @callback moduleapi/UserApi~userIdDeleteCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} id 
+     * @param {module:api/UserApi~userIdDeleteCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    userIdDelete(id, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling userIdDelete");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/User/{id}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

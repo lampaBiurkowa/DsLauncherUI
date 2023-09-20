@@ -35,8 +35,8 @@ export class PurchaseApi {
     }
 
     /**
-     * Callback function to receive the result of the purchaseAddDataPost operation.
-     * @callback moduleapi/PurchaseApi~purchaseAddDataPostCallback
+     * Callback function to receive the result of the purchaseDataPost operation.
+     * @callback moduleapi/PurchaseApi~purchaseDataPostCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -44,14 +44,14 @@ export class PurchaseApi {
 
     /**
      * @param {String} data 
-     * @param {module:api/PurchaseApi~purchaseAddDataPostCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/PurchaseApi~purchaseDataPostCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    purchaseAddDataPost(data, callback) {
+    purchaseDataPost(data, callback) {
       
       let postBody = null;
       // verify the required parameter 'data' is set
       if (data === undefined || data === null) {
-        throw new Error("Missing the required parameter 'data' when calling purchaseAddDataPost");
+        throw new Error("Missing the required parameter 'data' when calling purchaseDataPost");
       }
 
       let pathParams = {
@@ -73,7 +73,7 @@ export class PurchaseApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/Purchase/Add/{data}', 'POST',
+        '/Purchase/{data}', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -114,6 +114,50 @@ export class PurchaseApi {
 
       return this.apiClient.callApi(
         '/Purchase', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the purchaseIdDelete operation.
+     * @callback moduleapi/PurchaseApi~purchaseIdDeleteCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} id 
+     * @param {module:api/PurchaseApi~purchaseIdDeleteCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    purchaseIdDelete(id, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling purchaseIdDelete");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/Purchase/{id}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

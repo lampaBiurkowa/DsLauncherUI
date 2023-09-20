@@ -35,8 +35,8 @@ export class ChannelApi {
     }
 
     /**
-     * Callback function to receive the result of the channelAddDataPost operation.
-     * @callback moduleapi/ChannelApi~channelAddDataPostCallback
+     * Callback function to receive the result of the channelDataPost operation.
+     * @callback moduleapi/ChannelApi~channelDataPostCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -44,14 +44,14 @@ export class ChannelApi {
 
     /**
      * @param {String} data 
-     * @param {module:api/ChannelApi~channelAddDataPostCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ChannelApi~channelDataPostCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    channelAddDataPost(data, callback) {
+    channelDataPost(data, callback) {
       
       let postBody = null;
       // verify the required parameter 'data' is set
       if (data === undefined || data === null) {
-        throw new Error("Missing the required parameter 'data' when calling channelAddDataPost");
+        throw new Error("Missing the required parameter 'data' when calling channelDataPost");
       }
 
       let pathParams = {
@@ -73,7 +73,7 @@ export class ChannelApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/Channel/Add/{data}', 'POST',
+        '/Channel/{data}', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -114,6 +114,50 @@ export class ChannelApi {
 
       return this.apiClient.callApi(
         '/Channel', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the channelIdDelete operation.
+     * @callback moduleapi/ChannelApi~channelIdDeleteCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} id 
+     * @param {module:api/ChannelApi~channelIdDeleteCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    channelIdDelete(id, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling channelIdDelete");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/Channel/{id}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
