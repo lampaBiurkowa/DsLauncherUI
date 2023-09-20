@@ -25,6 +25,13 @@
       color: $text-inactive;
       font-size: $text-sm;
     }
+
+    .developer-badge {
+      display: block;
+      padding: 2px;
+      background-color: $accent-alt;
+      border-radius: $radius-sm;
+    }
   }
 
   .content {

@@ -8,22 +8,24 @@ function Review({ review }) {
     <div className="review-container">
       <div className="header">
         <img
-          src="/public/img/user.png"
+          src="/img/user.png"
           alt="Profile picture"
           className="profile-picture"
         />
-        <span className="username">User</span>
+        <span className="username">{review.user.name}</span>
+        {review.user.developer != undefined ? (
+          <i className="developer-badge las la-certificate" title="Developer" />
+        ) : (
+          ""
+        )}
         <Spacer />
-        <span className="published">18.07.2000</span>
-        <Rating value={5} isReadOnly={true} />
+        <p className="published">
+          {new Date(review._date).toLocaleDateString()}
+        </p>
+        <Rating value={review.rate + 1} isReadOnly={true} />
       </div>
 
-      <span className="content">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut architecto,
-        inventore, soluta sed aperiam minus fuga itaque mollitia reiciendis,
-        consequatur incidunt ea tempore? Magni dolorem perspiciatis iusto
-        corporis dignissimos repellendus!
-      </span>
+      <span className="content">{review.content}</span>
     </div>
   );
 }

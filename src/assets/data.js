@@ -56,7 +56,7 @@ export const topFree = [
     platform: ["win"],
   },
   {
-    id: 16,
+    id: 6,
     name: "Hlyss Translate",
     icon: "https://drive.google.com/uc?id=16RfwEGHHiffr0tTjN4XWzhFo1yYxPMaA",
     rating: 4.8,
@@ -77,7 +77,7 @@ export const topFree = [
     platform: ["win"],
   },
   {
-    id: 16,
+    id: 6,
     name: "Hlyss Translate",
     icon: "https://drive.google.com/uc?id=16RfwEGHHiffr0tTjN4XWzhFo1yYxPMaA",
     rating: 4.8,
@@ -98,7 +98,7 @@ export const topFree = [
     platform: ["win"],
   },
   {
-    id: 16,
+    id: 6,
     name: "Hlyss Translate",
     icon: "https://drive.google.com/uc?id=16RfwEGHHiffr0tTjN4XWzhFo1yYxPMaA",
     rating: 4.8,

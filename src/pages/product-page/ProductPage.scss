@@ -15,7 +15,7 @@ article {
         rgba(0, 0, 0, 1) 0%,
         rgba(0, 0, 0, 0) 100%
       ),
-      url("/public/test/product_cover.png") $accent;
+      url("/test/product_cover.png") $accent;
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
@@ -117,12 +117,35 @@ article {
       border: 1px solid $dark-3;
       border-radius: $radius-lg;
       padding: $padding-xl;
+      align-self: start;
+
+      .overall {
+        span:first-child {
+          font-size: 3rem;
+          font-weight: $text-bold;
+        }
+        span:last-child {
+          margin-left: $margin-md;
+        }
+      }
+
+      .details {
+        display: flex;
+        flex-direction: column;
+        gap: $margin-sm;
+        margin: $margin-xl 0;
+      }
     }
 
     .reviews-comments {
       grid-area: reviews;
       display: flex;
       flex-direction: column;
+      gap: $margin-md;
+
+      button {
+        align-self: end;
+      }
     }
   }
 
