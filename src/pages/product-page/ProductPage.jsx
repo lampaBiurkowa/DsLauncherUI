@@ -7,21 +7,16 @@ import "./ProductPage.scss";
 import Shelf from "../../components/shelf/Shelf";
 import useReviews from "./hooks/useReviews";
 import Review from "./components/Review";
+import useSummary from "./hooks/useSummary";
+import ReviewCounter from "./components/ReviewCounter";
+
+const MAX_REVIEWS = 3;
 
 function ProductPage() {
   const { id: productId } = useParams();
   let product = useProduct(productId);
   let reviews = useReviews(productId);
-
-  let summary = {
-    average: 4.56,
-    reviewsTotal: 34,
-    reviews5: 4,
-    reviews4: 4,
-    reviews3: 4,
-    reviews2: 4,
-    reviews1: 4,
-  };
+  let summary = useSummary(productId);
 
   return (
     <article>
@@ -36,24 +31,16 @@ function ProductPage() {
         </div>
       </AspectRatio>
       <section className="description">
-        <img src="/public/test/product_icon.png" alt="Application Icon" />
+        <img src="/test/product_icon.png" alt="Application Icon" />
         <h2>About</h2>
-        <span>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid ex
-          assumenda autem. Officia temporibus atque debitis, voluptatem sequi
-          modi quisquam. Molestiae saepe officiis cupiditate fugit quaerat
-          magnam ut earum similique. Lorem ipsum dolor, sit amet consectetur
-          adipisicing elit. Eveniet inventore optio facere nobis, adipisci
-          blanditiis sint. Sunt nostrum atque vero optio dolorum, ipsam libero
-          suscipit harum velit sed aliquid tempore!
-        </span>
+        <span>{product?.description}</span>
       </section>
       <section>
         <Shelf className="screenshots" title="Screenshots">
           {Array.from({ length: 10 }).map((item, index) => {
             return (
               <img
-                src="/public/test/product_cover.png"
+                src="/test/product_cover.png"
                 alt="Screenshot"
                 className="screenshot"
                 key={index}
@@ -65,15 +52,44 @@ function ProductPage() {
       <section className="reviews">
         <h2>Comments & Reviews</h2>
         <div className="reviews-summary">
-          <div>
-            <span>{5}</span>
-            <span>({1})</span>
+          <div className="overall">
+            <span>{summary?.avg.toFixed(1)}</span>
+            <span>({reviews?.length})</span>
           </div>
+          <div className="details">
+            <ReviewCounter
+              rate={5}
+              count={summary?.rateCounts[0]}
+              totalCount={reviews?.length}
+            />
+            <ReviewCounter
+              rate={4}
+              count={summary?.rateCounts[1]}
+              totalCount={reviews?.length}
+            />
+            <ReviewCounter
+              rate={3}
+              count={summary?.rateCounts[2]}
+              totalCount={reviews?.length}
+            />
+            <ReviewCounter
+              rate={2}
+              count={summary?.rateCounts[3]}
+              totalCount={reviews?.length}
+            />
+            <ReviewCounter
+              rate={1}
+              count={summary?.rateCounts[4]}
+              totalCount={reviews?.length}
+            />
+          </div>
+          <button className="accent">Add review</button>
         </div>
         <div className="reviews-comments">
-          {reviews?.map((review, index) => (
+          {reviews?.slice(0, MAX_REVIEWS).map((review, index) => (
             <Review review={review} key={index} />
           ))}
+          <button>Show all reviews</button>
         </div>
       </section>
       <section className="details">

@@ -175,12 +175,9 @@ export {
    * The ActivationApi service constructor.
    * @property {module:api/ActivationApi}
    */
-  ActivationApi,  
-  
+  ActivationApi,
   AuthApi,
   ProductCategory,
-
-
 
   /**
    * The AuthorApi service constructor.

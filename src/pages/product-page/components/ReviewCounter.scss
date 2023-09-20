@@ -1,0 +1,29 @@
+@use "@/styles" as *;
+
+.rate-counter {
+  display: grid;
+  grid-template-columns: 15px 45px auto;
+  align-items: center;
+
+  .rate {
+    font-size: $text-lg;
+    font-weight: $text-medium;
+    justify-self: end;
+  }
+
+  .count {
+    font-size: $text-xs;
+    margin-left: $margin-xs;
+    margin-right: $margin-xl;
+  }
+
+  .bar {
+    height: 10px;
+    background: $text-inactive;
+    border-radius: $radius-round;
+
+    &.fill {
+      background: $accent-alt;
+    }
+  }
+}

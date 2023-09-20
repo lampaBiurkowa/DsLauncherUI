@@ -7,7 +7,7 @@ function useSingleArticle(id) {
   let [article, setArticle] = useState();
 
   useEffect(() => {
-    newsApi.newsGetIdGet(id, (error, data) => {
+    newsApi.newsIdGet(id, (error, data) => {
       if (error === null) {
         setArticle(data);
       }

@@ -18,7 +18,7 @@ function NewsEntry({ id, title, image, date, summary, target }) {
         )}
       </div>
       <h2>{title}</h2>
-      <span className="date">{new Date(date).toDateString()}</span>
+      <span className="date">{new Date(date).toLocaleDateString()}</span>
       <p>{summary}</p>
     </Link>
   );
