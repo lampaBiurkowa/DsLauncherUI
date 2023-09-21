@@ -2,6 +2,8 @@ import React from "react";
 import "./LoginPage.scss";
 import Logo from "@/components/logo/Logo";
 import Spacer from "../../components/spacer/Spacer";
+import { Link, NavLink } from "react-router-dom";
+import Separator from "../../components/separator/Separator";
 
 function LoginPage() {
   return (
@@ -28,12 +30,14 @@ function LoginPage() {
               Remember me
             </label>
             <Spacer />
-            <button className="outlined">Sign in</button>
+            <button className="outlined">Log in</button>
           </div>
         </form>
         <div className="sign-up">
-          <div className="separator">Create Dibrysoft Account</div>
-          <button className="accent outlined">Sign up</button>
+          <Separator>Create Dibrysoft Account</Separator>
+          <NavLink className="button outlined accent" to="/register">
+            Sign up
+          </NavLink>
         </div>
         <a className="password-help">Forgot password?</a>
       </div>

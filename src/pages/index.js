@@ -9,6 +9,7 @@ import MainPage from "./main-page/MainPage";
 import SettingsPage from "./settings-page/SettingsPage";
 import StorePage from "./store-page/StorePage";
 import ProductPage from "./product-page/ProductPage";
+import RegisterPage from "./register-page/RegisterPage";
 
 export {
   AppsPage,
@@ -22,6 +23,7 @@ export {
   SettingsPage,
   StorePage,
   ProductPage,
+  RegisterPage,
 };
 
 /*

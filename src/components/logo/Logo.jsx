@@ -1,11 +1,11 @@
 import React from "react";
 import "./Logo.scss";
 
-function Logo({ className }) {
+function Logo({ text, className }) {
   return (
     <div className={`${className ?? ""} logo`}>
       <img src="/img/icon.png" alt="Dibrysoft logo" />
-      <a>Dibrysoft</a>
+      <a>{text ?? "Dibrysoft"}</a>
     </div>
   );
 }

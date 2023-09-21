@@ -1,6 +1,7 @@
 @use "../variables" as *;
 
 input[type="text"],
+input[type="email"],
 input[type="search"],
 input[type="password"],
 textarea {
