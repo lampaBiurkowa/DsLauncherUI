@@ -19,6 +19,7 @@ import {
   ArticlePage,
   ProductPage,
 } from "./pages";
+import Protected from "./Protected";
 
 const router = createBrowserRouter([
   {
@@ -69,7 +70,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/library",
-        element: <LibraryPage />,
+        element: (
+          <Protected>
+            <LibraryPage />
+          </Protected>
+        ),
       },
       {
         path: "/settings",
