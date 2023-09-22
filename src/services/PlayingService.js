@@ -41,14 +41,11 @@ class PlayingService {
   async tryPingGameActivity()
   {
     let registeredGameActivity =  JSON.parse(await this.getLocallySavedGameActivity(PlayingService.currentStartDate));
-    console.log(registeredGameActivity);
     registeredGameActivity.endDate = new Date().toISOString();
-    console.log(JSON.stringify(registeredGameActivity));
     this.gameActivityApi.gameActivityPut({body: JSON.stringify(registeredGameActivity)}, async (error, data) => {
         if (error !== null)
         {
-          console.log('byl err');
-            await this.updateGameActivityLocally(registeredGameActivity);
+          await this.updateGameActivityLocally(registeredGameActivity);
         }
     })
   }
@@ -59,11 +56,10 @@ class PlayingService {
 
   async getLocallySavedGameActivitiesStarts() {
     let activities = await fs.readDir("", { dir: BaseDirectory.AppData });
-    console.log(activities);
     activities = activities.map((file) => {
       return file.name.replace('.json', '').replace(';', ':');
     });
-    console.log(activities);
+
     return activities;
   }
 
@@ -76,14 +72,6 @@ class PlayingService {
 
   async getLocallySavedGameActivity(startDate) {
     return this.readFileContent(this.getActivityFileName(startDate));
-    // console.log(`total saved ${activities.length} ${startDate}`);
-    // for (const a of activities) {
-    //   if (a.startDate === startDate)
-    //   {
-    //     return a;
-    //   }
-    // }
-    // return null;
   }
 
   async removeFromLocallySavedGameActivities(startDate) {
@@ -92,11 +80,8 @@ class PlayingService {
 
   async trySendSavedGameActivities() {
     const activities = await this.getLocallySavedGameActivitiesStarts();
-    console.log(`a ${activities.length}`);
     for (let i = 0; i < activities.length; i++) {
-      console.log("start");
       await this.trySubmitGameActivityEnded(activities[i]);
-      console.log("end");
     }
   }
 
@@ -109,11 +94,9 @@ class PlayingService {
     PlayingService.currentlyPlayedGameId = null;
     PlayingService.currentStartDate = null;
 
-    console.log(`submit ${registeredGameActivity}`);
     this.gameActivityApi.gameActivityPut({body: registeredGameActivity}, async (error, data) => {
       if (error === null) {
         await this.removeFromLocallySavedGameActivities(startDate);
-        console.log("settinh to false")
       }
       this.fileStillSaved = false;
     });
@@ -124,7 +107,7 @@ class PlayingService {
     {
       return null;
     }
-    console.log("readinh");
+
     return await fs.readTextFile(name, { dir: BaseDirectory.AppData });
   }
 
@@ -133,7 +116,7 @@ class PlayingService {
     {
       fs.createDir("", { dir: BaseDirectory.AppData });
     }
-    console.log("writinh", content);
+
     await fs.writeTextFile(name, content, { dir: BaseDirectory.AppData });
   }
 }
