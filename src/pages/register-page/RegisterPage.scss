@@ -1,0 +1,59 @@
+@use "@/styles" as *;
+
+.register-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-image: url("/img/traingles.png"),
+    linear-gradient(132deg, rgba(32, 34, 70, 1) 0%, rgba(54, 92, 111, 1) 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  .register-container {
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+    padding: $padding-xl;
+
+    background-color: $dark-1;
+    border: 1px solid $dark-3;
+    border-radius: $radius-lg;
+
+    .form {
+      display: grid;
+      grid-template-columns: repeat(2, calc(50% - ($margin-md / 2)));
+      grid-template-rows: repeat(6, auto);
+      grid-template-areas: "email email" "login login" "name surname" "password1 password1" "password2 password2" "submit submit";
+      gap: $margin-md;
+
+      margin-top: $margin-xl;
+
+      div {
+        display: grid;
+
+        input {
+          padding: $padding-sm;
+        }
+      }
+
+      .submit-area {
+        display: flex;
+        flex-direction: column;
+        gap: $margin-md;
+
+        .sign-up {
+          align-self: end;
+        }
+      }
+    }
+
+    .log-in {
+      display: flex;
+      flex-direction: column;
+      gap: $margin-md;
+      margin-top: calc(2 * $margin-xl);
+    }
+  }
+}

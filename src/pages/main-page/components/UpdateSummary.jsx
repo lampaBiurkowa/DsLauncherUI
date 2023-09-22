@@ -5,7 +5,7 @@ function UpdateSummary() {
   return (
     <button className="update-summary">
       <i className="las la-download" />
-      <a>Updating</a>
+      <span>Updating</span>
       <div className="progress-bar">
         <div className="progress" />
       </div>

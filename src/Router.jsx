@@ -18,7 +18,9 @@ import {
   AppsPage,
   ArticlePage,
   ProductPage,
+  RegisterPage,
 } from "./pages";
+import Protected from "./Protected";
 
 const router = createBrowserRouter([
   {
@@ -69,7 +71,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/library",
-        element: <LibraryPage />,
+        element: (
+          <Protected>
+            <LibraryPage />
+          </Protected>
+        ),
       },
       {
         path: "/settings",
@@ -80,6 +86,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
   },
 ]);
 

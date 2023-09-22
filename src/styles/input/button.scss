@@ -1,12 +1,21 @@
 @use "../variables" as *;
 
 //ButtonBase
+.button,
 button {
-  background-color: rgba($text, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   font-size: $text-sm;
   font-weight: $text-medium;
-  border-radius: $radius-sm;
+  color: $text;
+  text-decoration: none;
+
+  background-color: rgba($text, 0.1);
   transition: 0.1s background ease;
+
+  border-radius: $radius-sm;
   padding: 9px $padding-xl;
 
   &:hover {
@@ -20,10 +29,12 @@ button {
 }
 
 //Button themes
+.button.outlined,
 button.outlined {
   border: 1px solid rgba($text, 0.1);
 }
 
+.button.accent,
 button.accent {
   background-color: $accent;
 
@@ -37,12 +48,14 @@ button.accent {
 }
 
 //Button sizes
+.button.small,
 button.small {
   padding: $padding-sm $padding-md;
   font-size: $text-xs;
   font-weight: $text-regular;
 }
 
+.button.large,
 button.large {
   padding: $padding-lg calc(2 * $padding-xl);
   font-size: $text-base;
