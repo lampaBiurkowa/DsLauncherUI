@@ -13,18 +13,19 @@
  *
  */
 import {ApiClient} from "../ApiClient";
-import {ReviewModel} from '../model/ReviewModel';
+import {GameActivityModel} from '../model/GameActivityModel';
+import {TimeSpan} from '../model/TimeSpan';
 
 /**
-* Review service.
-* @module api/ReviewApi
+* GameActivity service.
+* @module api/GameActivityApi
 * @version 1.0
 */
-export class ReviewApi {
+export class GameActivityApi {
 
     /**
-    * Constructs a new ReviewApi. 
-    * @alias module:api/ReviewApi
+    * Constructs a new GameActivityApi. 
+    * @alias module:api/GameActivityApi
     * @class
     * @param {module:ApiClient} [apiClient] Optional API client implementation to use,
     * default to {@link module:ApiClient#instanc
@@ -35,18 +36,18 @@ export class ReviewApi {
     }
 
     /**
-     * Callback function to receive the result of the reviewGet operation.
-     * @callback moduleapi/ReviewApi~reviewGetCallback
+     * Callback function to receive the result of the gameActivityGet operation.
+     * @callback moduleapi/GameActivityApi~gameActivityGetCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<module:model/ReviewModel>{ data The data returned by the service call.
+     * @param {Array.<module:model/GameActivityModel>{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * @param {module:api/ReviewApi~reviewGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/GameActivityApi~gameActivityGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    reviewGet(callback) {
+    gameActivityGet(callback) {
       
       let postBody = null;
 
@@ -66,17 +67,17 @@ export class ReviewApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = [ReviewModel];
+      let returnType = [GameActivityModel];
 
       return this.apiClient.callApi(
-        '/Review', 'GET',
+        '/GameActivity', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
     /**
-     * Callback function to receive the result of the reviewIdDelete operation.
-     * @callback moduleapi/ReviewApi~reviewIdDeleteCallback
+     * Callback function to receive the result of the gameActivityIdDelete operation.
+     * @callback moduleapi/GameActivityApi~gameActivityIdDeleteCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -84,14 +85,14 @@ export class ReviewApi {
 
     /**
      * @param {Number} id 
-     * @param {module:api/ReviewApi~reviewIdDeleteCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/GameActivityApi~gameActivityIdDeleteCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    reviewIdDelete(id, callback) {
+    gameActivityIdDelete(id, callback) {
       
       let postBody = null;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling reviewIdDelete");
+        throw new Error("Missing the required parameter 'id' when calling gameActivityIdDelete");
       }
 
       let pathParams = {
@@ -113,30 +114,30 @@ export class ReviewApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/Review/{id}', 'DELETE',
+        '/GameActivity/{id}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
     /**
-     * Callback function to receive the result of the reviewIdGet operation.
-     * @callback moduleapi/ReviewApi~reviewIdGetCallback
+     * Callback function to receive the result of the gameActivityIdGet operation.
+     * @callback moduleapi/GameActivityApi~gameActivityIdGetCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/ReviewModel{ data The data returned by the service call.
+     * @param {module:model/GameActivityModel{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
      * @param {Number} id 
-     * @param {module:api/ReviewApi~reviewIdGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/GameActivityApi~gameActivityIdGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    reviewIdGet(id, callback) {
+    gameActivityIdGet(id, callback) {
       
       let postBody = null;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling reviewIdGet");
+        throw new Error("Missing the required parameter 'id' when calling gameActivityIdGet");
       }
 
       let pathParams = {
@@ -155,17 +156,17 @@ export class ReviewApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = ReviewModel;
+      let returnType = GameActivityModel;
 
       return this.apiClient.callApi(
-        '/Review/{id}', 'GET',
+        '/GameActivity/{id}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
     /**
-     * Callback function to receive the result of the reviewPost operation.
-     * @callback moduleapi/ReviewApi~reviewPostCallback
+     * Callback function to receive the result of the gameActivityPost operation.
+     * @callback moduleapi/GameActivityApi~gameActivityPostCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -173,10 +174,10 @@ export class ReviewApi {
 
     /**
      * @param {Object} opts Optional parameters
-     * @param {module:model/ReviewModel} opts.body 
-     * @param {module:api/ReviewApi~reviewPostCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:model/GameActivityModel} opts.body 
+     * @param {module:api/GameActivityApi~gameActivityPostCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    reviewPost(opts, callback) {
+    gameActivityPost(opts, callback) {
       opts = opts || {};
       let postBody = opts['body'];
 
@@ -199,59 +200,14 @@ export class ReviewApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/Review', 'POST',
+        '/GameActivity', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
     /**
-     * Callback function to receive the result of the reviewProductsIdGet operation.
-     * @callback moduleapi/ReviewApi~reviewProductsIdGetCallback
-     * @param {String} error Error message, if any.
-     * @param {Array.<module:model/ReviewModel>{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * @param {Number} id 
-     * @param {module:api/ReviewApi~reviewProductsIdGetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    reviewProductsIdGet(id, callback) {
-      
-      let postBody = null;
-      // verify the required parameter 'id' is set
-      if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling reviewProductsIdGet");
-      }
-
-      let pathParams = {
-        'id': id
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
-
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = [ReviewModel];
-
-      return this.apiClient.callApi(
-        '/Review/Products/{id}', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
-     * Callback function to receive the result of the reviewPut operation.
-     * @callback moduleapi/ReviewApi~reviewPutCallback
+     * Callback function to receive the result of the gameActivityPut operation.
+     * @callback moduleapi/GameActivityApi~gameActivityPutCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
@@ -259,10 +215,10 @@ export class ReviewApi {
 
     /**
      * @param {Object} opts Optional parameters
-     * @param {module:model/ReviewModel} opts.body 
-     * @param {module:api/ReviewApi~reviewPutCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:model/GameActivityModel} opts.body 
+     * @param {module:api/GameActivityApi~gameActivityPutCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    reviewPut(opts, callback) {
+    gameActivityPut(opts, callback) {
       opts = opts || {};
       let postBody = opts['body'];
 
@@ -285,7 +241,57 @@ export class ReviewApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/Review', 'PUT',
+        '/GameActivity', 'PUT',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the gameActivityTimeSpentUserIdProductIdGet operation.
+     * @callback moduleapi/GameActivityApi~gameActivityTimeSpentUserIdProductIdGetCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/TimeSpan{ data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} userId 
+     * @param {Number} productId 
+     * @param {module:api/GameActivityApi~gameActivityTimeSpentUserIdProductIdGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     */
+    gameActivityTimeSpentUserIdProductIdGet(userId, productId, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'userId' is set
+      if (userId === undefined || userId === null) {
+        throw new Error("Missing the required parameter 'userId' when calling gameActivityTimeSpentUserIdProductIdGet");
+      }
+      // verify the required parameter 'productId' is set
+      if (productId === undefined || productId === null) {
+        throw new Error("Missing the required parameter 'productId' when calling gameActivityTimeSpentUserIdProductIdGet");
+      }
+
+      let pathParams = {
+        'userId': userId,'productId': productId
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = TimeSpan;
+
+      return this.apiClient.callApi(
+        '/GameActivity/TimeSpent/{userId}/{productId}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

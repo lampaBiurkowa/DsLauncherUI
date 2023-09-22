@@ -46,6 +46,7 @@ import { ChannelMemberModel } from "../services/model/ChannelMemberModel";
 import { ChannelModel } from "../services/model/ChannelModel";
 import { FilesUploadBody } from "../services/model/FilesUploadBody";
 import { FriendshipModel } from "../services/model/FriendshipModel";
+import { GameActivityModel } from "../services/model/GameActivityModel";
 import { NewsModel } from "../services/model/NewsModel";
 import { ProductModel } from "../services/model/ProductModel";
 import { ProductCategory } from "../services/model/ProductCategory";
@@ -60,6 +61,7 @@ import { ChannelApi } from "../services/api/ChannelApi";
 import { ChannelMemberApi } from "../services/api/ChannelMemberApi";
 import { FilesApi } from "../services/api/FilesApi";
 import { FriendshipApi } from "../services/api/FriendshipApi";
+import { GameActivityApi } from "../services/api/GameActivityApi";
 import { NewsApi } from "../services/api/NewsApi";
 import { ProductApi } from "../services/api/ProductApi";
 import { PurchaseApi } from "../services/api/PurchaseApi";
@@ -133,6 +135,7 @@ export {
    * @property {module:model/FriendshipModel}
    */
   FriendshipModel,
+  GameActivityModel,
 
   /**
    * The NewsModel model constructor.
@@ -207,6 +210,7 @@ export {
    * @property {module:api/FriendshipApi}
    */
   FriendshipApi,
+  GameActivityApi,
 
   /**
    * The NewsApi service constructor.

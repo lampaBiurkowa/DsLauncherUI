@@ -2,15 +2,16 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import useProduct from "./hooks/useProduct";
 import AspectRatio from "../../components/aspect-ratio/AspectRatio";
-
 import "./ProductPage.scss";
 import Shelf from "../../components/shelf/Shelf";
 import useReviews from "./hooks/useReviews";
 import Review from "./components/Review";
 import useSummary from "./hooks/useSummary";
 import ReviewCounter from "./components/ReviewCounter";
+import PlayingService from "../../services/PlayingService";
 
 const MAX_REVIEWS = 3;
+const playingService = new PlayingService();
 
 function ProductPage() {
   const { id: productId } = useParams();

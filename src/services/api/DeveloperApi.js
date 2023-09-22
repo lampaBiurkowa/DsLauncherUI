@@ -35,50 +35,6 @@ export class DeveloperApi {
     }
 
     /**
-     * Callback function to receive the result of the developerAddDataPost operation.
-     * @callback moduleapi/DeveloperApi~developerAddDataPostCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * @param {String} data 
-     * @param {module:api/DeveloperApi~developerAddDataPostCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    developerAddDataPost(data, callback) {
-      
-      let postBody = null;
-      // verify the required parameter 'data' is set
-      if (data === undefined || data === null) {
-        throw new Error("Missing the required parameter 'data' when calling developerAddDataPost");
-      }
-
-      let pathParams = {
-        'data': data
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
-
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = [];
-      let returnType = null;
-
-      return this.apiClient.callApi(
-        '/Developer/Add/{data}', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
      * Callback function to receive the result of the developerGet operation.
      * @callback moduleapi/DeveloperApi~developerGetCallback
      * @param {String} error Error message, if any.
@@ -164,6 +120,50 @@ export class DeveloperApi {
       );
     }
     /**
+     * Callback function to receive the result of the developerIdDelete operation.
+     * @callback moduleapi/DeveloperApi~developerIdDeleteCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} id 
+     * @param {module:api/DeveloperApi~developerIdDeleteCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    developerIdDelete(id, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling developerIdDelete");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/Developer/{id}', 'DELETE',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
      * Callback function to receive the result of the developerIdGet operation.
      * @callback moduleapi/DeveloperApi~developerIdGetCallback
      * @param {String} error Error message, if any.
@@ -204,6 +204,88 @@ export class DeveloperApi {
 
       return this.apiClient.callApi(
         '/Developer/{id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the developerPost operation.
+     * @callback moduleapi/DeveloperApi~developerPostCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {module:model/DeveloperModel} opts.body 
+     * @param {module:api/DeveloperApi~developerPostCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    developerPost(opts, callback) {
+      opts = opts || {};
+      let postBody = opts['body'];
+
+      let pathParams = {
+        
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = ['application/json', 'text/json', 'application/_*+json'];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/Developer', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the developerPut operation.
+     * @callback moduleapi/DeveloperApi~developerPutCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {module:model/DeveloperModel} opts.body 
+     * @param {module:api/DeveloperApi~developerPutCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    developerPut(opts, callback) {
+      opts = opts || {};
+      let postBody = opts['body'];
+
+      let pathParams = {
+        
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = ['application/json', 'text/json', 'application/_*+json'];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/Developer', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

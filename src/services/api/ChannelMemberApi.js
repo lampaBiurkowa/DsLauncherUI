@@ -35,50 +35,6 @@ export class ChannelMemberApi {
     }
 
     /**
-     * Callback function to receive the result of the channelMemberAddDataPost operation.
-     * @callback moduleapi/ChannelMemberApi~channelMemberAddDataPostCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * @param {String} data 
-     * @param {module:api/ChannelMemberApi~channelMemberAddDataPostCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    channelMemberAddDataPost(data, callback) {
-      
-      let postBody = null;
-      // verify the required parameter 'data' is set
-      if (data === undefined || data === null) {
-        throw new Error("Missing the required parameter 'data' when calling channelMemberAddDataPost");
-      }
-
-      let pathParams = {
-        'data': data
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
-
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = [];
-      let returnType = null;
-
-      return this.apiClient.callApi(
-        '/ChannelMember/Add/{data}', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
      * Callback function to receive the result of the channelMemberGet operation.
      * @callback moduleapi/ChannelMemberApi~channelMemberGetCallback
      * @param {String} error Error message, if any.
@@ -114,6 +70,50 @@ export class ChannelMemberApi {
 
       return this.apiClient.callApi(
         '/ChannelMember', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the channelMemberIdDelete operation.
+     * @callback moduleapi/ChannelMemberApi~channelMemberIdDeleteCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} id 
+     * @param {module:api/ChannelMemberApi~channelMemberIdDeleteCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    channelMemberIdDelete(id, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling channelMemberIdDelete");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/ChannelMember/{id}', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -159,6 +159,88 @@ export class ChannelMemberApi {
 
       return this.apiClient.callApi(
         '/ChannelMember/{id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the channelMemberPost operation.
+     * @callback moduleapi/ChannelMemberApi~channelMemberPostCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {module:model/ChannelMemberModel} opts.body 
+     * @param {module:api/ChannelMemberApi~channelMemberPostCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    channelMemberPost(opts, callback) {
+      opts = opts || {};
+      let postBody = opts['body'];
+
+      let pathParams = {
+        
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = ['application/json', 'text/json', 'application/_*+json'];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/ChannelMember', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the channelMemberPut operation.
+     * @callback moduleapi/ChannelMemberApi~channelMemberPutCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {module:model/ChannelMemberModel} opts.body 
+     * @param {module:api/ChannelMemberApi~channelMemberPutCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    channelMemberPut(opts, callback) {
+      opts = opts || {};
+      let postBody = opts['body'];
+
+      let pathParams = {
+        
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = ['application/json', 'text/json', 'application/_*+json'];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/ChannelMember', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

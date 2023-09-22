@@ -49,6 +49,8 @@ export class UserModel {
         obj.isLoggedIn = ApiClient.convertToType(data['isLoggedIn'], 'Boolean');
       if (data.hasOwnProperty('lastLoginDate'))
         obj.lastLoginDate = ApiClient.convertToType(data['lastLoginDate'], 'Date');
+      if (data.hasOwnProperty('lastOnlineDate'))
+        obj.lastOnlineDate = ApiClient.convertToType(data['lastOnlineDate'], 'Date');
       if (data.hasOwnProperty('login'))
         obj.login = ApiClient.convertToType(data['login'], 'String');
       if (data.hasOwnProperty('name'))
@@ -90,6 +92,11 @@ UserModel.prototype.isLoggedIn = undefined;
  * @member {Date} lastLoginDate
  */
 UserModel.prototype.lastLoginDate = undefined;
+
+/**
+ * @member {Date} lastOnlineDate
+ */
+UserModel.prototype.lastOnlineDate = undefined;
 
 /**
  * @member {String} login
