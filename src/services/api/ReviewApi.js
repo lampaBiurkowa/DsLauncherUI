@@ -35,50 +35,6 @@ export class ReviewApi {
     }
 
     /**
-     * Callback function to receive the result of the reviewDataPost operation.
-     * @callback moduleapi/ReviewApi~reviewDataPostCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * @param {String} data 
-     * @param {module:api/ReviewApi~reviewDataPostCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    reviewDataPost(data, callback) {
-      
-      let postBody = null;
-      // verify the required parameter 'data' is set
-      if (data === undefined || data === null) {
-        throw new Error("Missing the required parameter 'data' when calling reviewDataPost");
-      }
-
-      let pathParams = {
-        'data': data
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
-
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = [];
-      let returnType = null;
-
-      return this.apiClient.callApi(
-        '/Review/{data}', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
      * Callback function to receive the result of the reviewGet operation.
      * @callback moduleapi/ReviewApi~reviewGetCallback
      * @param {String} error Error message, if any.
@@ -208,6 +164,47 @@ export class ReviewApi {
       );
     }
     /**
+     * Callback function to receive the result of the reviewPost operation.
+     * @callback moduleapi/ReviewApi~reviewPostCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {module:model/ReviewModel} opts.body 
+     * @param {module:api/ReviewApi~reviewPostCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    reviewPost(opts, callback) {
+      opts = opts || {};
+      let postBody = opts['body'];
+
+      let pathParams = {
+        
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = ['application/json', 'text/json', 'application/_*+json'];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/Review', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
      * Callback function to receive the result of the reviewProductsIdGet operation.
      * @callback moduleapi/ReviewApi~reviewProductsIdGetCallback
      * @param {String} error Error message, if any.
@@ -248,6 +245,47 @@ export class ReviewApi {
 
       return this.apiClient.callApi(
         '/Review/Products/{id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the reviewPut operation.
+     * @callback moduleapi/ReviewApi~reviewPutCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {module:model/ReviewModel} opts.body 
+     * @param {module:api/ReviewApi~reviewPutCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    reviewPut(opts, callback) {
+      opts = opts || {};
+      let postBody = opts['body'];
+
+      let pathParams = {
+        
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = ['application/json', 'text/json', 'application/_*+json'];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/Review', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

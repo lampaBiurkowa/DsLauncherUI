@@ -50,8 +50,6 @@ export class GameActivityModel {
         obj.product = ProductModel.constructFromObject(data['product']);
       if (data.hasOwnProperty('user'))
         obj.user = UserModel.constructFromObject(data['user']);
-      if (data.hasOwnProperty('currentlyPlaying'))
-        obj.currentlyPlaying = ApiClient.convertToType(data['currentlyPlaying'], 'Boolean');
     }
     return obj;
   }
@@ -81,9 +79,4 @@ GameActivityModel.prototype.product = undefined;
  * @member {module:model/UserModel} user
  */
 GameActivityModel.prototype.user = undefined;
-
-/**
- * @member {Boolean} currentlyPlaying
- */
-GameActivityModel.prototype.currentlyPlaying = undefined;
 

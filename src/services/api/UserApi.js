@@ -37,50 +37,6 @@ export class UserApi {
     }
 
     /**
-     * Callback function to receive the result of the userDataPost operation.
-     * @callback moduleapi/UserApi~userDataPostCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * @param {String} data 
-     * @param {module:api/UserApi~userDataPostCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    userDataPost(data, callback) {
-      
-      let postBody = null;
-      // verify the required parameter 'data' is set
-      if (data === undefined || data === null) {
-        throw new Error("Missing the required parameter 'data' when calling userDataPost");
-      }
-
-      let pathParams = {
-        'data': data
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
-
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = [];
-      let returnType = null;
-
-      return this.apiClient.callApi(
-        '/User/{data}', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-    /**
      * Callback function to receive the result of the userGet operation.
      * @callback moduleapi/UserApi~userGetCallback
      * @param {String} error Error message, if any.
@@ -430,6 +386,222 @@ export class UserApi {
 
       return this.apiClient.callApi(
         '/User/{id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the userIsOnlineLoginGet operation.
+     * @callback moduleapi/UserApi~userIsOnlineLoginGetCallback
+     * @param {String} error Error message, if any.
+     * @param {'Boolean'{ data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {String} login 
+     * @param {module:api/UserApi~userIsOnlineLoginGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     */
+    userIsOnlineLoginGet(login, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'login' is set
+      if (login === undefined || login === null) {
+        throw new Error("Missing the required parameter 'login' when calling userIsOnlineLoginGet");
+      }
+
+      let pathParams = {
+        'login': login
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = 'Boolean';
+
+      return this.apiClient.callApi(
+        '/User/IsOnline/{login}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the userIsPlayingUserIdGet operation.
+     * @callback moduleapi/UserApi~userIsPlayingUserIdGetCallback
+     * @param {String} error Error message, if any.
+     * @param {'String'{ data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Number} userId 
+     * @param {module:api/UserApi~userIsPlayingUserIdGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     */
+    userIsPlayingUserIdGet(userId, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'userId' is set
+      if (userId === undefined || userId === null) {
+        throw new Error("Missing the required parameter 'userId' when calling userIsPlayingUserIdGet");
+      }
+
+      let pathParams = {
+        'userId': userId
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = 'String';
+
+      return this.apiClient.callApi(
+        '/User/IsPlaying/{userId}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the userPost operation.
+     * @callback moduleapi/UserApi~userPostCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {module:model/UserModel} opts.body 
+     * @param {module:api/UserApi~userPostCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    userPost(opts, callback) {
+      opts = opts || {};
+      let postBody = opts['body'];
+
+      let pathParams = {
+        
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = ['application/json', 'text/json', 'application/_*+json'];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/User', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the userPut operation.
+     * @callback moduleapi/UserApi~userPutCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {module:model/UserModel} opts.body 
+     * @param {module:api/UserApi~userPutCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    userPut(opts, callback) {
+      opts = opts || {};
+      let postBody = opts['body'];
+
+      let pathParams = {
+        
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = ['application/json', 'text/json', 'application/_*+json'];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/User', 'PUT',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the userReportOnlineLoginGet operation.
+     * @callback moduleapi/UserApi~userReportOnlineLoginGetCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {String} login 
+     * @param {module:api/UserApi~userReportOnlineLoginGetCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    userReportOnlineLoginGet(login, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'login' is set
+      if (login === undefined || login === null) {
+        throw new Error("Missing the required parameter 'login' when calling userReportOnlineLoginGet");
+      }
+
+      let pathParams = {
+        'login': login
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/User/ReportOnline/{login}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
