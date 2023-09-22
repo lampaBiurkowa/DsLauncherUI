@@ -15,7 +15,7 @@ class PlayingService {
     this.productApi = new ProductApi();
   }
 
-  async tryRegisterGameActivity(gameId) {
+  async tryRegisterGameActivity(gameId, userId) {
     PlayingService.currentlyPlayedGameId = gameId;
     PlayingService.currentStartDate = new Date().toISOString();
     
@@ -23,7 +23,7 @@ class PlayingService {
     gameActivity.endDate = null;
     gameActivity.startDate = PlayingService.currentStartDate;
     var user = new UserModel();
-    user.id = 11;
+    user.id = userId;
     gameActivity.user = user;
     var product = new ProductModel();
     product.id = gameId;
