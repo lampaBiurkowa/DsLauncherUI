@@ -23,10 +23,16 @@ function Shelf({ title, scrollAmount = 300, className, children }) {
       <div className="shelf-head">
         <h2>{title}</h2>
         <div className="shelf-controls">
-          <button onClick={() => scrollLeft()}>
+          <button
+            className="outlined small capsule"
+            onClick={() => scrollLeft()}
+          >
             <i className="las la-angle-left"></i>
           </button>
-          <button onClick={() => scrollRight()}>
+          <button
+            className="outlined small capsule"
+            onClick={() => scrollRight()}
+          >
             <i className="las la-angle-right"></i>
           </button>
         </div>

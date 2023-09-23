@@ -60,3 +60,9 @@ button.large {
   padding: $padding-lg calc(2 * $padding-xl);
   font-size: $text-base;
 }
+
+//Button shapes
+.button.capsule,
+button.capsule {
+  border-radius: $radius-round;
+}
