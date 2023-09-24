@@ -31,6 +31,7 @@ export class AuthApi {
     */
     constructor(apiClient) {
         this.apiClient = apiClient || ApiClient.instance;
+        this.apiClient.basePath = "http://127.0.0.1:6542";
     }
 
     /**
@@ -129,28 +130,33 @@ export class AuthApi {
       );
     }
     /**
-     * Callback function to receive the result of the authIsTokenValidTokenGet operation.
-     * @callback moduleapi/AuthApi~authIsTokenValidTokenGetCallback
+     * Callback function to receive the result of the authIsLoggedInLoginTokenGet operation.
+     * @callback moduleapi/AuthApi~authIsLoggedInLoginTokenGetCallback
      * @param {String} error Error message, if any.
      * @param {'Boolean'{ data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
+     * @param {String} login 
      * @param {String} token 
-     * @param {module:api/AuthApi~authIsTokenValidTokenGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/AuthApi~authIsLoggedInLoginTokenGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    authIsTokenValidTokenGet(token, callback) {
+    authIsLoggedInLoginTokenGet(login, token, callback) {
       
       let postBody = null;
+      // verify the required parameter 'login' is set
+      if (login === undefined || login === null) {
+        throw new Error("Missing the required parameter 'login' when calling authIsLoggedInLoginTokenGet");
+      }
       // verify the required parameter 'token' is set
       if (token === undefined || token === null) {
-        throw new Error("Missing the required parameter 'token' when calling authIsTokenValidTokenGet");
+        throw new Error("Missing the required parameter 'token' when calling authIsLoggedInLoginTokenGet");
       }
 
       let pathParams = {
-        'token': token
+        'login': login,'token': token
       };
       let queryParams = {
         
@@ -168,7 +174,7 @@ export class AuthApi {
       let returnType = 'Boolean';
 
       return this.apiClient.callApi(
-        '/Auth/IsTokenValid/{token}', 'GET',
+        '/Auth/IsLoggedIn/{login}/{token}', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

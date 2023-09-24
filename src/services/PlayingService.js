@@ -55,6 +55,7 @@ class PlayingService {
   }
 
   async getLocallySavedGameActivitiesStarts() {
+    await this.createAppDataDirIfDoesntExist();
     let activities = await fs.readDir("", { dir: BaseDirectory.AppData });
     activities = activities.map((file) => {
       return file.name.replace('.json', '').replace(';', ':');
@@ -75,6 +76,7 @@ class PlayingService {
   }
 
   async removeFromLocallySavedGameActivities(startDate) {
+    await this.createAppDataDirIfDoesntExist();
     await fs.removeFile(this.getActivityFileName(startDate), { dir: BaseDirectory.AppData });
   }
 
@@ -112,12 +114,17 @@ class PlayingService {
   }
 
   async writeFileContent(name, content) {
+    await this.createAppDataDirIfDoesntExist();
+
+    await fs.writeTextFile(name, content, { dir: BaseDirectory.AppData });
+  }
+
+  async createAppDataDirIfDoesntExist()
+  {
     if (!await fs.exists("", { dir: BaseDirectory.AppData }))
     {
       fs.createDir("", { dir: BaseDirectory.AppData });
     }
-
-    await fs.writeTextFile(name, content, { dir: BaseDirectory.AppData });
   }
 }
 

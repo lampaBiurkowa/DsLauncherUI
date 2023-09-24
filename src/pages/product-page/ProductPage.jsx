@@ -9,6 +9,11 @@ import Review from "./components/Review";
 import useSummary from "./hooks/useSummary";
 import ReviewCounter from "./components/ReviewCounter";
 import PlayingService from "../../services/PlayingService";
+import { ReviewApi } from "../../services/api/ReviewApi";
+import { ReviewModel } from "../../services/model/ReviewModel";
+import { ProductModel } from "../../services/model/ProductModel";
+import { UserModel } from "../../services/model/UserModel";
+
 
 const MAX_REVIEWS = 3;
 const playingService = new PlayingService();
