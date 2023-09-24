@@ -4,6 +4,10 @@ import Logo from "@/components/logo/Logo";
 import Spacer from "../../components/spacer/Spacer";
 import { Link, NavLink } from "react-router-dom";
 import Separator from "../../components/separator/Separator";
+import { AuthApi } from "../../services/api/AuthApi";
+import { ApiClient } from "../../services/ApiClient";
+
+const authApi = new AuthApi(new ApiClient());
 
 function LoginPage() {
   return (
@@ -30,7 +34,15 @@ function LoginPage() {
               Remember me
             </label>
             <Spacer />
-            <button className="outlined">Log in</button>
+            <button type="button" className="outlined" onClick={ () =>
+            {
+              const loginInput = document.querySelector('input[name="login"]');
+              const passwordInput = document.querySelector('input[name="password"]');
+              ApiClient.authentications.password = crypto.randomUUID();
+              authApi.authLoginLoginPasswordIdGet(loginInput.value, passwordInput.value, ApiClient.authentications.password, async (error, data) => {
+                console.log(`lohhed in with token ${ApiClient.authentications.password}`);
+              });
+            }}>Log in</button>
           </div>
         </form>
         <div className="sign-up">

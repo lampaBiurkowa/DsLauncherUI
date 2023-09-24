@@ -14,6 +14,7 @@
  */
 import superagent from "superagent";
 import querystring from "querystring";
+import { Buffer } from "buffer";
 
 /**
  * @module ApiClient
@@ -28,6 +29,12 @@ import querystring from "querystring";
  * @class
  */
 export class ApiClient {
+  static authentications = {
+      type: "basic",
+      username: "d",
+      password: "token"
+  };
+
   constructor() {
     /**
      * The base URL against which to resolve every API call's (relative) path.
@@ -36,12 +43,11 @@ export class ApiClient {
      */
     this.basePath = "http://127.0.0.1:6544";
 
+    
     /**
      * The authentication methods to be included for all API calls.
      * @type {Array.<String>}
      */
-    this.authentications = {};
-
     /**
      * The default HTTP headers to be included for all API calls.
      * @type {Array.<String>}
@@ -296,42 +302,9 @@ export class ApiClient {
    * @param {Array.<String>} authNames An array of authentication method names.
    */
   applyAuthToRequest(request, authNames) {
-    authNames.forEach((authName) => {
-      var auth = this.authentications[authName];
-      switch (auth.type) {
-        case "basic":
-          if (auth.username || auth.password) {
-            request.auth(auth.username || "", auth.password || "");
-          }
-
-          break;
-        case "apiKey":
-          if (auth.apiKey) {
-            var data = {};
-            if (auth.apiKeyPrefix) {
-              data[auth.name] = auth.apiKeyPrefix + " " + auth.apiKey;
-            } else {
-              data[auth.name] = auth.apiKey;
-            }
-
-            if (auth["in"] === "header") {
-              request.set(data);
-            } else {
-              request.query(data);
-            }
-          }
-
-          break;
-        case "oauth2":
-          if (auth.accessToken) {
-            request.set({ Authorization: "Bearer " + auth.accessToken });
-          }
-
-          break;
-        default:
-          throw new Error("Unknown authentication type: " + auth.type);
-      }
-    });
+    var b = Buffer.from(`${ApiClient.authentications.username}:${ApiClient.authentications.password}`);
+    var s = b.toString('base64');
+    request.set('Authorization', "Basic " + s);
   }
 
   /**
