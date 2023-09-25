@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
 import useArticles from "./hooks/useArticles";
+import useRecentProducts from "../product-page/hooks/useRecentProducts";
 import NewsEntry from "./components/NewsEntry";
 import RecentApp from "./components/RecentApp";
 import "./HomePage.scss";
 
-import { recentApps } from "../../assets/data.js";
 
 function HomePage() {
   let articles = useArticles();
+  let recentProducts = useRecentProducts();
 
   return (
     <div className="home-page">
-      {recentApps.length > 0 && (
+      {recentProducts?.length > 0 && (
         <section className="recent-section">
           <h1>Recently played</h1>
           <div className="recent-apps">
-            {recentApps.map((app, key) => {
+            {recentProducts.map((app, key) => {
               return (
-                <RecentApp key={key} coverUrl={app.coverUrl}>
+                <RecentApp key={key} coverUrl={app.description}>
                   {app.name}
                 </RecentApp>
               );
