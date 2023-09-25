@@ -66,7 +66,7 @@ export class FilesApi {
         
       };
 
-      let authNames = [];
+      let authNames = ['basic'];
       let contentTypes = [];
       let accepts = [];
       let returnType = null;
@@ -115,7 +115,7 @@ export class FilesApi {
         
       };
 
-      let authNames = [];
+      let authNames = ['basic'];
       let contentTypes = [];
       let accepts = [];
       let returnType = null;
@@ -169,7 +169,7 @@ export class FilesApi {
         
       };
 
-      let authNames = [];
+      let authNames = ['basic'];
       let contentTypes = [];
       let accepts = [];
       let returnType = null;
@@ -218,7 +218,7 @@ export class FilesApi {
         
       };
 
-      let authNames = [];
+      let authNames = ['basic'];
       let contentTypes = [];
       let accepts = [];
       let returnType = null;
@@ -259,7 +259,7 @@ export class FilesApi {
         'files': this.apiClient.buildCollectionParam(opts['files'], 'multi')
       };
 
-      let authNames = [];
+      let authNames = ['basic'];
       let contentTypes = ['multipart/form-data'];
       let accepts = [];
       let returnType = null;

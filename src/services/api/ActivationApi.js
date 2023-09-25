@@ -71,7 +71,7 @@ export class ActivationApi {
         
       };
 
-      let authNames = [];
+      let authNames = ['basic'];
       let contentTypes = [];
       let accepts = [];
       let returnType = null;

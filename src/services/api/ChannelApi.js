@@ -63,7 +63,7 @@ export class ChannelApi {
         
       };
 
-      let authNames = [];
+      let authNames = ['basic'];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
       let returnType = [ChannelModel];
@@ -107,7 +107,7 @@ export class ChannelApi {
         
       };
 
-      let authNames = [];
+      let authNames = ['basic'];
       let contentTypes = [];
       let accepts = [];
       let returnType = null;
@@ -152,7 +152,7 @@ export class ChannelApi {
         
       };
 
-      let authNames = [];
+      let authNames = ['basic'];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
       let returnType = ChannelModel;
@@ -193,7 +193,7 @@ export class ChannelApi {
         
       };
 
-      let authNames = [];
+      let authNames = ['basic'];
       let contentTypes = ['application/json', 'text/json', 'application/_*+json'];
       let accepts = [];
       let returnType = null;
@@ -234,7 +234,7 @@ export class ChannelApi {
         
       };
 
-      let authNames = [];
+      let authNames = ['basic'];
       let contentTypes = ['application/json', 'text/json', 'application/_*+json'];
       let accepts = [];
       let returnType = null;
