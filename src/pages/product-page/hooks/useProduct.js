@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ProductApi } from "@/services/api/ProductApi";
+import getFilesData from "../../../services/getFilesData";
 
 const productApi = new ProductApi();
 
@@ -7,9 +8,10 @@ function useProduct(id) {
   let [product, setProduct] = useState();
 
   useEffect(() => {
-    productApi.productIdGet(id, (error, data) => {
+    productApi.productIdGet(id, async (error, data) => {
       if (error === null) {
-        setProduct(data);
+        let imagesData = await getFilesData(data.name);
+        setProduct({product: data, images: imagesData});
       }
     });
   }, []);

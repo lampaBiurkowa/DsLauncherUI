@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ProductApi } from "@/services/api/ProductApi";
+import getFilesData from "../../../services/getFilesData";
 
 const productApi = new ProductApi();
 
@@ -19,12 +20,20 @@ function useStaticProducts(staticResourceName) {
       var appIds = data;
       productApi.productGetSubsetGet({ids: appIds}, (error, data) => {
         if (error === null) {
-          productApi.productRatesSubsetGet({ids: appIds}, (error2, data2) => {
+          productApi.productRatesSubsetGet({ids: appIds}, async (error2, data2) => {
             if (error2 === null) {
               let result = [];
               for (let i = 0; i < appIds.length; i++)
-                result.push({product: data[i], summary: data2[i]});
-              console.log (result);
+              {
+                let icon = null;
+                try
+                {
+                  icon = (await getFilesData(data[i].name)).Icon;
+                }
+                catch {}
+                result.push({product: data[i], summary: data2[i], icon: icon});
+              }
+
               setProducts(result);
             }
           });

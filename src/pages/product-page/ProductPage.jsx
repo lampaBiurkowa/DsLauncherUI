@@ -9,11 +9,6 @@ import Review from "./components/Review";
 import useSummary from "./hooks/useSummary";
 import ReviewCounter from "./components/ReviewCounter";
 import PlayingService from "../../services/PlayingService";
-import { ReviewApi } from "../../services/api/ReviewApi";
-import { ReviewModel } from "../../services/model/ReviewModel";
-import { ProductModel } from "../../services/model/ProductModel";
-import { UserModel } from "../../services/model/UserModel";
-
 
 const MAX_REVIEWS = 3;
 const playingService = new PlayingService();
@@ -27,26 +22,32 @@ function ProductPage() {
   return (
     <article>
       <AspectRatio aspectRatio={12 / 5}>
-        <div className="product-hero">
+        <div className="product-hero"
+          style={{ background: `linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 0) 100%
+          ),
+          url("${product?.images?.Background}")` }}>
           <div className="product-header">
-            <h1 className="title">{product?.name}</h1>
-            <span className="developer">{product?.developer.name}</span>
+            <h1 className="title">{product?.product.name}</h1>
+            <span className="developer">{product?.product.developer.name}</span>
             <button className="buy-button accent large">Buy</button>
-            <span className="price">{product?.price}₽</span>
+            <span className="price">{product?.product.price}₽</span>
           </div>
         </div>
       </AspectRatio>
       <section className="description">
-        <img src="/test/product_icon.png" alt="Application Icon" />
+        <img src={product?.images?.Icon} alt="Application Icon" />
         <h2>About</h2>
-        <span>{product?.description}</span>
+        <span>{product?.product.description}</span>
       </section>
       <section>
         <Shelf className="screenshots" title="Screenshots">
-          {Array.from({ length: 10 }).map((item, index) => {
+          {product?.images?.Images.map((child, index) => {
             return (
               <img
-                src="/test/product_cover.png"
+                src={child}
                 alt="Screenshot"
                 className="screenshot"
                 key={index}
