@@ -1,5 +1,5 @@
 import { fs } from '@tauri-apps/api';
-import {  BaseDirectory } from '@tauri-apps/api/fs';
+import { BaseDirectory } from '@tauri-apps/api/fs';
 import { GameActivityApi } from "@/services/api/GameActivityApi";
 import { GameActivityModel } from "@/services/model/GameActivityModel";
 import { ProductApi } from "@/services/api/ProductApi";
@@ -13,6 +13,8 @@ class PlayingService {
   constructor() {
     this.gameActivityApi = new GameActivityApi();
     this.productApi = new ProductApi();
+    this.fileName = 'recent.json';
+    this.maxRecentAppsCount = 5;
   }
 
   async tryRegisterGameActivity(gameId, userId) {
@@ -36,6 +38,10 @@ class PlayingService {
 
   async registerGameActivityLocally(gameActivity) {
     await this.writeFileContent(this.getActivityFileName(PlayingService.currentStartDate), gameActivity);
+    var recentAppIds = JSON.parse(await readFileContent(this.fileName));
+    recentAppIds = recentAppIds.filter(item => item !== gameActivity.product.id);
+    recentAppIds.unshift(gameActivity.product.id);
+    recentAppIds.slice(0, this.maxRecentAppsCount);
   }
 
   async tryPingGameActivity()

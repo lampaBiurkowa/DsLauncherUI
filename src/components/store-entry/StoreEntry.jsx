@@ -15,7 +15,7 @@ function StoreEntry({ id, name, icon, rating, platform }) {
       <div className="app-info">
         <span className="app-name">{name}</span>
         <div className="app-rating">
-          {rating.toPrecision(2)}
+          {rating}
           <i className="las la-star"></i>
         </div>
         <div className="platforms">

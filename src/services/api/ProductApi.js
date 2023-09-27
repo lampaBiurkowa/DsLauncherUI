@@ -424,6 +424,48 @@ export class ProductApi {
       );
     }
     /**
+     * Callback function to receive the result of the productRatesSubsetGet operation.
+     * @callback moduleapi/ProductApi~productRatesSubsetGetCallback
+     * @param {String} error Error message, if any.
+     * @param {Array.<module:model/RatesData>{ data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {Object} opts Optional parameters
+     * @param {Array.<Number>} opts.ids 
+     * @param {module:api/ProductApi~productRatesSubsetGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     */
+    productRatesSubsetGet(opts, callback) {
+      opts = opts || {};
+      let postBody = null;
+
+      let pathParams = {
+        
+      };
+      let queryParams = {
+        'ids': this.apiClient.buildCollectionParam(opts['ids'], 'multi')
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = ['basic'];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = [RatesData];
+
+      return this.apiClient.callApi(
+        '/Product/Rates/Subset', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
      * Callback function to receive the result of the productTagTagGet operation.
      * @callback moduleapi/ProductApi~productTagTagGetCallback
      * @param {String} error Error message, if any.
