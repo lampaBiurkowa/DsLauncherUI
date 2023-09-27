@@ -9,15 +9,18 @@ import Review from "./components/Review";
 import useSummary from "./hooks/useSummary";
 import ReviewCounter from "./components/ReviewCounter";
 import PlayingService from "../../services/PlayingService";
+import usePlayerBought from "./hooks/usePlayerBought";
 
 const MAX_REVIEWS = 3;
 const playingService = new PlayingService();
 
 function ProductPage() {
   const { id: productId } = useParams();
+
   let product = useProduct(productId);
   let reviews = useReviews(productId);
   let summary = useSummary(productId);
+  let userBought = usePlayerBought('d', productId);
 
   return (
     <article>
@@ -32,7 +35,7 @@ function ProductPage() {
           <div className="product-header">
             <h1 className="title">{product?.product.name}</h1>
             <span className="developer">{product?.product.developer.name}</span>
-            <button className="buy-button accent large">Buy</button>
+            <button className="buy-button accent large">{userBought ? "Install" : "Buy"}</button>
             <span className="price">{product?.product.price}₽</span>
           </div>
         </div>

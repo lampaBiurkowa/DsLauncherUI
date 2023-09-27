@@ -33,7 +33,6 @@ function DiscoverPage() {
       </AspectRatio>
       <Shelf title="New & updated">
         {topFree?.map((child, index) => {
-          console.log(child?.icon);
           return (
             <StoreEntry
               key={index}
@@ -52,7 +51,7 @@ function DiscoverPage() {
               key={index}
               id={child.product.id}
               name={child.product.name}
-              icon={child.product.name}
+              icon={child.icon}
               rating={child.summary.avg}
             ></StoreEntry>
           );
