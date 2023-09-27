@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useArticles from "./hooks/useArticles";
 import useRecentProducts from "../product-page/hooks/useRecentProducts";
 import NewsEntry from "./components/NewsEntry";
