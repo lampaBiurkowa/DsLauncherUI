@@ -6,11 +6,12 @@ import StoreEntry from "@/components/store-entry/StoreEntry";
 import DiscoverSliderContent from "./components/DiscoverCarouselContent";
 import Shelf from "@/components/shelf/Shelf";
 import useStaticProducts from "../product-page/hooks/useStaticProducts";
+import usePromoted from "../product-page/hooks/usePromoted";
 
 import "./DiscoverPage.scss";
 
 function DiscoverPage() {
-  let promoted = useStaticProducts('promoted');
+  let promoted = usePromoted();
   let topFree = useStaticProducts('topFree');
 
   return (
@@ -21,10 +22,10 @@ function DiscoverPage() {
             return (
               <DiscoverSliderContent
                 key={index}
-                name={child.product.name}
-                desc={child.product.description}
-                link={child.product.name}
-                background={child.product.name}
+                name={child.name}
+                desc={child.desc}
+                link={child.link}
+                background={child.background}
               />
             );
           })}
@@ -32,8 +33,6 @@ function DiscoverPage() {
       </AspectRatio>
       <Shelf title="New & updated">
         {topFree?.map((child, index) => {
-            console.log(child);
-            console.log(child.product.name);
           return (
             <StoreEntry
               key={index}
