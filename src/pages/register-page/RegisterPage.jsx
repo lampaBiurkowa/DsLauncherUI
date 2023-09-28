@@ -9,7 +9,7 @@ import { UserContext } from "../../contexts/UserContextProvider";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-const authApi = new AuthApi();
+const authApi = new AuthApi(new ApiClient());
 
 function RegisterPage() {
   let { currentUser } = useContext(UserContext);
