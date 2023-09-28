@@ -39,7 +39,6 @@ function LoginPage() {
               const loginInput = document.querySelector('input[name="login"]');
               const passwordInput = document.querySelector('input[name="password"]');
               ApiClient.authentications.password = crypto.randomUUID();
-              console.log(`a ${ApiClient.authentications.password}`);
               authApi.authLoginLoginPasswordIdGet(loginInput.value, passwordInput.value, ApiClient.authentications.password, async (error, data) => {
                 console.log(`lohhed in with token ${ApiClient.authentications.password}`);
               });

@@ -12,7 +12,7 @@ import "./DiscoverPage.scss";
 
 function DiscoverPage() {
   let promoted = usePromoted();
-  let topFree = useStaticProducts('topFree');
+  let sections = useStaticProducts();
 
   return (
     <div className="discover-container">
@@ -31,32 +31,23 @@ function DiscoverPage() {
           })}
         </Carousel>
       </AspectRatio>
-      <Shelf title="New & updated">
-        {topFree?.map((child, index) => {
-          return (
-            <StoreEntry
-              key={index}
-              id={child.product.id}
-              name={child.product.name}
-              icon={child.icon}
-              rating={child.summary.avg}
-            ></StoreEntry>
-          );
-        })}
-      </Shelf>
-      <Shelf title="MOCNE">
-        {topFree?.map((child, index) => {
-          return (
-            <StoreEntry
-              key={index}
-              id={child.product.id}
-              name={child.product.name}
-              icon={child.icon}
-              rating={child.summary.avg}
-            ></StoreEntry>
-          );
-        })}
-      </Shelf>
+      {sections?.map((section, sectionIndex) => {
+        return (
+          <Shelf title={section.name} key={sectionIndex}>
+            {section.items?.map((child, index) => {
+              return (
+                <StoreEntry
+                  key={index}
+                  id={child.product.id}
+                  name={child.product.name}
+                  icon={child.icon}
+                  rating={child.summary.avg}
+                ></StoreEntry>
+              );
+            })}
+          </Shelf>
+        );
+      })}
     </div>
   );
 }

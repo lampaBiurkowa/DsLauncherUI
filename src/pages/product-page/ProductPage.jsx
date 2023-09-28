@@ -12,6 +12,7 @@ import PlayingService from "../../services/PlayingService";
 import usePlayerBought from "./hooks/usePlayerBought";
 import { PurchaseApi } from "../../services/api/PurchaseApi";
 import { PurchaseModel } from "../../services/model/PurchaseModel";
+import { runInstall } from "../../services/CLIClient";
 
 const MAX_REVIEWS = 3;
 const playingService = new PlayingService();
@@ -32,6 +33,13 @@ function handlePurchase(productId, price)
       userBought = true;//ni umiem odswiezyc :D/ usePlayerBought('d', productId);
     }
   });
+}
+
+async function handleInstall(productName)
+{
+  let library = "C:/test/test1";
+  
+  await runInstall(productName, library);
 }
 
 function ProductPage() {
@@ -58,7 +66,7 @@ function ProductPage() {
             <button className="buy-button accent large" onClick={() =>
               {
                 if (userBought)
-                  ;
+                  handleInstall(product?.product.name);
                 else
                   handlePurchase(productId,  product?.product.price);
               }

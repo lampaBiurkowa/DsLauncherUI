@@ -4,8 +4,8 @@ import getFilesData from "../../../services/getFilesData";
 
 const productApi = new ProductApi();
 
-function useStaticProducts(staticResourceName) {
-  const url = `https://raw.githubusercontent.com/DibrySoft/static/master/${staticResourceName}.json`;
+function useStaticProducts() {
+  const url = `https://raw.githubusercontent.com/DibrySoft/static/master/discover.json`;
   let [products, setProducts] = useState();
 
   useEffect(() => {
@@ -17,28 +17,33 @@ function useStaticProducts(staticResourceName) {
       return response.json();
     })
     .then(data => {
-      var appIds = data;
-      productApi.productGetSubsetGet({ids: appIds}, (error, data) => {
-        if (error === null) {
-          productApi.productRatesSubsetGet({ids: appIds}, async (error2, data2) => {
-            if (error2 === null) {
-              let result = [];
-              for (let i = 0; i < appIds.length; i++)
-              {
-                let icon = null;
-                try
+      var sections = [];
+      for (let i = 0; i < data.length; i++)
+      {
+        var appIds = data[i].items;
+        productApi.productGetSubsetGet({ids: appIds}, (productError, productData) => {
+          if (productError === null) {
+            productApi.productRatesSubsetGet({ids: appIds}, async (ratesError, ratesData) => {
+              if (ratesError === null) {
+                let result = [];
+                for (let j = 0; j < appIds.length; j++)
                 {
-                  icon = (await getFilesData(data[i].name)).Icon;
+                  let icon = null;
+                  try
+                  {
+                    icon = (await getFilesData(productData[j].name)).Icon;
+                  }
+                  catch {}
+                  result.push({product: productData[j], summary: ratesData[j], icon: icon});
                 }
-                catch {}
-                result.push({product: data[i], summary: data2[i], icon: icon});
+                sections.push({name: data[i].name, items: result});
+                if (i == data.length - 1) //HZD
+                  setProducts(sections);
               }
-
-              setProducts(result);
-            }
-          });
-        }
-      });
+            });
+          }
+        });
+      }
     })
     .catch(error => {
       console.error('There has been a problem with your fetch operation:', error);
