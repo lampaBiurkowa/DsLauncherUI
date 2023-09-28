@@ -48,8 +48,12 @@ export class GameActivityModel {
         obj.endDate = ApiClient.convertToType(data['endDate'], 'Date');
       if (data.hasOwnProperty('product'))
         obj.product = ProductModel.constructFromObject(data['product']);
+      if (data.hasOwnProperty('productId'))
+        obj.productId = ApiClient.convertToType(data['productId'], 'Number');
       if (data.hasOwnProperty('user'))
         obj.user = UserModel.constructFromObject(data['user']);
+      if (data.hasOwnProperty('userId'))
+        obj.userId = ApiClient.convertToType(data['userId'], 'Number');
     }
     return obj;
   }
@@ -76,7 +80,17 @@ GameActivityModel.prototype.endDate = undefined;
 GameActivityModel.prototype.product = undefined;
 
 /**
+ * @member {Number} productId
+ */
+GameActivityModel.prototype.productId = undefined;
+
+/**
  * @member {module:model/UserModel} user
  */
 GameActivityModel.prototype.user = undefined;
+
+/**
+ * @member {Number} userId
+ */
+GameActivityModel.prototype.userId = undefined;
 

@@ -48,10 +48,14 @@ export class ReviewModel {
         obj._date = ApiClient.convertToType(data['date'], 'Date');
       if (data.hasOwnProperty('product'))
         obj.product = ProductModel.constructFromObject(data['product']);
+      if (data.hasOwnProperty('productId'))
+        obj.productId = ApiClient.convertToType(data['productId'], 'Number');
       if (data.hasOwnProperty('rate'))
         obj.rate = ApiClient.convertToType(data['rate'], 'Number');
       if (data.hasOwnProperty('user'))
         obj.user = UserModel.constructFromObject(data['user']);
+      if (data.hasOwnProperty('userId'))
+        obj.userId = ApiClient.convertToType(data['userId'], 'Number');
     }
     return obj;
   }
@@ -78,6 +82,11 @@ ReviewModel.prototype._date = undefined;
 ReviewModel.prototype.product = undefined;
 
 /**
+ * @member {Number} productId
+ */
+ReviewModel.prototype.productId = undefined;
+
+/**
  * @member {Number} rate
  */
 ReviewModel.prototype.rate = undefined;
@@ -86,4 +95,9 @@ ReviewModel.prototype.rate = undefined;
  * @member {module:model/UserModel} user
  */
 ReviewModel.prototype.user = undefined;
+
+/**
+ * @member {Number} userId
+ */
+ReviewModel.prototype.userId = undefined;
 

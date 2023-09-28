@@ -46,6 +46,8 @@ export class PackageModel {
         obj._date = ApiClient.convertToType(data['date'], 'Date');
       if (data.hasOwnProperty('product'))
         obj.product = ProductModel.constructFromObject(data['product']);
+      if (data.hasOwnProperty('productId'))
+        obj.productId = ApiClient.convertToType(data['productId'], 'Number');
       if (data.hasOwnProperty('description'))
         obj.description = ApiClient.convertToType(data['description'], 'String');
       if (data.hasOwnProperty('supportedOperatingSystems'))
@@ -69,6 +71,11 @@ PackageModel.prototype._date = undefined;
  * @member {module:model/ProductModel} product
  */
 PackageModel.prototype.product = undefined;
+
+/**
+ * @member {Number} productId
+ */
+PackageModel.prototype.productId = undefined;
 
 /**
  * @member {String} description

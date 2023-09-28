@@ -10,9 +10,29 @@ import useSummary from "./hooks/useSummary";
 import ReviewCounter from "./components/ReviewCounter";
 import PlayingService from "../../services/PlayingService";
 import usePlayerBought from "./hooks/usePlayerBought";
+import { PurchaseApi } from "../../services/api/PurchaseApi";
+import { PurchaseModel } from "../../services/model/PurchaseModel";
 
 const MAX_REVIEWS = 3;
 const playingService = new PlayingService();
+const purchaseApi = new PurchaseApi();
+let userBought = false;
+
+function handlePurchase(productId, price)
+{
+  let purchaseModel = new PurchaseModel();
+  purchaseModel.productId = productId;
+  purchaseModel.userId = 11;
+  purchaseModel._date = new Date().toISOString();
+  purchaseModel.value = price;
+  
+  purchaseApi.purchasePost({body: JSON.stringify(purchaseModel)}, (error, data) => {
+    if (error === null)
+    {console.log("kupilem se");
+      userBought = true;//ni umiem odswiezyc :D/ usePlayerBought('d', productId);
+    }
+  });
+}
 
 function ProductPage() {
   const { id: productId } = useParams();
@@ -20,7 +40,7 @@ function ProductPage() {
   let product = useProduct(productId);
   let reviews = useReviews(productId);
   let summary = useSummary(productId);
-  let userBought = usePlayerBought('d', productId);
+  userBought = usePlayerBought('d', productId);
 
   return (
     <article>
@@ -35,7 +55,14 @@ function ProductPage() {
           <div className="product-header">
             <h1 className="title">{product?.product.name}</h1>
             <span className="developer">{product?.product.developer.name}</span>
-            <button className="buy-button accent large">{userBought ? "Install" : "Buy"}</button>
+            <button className="buy-button accent large" onClick={() =>
+              {
+                if (userBought)
+                  ;
+                else
+                  handlePurchase(productId,  product?.product.price);
+              }
+            }>{userBought ? "Install" : "Buy"}</button>
             <span className="price">{product?.product.price}₽</span>
           </div>
         </div>

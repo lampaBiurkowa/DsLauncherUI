@@ -42,6 +42,8 @@ export class ProductModel {
       obj = obj || new ProductModel();
       if (data.hasOwnProperty('id'))
         obj.id = ApiClient.convertToType(data['id'], 'Number');
+      if (data.hasOwnProperty('developerId'))
+        obj.developerId = ApiClient.convertToType(data['developerId'], 'Number');
       if (data.hasOwnProperty('developer'))
         obj.developer = DeveloperModel.constructFromObject(data['developer']);
       if (data.hasOwnProperty('description'))
@@ -63,6 +65,11 @@ export class ProductModel {
  * @member {Number} id
  */
 ProductModel.prototype.id = undefined;
+
+/**
+ * @member {Number} developerId
+ */
+ProductModel.prototype.developerId = undefined;
 
 /**
  * @member {module:model/DeveloperModel} developer

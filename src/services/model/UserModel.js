@@ -63,6 +63,8 @@ export class UserModel {
         obj.surname = ApiClient.convertToType(data['surname'], 'String');
       if (data.hasOwnProperty('developer'))
         obj.developer = DeveloperModel.constructFromObject(data['developer']);
+      if (data.hasOwnProperty('developerId'))
+        obj.developerId = ApiClient.convertToType(data['developerId'], 'Number');
       if (data.hasOwnProperty('money'))
         obj.money = ApiClient.convertToType(data['money'], 'Number');
     }
@@ -129,6 +131,11 @@ UserModel.prototype.surname = undefined;
  * @member {module:model/DeveloperModel} developer
  */
 UserModel.prototype.developer = undefined;
+
+/**
+ * @member {Number} developerId
+ */
+UserModel.prototype.developerId = undefined;
 
 /**
  * @member {Number} money

@@ -46,8 +46,12 @@ export class PurchaseModel {
         obj._date = ApiClient.convertToType(data['date'], 'Date');
       if (data.hasOwnProperty('product'))
         obj.product = ProductModel.constructFromObject(data['product']);
+      if (data.hasOwnProperty('productId'))
+        obj.productId = ApiClient.convertToType(data['productId'], 'Number');
       if (data.hasOwnProperty('user'))
         obj.user = UserModel.constructFromObject(data['user']);
+      if (data.hasOwnProperty('userId'))
+        obj.userId = ApiClient.convertToType(data['userId'], 'Number');
       if (data.hasOwnProperty('value'))
         obj.value = ApiClient.convertToType(data['value'], 'Number');
     }
@@ -71,9 +75,19 @@ PurchaseModel.prototype._date = undefined;
 PurchaseModel.prototype.product = undefined;
 
 /**
+ * @member {Number} productId
+ */
+PurchaseModel.prototype.productId = undefined;
+
+/**
  * @member {module:model/UserModel} user
  */
 PurchaseModel.prototype.user = undefined;
+
+/**
+ * @member {Number} userId
+ */
+PurchaseModel.prototype.userId = undefined;
 
 /**
  * @member {Number} value
