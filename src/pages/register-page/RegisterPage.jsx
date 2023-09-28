@@ -3,8 +3,17 @@ import "./RegisterPage.scss";
 import Logo from "@/components/logo/Logo";
 import { Form, NavLink } from "react-router-dom";
 import Separator from "../../components/separator/Separator";
+import { ApiClient } from "../../services/ApiClient";
+import { AuthApi } from "../../services/api/AuthApi";
+import { UserContext } from "../../contexts/UserContextProvider";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+const authApi = new AuthApi();
 
 function RegisterPage() {
+  let { currentUser } = useContext(UserContext);
+  let navigate = useNavigate();
   return (
     <div className="register-page">
       <div className="register-container">
@@ -79,7 +88,28 @@ function RegisterPage() {
           </div>
           {/*Submit*/}
           <div style={{ gridArea: "submit" }} className="submit-area">
-            <button className="accent outlined sign-up">Sign up</button>
+            <button type="button" className="accent outlined sign-up" onClick={ () =>
+            {
+              const emailInput = document.querySelector('input[name="email"]').value;
+              const nameInput = document.querySelector('input[name="name"]').value;
+              const surnameInput = document.querySelector('input[name="surname"]').value;
+              const loginInput = document.querySelector('input[name="login"]').value;
+              const password1Input = document.querySelector('input[name="password1"]').value;
+              const password2Input = document.querySelector('input[name="password2"]').value;
+              
+              if (password1Input !== password2Input)
+              {
+                //do cos
+                return;
+              }
+
+              authApi.authRegisterLoginPasswordEmailNameSurnameGet(loginInput, password1Input, emailInput, nameInput, surnameInput, async (error, data) => {
+                if (error !== null || data === false)
+                  return;
+
+                  navigate("/login");
+              });
+            }}>Sign up</button>
           </div>
         </Form>
         <div className="log-in">

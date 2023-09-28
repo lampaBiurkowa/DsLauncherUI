@@ -280,59 +280,68 @@ export class AuthApi {
       );
     }
     /**
-     * Callback function to receive the result of the authRegisterLoginPasswordEmailGet operation.
-     * @callback moduleapi/AuthApi~authRegisterLoginPasswordEmailGetCallback
+     * Callback function to receive the result of the authRegisterLoginPasswordEmailNameSurnameGet operation.
+     * @callback moduleapi/AuthApi~authRegisterLoginPasswordEmailNameSurnameGetCallback
      * @param {String} error Error message, if any.
      * @param {'Boolean'{ data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
+    * @param {String} response The complete HTTP response.
+    */
 
-    /**
-     * @param {String} login 
-     * @param {String} password 
-     * @param {String} email 
-     * @param {module:api/AuthApi~authRegisterLoginPasswordEmailGetCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-     */
-    authRegisterLoginPasswordEmailGet(login, password, email, callback) {
-      
-      let postBody = null;
-      // verify the required parameter 'login' is set
-      if (login === undefined || login === null) {
-        throw new Error("Missing the required parameter 'login' when calling authRegisterLoginPasswordEmailGet");
-      }
-      // verify the required parameter 'password' is set
-      if (password === undefined || password === null) {
-        throw new Error("Missing the required parameter 'password' when calling authRegisterLoginPasswordEmailGet");
-      }
-      // verify the required parameter 'email' is set
-      if (email === undefined || email === null) {
-        throw new Error("Missing the required parameter 'email' when calling authRegisterLoginPasswordEmailGet");
-      }
+   /**
+    * @param {String} login 
+    * @param {String} password 
+    * @param {String} email 
+    * @param {String} name 
+    * @param {String} surname 
+    * @param {module:api/AuthApi~authRegisterLoginPasswordEmailNameSurnameGetCallback} callback The callback function, accepting three arguments: error, data, response
+    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+    */
+   authRegisterLoginPasswordEmailNameSurnameGet(login, password, email, name, surname, callback) {
+     
+     let postBody = null;
+     // verify the required parameter 'login' is set
+     if (login === undefined || login === null) {
+       throw new Error("Missing the required parameter 'login' when calling authRegisterLoginPasswordEmailNameSurnameGet");
+     }
+     // verify the required parameter 'password' is set
+     if (password === undefined || password === null) {
+       throw new Error("Missing the required parameter 'password' when calling authRegisterLoginPasswordEmailNameSurnameGet");
+     }
+     // verify the required parameter 'email' is set
+     if (email === undefined || email === null) {
+       throw new Error("Missing the required parameter 'email' when calling authRegisterLoginPasswordEmailNameSurnameGet");
+     }
+     // verify the required parameter 'name' is set
+     if (name === undefined || name === null) {
+       throw new Error("Missing the required parameter 'name' when calling authRegisterLoginPasswordEmailNameSurnameGet");
+     }
+     // verify the required parameter 'surname' is set
+     if (surname === undefined || surname === null) {
+       throw new Error("Missing the required parameter 'surname' when calling authRegisterLoginPasswordEmailNameSurnameGet");
+     }
 
-      let pathParams = {
-        'login': login,'password': password,'email': email
-      };
-      let queryParams = {
-        
-      };
-      let headerParams = {
-        
-      };
-      let formParams = {
-        
-      };
+     let pathParams = {
+       'login': login,'password': password,'email': email,'name': name,'surname': surname
+     };
+     let queryParams = {
+       
+     };
+     let headerParams = {
+       
+     };
+     let formParams = {
+       
+     };
 
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = 'Boolean';
+     let authNames = [];
+     let contentTypes = [];
+     let accepts = ['text/plain', 'application/json', 'text/json'];
+     let returnType = 'Boolean';
 
-      return this.apiClient.callApi(
-        '/Auth/Register/{login}/{password}/{email}', 'GET',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
+     return this.apiClient.callApi(
+       '/Auth/Register/{login}/{password}/{email}/{name}/{surname}', 'GET',
+       pathParams, queryParams, headerParams, formParams, postBody,
+       authNames, contentTypes, accepts, returnType, callback
+     );
+   }
 }

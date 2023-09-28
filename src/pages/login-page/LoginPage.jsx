@@ -6,10 +6,17 @@ import { Link, NavLink } from "react-router-dom";
 import Separator from "../../components/separator/Separator";
 import { AuthApi } from "../../services/api/AuthApi";
 import { ApiClient } from "../../services/ApiClient";
+import { UserApi } from "../../services/api/UserApi";
+import { UserContext } from "../../contexts/UserContextProvider";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const authApi = new AuthApi(new ApiClient());
+const userApi = new UserApi();
 
 function LoginPage() {
+  let { currentUser } = useContext(UserContext);
+  let navigate = useNavigate();
   return (
     <div className="login-page">
       <div className="login-container">
@@ -36,11 +43,21 @@ function LoginPage() {
             <Spacer />
             <button type="button" className="outlined" onClick={ () =>
             {
-              const loginInput = document.querySelector('input[name="login"]');
-              const passwordInput = document.querySelector('input[name="password"]');
+              const loginInput = document.querySelector('input[name="login"]').value;
+              const passwordInput = document.querySelector('input[name="password"]').value;
               ApiClient.authentications.password = crypto.randomUUID();
-              authApi.authLoginLoginPasswordIdGet(loginInput.value, passwordInput.value, ApiClient.authentications.password, async (error, data) => {
+              authApi.authLoginLoginPasswordIdGet(loginInput, passwordInput, ApiClient.authentications.password, async (error, data) => {
+                if (error !== null || data === false)
+                  return;
+                
                 console.log(`lohhed in with token ${ApiClient.authentications.password}`);
+                userApi.userGetAliasGet(loginInput, (userError, userData) => {
+                  if (userError !== null)
+                    return;
+
+                  currentUser = userData;
+                  navigate("/home");
+                })
               });
             }}>Log in</button>
           </div>
