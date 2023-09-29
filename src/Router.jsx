@@ -6,21 +6,21 @@ import {
 } from "react-router-dom";
 import React from "react";
 
-import {
-  LoginPage,
-  MainPage,
-  HomePage,
-  StorePage,
-  LibraryPage,
-  SettingsPage,
-  DiscoverPage,
-  GamesPage,
-  AppsPage,
-  ArticlePage,
-  ProductPage,
-  RegisterPage,
-} from "./pages";
-import Protected from "./Protected";
+import AppsPage from "@/pages/apps-page/AppsPage";
+import ArticlePage from "@/pages/article-page/ArticlePage";
+import DiscoverPage from "@/pages/discover-page/DiscoverPage";
+import GamesPage from "@/pages/games-page/GamesPage";
+import HomePage from "@/pages/home-page/HomePage";
+import LibraryPage from "@/pages/library-page/LibraryPage";
+import LoginPage from "@/pages/login-page/LoginPage";
+import MainPage from "@/pages/main-page/MainPage";
+import SettingsPage from "@/pages/settings-page/SettingsPage";
+import StorePage from "@/pages/store-page/StorePage";
+import ProductPage from "@/pages/product-page/ProductPage";
+import RegisterPage from "@/pages/register-page/RegisterPage";
+import InstalledPage from "@/pages/installed-page/InstalledPage";
+import UpdatesPage from "./pages/updates-page/UpdatesPage";
+import OwnedPage from "./pages/owned-page/OwnedPage";
 
 const router = createBrowserRouter([
   {
@@ -71,11 +71,21 @@ const router = createBrowserRouter([
       },
       {
         path: "/library",
-        element: (
-          <Protected>
-            <LibraryPage />
-          </Protected>
-        ),
+        element: <LibraryPage />,
+        children: [
+          {
+            element: <InstalledPage />,
+            index: true,
+          },
+          {
+            element: <UpdatesPage />,
+            path: "/library/updates",
+          },
+          {
+            element: <OwnedPage />,
+            path: "/library/owned",
+          },
+        ],
       },
       {
         path: "/settings",

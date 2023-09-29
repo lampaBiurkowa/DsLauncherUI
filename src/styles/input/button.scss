@@ -47,6 +47,21 @@ button.accent {
   }
 }
 
+.button.menuitem,
+button.menuitem {
+  background-color: transparent;
+  border-radius: $radius-none;
+
+  &:hover {
+    background-color: rgba($text, 0.2);
+    cursor: pointer;
+  }
+
+  &:active {
+    background-color: rgba($text, 0.3);
+  }
+}
+
 //Button sizes
 .button.small,
 button.small {

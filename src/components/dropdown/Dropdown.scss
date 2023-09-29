@@ -1,0 +1,33 @@
+@use "@/styles" as *;
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown {
+  position: relative;
+
+  button {
+    padding: $padding-md;
+  }
+
+  .menu {
+    position: absolute;
+    z-index: 100;
+
+    background-color: $dark-3;
+    border: 1px solid $text-inactive;
+    border-radius: $radius-sm;
+    overflow: hidden;
+
+    animation: menu-in 0.2s;
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+}

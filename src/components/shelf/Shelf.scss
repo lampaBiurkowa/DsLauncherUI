@@ -9,6 +9,12 @@
     justify-content: space-between;
     align-items: center;
 
+    h2 {
+      font-size: $text-xxl;
+      font-weight: $text-bold;
+      margin: $padding-xl 0;
+    }
+
     .shelf-controls {
       display: flex;
       gap: $margin-sm;
