@@ -35,13 +35,6 @@ function handlePurchase(productId, price)
   });
 }
 
-async function handleInstall(productName)
-{
-  let library = "C:/test/test1";
-  
-  await runInstall(productName, library);
-}
-
 function ProductPage() {
   const { id: productId } = useParams();
 
@@ -66,7 +59,7 @@ function ProductPage() {
             <button className="buy-button accent large" onClick={() =>
               {
                 if (userBought)
-                  handleInstall(product?.product.name);
+                  ;
                 else
                   handlePurchase(productId,  product?.product.price);
               }

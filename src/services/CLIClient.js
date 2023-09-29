@@ -1,10 +1,14 @@
 import { Command } from "@tauri-apps/api/shell";
 
 
-export async function runInstall(appName, path) {
+export async function runInstall(appName, path, token) {
+    console.log("fajer");
+    console.log(`--path="${path}"`);
+    console.log(`--token=${token}`);
+    console.log(`"${appName}"`);
     const command = Command.sidecar(
         "binaries/ndib-get",
-        ["install", appName, "--json", `--path=${path}`],
+        ["install", `${appName}`, "--json", `--path=${path}`, `--token=${token}`],
         { encoding: "utf-8" }
     );
 
@@ -20,11 +24,13 @@ export async function runInstall(appName, path) {
         }
     });
 
-    await command.execute();
+    var a = await command.execute();
+    console.log(a);
+    console.log("executed");
 }
 
 export async function runStatus(appName) {
-    const command = Command.sidecar("binaries/ndib-get", ['status', appName, '--json'])
+    const command = Command.sidecar("binaries/ndib-get", ['status', `${appName}`, '--json'])
     const output = await command.execute();
     try {
         console.log(`${output.stdout}`);
@@ -40,16 +46,17 @@ export async function runStatus(appName) {
     await command.execute();
 }
 
-export async function runList(updatable) {
+export async function runList(updatable, token) {
     let command = null;
     if (updatable)
-        command = Command.sidecar("binaries/ndib-get", ['list', '--updatable', '--json'])
+        command = Command.sidecar("binaries/ndib-get", ['list', '--updatable', '--json', `--token=${token}`])
     else
-        command = Command.sidecar("binaries/ndib-get", ['list', '--json'])
+        command = Command.sidecar("binaries/ndib-get", ['list', '--json', `--token=${token}`])
 
     const output = await command.execute();
     console.log(`${output.stdout}`);
     const jsonObject = JSON.parse(output.stdout);
     console.log(`${output.stdout} ${jsonObject}`);
     console.log(`${jsonObject.Names}`);
+    return jsonObject;
 }

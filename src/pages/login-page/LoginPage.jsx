@@ -15,7 +15,7 @@ const authApi = new AuthApi(new ApiClient());
 const userApi = new UserApi();
 
 function LoginPage() {
-  let { currentUser } = useContext(UserContext);
+  let context  = useContext(UserContext);
   let navigate = useNavigate();
   return (
     <div className="login-page">
@@ -55,7 +55,7 @@ function LoginPage() {
                   if (userError !== null)
                     return;
 
-                  currentUser = userData;
+                  context.currentUser = userData;
                   navigate("/home");
                 })
               });
