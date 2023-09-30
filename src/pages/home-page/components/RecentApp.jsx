@@ -3,7 +3,7 @@ import "./RecentApp.scss";
 
 function RecentApp({ children, coverUrl }) {
   const bgStyle = {
-    backgroundImage: `url(${coverUrl})`,
+    backgroundImage: `url("${coverUrl}")`,
   };
 
   return (

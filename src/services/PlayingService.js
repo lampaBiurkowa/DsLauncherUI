@@ -28,16 +28,26 @@ class PlayingService {
     gameActivity.productId = gameId;
 
     this.gameActivityApi.gameActivityPost({body: JSON.stringify(gameActivity)}, async (error, data) => {
-      await this.registerGameActivityLocally(JSON.stringify(gameActivity));
+      await this.registerGameActivityLocally(gameActivity);
     });
   }
 
   async registerGameActivityLocally(gameActivity) {
-    await this.writeFileContent(this.getActivityFileName(PlayingService.currentStartDate), gameActivity);
-    var recentAppIds = JSON.parse(await this.readFileContent(this.fileName));
-    recentAppIds = recentAppIds.filter(item => item !== gameActivity.product.id);
-    recentAppIds.unshift(gameActivity.product.id);
+    await this.writeFileContent(this.getActivityFileName(PlayingService.currentStartDate), JSON.stringify(gameActivity));
+    console.log(await this.readFileContent(this.fileName));
+    console.log(gameActivity);
+    var recentAppIds = [];
+    try
+    {
+      const appsInFile = JSON.parse(await this.readFileContent(this.fileName));
+      if (appsInFile !== null)
+        recentAppIds = appsInFile;
+    }
+    catch {}
+    recentAppIds = recentAppIds.filter(item => item !== gameActivity.productId);
+    recentAppIds.unshift(gameActivity.productId);
     recentAppIds.slice(0, this.maxRecentAppsCount);
+    await this.writeFileContent(this.fileName, JSON.stringify(recentAppIds));
   }
 
   async tryPingGameActivity()

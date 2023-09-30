@@ -18,8 +18,8 @@ function HomePage() {
           <div className="recent-apps">
             {recentProducts.map((app, key) => {
               return (
-                <RecentApp key={key} coverUrl={app.description}>
-                  {app.name}
+                <RecentApp key={key} coverUrl={app.icon}>
+                  {app.product.name}
                 </RecentApp>
               );
             })}

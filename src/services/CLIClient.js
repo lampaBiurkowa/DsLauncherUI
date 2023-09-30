@@ -63,5 +63,15 @@ export async function runGame(appName, appId, userId, path) {
     playingService.tryRegisterGameActivity(appId, userId);
     await command.execute();
     playingService.trySubmitCurrentGameActivityEnded();
-    console.log("hra ended");
+}
+
+export async function runPurge(appName, path) {
+    const command = Command.sidecar(
+        "binaries/ndib-get",
+        ["purge", `${appName}`, "--json", `--path=${path}`],
+        { encoding: "utf-8" }
+    );
+
+    var result = await command.execute();
+    return result.Succeeded;
 }

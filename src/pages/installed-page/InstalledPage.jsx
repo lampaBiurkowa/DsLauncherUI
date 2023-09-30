@@ -10,6 +10,7 @@ import { ProductApi } from "../../services/api/ProductApi";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { runGame } from "../../services/CLIClient";
+import { runPurge } from "../../services/CLIClient";
 
 function InstalledPage() {
   const productApi = new ProductApi();
@@ -53,6 +54,12 @@ function InstalledPage() {
     runGame(appName, appId, currentUser.id, "C:/test/test 1");
   }
 
+  async function uninstall(appName) {
+    console.log("adasd");
+    console.log(appName);
+    await runPurge(appName, "C:/test/test 1");
+  }
+
   return (
     <div className="installed-page">
       <h1>Installed Apps</h1>
@@ -74,7 +81,8 @@ function InstalledPage() {
               <Dropdown>
                 <ul className="dropdown-content">
                   <li>
-                    <button className="menuitem small">
+                    <button type="button" className="menuitem small"
+                      onClick={async () => await uninstall(app.game.name)}>
                       <i className="las la-trash" />
                       <span>Uninstall</span>
                     </button>
