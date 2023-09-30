@@ -14,7 +14,6 @@ import { runList } from "../../services/CLIClient";
 function OwnedPage() {
   const { currentUser } = useContext(UserContext);
   const userApi = new UserApi();
-  const activityApi = new GameActivityApi();
   const [apps, setApps] = useState([]);
 
   useEffect(() => {
@@ -23,20 +22,24 @@ function OwnedPage() {
         return;
 
       let installedAppNames = (await runList(false, getToken())).Names;
-      let result = [];
-      for (let i = 0; i < productsData.length; i++)
-      {
-        activityApi.gameActivityTimeSpentUserIdProductIdGet(currentUser.id, productsData[i].id, async (timeError, timeData) => {
-          if (timeError !== null)
-            return;
+      userApi.userGetNamePurchasesGet(currentUser.login, async (purchaseError, purchaseData) => {
+        if (purchaseError !== null)
+          return;
 
-          let icon = (await getFilesData(productsData[i].name)).Icon;
-          let isInstalled = installedAppNames.includes(productsData[i].name);
-          result.push({icon: icon, title: productsData[i].name, hours: timeData.totalSeconds, isInstalled: isInstalled});
-          if (result.length == productsData.length)
-            setApps(result);
-        });
-      }
+        let result = [];
+        for (let i = 0; i < productsData.length; i++)
+        {
+            console.log(productsData[i]);
+            console.log(purchaseData);
+            let icon = (await getFilesData(productsData[i].name)).Icon;
+            const purchase = purchaseData.find(p => p.product.id === productsData[i].id);
+            let boughtOn = purchase._date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, ' ');
+            let isInstalled = installedAppNames.includes(productsData[i].name);
+            result.push({icon: icon, title: productsData[i].name, boughtOn: boughtOn, isInstalled: isInstalled});
+            if (result.length == productsData.length)
+              setApps(result);
+        }
+      });
     });
   }, []);
 
@@ -50,7 +53,7 @@ function OwnedPage() {
       <div className="apps-list">
         {apps.map((app, index) => {
           return (
-            <LibraryEntry icon={app.icon} title={app.title} key={index}>
+            <LibraryEntry icon={app.icon} title={app.title} secondary={`Bought on ${app.boughtOn}`} key={index}>
               <button
                 className="accent outlined"
                 onClick={async () => await install(app.title)}

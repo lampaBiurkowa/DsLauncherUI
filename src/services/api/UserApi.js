@@ -15,6 +15,7 @@
 import {ApiClient} from "../ApiClient";
 import {ChannelModel} from '../model/ChannelModel';
 import {ProductModel} from '../model/ProductModel';
+import {PurchaseModel} from '../model/PurchaseModel';
 import {UserModel} from '../model/UserModel';
 
 /**
@@ -297,6 +298,51 @@ export class UserApi {
 
       return this.apiClient.callApi(
         '/User/Get/{name}/Products', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+    /**
+     * Callback function to receive the result of the userGetNamePurchasesGet operation.
+     * @callback moduleapi/UserApi~userGetNamePurchasesGetCallback
+     * @param {String} error Error message, if any.
+     * @param {Array.<module:model/PurchaseModel>{ data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * @param {String} name 
+     * @param {module:api/UserApi~userGetNamePurchasesGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
+     */
+    userGetNamePurchasesGet(name, callback) {
+      
+      let postBody = null;
+      // verify the required parameter 'name' is set
+      if (name === undefined || name === null) {
+        throw new Error("Missing the required parameter 'name' when calling userGetNamePurchasesGet");
+      }
+
+      let pathParams = {
+        'name': name
+      };
+      let queryParams = {
+        
+      };
+      let headerParams = {
+        
+      };
+      let formParams = {
+        
+      };
+
+      let authNames = ['basic'];
+      let contentTypes = [];
+      let accepts = ['text/plain', 'application/json', 'text/json'];
+      let returnType = [PurchaseModel];
+
+      return this.apiClient.callApi(
+        '/User/Get/{name}/Purchases', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

@@ -12,6 +12,7 @@ import { ProductApi } from "../../services/api/ProductApi";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { runInstall } from "../../services/CLIClient";
+import { runStatus } from "../../services/CLIClient";
 
 function UpdatesPage() {
   const productApi = new ProductApi();
@@ -27,21 +28,18 @@ function UpdatesPage() {
       let result = [];
       for (let i = 0; i < appNames.length; i++)
       {
-        productApi.productGetNameGet(appNames[i], (productError, productData) => {
+        productApi.productGetNameGet(appNames[i], async (productError, productData) => {
           if (productError !== null)
             return;
-
-          activityApi.gameActivityTimeSpentUserIdProductIdGet(currentUser.id, productData.id, async (timeError, timeData) => {
-            if (timeError !== null)
-              return;
   
-            let icon = (await getFilesData(productData.name)).Icon;
-            result.push({icon: icon, title: productData.name, hours: timeData.totalSeconds});
-            if (result.length == appNames.length)
-            {
-              setApps(result);
-            }
-          });
+          let icon = (await getFilesData(productData.name)).Icon;
+          let desc = (await runStatus(productData.name)).VersionDescription;
+          console.log(desc);
+          result.push({icon: icon, title: productData.name, desc: desc});
+          if (result.length == appNames.length)
+          {
+            setApps(result);
+          }
         });
       }
     }
@@ -66,7 +64,7 @@ function UpdatesPage() {
       <div className="apps-list">
         {apps.map((app, index) => {
           return (
-            <LibraryEntry icon={app.icon} title={app.title} key={index}>
+            <LibraryEntry icon={app.icon} title={app.title} secondary={app.desc} key={index}>
               <button
                 className="accent outlined"
                 onClick={async () => await update(app.title)}

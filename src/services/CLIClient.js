@@ -34,12 +34,12 @@ export async function runStatus(appName) {
         console.log(`${output.stdout} ${jsonObject}`);
         console.log(`${jsonObject.VersionInNdib}`);
         console.log(`${jsonObject.VersionDescription}`);
+        return jsonObject;
     }
     catch
     {
         console.log("not installed")
     }
-    await command.execute();
 }
 
 export async function runList(updatable, token) {
