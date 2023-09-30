@@ -9,6 +9,7 @@ import getToken from "../../services/getToken";
 import { ProductApi } from "../../services/api/ProductApi";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContextProvider";
+import { runGame } from "../../services/CLIClient";
 
 function InstalledPage() {
   const productApi = new ProductApi();
@@ -48,6 +49,7 @@ function InstalledPage() {
 
   function run(appName) {
     console.log(appName);
+    runGame(appName, "C:/test/test 1");
   }
 
   return (

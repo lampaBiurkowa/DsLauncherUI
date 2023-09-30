@@ -60,3 +60,10 @@ export async function runList(updatable, token) {
     console.log(`${jsonObject.Names}`);
     return jsonObject;
 }
+
+export async function runGame(appName, path) {
+    let command = Command.sidecar("binaries/ndib-get", ['run', appName, `--path=${path}`])
+
+    await command.execute();
+    console.log("hra ended");
+}
