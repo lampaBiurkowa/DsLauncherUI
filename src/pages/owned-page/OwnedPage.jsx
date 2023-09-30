@@ -33,7 +33,7 @@ function OwnedPage() {
           let icon = (await getFilesData(productsData[i].name)).Icon;
           let isInstalled = installedAppNames.includes(productsData[i].name);
           result.push({icon: icon, title: productsData[i].name, hours: timeData.totalSeconds, isInstalled: isInstalled});
-          if (i == productsData.length - 1)
+          if (result.length == productsData.length)
             setApps(result);
         });
       }

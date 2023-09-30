@@ -35,8 +35,8 @@ function InstalledPage() {
   
             let icon = (await getFilesData(productData.name)).Icon;
             const [hours, minutes, seconds] = timeData.split(':').map(Number);
-            result.push({icon: icon, title: productData.name, hours: hours});
-            if (i == appNames.length - 1)
+            result.push({icon: icon, game: productData, hours: hours, minutes: minutes});
+            if (result.length == appNames.length)
             {
               setApps(result);
             }
@@ -48,9 +48,9 @@ function InstalledPage() {
     getInstalled();
   }, []);
 
-  function run(appName) {
-    console.log(appName);
-    runGame(appName, "C:/test/test 1");
+  function run(appName, appId) {
+    console.log(appId);
+    runGame(appName, appId, currentUser.id, "C:/test/test 1");
   }
 
   return (
@@ -61,13 +61,13 @@ function InstalledPage() {
           return (
             <LibraryEntry
               icon={app.icon}
-              title={app.title}
-              secondary={app.hours}
+              title={app.game.name}
+              secondary={`${app.hours} hours and ${app.minutes} minutes spent`}
               key={index}
             >
               <button
                 className="accent outlined"
-                onClick={() => run(app.title)}
+                onClick={() => run(app.game.name, app.game.id)}
               >
                 Launch
               </button>

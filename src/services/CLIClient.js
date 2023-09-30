@@ -1,5 +1,7 @@
 import { Command } from "@tauri-apps/api/shell";
+import PlayingService from "@/services/PlayingService";
 
+const playingService = new PlayingService();
 
 export async function runInstall(appName, path, token) {
     const command = Command.sidecar(
@@ -55,9 +57,11 @@ export async function runList(updatable, token) {
     return jsonObject;
 }
 
-export async function runGame(appName, path) {
+export async function runGame(appName, appId, userId, path) {
     let command = Command.sidecar("binaries/ndib-get", ['run', appName, `--path=${path}`])
 
+    playingService.tryRegisterGameActivity(appId, userId);
     await command.execute();
+    playingService.trySubmitCurrentGameActivityEnded();
     console.log("hra ended");
 }

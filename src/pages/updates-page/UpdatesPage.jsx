@@ -37,7 +37,7 @@ function UpdatesPage() {
   
             let icon = (await getFilesData(productData.name)).Icon;
             result.push({icon: icon, title: productData.name, hours: timeData.totalSeconds});
-            if (i == appNames.length - 1)
+            if (result.length == appNames.length)
             {
               setApps(result);
             }

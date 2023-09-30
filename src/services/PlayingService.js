@@ -24,12 +24,8 @@ class PlayingService {
     const gameActivity = new GameActivityModel();
     gameActivity.endDate = null;
     gameActivity.startDate = PlayingService.currentStartDate;
-    var user = new UserModel();
-    user.id = userId;
-    gameActivity.user = user;
-    var product = new ProductModel();
-    product.id = gameId;
-    gameActivity.product = product;
+    gameActivity.userId = userId;
+    gameActivity.productId = gameId;
 
     this.gameActivityApi.gameActivityPost({body: JSON.stringify(gameActivity)}, async (error, data) => {
       await this.registerGameActivityLocally(JSON.stringify(gameActivity));
@@ -38,7 +34,7 @@ class PlayingService {
 
   async registerGameActivityLocally(gameActivity) {
     await this.writeFileContent(this.getActivityFileName(PlayingService.currentStartDate), gameActivity);
-    var recentAppIds = JSON.parse(await readFileContent(this.fileName));
+    var recentAppIds = JSON.parse(await this.readFileContent(this.fileName));
     recentAppIds = recentAppIds.filter(item => item !== gameActivity.product.id);
     recentAppIds.unshift(gameActivity.product.id);
     recentAppIds.slice(0, this.maxRecentAppsCount);
@@ -48,11 +44,10 @@ class PlayingService {
   {
     let registeredGameActivity =  JSON.parse(await this.getLocallySavedGameActivity(PlayingService.currentStartDate));
     registeredGameActivity.endDate = new Date().toISOString();
+    console.log(JSON.stringify(registeredGameActivity));
     this.gameActivityApi.gameActivityPut({body: JSON.stringify(registeredGameActivity)}, async (error, data) => {
-        if (error !== null)
-        {
-          await this.updateGameActivityLocally(registeredGameActivity);
-        }
+      console.log("leci");
+      await this.updateGameActivityLocally(registeredGameActivity);
     })
   }
 

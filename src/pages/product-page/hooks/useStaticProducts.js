@@ -37,7 +37,7 @@ function useStaticProducts() {
                   result.push({product: productData[j], summary: ratesData[j], icon: icon});
                 }
                 sections.push({name: data[i].name, items: result});
-                if (i == data.length - 1) //HZD
+                if (sections.length == data.length) //HZD
                   setProducts(sections);
               }
             });
