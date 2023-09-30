@@ -23,7 +23,6 @@ function UpdatesPage() {
     async function getUpdatable()
     {
       let appNames = (await runList(true, getToken())).Names;
-      console.log(appNames);
 
       let result = [];
       for (let i = 0; i < appNames.length; i++)
@@ -36,13 +35,10 @@ function UpdatesPage() {
             if (timeError !== null)
               return;
   
-            console.log(timeData.totalSeconds);
             let icon = (await getFilesData(productData.name)).Icon;
-            console.log(icon);
             result.push({icon: icon, title: productData.name, hours: timeData.totalSeconds});
             if (i == appNames.length - 1)
             {
-              console.log(result);
               setApps(result);
             }
           });

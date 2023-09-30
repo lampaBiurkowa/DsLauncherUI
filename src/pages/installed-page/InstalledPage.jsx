@@ -34,7 +34,8 @@ function InstalledPage() {
               return;
   
             let icon = (await getFilesData(productData.name)).Icon;
-            result.push({icon: icon, title: productData.name, hours: timeData.totalSeconds});
+            const [hours, minutes, seconds] = timeData.split(':').map(Number);
+            result.push({icon: icon, title: productData.name, hours: hours});
             if (i == appNames.length - 1)
             {
               setApps(result);

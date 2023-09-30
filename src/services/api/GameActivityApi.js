@@ -288,7 +288,7 @@ export class GameActivityApi {
       let authNames = ['basic'];
       let contentTypes = [];
       let accepts = ['text/plain', 'application/json', 'text/json'];
-      let returnType = TimeSpan;
+      let returnType = 'String';
 
       return this.apiClient.callApi(
         '/GameActivity/TimeSpent/{userId}/{productId}', 'GET',

@@ -2,10 +2,6 @@ import { Command } from "@tauri-apps/api/shell";
 
 
 export async function runInstall(appName, path, token) {
-    console.log("fajer");
-    console.log(`--path="${path}"`);
-    console.log(`--token=${token}`);
-    console.log(`"${appName}"`);
     const command = Command.sidecar(
         "binaries/ndib-get",
         ["install", `${appName}`, "--json", `--path=${path}`, `--token=${token}`],
@@ -24,9 +20,7 @@ export async function runInstall(appName, path, token) {
         }
     });
 
-    var a = await command.execute();
-    console.log(a);
-    console.log("executed");
+    await command.execute();
 }
 
 export async function runStatus(appName) {
