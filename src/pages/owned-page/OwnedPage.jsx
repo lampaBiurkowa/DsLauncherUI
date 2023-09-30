@@ -9,6 +9,7 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { runInstall } from "../../services/CLIClient";
 import getToken from "../../services/getToken";
+import { runList } from "../../services/CLIClient";
 
 function OwnedPage() {
   const { currentUser } = useContext(UserContext);
@@ -17,10 +18,11 @@ function OwnedPage() {
   const [apps, setApps] = useState([]);
 
   useEffect(() => {
-    userApi.userGetNameProductsGet(currentUser.login, (productsError, productsData) => {
+    userApi.userGetNameProductsGet(currentUser.login, async (productsError, productsData) => {
       if (productsError !== null)
         return;
 
+      let installedAppNames = (await runList(false, getToken())).Names;
       let result = [];
       for (let i = 0; i < productsData.length; i++)
       {
@@ -29,7 +31,8 @@ function OwnedPage() {
             return;
 
           let icon = (await getFilesData(productsData[i].name)).Icon;
-          result.push({icon: icon, title: productsData[i].name, hours: timeData.totalSeconds});
+          let isInstalled = installedAppNames.includes(productsData[i].name);
+          result.push({icon: icon, title: productsData[i].name, hours: timeData.totalSeconds, isInstalled: isInstalled});
           if (i == productsData.length - 1)
             setApps(result);
         });
