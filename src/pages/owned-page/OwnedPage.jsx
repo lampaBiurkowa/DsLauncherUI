@@ -29,8 +29,6 @@ function OwnedPage() {
         let result = [];
         for (let i = 0; i < productsData.length; i++)
         {
-            console.log(productsData[i]);
-            console.log(purchaseData);
             let icon = (await getFilesData(productsData[i].name)).Icon;
             const purchase = purchaseData.find(p => p.product.id === productsData[i].id);
             let boughtOn = purchase._date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, ' ');

@@ -34,8 +34,6 @@ class PlayingService {
 
   async registerGameActivityLocally(gameActivity) {
     await this.writeFileContent(this.getActivityFileName(PlayingService.currentStartDate), JSON.stringify(gameActivity));
-    console.log(await this.readFileContent(this.fileName));
-    console.log(gameActivity);
     var recentAppIds = [];
     try
     {
