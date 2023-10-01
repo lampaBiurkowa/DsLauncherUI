@@ -22,26 +22,27 @@ function useStaticProducts() {
       {
         var appIds = data[i].items;
         productApi.productGetSubsetGet({ids: appIds}, (productError, productData) => {
-          if (productError === null) {
-            productApi.productRatesSubsetGet({ids: appIds}, async (ratesError, ratesData) => {
-              if (ratesError === null) {
-                let result = [];
-                for (let j = 0; j < appIds.length; j++)
-                {
-                  let icon = null;
-                  try
-                  {
-                    icon = (await getFilesData(productData[j].name)).Icon;
-                  }
-                  catch {}
-                  result.push({product: productData[j], summary: ratesData[j], icon: icon});
-                }
-                sections.push({name: data[i].name, items: result});
-                if (sections.length == data.length) //HZD
-                  setProducts(sections);
-              }
-            });
-          }
+          if (productError !== null)
+            return;
+          var ids = [];
+          for (let j = 0; j < productData.length; j++)
+            ids.push(productData[j].id);
+
+          productApi.productRatesSubsetGet({ids: ids}, async (ratesError, ratesData) => {
+            if (ratesError !== null)
+              return;
+
+            let result = [];
+            for (let j = 0; j < ratesData.length; j++)
+            {
+              let icon = (await getFilesData(productData[j].name)).Icon;
+              result.push({product: productData[j], summary: ratesData[j], icon: icon});
+            }
+            sections.push({name: data[i].name, items: result});
+            if (sections.length == data.length)
+              setProducts(sections);
+          });
+          
         });
       }
     })

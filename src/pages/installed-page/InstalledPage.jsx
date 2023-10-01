@@ -50,7 +50,6 @@ function InstalledPage() {
   }, []);
 
   function run(appName, appId) {
-    console.log(appId);
     runGame(appName, appId, currentUser.id, "C:/test/test 1");
   }
 

@@ -54,9 +54,7 @@ class PlayingService {
   {
     let registeredGameActivity =  JSON.parse(await this.getLocallySavedGameActivity(PlayingService.currentStartDate));
     registeredGameActivity.endDate = new Date().toISOString();
-    console.log(JSON.stringify(registeredGameActivity));
     this.gameActivityApi.gameActivityPut({body: JSON.stringify(registeredGameActivity)}, async (error, data) => {
-      console.log("leci");
       await this.updateGameActivityLocally(registeredGameActivity);
     })
   }

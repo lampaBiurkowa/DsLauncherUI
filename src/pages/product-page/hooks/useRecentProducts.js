@@ -15,11 +15,9 @@ function useRecentProducts() {
       if (await fs.exists(fileName, { dir: BaseDirectory.AppData }))
       {
       let appIds = JSON.parse(await fs.readTextFile(fileName, { dir: BaseDirectory.AppData }));
-      console.log(appIds);
       productApi.productGetSubsetGet({ids: appIds}, async (error, data) => {
         if (error === null) {
           var result = [];
-          console.log(data);
           for (let i = 0; i < data.length; i++)
           {
             let icon = (await getFilesData(data[i].name)).Icon;
