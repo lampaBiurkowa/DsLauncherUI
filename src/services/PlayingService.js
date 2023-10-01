@@ -44,7 +44,7 @@ class PlayingService {
     catch {}
     recentAppIds = recentAppIds.filter(item => item !== gameActivity.productId);
     recentAppIds.unshift(gameActivity.productId);
-    recentAppIds.slice(0, this.maxRecentAppsCount);
+    recentAppIds = recentAppIds.slice(0, this.maxRecentAppsCount);
     await this.writeFileContent(this.fileName, JSON.stringify(recentAppIds));
   }
 
