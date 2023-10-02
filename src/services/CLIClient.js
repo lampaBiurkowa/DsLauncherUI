@@ -60,7 +60,7 @@ export async function runList(updatable, token, login) {
 export async function runGame(appName, appId, userId, path, login) {
     let command = Command.sidecar("binaries/ndib-get", ['run', appName, `--path=${path}`, `--profile=${login}`])
 
-    playingService.tryRegisterGameActivity(appId, userId);
+    playingService.tryRegisterGameActivity(appId, userId, login);
     await command.execute();
     playingService.trySubmitCurrentGameActivityEnded();
 }

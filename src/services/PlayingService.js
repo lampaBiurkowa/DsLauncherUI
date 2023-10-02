@@ -3,8 +3,6 @@ import { BaseDirectory } from '@tauri-apps/api/fs';
 import { GameActivityApi } from "@/services/api/GameActivityApi";
 import { GameActivityModel } from "@/services/model/GameActivityModel";
 import { ProductApi } from "@/services/api/ProductApi";
-import { UserModel } from '../pages';
-import { ProductModel } from '../pages';
 
 class PlayingService {
     static currentlyPlayedGameId = null;
@@ -13,11 +11,10 @@ class PlayingService {
   constructor() {
     this.gameActivityApi = new GameActivityApi();
     this.productApi = new ProductApi();
-    this.fileName = 'recent.json';
     this.maxRecentAppsCount = 5;
   }
 
-  async tryRegisterGameActivity(gameId, userId) {
+  async tryRegisterGameActivity(gameId, userId, login) {
     PlayingService.currentlyPlayedGameId = gameId;
     PlayingService.currentStartDate = new Date().toISOString();
     
@@ -28,16 +25,17 @@ class PlayingService {
     gameActivity.productId = gameId;
 
     this.gameActivityApi.gameActivityPost({body: JSON.stringify(gameActivity)}, async (error, data) => {
-      await this.registerGameActivityLocally(gameActivity);
+      await this.registerGameActivityLocally(gameActivity, login);
     });
   }
 
-  async registerGameActivityLocally(gameActivity) {
+  async registerGameActivityLocally(gameActivity, login) {
+    const fileName = `${login}.recent.json`;
     await this.writeFileContent(this.getActivityFileName(PlayingService.currentStartDate), JSON.stringify(gameActivity));
     var recentAppIds = [];
     try
     {
-      const appsInFile = JSON.parse(await this.readFileContent(this.fileName));
+      const appsInFile = JSON.parse(await this.readFileContent(fileName));
       if (appsInFile !== null)
         recentAppIds = appsInFile;
     }
@@ -45,7 +43,7 @@ class PlayingService {
     recentAppIds = recentAppIds.filter(item => item !== gameActivity.productId);
     recentAppIds.unshift(gameActivity.productId);
     recentAppIds = recentAppIds.slice(0, this.maxRecentAppsCount);
-    await this.writeFileContent(this.fileName, JSON.stringify(recentAppIds));
+    await this.writeFileContent(fileName, JSON.stringify(recentAppIds));
   }
 
   async tryPingGameActivity()

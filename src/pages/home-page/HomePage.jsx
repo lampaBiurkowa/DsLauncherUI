@@ -4,11 +4,13 @@ import useRecentProducts from "../product-page/hooks/useRecentProducts";
 import NewsEntry from "./components/NewsEntry";
 import RecentApp from "./components/RecentApp";
 import "./HomePage.scss";
-
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContextProvider";
 
 function HomePage() {
+  const { currentUser } = useContext(UserContext);
   let articles = useArticles();
-  let recentProducts = useRecentProducts();
+  let recentProducts = useRecentProducts(currentUser?.login);
 
   return (
     <div className="home-page">

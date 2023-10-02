@@ -3,11 +3,10 @@ import { ProductApi } from "@/services/api/ProductApi";
 import { fs } from '@tauri-apps/api';
 import { BaseDirectory } from '@tauri-apps/api/fs';
 import getFilesData from "../../../services/getFilesData";
-
 const productApi = new ProductApi();
 
-function useRecentProducts() {
-  const fileName = `recent.json`;
+function useRecentProducts(login) {
+  const fileName = `${login}.recent.json`;
   let [products, setProducts] = useState();
 
   useEffect(() => {
