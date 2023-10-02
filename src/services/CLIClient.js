@@ -3,10 +3,10 @@ import PlayingService from "@/services/PlayingService";
 
 const playingService = new PlayingService();
 
-export async function runInstall(appName, path, token) {
+export async function runInstall(appName, path, token, login) {
     const command = Command.sidecar(
         "binaries/ndib-get",
-        ["install", `${appName}`, "--json", `--path=${path}`, `--token=${token}`],
+        ["install", `${appName}`, "--json", `--path=${path}`, `--token=${token}`, `--profile=${login}`],
         { encoding: "utf-8" }
     );
 
@@ -25,8 +25,8 @@ export async function runInstall(appName, path, token) {
     await command.execute();
 }
 
-export async function runStatus(appName) {
-    const command = Command.sidecar("binaries/ndib-get", ['status', `${appName}`, '--json'])
+export async function runStatus(appName, login) {
+    const command = Command.sidecar("binaries/ndib-get", ['status', `${appName}`, '--json', `--profile=${login}`])
     const output = await command.execute();
     try {
         console.log(`${output.stdout}`);
@@ -42,12 +42,12 @@ export async function runStatus(appName) {
     }
 }
 
-export async function runList(updatable, token) {
+export async function runList(updatable, token, login) {
     let command = null;
     if (updatable)
-        command = Command.sidecar("binaries/ndib-get", ['list', '--updatable', '--json', `--token=${token}`])
+        command = Command.sidecar("binaries/ndib-get", ['list', '--updatable', '--json', `--token=${token}`, `--profile=${login}`])
     else
-        command = Command.sidecar("binaries/ndib-get", ['list', '--json', `--token=${token}`])
+        command = Command.sidecar("binaries/ndib-get", ['list', '--json', `--token=${token}`, `--profile=${login}`])
 
     const output = await command.execute();
     console.log(`${output.stdout}`);
@@ -57,18 +57,18 @@ export async function runList(updatable, token) {
     return jsonObject;
 }
 
-export async function runGame(appName, appId, userId, path) {
-    let command = Command.sidecar("binaries/ndib-get", ['run', appName, `--path=${path}`])
+export async function runGame(appName, appId, userId, path, login) {
+    let command = Command.sidecar("binaries/ndib-get", ['run', appName, `--path=${path}`, `--profile=${login}`])
 
     playingService.tryRegisterGameActivity(appId, userId);
     await command.execute();
     playingService.trySubmitCurrentGameActivityEnded();
 }
 
-export async function runPurge(appName, path) {
+export async function runPurge(appName, path, login) {
     const command = Command.sidecar(
         "binaries/ndib-get",
-        ["purge", `${appName}`, "--json", `--path=${path}`],
+        ["purge", `${appName}`, "--json", `--path=${path}`, `--profile=${login}`],
         { encoding: "utf-8" }
     );
 

@@ -3,7 +3,6 @@ import LibraryEntry from "@/components/library-entry/LibraryEntry";
 
 import "./OwnedPage.scss";
 import { UserApi } from "@/services/api/UserApi";
-import { GameActivityApi } from "@/services/api/GameActivityApi";
 import getFilesData from "../../services/getFilesData";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContextProvider";
@@ -21,7 +20,7 @@ function OwnedPage() {
       if (productsError !== null)
         return;
 
-      let installedAppNames = (await runList(false, getToken())).Names;
+      let installedAppNames = (await runList(false, getToken(), currentUser.login)).Names;
       userApi.userGetNamePurchasesGet(currentUser.login, async (purchaseError, purchaseData) => {
         if (purchaseError !== null)
           return;
@@ -42,7 +41,7 @@ function OwnedPage() {
   }, []);
 
   async function install(appName) {
-    await runInstall(appName, "C:/test/test 1", getToken());
+    await runInstall(appName, "C:/test/test 1", getToken(),currentUser.login);
   }
 
   return (

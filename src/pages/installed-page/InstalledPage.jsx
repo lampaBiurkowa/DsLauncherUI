@@ -21,7 +21,7 @@ function InstalledPage() {
   useEffect(() => {
     async function getInstalled()
     {
-      let appNames = (await runList(false, getToken())).Names;
+      let appNames = (await runList(false, getToken(), currentUser.login)).Names;
 
       let result = [];
       for (let i = 0; i < appNames.length; i++)
@@ -50,13 +50,13 @@ function InstalledPage() {
   }, []);
 
   function run(appName, appId) {
-    runGame(appName, appId, currentUser.id, "C:/test/test 1");
+    runGame(appName, appId, currentUser.id, "C:/test/test 1", currentUser.login);
   }
 
   async function uninstall(appName) {
     console.log("adasd");
     console.log(appName);
-    await runPurge(appName, "C:/test/test 1");
+    await runPurge(appName, "C:/test/test 1", currentUser.login);
   }
 
   return (

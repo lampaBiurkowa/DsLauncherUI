@@ -23,7 +23,7 @@ function UpdatesPage() {
   useEffect(() => {
     async function getUpdatable()
     {
-      let appNames = (await runList(true, getToken())).Names;
+      let appNames = (await runList(true, getToken(), currentUser.login)).Names;
 
       let result = [];
       for (let i = 0; i < appNames.length; i++)
@@ -33,7 +33,7 @@ function UpdatesPage() {
             return;
   
           let icon = (await getFilesData(productData.name)).Icon;
-          let desc = (await runStatus(productData.name)).VersionDescription;
+          let desc = (await runStatus(productData.name, currentUser.login)).VersionDescription;
           console.log(desc);
           result.push({icon: icon, title: productData.name, desc: desc});
           if (result.length == appNames.length)
@@ -48,7 +48,7 @@ function UpdatesPage() {
   }, []);
 
   async function update(appName) {
-    await runInstall(appName, "C:/test/test 1", getToken());
+    await runInstall(appName, "C:/test/test 1", getToken(),currentUser.login);
   }
 
   return (
