@@ -1,7 +1,4 @@
 import { useState, useEffect } from "react";
-import { ProductApi } from "@/services/api/ProductApi";
-
-const productApi = new ProductApi();
 
 function usePromoted() {
   const url = `https://raw.githubusercontent.com/DibrySoft/static/master/promoted.json`;

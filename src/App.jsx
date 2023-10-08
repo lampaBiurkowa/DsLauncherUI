@@ -5,6 +5,7 @@ import Router from "./Router.jsx";
 import UserContextProvider from "./contexts/UserContextProvider";
 
 import { UserApi } from "./pages";
+import { ProductApi } from "./pages";
 import PlayingService from "./services/PlayingService";
 import SettingsContextProvider from "./contexts/SettingsContextProvider";
 
@@ -24,6 +25,20 @@ setInterval(async () => {
     await playingService.tryPingGameActivity();
   }
 }, 10000);
+
+const fetchProducts = async () => {
+  return new Promise((resolve, reject) => {
+    const productApi = new ProductApi();
+    productApi.productGet((error, data) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+};
+export const cachedProducts = await fetchProducts();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <div className="app">
