@@ -13,11 +13,34 @@ import usePlayerBought from "./hooks/usePlayerBought";
 import { PurchaseApi } from "../../services/api/PurchaseApi";
 import { PurchaseModel } from "../../services/model/PurchaseModel";
 import { runInstall } from "../../services/CLIClient";
+import { useState } from 'react';
+
 
 const MAX_REVIEWS = 3;
 const playingService = new PlayingService();
 const purchaseApi = new PurchaseApi();
-let userBought = false;
+let userBought = null;
+// const handleImageClick = (event) => {
+//   const image = event.currentTarget;
+//   image.classList.toggle("enlarged");
+//   console.log("co");
+// };
+//import React from 'react';
+
+const ImagePopup = ({ image, onClose }) => {
+  return (
+    <div className="image-popup">
+      <div className="popup-content">
+        <img src={image} alt="Enlarged Screenshot" />
+        <button onClick={onClose} className="close-button">
+          Close
+        </button>
+      </div>
+    </div>
+  );
+};
+
+//export default ImagePopup;
 
 function handlePurchase(productId, price)
 {
@@ -42,6 +65,17 @@ function ProductPage() {
   let reviews = useReviews(productId);
   let summary = useSummary(productId);
   userBought = usePlayerBought('d', productId);
+
+  const [enlargedImage, setEnlargedImage] = useState(null);
+
+  const handleImageClick = (event) => {
+    console.log(event.target.currentSrc);
+    setEnlargedImage(event.target.currentSrc);
+  };
+
+  const handleClosePopup = () => {
+    setEnlargedImage(null);
+  };
 
   return (
     <article>
@@ -82,10 +116,14 @@ function ProductPage() {
                 alt="Screenshot"
                 className="screenshot"
                 key={index}
+                onClick={handleImageClick}
               />
             );
           })}
         </Shelf>
+        {enlargedImage && (
+        <ImagePopup image={enlargedImage} onClose={handleClosePopup} />
+      )}
       </section>
       <section className="reviews">
         <h2>Comments & Reviews</h2>
