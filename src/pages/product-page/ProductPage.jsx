@@ -53,7 +53,7 @@ function handlePurchase(productId, price)
   purchaseApi.purchasePost({body: JSON.stringify(purchaseModel)}, (error, data) => {
     if (error === null)
     {console.log("kupilem se");
-      userBought = true;//ni umiem odswiezyc :D/ usePlayerBought('d', productId);
+      //userBought = true;//ni umiem odswiezyc :D/ usePlayerBought('d', productId);
     }
   });
 }

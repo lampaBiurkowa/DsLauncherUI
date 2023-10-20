@@ -8,6 +8,7 @@ import { UserApi } from "./pages";
 import { ProductApi } from "./pages";
 import PlayingService from "./services/PlayingService";
 import SettingsContextProvider from "./contexts/SettingsContextProvider";
+import getFilesData from "./services/getFilesData";
 
 //report online loop
 const userApi = new UserApi();
@@ -38,7 +39,19 @@ const fetchProducts = async () => {
     });
   });
 };
-export const cachedProducts = await fetchProducts();
+
+const getProductsWithImages = async () => {
+  var products = await fetchProducts();
+  var result = [];
+  for (var i = 0; i < products.length; i++)
+  {
+    result.push({data: products[i], image: await getFilesData(products[i].name)});
+  }
+  return result;
+};
+export const cachedProducts = await getProductsWithImages();
+
+ 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <div className="app">

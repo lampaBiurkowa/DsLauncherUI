@@ -7,12 +7,14 @@ import { cachedProducts } from '../../App';
 
 function StorePage() {
   const [searchValue, setSearchValue] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
   const handleSearchChange = (event) => {
     var text = event.target.value;
     setSearchValue(text);
-    var seachedApps = cachedProducts.filter(item => item.name.toLowerCase().includes(text.toLowerCase()));
-    console.log(seachedApps);
+    var searchedApps = cachedProducts.filter(item => item.data.name.toLowerCase().includes(text.toLowerCase()));
+    console.log(searchedApps);
+    setSearchResults(searchedApps);
   };
 
   return (
@@ -24,13 +26,32 @@ function StorePage() {
           </NavButton>
           <NavButton to="/store/games">Games</NavButton>
           <NavButton to="/store/apps">Apps</NavButton>
+      <div className="search-container-wrapper">
+          <div className="search-container">
           <input
             navend="true"
+            className="search-input"
             placeholder="Search"
             type="search"
             style={{ alignSelf: "center" }}
             onChange={handleSearchChange}
           />
+          {(
+            <div className="search-results-dropdown">
+              {searchResults.map((result) => (
+                <div className="search-result-item">
+                  <img
+                    src={result.image?.Icon}
+                    alt={result.data.name}
+                    className="product-image"
+                  />
+                  <a href={`/store/product/${result.data.id}`}>{result.data.name}</a>
+                </div>
+              ))}
+            </div>
+          )}
+          </div>
+          </div>
         </NavBar>
       </div>
       <Outlet />
