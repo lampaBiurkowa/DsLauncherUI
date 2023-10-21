@@ -4,7 +4,6 @@ import Dropdown from "@/components/dropdown/Dropdown";
 
 import "./UpdatesPage.scss";
 
-import { GameActivityApi } from "@/services/api/GameActivityApi";
 import getFilesData from "../../services/getFilesData";
 import { runList } from "../../services/CLIClient";
 import getToken from "../../services/getToken";
@@ -16,7 +15,7 @@ import { runStatus } from "../../services/CLIClient";
 
 function UpdatesPage() {
   const productApi = new ProductApi();
-  const activityApi = new GameActivityApi();
+  const [settings, applySettings] = useSettings();
   const { currentUser } = useContext(UserContext);
   const [apps, setApps] = useState([]);
 
@@ -34,7 +33,6 @@ function UpdatesPage() {
   
           let icon = (await getFilesData(productData.name)).Icon;
           let desc = (await runStatus(productData.name, currentUser.login)).VersionDescription;
-          console.log(desc);
           result.push({icon: icon, title: productData.name, desc: desc});
           if (result.length == appNames.length)
           {
@@ -48,7 +46,7 @@ function UpdatesPage() {
   }, []);
 
   async function update(appName) {
-    await runInstall(appName, "C:/test/test 1", getToken(),currentUser.login);
+    await runInstall(appName, settings.games[appName], getToken(),currentUser.login);
   }
 
   return (
@@ -74,7 +72,7 @@ function UpdatesPage() {
               <Dropdown>
                 <ul className="dropdown-content">
                   <li>
-                    <button className="menuitem small">
+                    <button className="menuitem small" onClick={console.log("pliz")}>
                       <i className="las la-trash" />
                       <span>Uninstall</span>
                     </button>

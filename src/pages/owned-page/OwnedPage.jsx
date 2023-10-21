@@ -9,11 +9,48 @@ import { UserContext } from "../../contexts/UserContextProvider";
 import { runInstall } from "../../services/CLIClient";
 import getToken from "../../services/getToken";
 import { runList } from "../../services/CLIClient";
+import { readOrDefault } from "../../services/SettingsService";
+import useSettings from "../../hooks/useSettings";
+
+
+function Popup({ app, onCancel, onAccept }) {
+  const [settings, applySettings] = useSettings();
+  const [selectedOption, setSelectedOption] = useState('');
+
+  const handleAccept = () => {
+    if (selectedOption) {
+      onAccept(app, selectedOption);
+    }
+  };
+  
+  return (
+    <div className="popup">
+      <div className="popup-content">
+        <h2>Install {app.title}</h2>
+        <select value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
+          <option value="">Select an option</option>
+          {
+            settings.libraries.map((library) => {
+              return (
+                <option value={library}>{library}</option>
+              );
+            })
+          }
+        </select>
+        <div className="popup-buttons">
+          <button onClick={handleAccept}>Accept</button>
+          <button onClick={onCancel}>Cancel</button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function OwnedPage() {
   const { currentUser } = useContext(UserContext);
   const userApi = new UserApi();
   const [apps, setApps] = useState([]);
+  const [settings, applySettings] = useSettings();
 
   useEffect(() => {
     userApi.userGetNameProductsGet(currentUser.login, async (productsError, productsData) => {
@@ -40,8 +77,29 @@ function OwnedPage() {
     });
   }, []);
 
-  async function install(appName) {
-    await runInstall(appName, "C:/test/test 1", getToken(),currentUser.login);
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [selectedApp, setSelectedApp] = useState(null);
+
+  const showPopup = (app) => {
+    setSelectedApp(app);
+    setPopupVisible(true);
+  };
+
+  const hidePopup = () => {
+    setSelectedApp(null);
+    setPopupVisible(false);
+  };
+
+  const handleAccept = async (app, selectedOption) => {
+    console.log(`Installing ${app.title} with ${selectedOption}`);
+    await install(app.title, selectedOption);
+    hidePopup();
+  };
+  async function install(appName, library) {
+    settings.games[appName] = library;
+    applySettings((s) => {s.games[appName] = library;});
+
+    await runInstall(appName, library, getToken(),currentUser.login);
   }
 
   return (
@@ -53,14 +111,17 @@ function OwnedPage() {
             <LibraryEntry icon={app.icon} title={app.title} secondary={`Bought on ${app.boughtOn}`} key={index}>
               <button
                 className="accent outlined"
-                onClick={async () => await install(app.title)}
+                onClick={() => showPopup(app)}
+                // onClick={async () => await install(app.title)  }
               >
                 Install
               </button>
             </LibraryEntry>
           );
         })}
-      </div>
+      </div>{popupVisible && (
+        <Popup app={selectedApp} onCancel={hidePopup} onAccept={handleAccept} />
+      )}
     </div>
   );
 }

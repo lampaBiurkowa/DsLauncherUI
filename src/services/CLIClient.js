@@ -57,6 +57,10 @@ export async function runList(updatable, token, login) {
     return jsonObject;
 }
 
+async function getGameLibrary() {
+    
+}
+
 export async function runGame(appName, appId, userId, path, login) {
     let command = Command.sidecar("binaries/ndib-get", ['run', appName, `--path=${path}`, `--profile=${login}`])
 

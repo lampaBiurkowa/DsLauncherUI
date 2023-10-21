@@ -4,7 +4,8 @@ import { BaseDirectory } from "@tauri-apps/api/fs";
 const SETTINGS_PATH = "settings.json";
 const DEFAULT_SETTINGS = {
   theme: "dark",
-  libraries: [],
+  libraries: ["C:/test/test1","C:/test/test2","C:/test/test3"],
+  games: {}
 };
 
 export async function readOrDefault() {
@@ -17,7 +18,7 @@ export async function readOrDefault() {
   return DEFAULT_SETTINGS;
 }
 
-export async function write(settings) {
+export async function writeSettings(settings) {
   await fs.writeTextFile(SETTINGS_PATH, JSON.stringify(settings), {
     dir: BaseDirectory.AppData,
   });

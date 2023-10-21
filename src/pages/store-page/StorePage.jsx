@@ -13,7 +13,6 @@ function StorePage() {
     var text = event.target.value;
     setSearchValue(text);
     var searchedApps = cachedProducts.filter(item => item.data.name.toLowerCase().includes(text.toLowerCase()));
-    console.log(searchedApps);
     setSearchResults(searchedApps);
   };
 

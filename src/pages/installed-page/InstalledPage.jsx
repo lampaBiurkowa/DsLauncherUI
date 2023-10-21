@@ -11,11 +11,13 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { runGame } from "../../services/CLIClient";
 import { runPurge } from "../../services/CLIClient";
+import useSettings from "../../hooks/useSettings";
 
 function InstalledPage() {
   const productApi = new ProductApi();
   const activityApi = new GameActivityApi();
   const { currentUser } = useContext(UserContext);
+  const [settings, applySettings] = useSettings();
   const [apps, setApps] = useState([]);
 
   useEffect(() => {
@@ -50,13 +52,12 @@ function InstalledPage() {
   }, []);
 
   function run(appName, appId) {
-    runGame(appName, appId, currentUser.id, "C:/test/test 1", currentUser.login);
+    runGame(appName, appId, currentUser.id, settings.games[appName], currentUser.login);
   }
 
   async function uninstall(appName) {
-    console.log("adasd");
-    console.log(appName);
-    await runPurge(appName, "C:/test/test 1", currentUser.login);
+    await runPurge(appName, settings.games[appName], currentUser.login);
+    applySettings((s) => {delete s.games[appName];})//was jd
   }
 
   return (

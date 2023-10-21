@@ -9,7 +9,6 @@ function usePlayerBought(userLogin, productId) {
   useEffect(() => {
     userApi.userGetNameProductsGet(userLogin, (error, data) => {
       if (error === null) {
-        console.log(data);
         checkIfPlayerBought(data.some(item => item.id == productId));
       }
     });

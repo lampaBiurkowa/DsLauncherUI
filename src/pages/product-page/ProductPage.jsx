@@ -12,19 +12,13 @@ import PlayingService from "../../services/PlayingService";
 import usePlayerBought from "./hooks/usePlayerBought";
 import { PurchaseApi } from "../../services/api/PurchaseApi";
 import { PurchaseModel } from "../../services/model/PurchaseModel";
-import { runInstall } from "../../services/CLIClient";
 import { useState } from 'react';
 
 
 const MAX_REVIEWS = 3;
-const playingService = new PlayingService();
 const purchaseApi = new PurchaseApi();
 let userBought = null;
-// const handleImageClick = (event) => {
-//   const image = event.currentTarget;
-//   image.classList.toggle("enlarged");
-//   console.log("co");
-// };
+
 //import React from 'react';
 
 const ImagePopup = ({ image, onClose }) => {
@@ -69,7 +63,6 @@ function ProductPage() {
   const [enlargedImage, setEnlargedImage] = useState(null);
 
   const handleImageClick = (event) => {
-    console.log(event.target.currentSrc);
     setEnlargedImage(event.target.currentSrc);
   };
 
