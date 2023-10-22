@@ -11,8 +11,6 @@ function UserButton({ to }) {
     if (currentUser != null) {
       return UsersCache.getById(currentUser.id).images.profileImageBase64;
     }
-
-    return "/img/user.png"; //napraw
   }
 
   function getUsername() {
@@ -41,7 +39,7 @@ function UserButton({ to }) {
 
   return (
     <NavLink className="user-button" to={getLink()}>
-      <img src={"data:image/png;base64," + getProfilePictureBase64()} alt="Profile Picture" />
+      <img src={getProfilePictureBase64()} alt="Profile Picture" />
       <div>
         <span className="user-name">{getUsername()}</span>
         <span className="user-handle">{getHandleOrTip()}</span>

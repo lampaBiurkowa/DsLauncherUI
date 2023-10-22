@@ -6,14 +6,33 @@ import RecentApp from "./components/RecentApp";
 import "./HomePage.scss";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContextProvider";
+import { UserImagesApi } from "../../services/api/UserImagesApi";
+import { UsersCache } from "../../services/CacheService";
 
 function HomePage() {
   const { currentUser } = useContext(UserContext);
   let articles = useArticles();
   let recentProducts = useRecentProducts(currentUser?.login);
 
+  function encodeImageFileAsURL(event) {
+    const api = new UserImagesApi();
+    var file = event.target.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function() {
+      console.log('RESULT', reader.result);
+      api.userImagesPut({body: {id: currentUser.id, profileImageBase64: reader.result}}, (error, data) =>
+      {
+        if (error === null) {
+          console.log("profile uploaded");
+          UsersCache.load();
+        }
+      });
+    }
+    reader.readAsDataURL(file);
+  }
+
   return (
-    <div className="home-page">
+    <div className="home-page"><input type="file" onChange={encodeImageFileAsURL} />
       {recentProducts?.length > 0 && (
         <section className="recent-section">
           <h1>Recently played</h1>
