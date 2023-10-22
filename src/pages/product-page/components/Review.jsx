@@ -2,13 +2,18 @@ import React from "react";
 import "./Review.scss";
 import Spacer from "../../../components/spacer/Spacer";
 import Rating from "../../../components/rating/Rating";
+import { UsersCache } from "../../../services/CacheService";
+
+function getProfilePictureBase64(userId) {
+  return UsersCache.getById(userId).images.profileImageBase64;
+}
 
 function Review({ review }) {
   return (
     <div className="review-container">
       <div className="header">
         <img
-          src="/img/user.png"
+          src={"data:image/png;base64," + getProfilePictureBase64(review.user.id)}
           alt="Profile picture"
           className="profile-picture"
         />

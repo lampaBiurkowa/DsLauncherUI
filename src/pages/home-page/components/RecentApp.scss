@@ -3,28 +3,39 @@
 .recent-app {
   width: 160px;
   height: 90px;
+  position: relative;
 
-  background-color: $dark-0;
   background-position: center;
   background-size: cover;
 
   border: 1px solid $dark-3;
   border-radius: $radius-sm;
-  transition: 0.1s all ease;
-
   transition: background-size 2s ease-in;
 
   &:hover {
-    background-color: $dark-1;
-    cursor: pointer;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba($dark-0, 0.7);
+      z-index: 1;
+      transition: background-color 0.2s ease;
+    }
 
     a {
       opacity: 1;
+      z-index: 2;
     }
   }
 
   a {
     opacity: 0;
     transition: 0.1s opacity ease;
+    position: relative;
+    text-decoration: none;
+    color: $text;
   }
 }

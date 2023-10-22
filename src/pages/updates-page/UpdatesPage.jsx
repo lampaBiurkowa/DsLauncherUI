@@ -12,6 +12,7 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { runInstall } from "../../services/CLIClient";
 import { runStatus } from "../../services/CLIClient";
+import useSettings from "../../hooks/useSettings";
 
 function UpdatesPage() {
   const productApi = new ProductApi();

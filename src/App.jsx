@@ -4,11 +4,12 @@ import TitleBar from "./components/titlebar/TitleBar";
 import Router from "./Router.jsx";
 import UserContextProvider from "./contexts/UserContextProvider";
 
-import { UserApi } from "./pages";
+import { UserApi, UserImagesApi } from "./pages";
 import { ProductApi } from "./pages";
 import PlayingService from "./services/PlayingService";
 import SettingsContextProvider from "./contexts/SettingsContextProvider";
 import getFilesData from "./services/getFilesData";
+import { UsersCache } from "./services/CacheService";
 
 //report online loop
 const userApi = new UserApi();
@@ -51,7 +52,7 @@ const getProductsWithImages = async () => {
 };
 export const cachedProducts = await getProductsWithImages();
 
- 
+await UsersCache.load();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <div className="app">

@@ -39,6 +39,7 @@ import { ProductApi } from "../services/api/ProductApi";
 import { PurchaseApi } from "../services/api/PurchaseApi";
 import { ReviewApi } from "../services/api/ReviewApi";
 import { UserApi } from "../services/api/UserApi";
+import { UserImagesApi } from "../services/api/UserImagesApi";
 
 /**
  * Object.<br>
@@ -213,4 +214,6 @@ export {
    * @property {module:api/UserApi}
    */
   UserApi,
+
+  UserImagesApi
 };

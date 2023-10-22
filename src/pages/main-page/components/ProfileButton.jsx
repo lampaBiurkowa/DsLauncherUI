@@ -2,16 +2,17 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../../../contexts/UserContextProvider";
 import "./ProfileButton.scss";
+import { UsersCache } from "../../../services/CacheService";
 
 function UserButton({ to }) {
   const { currentUser } = useContext(UserContext);
 
-  function getProfilePictureUrl() {
+  function getProfilePictureBase64() {
     if (currentUser != null) {
-      return currentUser.pictureUrl;
+      return UsersCache.getById(currentUser.id).images.profileImageBase64;
     }
 
-    return "/img/user.png";
+    return "/img/user.png"; //napraw
   }
 
   function getUsername() {
@@ -40,7 +41,7 @@ function UserButton({ to }) {
 
   return (
     <NavLink className="user-button" to={getLink()}>
-      <img src={getProfilePictureUrl()} alt="Profile Picture" />
+      <img src={"data:image/png;base64," + getProfilePictureBase64()} alt="Profile Picture" />
       <div>
         <span className="user-name">{getUsername()}</span>
         <span className="user-handle">{getHandleOrTip()}</span>
