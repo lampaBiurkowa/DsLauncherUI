@@ -2,17 +2,22 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../../../contexts/UserContextProvider";
 import "./ProfileButton.scss";
-import { UsersCache } from "../../../services/CacheService";
+import { getProfilePictureBase64 } from "../../../services/Base64Service";
+import { useState, useEffect } from "react";
 
 function UserButton({ to }) {
   const { currentUser } = useContext(UserContext);
 
-  function getProfilePictureBase64() {
-    if (currentUser != null) {
-      return UsersCache.getById(currentUser.id).images.profileImageBase64;
-    }
+  function useProfileImage() {
+  
+    let [profileImage, setProfileImage] = useState([]);
+    useEffect(() => {
+      setProfileImage(getProfilePictureBase64(currentUser?.id));
+    }, []);
+  
+    return profileImage;
   }
-
+  
   function getUsername() {
     if (currentUser != null) {
       return `${currentUser.name} ${currentUser.surname}`;
@@ -37,9 +42,10 @@ function UserButton({ to }) {
     return "/login";
   }
 
+  let profileImage = useProfileImage();
   return (
     <NavLink className="user-button" to={getLink()}>
-      <img src={getProfilePictureBase64()} alt="Profile Picture" />
+      <img src={profileImage} alt="Profile Picture" />
       <div>
         <span className="user-name">{getUsername()}</span>
         <span className="user-handle">{getHandleOrTip()}</span>

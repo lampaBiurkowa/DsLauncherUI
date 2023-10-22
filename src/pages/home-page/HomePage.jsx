@@ -19,12 +19,11 @@ function HomePage() {
     var file = event.target.files[0];
     var reader = new FileReader();
     reader.onloadend = function() {
-      console.log('RESULT', reader.result);
       api.userImagesPut({body: {id: currentUser.id, profileImageBase64: reader.result}}, (error, data) =>
       {
         if (error === null) {
-          console.log("profile uploaded");
           UsersCache.load();
+          console.log("profile uploaded");
         }
       });
     }
