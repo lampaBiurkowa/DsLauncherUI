@@ -8,7 +8,6 @@ import useReviews from "./hooks/useReviews";
 import Review from "./components/Review";
 import useSummary from "./hooks/useSummary";
 import ReviewCounter from "./components/ReviewCounter";
-import PlayingService from "../../services/PlayingService";
 import usePlayerBought from "./hooks/usePlayerBought";
 import { PurchaseApi } from "../../services/api/PurchaseApi";
 import { PurchaseModel } from "../../services/model/PurchaseModel";

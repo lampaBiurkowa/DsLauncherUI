@@ -71,7 +71,9 @@ function OwnedPage() {
             let isInstalled = installedAppNames.includes(productsData[i].name);
             result.push({icon: icon, title: productsData[i].name, boughtOn: boughtOn, isInstalled: isInstalled});
             if (result.length == productsData.length)
+            {
               setApps(result);
+            }
         }
       });
     });
@@ -112,7 +114,6 @@ function OwnedPage() {
               <button
                 className="accent outlined"
                 onClick={() => showPopup(app)}
-                // onClick={async () => await install(app.title)  }
               >
                 Install
               </button>

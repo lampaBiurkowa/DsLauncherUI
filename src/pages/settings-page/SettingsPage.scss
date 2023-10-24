@@ -1,0 +1,162 @@
+@use "@/styles" as *;
+
+.settings-container {
+    display: block;
+    padding: 20px;
+    border-radius: 5px;
+
+    .main-content {
+        display: block;
+        justify-content: space-between;
+        width: 60%;
+        flex: 1;
+        float: left;
+    }
+
+    .library-paths-aside {
+        display: block;
+        flex: 1;
+        width: 30%;
+        padding: 10px;
+        margin-left: 20px;
+        float: left;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: $text;
+    }
+
+    h3 {
+        color: $text-alt;
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .custom-file-input {
+        position: relative;
+        overflow: hidden;
+        background-color: rgba($text, 0.1);
+        color: $text;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 10px;
+        transition: background-color 0.3s;
+        display: inline-block;
+
+        &:hover {
+            background-color: $accent-alt;
+            background-color: rgba($text, 0.2);
+        }
+
+        &:active {
+            background-color: $accent-alt;
+            background-color: rgba($text, 0.3);
+        }
+
+        input[type="file"] {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+    }
+
+    .dropdown-container {
+        margin-bottom: 20px;
+        width: 100px;
+        position: relative;
+
+        .dropdown-arrow {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+            padding: 10px;
+            background-color: rgba($text, 0.1);
+            border-radius: 5px;
+
+            &.open {
+                background-color: rgba($text, 0.2);
+            }
+        }
+
+        .dropdown-options {
+            text-align: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background-color: $dark-2;
+            position: absolute;
+            width: 100%;
+
+            li {
+                padding: 10px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $dark-3;
+                }
+            }
+        }
+    }
+
+    .library-path-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
+
+        li {
+            padding: 10px;
+            width: 100%;
+            margin-right: 10px;
+        }
+    }
+
+    .input-container {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+
+        input {
+            flex: 1;
+        }
+
+        button {
+            margin-left: 10px;
+        }
+    }
+
+    label {
+        display: block;
+        margin-bottom: 15px;
+
+        input[type="text"],
+        input[type="password"] {
+            margin-top: 5px;
+            width: 100%;
+            padding: 10px;
+        }
+    }
+
+    .error-message {
+        color: #e74c3c;
+    }
+
+    .save-button {
+        background-color: $accent;
+
+        &:hover {
+            background-color: $accent-alt;
+        }
+    }
+}

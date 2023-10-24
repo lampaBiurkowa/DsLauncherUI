@@ -3,7 +3,7 @@ import { BaseDirectory } from "@tauri-apps/api/fs";
 
 const SETTINGS_PATH = "settings.json";
 const DEFAULT_SETTINGS = {
-  theme: "dark",
+  theme: "Dark",
   libraries: ["C:/test/test1","C:/test/test2","C:/test/test3"],
   games: {}
 };

@@ -26,6 +26,11 @@ button {
   &:active {
     background-color: rgba($text, 0.3);
   }
+  
+  &:disabled {
+    background-color: rgba($text, 0.4);
+    cursor: auto;
+  }
 }
 
 //Button themes
@@ -61,6 +66,7 @@ button.menuitem {
     background-color: rgba($text, 0.3);
   }
 }
+
 
 //Button sizes
 .button.small,
