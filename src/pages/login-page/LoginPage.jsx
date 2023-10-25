@@ -10,11 +10,13 @@ import { UserApi } from "../../services/api/UserApi";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const authApi = new AuthApi(new ApiClient());
 const userApi = new UserApi();
 
 function LoginPage() {
+  const [error, setError] = useState(null);
   let context  = useContext(UserContext);
   let navigate = useNavigate();
   return (
@@ -48,12 +50,17 @@ function LoginPage() {
               ApiClient.authentications.password = crypto.randomUUID();
               authApi.authLoginLoginPasswordIdGet(loginInput, passwordInput, ApiClient.authentications.password, async (error, data) => {
                 if (error !== null || data === false)
+                {
+                  setError("Login failed. Please check your credentials.");
                   return;
+                }
                 
                 console.log(`lohhed in with token ${ApiClient.authentications.password}`);
                 userApi.userGetAliasGet(loginInput, (userError, userData) => {
-                  if (userError !== null)
+                  if (userError !== null) {
+                    setError("An error occurred while fetching user data. Consider buying a new PC.");
                     return;
+                  }
 
                   context.currentUser = userData;
                   navigate("/home");
@@ -61,6 +68,7 @@ function LoginPage() {
               });
             }}>Log in</button>
           </div>
+          {error && <p className="error-message">{error}</p>}
         </form>
         <div className="sign-up">
           <Separator>Create Dibrysoft Account</Separator>

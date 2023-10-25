@@ -228,7 +228,6 @@ function SettingsPage() {
             {libraryPaths.map((path, index) => (
               <div className="library-path-item" key={index}>
                 <span>{path}</span>
-                {console.log(isPathRemovable(path))}
                 <button disabled={!isPathRemovable(path)} onClick={() => deletePath(index)}>Delete</button>
               </div>
             ))}

@@ -83,4 +83,10 @@
       }
     }
   }
+
+  .error-message {
+    color: #aa0000;
+    font-size: $text-base;
+    margin-top: $margin-md;
+  }
 }
