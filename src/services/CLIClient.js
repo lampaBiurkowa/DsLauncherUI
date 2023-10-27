@@ -1,9 +1,11 @@
 import { Command } from "@tauri-apps/api/shell";
 import PlayingService from "@/services/PlayingService";
+import { globalUpdateProgress } from "../App";
 
 const playingService = new PlayingService();
 
 export async function runInstall(appName, path, token, login) {
+
     const command = Command.sidecar(
         "binaries/ndib-get",
         ["install", `${appName}`, "--json", `--path=${path}`, `--token=${token}`, `--profile=${login}`],
@@ -17,12 +19,17 @@ export async function runInstall(appName, path, token, login) {
             console.log(`${jsonObject.BytesTotal}`);
             console.log(`${jsonObject.BytesDownloaded}`);
             console.log(`${jsonObject.Percentage}`);
-        } catch {
+            globalUpdateProgress.progress = parseInt(jsonObject.Percentage);
+            console.log(`wyt ${globalUpdateProgress.progress}`);
+        } catch (error) {
+            console.error(error);
             console.log(`Invalid json: "${line}"`);
+            globalUpdateProgress.progress = 0;
         }
     });
 
     await command.execute();
+    globalUpdateProgress.progress = 100;
 }
 
 export async function runStatus(appName, login) {

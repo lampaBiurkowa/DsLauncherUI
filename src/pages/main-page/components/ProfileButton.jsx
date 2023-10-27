@@ -28,7 +28,7 @@ function UserButton({ to }) {
 
   function getHandleOrTip() {
     if (currentUser != null) {
-      return currentUser.handle;
+      return `${currentUser.money} $`;
     }
 
     return "Log in";

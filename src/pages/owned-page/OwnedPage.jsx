@@ -9,8 +9,8 @@ import { UserContext } from "../../contexts/UserContextProvider";
 import { runInstall } from "../../services/CLIClient";
 import getToken from "../../services/getToken";
 import { runList } from "../../services/CLIClient";
-import { readOrDefault } from "../../services/SettingsService";
 import useSettings from "../../hooks/useSettings";
+import { globalUpdateProgress } from "../../App";
 
 
 function Popup({ app, onCancel, onAccept }) {
@@ -94,8 +94,8 @@ function OwnedPage() {
 
   const handleAccept = async (app, selectedOption) => {
     console.log(`Installing ${app.title} with ${selectedOption}`);
-    await install(app.title, selectedOption);
     hidePopup();
+    await install(app.title, selectedOption);
   };
   async function install(appName, library) {
     settings.games[appName] = library;

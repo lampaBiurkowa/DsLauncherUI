@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "./UpdateSummary.scss";
+import { globalUpdateProgress } from "../../../App";
 
 function UpdateSummary() {
+  const [updateProgress, setUpdateProgress] = useState(0);
+  setInterval(async () => {
+    setUpdateProgress(globalUpdateProgress.progress);
+  }, 100);
+
+
   return (
     <button className="update-summary">
       <i className="las la-download" />
       <span>Updating</span>
       <div className="progress-bar">
-        <div className="progress" />
+        <div className="progress" style={{ width: `${updateProgress}%` }} />
       </div>
     </button>
   );

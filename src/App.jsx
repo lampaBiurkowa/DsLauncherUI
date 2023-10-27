@@ -14,7 +14,7 @@ import { UsersCache } from "./services/CacheService";
 //report online loop
 const userApi = new UserApi();
 setInterval(() => {
-  userApi.userReportOnlineLoginGet("d", (error, data) => {});
+  userApi.userReportOnlineLoginGet("d", (error, data) => { });
 }, 60000);
 
 //recover unsent game activities data
@@ -44,13 +44,15 @@ const fetchProducts = async () => {
 const getProductsWithImages = async () => {
   var products = await fetchProducts();
   var result = [];
-  for (var i = 0; i < products.length; i++)
-  {
-    result.push({data: products[i], image: await getFilesData(products[i].name)});
+  for (var i = 0; i < products.length; i++) {
+    result.push({ data: products[i], image: await getFilesData(products[i].name) });
   }
   return result;
 };
 export const cachedProducts = await getProductsWithImages();
+export const globalUpdateProgress = {
+  progress: 0
+};
 
 await UsersCache.load();
 
