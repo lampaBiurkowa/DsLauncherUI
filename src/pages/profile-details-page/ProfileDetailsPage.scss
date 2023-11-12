@@ -1,0 +1,48 @@
+@use "@/styles" as *;
+
+.profile-details-page {
+  display: flex;
+  flex-direction: column;
+  gap: $margin-xl;
+  padding: $padding-xl;
+  height: calc(100% - 2 * $padding-xl);
+  overflow-y: auto;
+
+  .section-info {
+    display: flex;
+    flex-direction: column;
+    padding: $padding-md;
+    gap: $margin-xl 0;
+
+    background-color: $dark-1;
+    border: 1px solid $dark-2;
+    border-radius: $radius-lg;
+
+    h2 {
+      font-weight: $text-medium;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: $margin-md;
+
+      div {
+        display: grid;
+
+        input {
+          padding: $padding-sm;
+        }
+      }
+
+      .label {
+        font-size: $text-xs;
+        font-weight: $text-medium;
+        margin-bottom: $margin-xs;
+      }
+    }
+    .save-btn {
+      align-self: end;
+    }
+  }
+}

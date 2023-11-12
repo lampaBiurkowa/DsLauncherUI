@@ -1,0 +1,93 @@
+@use "@/styles" as *;
+@include slidein-mixin;
+
+.profile-page {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  animation: slidein 0.2s;
+  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+  .profile-summary {
+    display: flex;
+    justify-content: space-between;
+
+    padding: $padding-xl;
+    background-color: $dark-1;
+
+    .profile-picture {
+      width: 128px;
+      height: 128px;
+      grid-area: image;
+    }
+
+    .profile-basic {
+      display: grid;
+      gap: $margin-xs $margin-xl;
+      grid-template-areas: "image name" "image actions";
+
+      .profile-name {
+        align-self: end;
+        font-size: $text-xl;
+        font-weight: $text-bold;
+        text-transform: uppercase;
+      }
+
+      .profile-actions {
+        display: flex;
+        align-items: start;
+      }
+    }
+
+    .profile-currency {
+      align-self: center;
+      display: grid;
+      grid-template-areas: "symbol name" "symbol amount";
+      gap: $margin-xs $margin-md;
+
+      padding: $padding-md;
+      margin-right: 50px;
+
+      border-radius: $radius-sm;
+      transition: 0.2s all ease;
+      color: $text;
+      text-decoration: none;
+
+      i {
+        grid-area: symbol;
+        align-self: center;
+        font-size: 2em;
+        font-weight: $text-bold;
+      }
+
+      .currency-name {
+        grid-area: name;
+        font-size: $text-sm;
+        font-weight: $text-bold;
+      }
+
+      .currency-amount {
+        grid-area: amount;
+        font-size: $text-sm;
+      }
+
+      &:hover {
+        background: $dark-2;
+      }
+    }
+  }
+
+  .profile-details {
+    overflow: hidden;
+
+    .profile-nav-container {
+      background: $dark-1;
+      padding: $padding-xs $padding-xs;
+      padding-right: $padding-xl;
+    }
+  }
+}

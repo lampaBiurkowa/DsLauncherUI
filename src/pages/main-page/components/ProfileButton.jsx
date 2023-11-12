@@ -9,15 +9,14 @@ function UserButton({ to }) {
   const { currentUser } = useContext(UserContext);
 
   function useProfileImage() {
-  
-    let [profileImage, setProfileImage] = useState([]);
+    let [profileImage, setProfileImage] = useState();
     useEffect(() => {
       setProfileImage(getProfilePictureBase64(currentUser?.id));
     }, []);
-  
+
     return profileImage;
   }
-  
+
   function getUsername() {
     if (currentUser != null) {
       return `${currentUser.name} ${currentUser.surname}`;

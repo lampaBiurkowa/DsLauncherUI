@@ -6,6 +6,8 @@ import {
 } from "react-router-dom";
 import React from "react";
 
+import Protected from "./Protected";
+
 import AppsPage from "@/pages/apps-page/AppsPage";
 import ArticlePage from "@/pages/article-page/ArticlePage";
 import DiscoverPage from "@/pages/discover-page/DiscoverPage";
@@ -21,6 +23,8 @@ import RegisterPage from "@/pages/register-page/RegisterPage";
 import InstalledPage from "@/pages/installed-page/InstalledPage";
 import UpdatesPage from "./pages/updates-page/UpdatesPage";
 import OwnedPage from "./pages/owned-page/OwnedPage";
+import ProfilePage from "./pages/profile-page/ProfilePage";
+import ProfileDetailsPage from "./pages/profile-details-page/ProfileDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +36,24 @@ const router = createBrowserRouter([
         loader: () => {
           return redirect("/home");
         },
+      },
+      {
+        path: "/profile",
+        element: (
+          <Protected>
+            <ProfilePage />
+          </Protected>
+        ),
+        children: [
+          {
+            index: true,
+            element: (
+              <Protected>
+                <ProfileDetailsPage />
+              </Protected>
+            ),
+          },
+        ],
       },
       {
         path: "/home",

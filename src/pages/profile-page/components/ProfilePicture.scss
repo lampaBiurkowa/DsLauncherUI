@@ -1,0 +1,38 @@
+@use "@/styles" as *;
+
+.profile-picture {
+  position: relative;
+  border-radius: $radius-round;
+  overflow: hidden;
+
+  .image {
+    width: 100%;
+    height: 100%;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .select-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba($color: #000000, $alpha: 0.5);
+    border-radius: $radius-round;
+    opacity: 0;
+    transition: 0.2s opacity ease;
+
+    i {
+      font-size: 4em;
+      font-weight: $text-bold;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
