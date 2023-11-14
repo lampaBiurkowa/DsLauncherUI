@@ -13,7 +13,7 @@
   "tauri": {
     "allowlist": {
       "fs": {
-        "scope": ["**","$APPDATA/*"],
+        "scope": ["**", "$APPDATA/*"],
         "all": true
       },
       "all": false,
@@ -33,6 +33,12 @@
         "maximize": true,
         "unmaximize": true,
         "close": true
+      },
+      "dialog": {
+        "open": true
+      },
+      "protocol": {
+        "asset": true
       }
     },
     "bundle": {
