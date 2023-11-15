@@ -1,10 +1,10 @@
 import "./Rating.scss";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const MAX_RATING = 5;
 
-function Rating({ value, isReadOnly, className }) {
+function Rating({ value, isReadOnly, onValueChanged, className }) {
   let [rating, setRating] = useState(value ?? -1);
   let [ratingPreview, setRatingPreview] = useState(-1);
 
@@ -23,6 +23,10 @@ function Rating({ value, isReadOnly, className }) {
   function onMouseClickStar(index) {
     if (!isReadOnly) setRating(index + 1);
   }
+
+  useEffect(() => {
+    onValueChanged?.(rating);
+  }, [rating]);
 
   return (
     <div className={`${className ?? ""} rating`}>
