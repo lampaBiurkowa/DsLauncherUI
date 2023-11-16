@@ -5,7 +5,7 @@ import { globalUpdateProgress } from "../../../App";
 function UpdateSummary() {
   const [updateProgress, setUpdateProgress] = useState(0);
   setInterval(async () => {
-    setUpdateProgress(globalUpdateProgress.progress);
+    setUpdateProgress(globalUpdateProgress?.progress);
   }, 100);
 
 
