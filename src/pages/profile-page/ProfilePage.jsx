@@ -1,15 +1,18 @@
+import { convertFileSrc } from "@tauri-apps/api/tauri";
 import React, { useContext, useEffect, useState } from "react";
 import ProfilePicture from "./components/ProfilePicture";
 
 import "./ProfilePage.scss";
-import { UserContext } from "../../contexts/UserContextProvider";
+import { UserContext } from "@/contexts/UserContextProvider";
 import { getProfilePictureBase64 } from "@/services/Base64Service";
-import Navbar from "../../components/navbar/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 import { NavLink, Outlet } from "react-router-dom";
-import NavButton from "../../components/navbar/NavButton";
 import { AuthApi } from "../../services/api/AuthApi";
 import { useNavigate } from "react-router-dom";
 import { ApiClient } from "../../services/ApiClient";
+import NavButton from "@/components/navbar/NavButton";
+import { UserImagesApi } from "@/services/api/UserImagesApi";
+import { UsersCache } from "@/services/CacheService";
 
 function ProfilePage() {
   let context = useContext(UserContext);
@@ -22,11 +25,37 @@ function ProfilePage() {
     setProfileImage(getProfilePictureBase64(context.currentUser?.id));
   }, []);
 
+  function onPictureSelected(path) {
+    const api = new UserImagesApi();
+
+    //MOCARNE
+    fetch(convertFileSrc(path))
+      .then((response) => response.blob())
+      .then((blob) => {
+        let reader = new FileReader();
+        reader.onloadend = () => {
+          api.userImagesPut(
+            { body: { id: currentUser.id, profileImageBase64: reader.result } },
+            (error, data) => {
+              if (error === null) {
+                UsersCache.load();
+                console.log("profile uploaded");
+              }
+            }
+          );
+        };
+        reader.readAsDataURL(blob);
+      });
+  }
+
   return (
     <div className="profile-page">
       <section className="profile-summary">
         <div className="profile-basic">
-          <ProfilePicture src={profileImage}></ProfilePicture>
+          <ProfilePicture
+            src={profileImage}
+            onSelected={onPictureSelected}
+          ></ProfilePicture>
           <span className="profile-name">{`${context.currentUser?.name} ${context.currentUser?.surname}`}</span>
           <div className="profile-actions">
             <button className="small"
