@@ -35,10 +35,11 @@ function ProfilePage() {
         let reader = new FileReader();
         reader.onloadend = () => {
           api.userImagesPut(
-            { body: { id: currentUser.id, profileImageBase64: reader.result } },
+            { body: { id: context.currentUser.id, profileImageBase64: reader.result } },
             (error, data) => {
               if (error === null) {
                 UsersCache.load();
+                setProfileImage(reader.result);
                 console.log("profile uploaded");
               }
             }
