@@ -137,11 +137,6 @@ function SettingsPage() {
       <h2>Settings Page</h2>
       <div className="main-content">
         <div className="settings-form">
-          <h3>Profile image</h3>
-          <label className="custom-file-input">
-            Upload
-            <input type="file" onChange={encodeImageFileAsURL} />
-          </label>
           <h3>Theme</h3>
           <div className="dropdown-container">
             <div className={`dropdown-toggle ${isDropdownOpen ? "open" : ""}`} onClick={toggleDropdown}>
@@ -171,53 +166,6 @@ function SettingsPage() {
                 <button onClick={addPath}>Add Path</button>
               </div>
             </label>
-          </div>
-          <h3>User data</h3>
-          <div>
-            <label>
-              Name:
-              <input
-                type="text"
-                value={newName}
-                onChange={handleNameChange}
-                placeholder="Enter new name"
-              />
-            </label>
-
-            <label>
-              Surname:
-              <input
-                type="text"
-                value={newSurname}
-                onChange={handleSurnameChange}
-                placeholder="Enter new surname"
-              />
-            </label>
-
-            <label>
-              Password:
-              <input
-                type="password"
-                value={newPassword}
-                onChange={handlePasswordChange}
-                placeholder="Enter new password"
-              />
-            </label>
-
-            <label>
-              Enter Existing Password:
-              <input
-                type="password"
-                value={existingPassword}
-                onChange={handleExistingPasswordChange}
-              />
-            </label>
-
-            {passwordError && (
-              <p style={{ color: "red" }}>Incorrect existing password</p>
-            )}
-
-            <button className="save-button" onClick={changeUserInfo}>Change User Info</button>
           </div>
         </div>
       </div>

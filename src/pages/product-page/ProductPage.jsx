@@ -90,33 +90,33 @@ function ProductPage() {
             rgba(0, 0, 0, 1) 0%,
             rgba(0, 0, 0, 0) 100%
           ),
-          url("${product?.images?.Background}")`,
+          url("${product?.static?.Background}")`,
           }}
         >
           <div className="product-header">
-            <h1 className="title">{product?.product.name}</h1>
-            <span className="developer">{product?.product.developer.name}</span>
+            <h1 className="title">{product?.data.name}</h1>
+            <span className="developer">{product?.data.developer.name}</span>
             <button
               className="buy-button accent large"
               onClick={() => {
                 if (userBought);
-                else handlePurchase(productId, product?.product.price);
+                else handlePurchase(productId, product?.data.price);
               }}
             >
               {userBought ? "Install" : "Buy"}
             </button>
-            <span className="price">{product?.product.price}₽</span>
+            <span className="price">{product?.data.price}₽</span>
           </div>
         </div>
       </AspectRatio>
       <section className="description">
-        <img src={product?.images?.Icon} alt="Application Icon" />
+        <img src={product?.static?.Icon} alt="Application Icon" />
         <h2>About</h2>
-        <span>{product?.product.description}</span>
+        <span>{product?.data.description}</span>
       </section>
       <section>
         <Shelf className="screenshots" title="Screenshots">
-          {product?.images?.Images.map((child, index) => {
+          {product?.static?.Images.map((child, index) => {
             return (
               <img
                 src={child}
@@ -140,31 +140,14 @@ function ProductPage() {
             <span>({reviews?.length})</span>
           </div>
           <div className="details">
-            <ReviewCounter
-              rate={5}
-              count={summary?.rateCounts[0]}
-              totalCount={reviews?.length}
-            />
-            <ReviewCounter
-              rate={4}
-              count={summary?.rateCounts[1]}
-              totalCount={reviews?.length}
-            />
-            <ReviewCounter
-              rate={3}
-              count={summary?.rateCounts[2]}
-              totalCount={reviews?.length}
-            />
-            <ReviewCounter
-              rate={2}
-              count={summary?.rateCounts[3]}
-              totalCount={reviews?.length}
-            />
-            <ReviewCounter
-              rate={1}
-              count={summary?.rateCounts[4]}
-              totalCount={reviews?.length}
-            />
+            {[5, 4, 3, 2, 1].map((rate, index) => (
+              <ReviewCounter
+                key={rate}
+                rate={rate}
+                count={summary?.rateCounts[index]}
+                totalCount={reviews?.length}
+              />
+            ))}
           </div>
           <button
             className="accent"
@@ -184,6 +167,11 @@ function ProductPage() {
       </section>
       <section className="details">
         <h2>Details</h2>
+        <div class="vertical-container">
+          <div class="content-item"><i class="las la-memory"/> Ram: {product?.static.RamMib}MB</div>
+          <div class="content-item"><i class="las la-hdd"/> Disk: {product?.static.DiskMib}MB</div>
+          <div class="content-item"><i class="las la-microchip"/> CPU: {product?.static.CpuMHz}MHz</div>
+        </div>
       </section>
 
       {/*Dialogs*/}

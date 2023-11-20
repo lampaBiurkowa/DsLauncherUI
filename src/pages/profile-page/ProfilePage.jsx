@@ -40,7 +40,6 @@ function ProfilePage() {
               if (error === null) {
                 UsersCache.load();
                 setProfileImage(reader.result);
-                console.log("profile uploaded");
               }
             }
           );
@@ -64,7 +63,6 @@ function ProfilePage() {
               authApi.authLogoutLoginGet(context.currentUser.login, (error, data) => 
               {
                 context.currentUser = null;
-                console.log(context.currentUser);
                 navigate("/home", { replace: true });
                 navigate(0);
               })

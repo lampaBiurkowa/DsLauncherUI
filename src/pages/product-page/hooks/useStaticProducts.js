@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ProductApi } from "@/services/api/ProductApi";
 import getFilesData from "../../../services/getFilesData";
+import { ProductsCache } from "../../../services/CacheService";
 
 const productApi = new ProductApi();
 
@@ -20,31 +21,16 @@ function useStaticProducts() {
       var sections = [];
       for (let i = 0; i < data.length; i++)
       {
+        const result = [];
         var appIds = data[i].items;
-        productApi.productGetSubsetGet({ids: appIds}, (productError, productData) => {
-          if (productError !== null)
-            return;
-          var ids = [];
-          for (let j = 0; j < productData.length; j++)
-            ids.push(productData[j].id);
-
-          productApi.productRatesSubsetGet({ids: ids}, async (ratesError, ratesData) => {
-            if (ratesError !== null)
-              return;
-
-            let result = [];
-            for (let j = 0; j < ratesData.length; j++)
-            {
-              let icon = (await getFilesData(productData[j].name)).Icon;
-              result.push({product: productData[j], summary: ratesData[j], icon: icon});
-            }
-            sections.push({name: data[i].name, items: result});
-            if (sections.length == data.length)
-              setProducts(sections);
-          });
-          
-        });
+        for (let j = 0; j < appIds.length; j++)
+        {
+          var product = ProductsCache.getById(appIds[j]);
+          result.push(product);
+        }
+        sections.push({name: data[i].name, items: result});
       }
+      setProducts(sections);
     })
     .catch(error => {
       console.error('There has been a problem with your fetch operation:', error);

@@ -1,4 +1,5 @@
-import { UserApi, UserImagesApi } from "../pages";
+import { ProductApi, UserApi, UserImagesApi } from "../pages";
+import getFilesData from "@/services/getFilesData";
 
 class CachedObjects {
   constructor() {
@@ -56,5 +57,46 @@ class UsersCacheSingleton extends CachedObjects {
   }
 }
 
+class ProductssCacheSingleton extends CachedObjects {
+  constructor() {
+    super();
+  }
 
+  async fetchProducts()  {
+    return new Promise((resolve, reject) => {
+      const productApi = new ProductApi();
+      productApi.productGet((error, data) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(data);
+        }
+      });
+    });
+  };
+
+  async getRates(productId) {
+    return new Promise((resolve, reject) => {
+      const productApi = new ProductApi();
+      productApi.productIdRatesGet(productId, (ratesError, ratesData) => {
+        if (ratesError !== null) {
+          reject(ratesError);
+        } else {
+          resolve(ratesData);
+        }
+      });
+    });
+  }
+
+  async load() {
+    var products = await this.fetchProducts();
+    var result = [];
+    for (var i = 0; i < products.length; i++) {
+      this.data[products[i].id] = { data: products[i], static: await getFilesData(products[i].name), rates: await this.getRates(products[i].id) };
+    }
+    return result;
+  };
+}
+
+export const ProductsCache = new ProductssCacheSingleton();
 export const UsersCache = new UsersCacheSingleton();

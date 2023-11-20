@@ -218,4 +218,20 @@ article {
       }
     }
   }
+
+  .vertical-container {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+  }
+
+  .content-item {
+    font-size: $text-xl;
+    padding: 10px;
+    border-bottom: 1px dashed #ccc;
+  }
+
+  .content-item:last-child {
+    border-bottom: none;
+  }
 }

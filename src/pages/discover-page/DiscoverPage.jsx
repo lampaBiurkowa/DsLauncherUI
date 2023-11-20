@@ -25,7 +25,7 @@ function DiscoverPage() {
                 name={child.name}
                 desc={child.desc}
                 link={child.link}
-                background={child.background}
+                background={child.Background}
               />
             );
           })}
@@ -38,10 +38,11 @@ function DiscoverPage() {
               return (
                 <StoreEntry
                   key={index}
-                  id={child.product.id}
-                  name={child.product.name}
-                  icon={child.icon}
-                  rating={child.summary.avg}
+                  id={child.data.id}
+                  name={child.data.name}
+                  icon={child.static.Icon}
+                  rating={child.rates.avg}
+                  platform={`${child.static.Linux ? 'linux' : ''} ${child.static.Win ? 'win' : ''} ${child.static.Mac ? 'macos' : ''}`}
                 ></StoreEntry>
               );
             })}

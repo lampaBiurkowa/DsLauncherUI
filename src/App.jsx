@@ -8,8 +8,7 @@ import { UserApi, UserImagesApi } from "./pages";
 import { ProductApi } from "./pages";
 import PlayingService from "./services/PlayingService";
 import SettingsContextProvider from "./contexts/SettingsContextProvider";
-import getFilesData from "./services/getFilesData";
-import { UsersCache } from "./services/CacheService";
+import { ProductsCache, UsersCache } from "./services/CacheService";
 
 //report online loop
 const userApi = new UserApi();
@@ -28,33 +27,12 @@ setInterval(async () => {
   }
 }, 10000);
 
-const fetchProducts = async () => {
-  return new Promise((resolve, reject) => {
-    const productApi = new ProductApi();
-    productApi.productGet((error, data) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(data);
-      }
-    });
-  });
-};
-
-const getProductsWithImages = async () => {
-  var products = await fetchProducts();
-  var result = [];
-  for (var i = 0; i < products.length; i++) {
-    result.push({ data: products[i], image: await getFilesData(products[i].name) });
-  }
-  return result;
-};
-export const cachedProducts = await getProductsWithImages();
 export const globalUpdateProgress = {
   progress: 0
 };
 
 await UsersCache.load();
+await ProductsCache.load();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <div className="app">

@@ -19,6 +19,7 @@ function StoreEntry({ id, name, icon, rating, platform }) {
           <i className="las la-star"></i>
         </div>
         <div className="platforms">
+        {console.log(platform)}
           {platform?.includes("win") ? <i className="lab la-windows" /> : ""}
           {platform?.includes("linux") ? <i className="lab la-linux" /> : ""}
           {platform?.includes("macos") ? <i className="lab la-apple" /> : ""}
