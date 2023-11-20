@@ -62,6 +62,8 @@ function ProfilePage() {
              onClick={() => {
               authApi.authLogoutLoginGet(context.currentUser.login, (error, data) => 
               {
+                localStorage.setItem('token', '');
+                localStorage.setItem('currentUser', '');
                 context.currentUser = null;
                 navigate("/home", { replace: true });
                 navigate(0);

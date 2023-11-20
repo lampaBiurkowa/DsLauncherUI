@@ -4,8 +4,7 @@ import TitleBar from "./components/titlebar/TitleBar";
 import Router from "./Router.jsx";
 import UserContextProvider from "./contexts/UserContextProvider";
 
-import { UserApi, UserImagesApi } from "./pages";
-import { ProductApi } from "./pages";
+import { UserApi } from "./pages";
 import PlayingService from "./services/PlayingService";
 import SettingsContextProvider from "./contexts/SettingsContextProvider";
 import { ProductsCache, UsersCache } from "./services/CacheService";

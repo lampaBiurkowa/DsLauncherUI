@@ -62,6 +62,8 @@ function LoginPage() {
                     return;
                   }
 
+                  localStorage.setItem('token', ApiClient.authentications.password);
+                  localStorage.setItem('currentUser', userData.id);
                   context.currentUser = userData;
                   navigate("/home");
                 })
