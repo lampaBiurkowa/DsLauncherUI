@@ -136,22 +136,6 @@
         }
     }
 
-    label {
-        display: block;
-        margin-bottom: 15px;
-
-        input[type="text"],
-        input[type="password"] {
-            margin-top: 5px;
-            width: 100%;
-            padding: 10px;
-        }
-    }
-
-    .error-message {
-        color: #e74c3c;
-    }
-
     .save-button {
         background-color: $accent;
 
