@@ -8,6 +8,8 @@ ApiClient.authentications.password = localStorage.getItem('token', );
 
 function getUserData(userId) {
   return new Promise((resolve, reject) => {
+    if (!userId) resolve(null);
+
     userApi.userGetIdGet(userId, (error, data) => {
       if (error === null) {
         currentUser = data;
