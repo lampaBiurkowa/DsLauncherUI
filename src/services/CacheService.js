@@ -65,7 +65,7 @@ class ProductssCacheSingleton extends CachedObjects {
   async fetchProducts()  {
     return new Promise((resolve, reject) => {
       const productApi = new ProductApi();
-      productApi.productGet((error, data) => {
+      productApi.productGet({skip:0,take:1000}, (error, data) => {
         if (error) {
           reject(error);
         } else {
@@ -89,9 +89,11 @@ class ProductssCacheSingleton extends CachedObjects {
   }
 
   async load() {
+    console.log("malpa");
     var products = await this.fetchProducts();
     var result = [];
     for (var i = 0; i < products.length; i++) {
+      console.log(i);
       this.data[products[i].id] = { data: products[i], static: await getFilesData(products[i].name), rates: await this.getRates(products[i].id) };
     }
     return result;

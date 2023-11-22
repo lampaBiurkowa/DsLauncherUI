@@ -7,7 +7,7 @@ function useArticles() {
   let [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    newsApi.newsGet((error, data) => {
+    newsApi.newsGet({skip:0,take:1000}, (error, data) => {
       if (error === null) {
         setArticles(data);
       }

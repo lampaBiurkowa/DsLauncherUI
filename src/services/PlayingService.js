@@ -105,7 +105,6 @@ class PlayingService {
       if (error === null) {
         await this.removeFromLocallySavedGameActivities(startDate);
       }
-      this.fileStillSaved = false;
     });
   }
 
