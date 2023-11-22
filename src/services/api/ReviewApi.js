@@ -220,8 +220,9 @@ export class ReviewApi {
      * @param {module:api/ReviewApi~reviewProductsIdGetCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    reviewProductsIdGet(id, callback) {
+    reviewProductsIdGet(opts, id, callback) {
       
+      opts = opts || {};
       let postBody = null;
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
@@ -232,7 +233,7 @@ export class ReviewApi {
         'id': id
       };
       let queryParams = {
-        
+        'skip': opts['skip'],'take': opts['take']
       };
       let headerParams = {
         
