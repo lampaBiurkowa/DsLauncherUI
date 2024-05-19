@@ -219,6 +219,28 @@ article {
     }
   }
 
+  #all-reviews-dialog {
+    & > form {
+      width: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: $margin-xl;
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        font-size: $text-xl;
+        font-weight: $text-bold;
+
+        button {
+          padding: $padding-sm;
+        }
+      }
+    }
+  }
+
   .vertical-container {
     display: flex;
     flex-direction: column;

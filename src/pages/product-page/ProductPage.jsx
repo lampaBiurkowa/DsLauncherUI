@@ -162,15 +162,27 @@ function ProductPage() {
           {reviews?.slice(0, MAX_REVIEWS).map((review, index) => (
             <Review review={review} key={index} />
           ))}
-          <button>Show all reviews</button>
+          <button
+            onClick={() => {
+              document.getElementById("all-reviews-dialog").showModal();
+            }}
+          >
+            Show all reviews
+          </button>
         </div>
       </section>
       <section className="details">
         <h2>Details</h2>
         <div class="vertical-container">
-          <div class="content-item"><i class="las la-memory"/> Ram: {product?.static.RamMib}MB</div>
-          <div class="content-item"><i class="las la-hdd"/> Disk: {product?.static.DiskMib}MB</div>
-          <div class="content-item"><i class="las la-microchip"/> CPU: {product?.static.CpuMHz}MHz</div>
+          <div class="content-item">
+            <i class="las la-memory" /> Ram: {product?.static.RamMib}MB
+          </div>
+          <div class="content-item">
+            <i class="las la-hdd" /> Disk: {product?.static.DiskMib}MB
+          </div>
+          <div class="content-item">
+            <i class="las la-microchip" /> CPU: {product?.static.CpuMHz}MHz
+          </div>
         </div>
       </section>
 
@@ -204,6 +216,16 @@ function ProductPage() {
               Add review
             </button>
             <button formMethod="dialog">Cancel</button>
+          </div>
+        </form>
+      </dialog>
+      <dialog id="all-reviews-dialog">
+        <form>
+          <div className="header">
+            <h1>Reviews</h1>
+            <button className="capsule" formMethod="dialog">
+              <i className="las la-times" />
+            </button>
           </div>
         </form>
       </dialog>
