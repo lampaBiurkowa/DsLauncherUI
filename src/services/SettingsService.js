@@ -1,17 +1,16 @@
-import { fs } from "@tauri-apps/api";
-import { BaseDirectory } from "@tauri-apps/api/fs";
+import * as fs from "@tauri-apps/plugin-fs";
 
 const SETTINGS_PATH = "settings.json";
 const DEFAULT_SETTINGS = {
   theme: "Dark",
-  libraries: ["C:/test/test1","C:/test/test2","C:/test/test3"],
-  games: {}
+  libraries: ["C:/test/test1", "C:/test/test2", "C:/test/test3"],
+  games: {},
 };
 
 export async function readOrDefault() {
-  if (await fs.exists(SETTINGS_PATH, { dir: BaseDirectory.AppData })) {
+  if (await fs.exists(SETTINGS_PATH, { dir: fs.BaseDirectory.AppData })) {
     let settings = await fs.readTextFile(SETTINGS_PATH, {
-      dir: BaseDirectory.AppData,
+      dir: fs.BaseDirectory.AppData,
     });
     return JSON.parse(settings);
   }
@@ -20,6 +19,6 @@ export async function readOrDefault() {
 
 export async function writeSettings(settings) {
   await fs.writeTextFile(SETTINGS_PATH, JSON.stringify(settings), {
-    dir: BaseDirectory.AppData,
+    dir: fs.BaseDirectory.AppData,
   });
 }

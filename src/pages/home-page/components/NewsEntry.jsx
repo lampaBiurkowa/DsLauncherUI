@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./NewsEntry.scss";
-import { getAppIconUrl } from "@/services/supabase";
 
 function NewsEntry({ id, title, image, date, summary, target }) {
   return (

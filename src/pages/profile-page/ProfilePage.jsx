@@ -1,4 +1,4 @@
-import { convertFileSrc } from "@tauri-apps/api/tauri";
+import { convertFileSrc } from "@tauri-apps/api/core";
 import React, { useContext, useEffect, useState } from "react";
 import ProfilePicture from "./components/ProfilePicture";
 
@@ -35,7 +35,12 @@ function ProfilePage() {
         let reader = new FileReader();
         reader.onloadend = () => {
           api.userImagesPut(
-            { body: { id: context.currentUser.id, profileImageBase64: reader.result } },
+            {
+              body: {
+                id: context.currentUser.id,
+                profileImageBase64: reader.result,
+              },
+            },
             (error, data) => {
               if (error === null) {
                 UsersCache.load();
@@ -58,18 +63,23 @@ function ProfilePage() {
           ></ProfilePicture>
           <span className="profile-name">{`${context.currentUser?.name} ${context.currentUser?.surname}`}</span>
           <div className="profile-actions">
-            <button className="small"
-             onClick={() => {
-              authApi.authLogoutLoginGet(context.currentUser.login, (error, data) => 
-              {
-                localStorage.setItem('token', '');
-                localStorage.setItem('currentUser', '');
-                context.currentUser = null;
-                navigate("/home", { replace: true });
-                navigate(0);
-              })
+            <button
+              className="small"
+              onClick={() => {
+                authApi.authLogoutLoginGet(
+                  context.currentUser.login,
+                  (error, data) => {
+                    localStorage.setItem("token", "");
+                    localStorage.setItem("currentUser", "");
+                    context.currentUser = null;
+                    navigate("/home", { replace: true });
+                    navigate(0);
+                  }
+                );
               }}
-              >Log out</button>
+            >
+              Log out
+            </button>
           </div>
         </div>
         <NavLink className="profile-currency" to="/profile/payment">

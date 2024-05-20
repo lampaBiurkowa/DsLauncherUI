@@ -1,4 +1,4 @@
-import { Command } from "@tauri-apps/api/shell";
+import { Command } from "@tauri-apps/plugin-shell";
 import PlayingService from "@/services/PlayingService";
 import { globalUpdateProgress } from "../App";
 
