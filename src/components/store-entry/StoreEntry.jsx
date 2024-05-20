@@ -8,7 +8,7 @@ function StoreEntry({ id, name, icon, rating, platform }) {
       <div className="icon-container">
         <div
           className="icon-shadow"
-          style={{ backgroundImage: `url(${icon})` }}
+          style={{ backgroundImage: `url("${icon}")` }}
         />
         <img src={icon} className="icon" alt="Application icon" />
       </div>
@@ -19,7 +19,7 @@ function StoreEntry({ id, name, icon, rating, platform }) {
           <i className="las la-star"></i>
         </div>
         <div className="platforms">
-        {console.log(platform)}
+          {console.log(platform)}
           {platform?.includes("win") ? <i className="lab la-windows" /> : ""}
           {platform?.includes("linux") ? <i className="lab la-linux" /> : ""}
           {platform?.includes("macos") ? <i className="lab la-apple" /> : ""}
