@@ -1,24 +1,14 @@
 import React, { createContext } from "react";
-import { ApiClient, UserApi } from "../pages";
+import { DsCoreApiClient, User } from "../services/DsCoreApiClient";
 
 const currentUserId = localStorage.getItem('currentUser');
 let currentUser = null;
-const userApi = new UserApi();
-ApiClient.authentications.password = localStorage.getItem('token', );
+const userApi = new DsCoreApiClient();
 
-function getUserData(userId) {
-  return new Promise((resolve, reject) => {
-    if (!userId) resolve(null);
-
-    userApi.userGetIdGet(userId, (error, data) => {
-      if (error === null) {
-        currentUser = data;
-        resolve(currentUser);
-      } else {
-        resolve(null);
-      }
-    });
-  });
+async function getUserData(userId) {
+    if (!userId) return null;
+    currentUser = await userApi.getUserById(userId);
+    console.log(currentUser);
 }
 currentUser = await getUserData(currentUserId);
 const DefaultValue = {

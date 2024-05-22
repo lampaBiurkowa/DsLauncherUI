@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
-import { NewsApi } from "@/services/api/NewsApi";
+import { DsLauncherApiClient } from "../../../services/DsLauncherApiClient";
 
-const newsApi = new NewsApi();
+const api = new DsLauncherApiClient();
 
 function useArticles() {
-  let [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    newsApi.newsGet({skip:0,take:1000}, (error, data) => {
-      if (error === null) {
-        setArticles(data);
-      }
-    });
+    async function fetchArticles() {
+      const response = await api.getNews(0, 10);
+      setArticles(response);
+    }
+    fetchArticles();
   }, []);
 
   return articles;

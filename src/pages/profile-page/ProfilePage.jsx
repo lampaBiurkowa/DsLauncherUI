@@ -7,17 +7,13 @@ import { UserContext } from "@/contexts/UserContextProvider";
 import { getProfilePictureBase64 } from "@/services/Base64Service";
 import Navbar from "@/components/navbar/Navbar";
 import { NavLink, Outlet } from "react-router-dom";
-import { AuthApi } from "../../services/api/AuthApi";
 import { useNavigate } from "react-router-dom";
-import { ApiClient } from "../../services/ApiClient";
 import NavButton from "@/components/navbar/NavButton";
-import { UserImagesApi } from "@/services/api/UserImagesApi";
 import { UsersCache } from "@/services/CacheService";
 
 function ProfilePage() {
   let context = useContext(UserContext);
   console.log(context.currentUser);
-  const authApi = new AuthApi(new ApiClient());
   let navigate = useNavigate();
 
   const [profileImage, setProfileImage] = useState();
@@ -66,16 +62,11 @@ function ProfilePage() {
             <button
               className="small"
               onClick={() => {
-                authApi.authLogoutLoginGet(
-                  context.currentUser.login,
-                  (error, data) => {
-                    localStorage.setItem("token", "");
-                    localStorage.setItem("currentUser", "");
-                    context.currentUser = null;
-                    navigate("/home", { replace: true });
-                    navigate(0);
-                  }
-                );
+                localStorage.setItem("token", "");
+                localStorage.setItem("currentUser", "");
+                context.currentUser = null;
+                navigate("/home", { replace: true });
+                navigate(0);
               }}
             >
               Log out

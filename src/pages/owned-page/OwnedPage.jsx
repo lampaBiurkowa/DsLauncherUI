@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import LibraryEntry from "@/components/library-entry/LibraryEntry";
 
 import "./OwnedPage.scss";
-import { UserApi } from "@/services/api/UserApi";
 import getFilesData from "../../services/getFilesData";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { runInstall } from "../../services/CLIClient";
-import getToken from "../../services/getToken";
+// import getToken from "../../services/getToken";
 import { runList } from "../../services/CLIClient";
 import useSettings from "../../hooks/useSettings";
 import { globalUpdateProgress } from "../../App";
@@ -48,35 +47,35 @@ function Popup({ app, onCancel, onAccept }) {
 
 function OwnedPage() {
   const { currentUser } = useContext(UserContext);
-  const userApi = new UserApi();
+  // const userApi = new UserApi(); TODO
   const [apps, setApps] = useState([]);
   const [settings, applySettings] = useSettings();
 
   useEffect(() => {
-    userApi.userGetNameProductsGet(currentUser.login, async (productsError, productsData) => {
-      if (productsError !== null)
-        return;
+    // userApi.userGetNameProductsGet(currentUser.login, async (productsError, productsData) => {
+    //   if (productsError !== null)
+    //     return;
 
-      let installedAppNames = (await runList(false, getToken(), currentUser.login)).Names;
-      userApi.userGetNamePurchasesGet(currentUser.login, async (purchaseError, purchaseData) => {
-        if (purchaseError !== null)
-          return;
+    //   let installedAppNames = (await runList(false, getToken(), currentUser.login)).Names;
+    //   userApi.userGetNamePurchasesGet(currentUser.login, async (purchaseError, purchaseData) => {
+    //     if (purchaseError !== null)
+    //       return;
 
-        let result = [];
-        for (let i = 0; i < productsData.length; i++)
-        {
-            let icon = (await getFilesData(productsData[i].name)).Icon;
-            const purchase = purchaseData.find(p => p.product.id === productsData[i].id);
-            let boughtOn = purchase._date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, ' ');
-            let isInstalled = installedAppNames.includes(productsData[i].name);
-            result.push({icon: icon, title: productsData[i].name, boughtOn: boughtOn, isInstalled: isInstalled});
-            if (result.length == productsData.length)
-            {
-              setApps(result);
-            }
-        }
-      });
-    });
+    //     let result = [];
+    //     for (let i = 0; i < productsData.length; i++)
+    //     {
+    //         let icon = (await getFilesData(productsData[i].name)).Icon;
+    //         const purchase = purchaseData.find(p => p.product.id === productsData[i].id);
+    //         let boughtOn = purchase._date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, ' ');
+    //         let isInstalled = installedAppNames.includes(productsData[i].name);
+    //         result.push({icon: icon, title: productsData[i].name, boughtOn: boughtOn, isInstalled: isInstalled});
+    //         if (result.length == productsData.length)
+    //         {
+    //           setApps(result);
+    //         }
+    //     }
+    //   });
+    // });
   }, []);
 
   const [popupVisible, setPopupVisible] = useState(false);

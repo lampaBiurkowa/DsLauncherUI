@@ -1,26 +1,23 @@
 import * as fs from "@tauri-apps/plugin-fs";
-import { GameActivityApi } from "@/services/api/GameActivityApi";
-import { GameActivityModel } from "@/services/model/GameActivityModel";
-import { ProductApi } from "@/services/api/ProductApi";
 
 class PlayingService {
   static currentlyPlayedGameId = null;
   static currentStartDate = null;
 
   constructor() {
-    this.gameActivityApi = new GameActivityApi();
-    this.productApi = new ProductApi();
+    // this.gameActivityApi = new GameActivityApi();
+    // this.productApi = new ProductApi();
     this.maxRecentAppsCount = 5;
   }
 
-  async tryRegisterGameActivity(gameId, userId, login) {
+  async tryRegisterGameActivity(gameId, userGuid, login) {
     PlayingService.currentlyPlayedGameId = gameId;
     PlayingService.currentStartDate = new Date().toISOString();
 
     const gameActivity = new GameActivityModel();
     gameActivity.endDate = null;
     gameActivity.startDate = PlayingService.currentStartDate;
-    gameActivity.userId = userId;
+    gameActivity.userGuid = userGuid;
     gameActivity.productId = gameId;
 
     this.gameActivityApi.gameActivityPost(

@@ -35,10 +35,13 @@ function DiscoverPage() {
         return (
           <Shelf title={section.name} key={sectionIndex}>
             {section?.items.map((child, index) => {
+              console.log(section?.items);
+              console.log(index);
+              console.log(child);
               return (
                 <StoreEntry
                   key={index}
-                  id={child.data.id}
+                  id={child.data.guid}
                   name={child.data.name}
                   icon={child.static.Icon}
                   rating={child.rates.avg}

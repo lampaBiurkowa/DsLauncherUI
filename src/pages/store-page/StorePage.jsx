@@ -50,7 +50,7 @@ function StorePage() {
                         alt={result.data.name}
                         className="product-image"
                       />
-                      <a href={`/store/product/${result.data.id}`}>{result.data.name}</a>
+                      <a href={`/store/product/${result.data.guid}`}>{result.data.name}</a>
                     </div>
                   ))}
                 </div>

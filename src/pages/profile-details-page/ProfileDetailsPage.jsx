@@ -1,13 +1,15 @@
 import React, { useContext, useState } from "react";
 import "./ProfileDetailsPage.scss";
-import { UserImagesApi } from "../../services/api/UserImagesApi";
 import { UsersCache } from "../../services/CacheService";
 import { UserContext } from "../../contexts/UserContextProvider";
-import { UserApi } from "../../services/api/UserApi";
+import { DsCoreApiClient } from "../../services/DsCoreApiClient"
+import { DsAuthApiClient } from "../../services/DsAuthApiClient"
 
 function ProfileDetailsPage() {
   let { currentUser } = useContext(UserContext);
-  const userApi = new UserApi();
+  console.log("cur", currentUser);
+  const userApi = new DsCoreApiClient();
+  const authApi = new DsAuthApiClient();
   function encodeImageFileAsURL(event) {
     const api = new UserImagesApi();
     var file = event.target.files[0];
@@ -50,37 +52,34 @@ function ProfileDetailsPage() {
     setExistingPassword(e.target.value);
   };
 
-  const changeUserInfo = () => {
+  const changeUserInfo = async () => {
     currentUser.name = newName;
     currentUser.surname = newSurname;
     currentUser.email = newEmail;
-    userApi.userPut({body: currentUser}, (error, data) =>
-    {
-      if (error === null) {
-      }
-    });
+    await userApi.updateUser(currentUser);
   };
 
-  const changeUserPassword = () => {
-    if (existingPassword !== currentUser.password) {
-      setPasswordError(true);
-      return;
-    }
+  const changeUserPassword = async () => {
+    // if (existingPassword !== currentUser.password) {
+    //   setPasswordError(true);
+    //   return;
+    // }
 
     if (newPassword) {
       setNewPassword(newPassword);
     }
 
+    await authApi.changePassword(currentUser.guid, btoa(existingPassword), btoa(newPassword));
     currentUser.password = newPassword;
-    userApi.userPut({body: currentUser}, (error, data) =>
-    {
-      if (error !== null) {
-        setPasswordError(false); //zla wiadomosc wypisze :D/
-      }
-      else {
-        setPasswordError(false);
-      }
-    });
+    // userApi.userPut({body: currentUser}, (error, data) =>
+    // {
+    //   if (error !== null) {
+    //     setPasswordError(false); //zla wiadomosc wypisze :D/
+    //   }
+    //   else {
+    //     setPasswordError(false);
+    //   }
+    // });
   };
 
   return (

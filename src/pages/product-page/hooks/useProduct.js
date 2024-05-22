@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
-import { ProductApi } from "@/services/api/ProductApi";
 import { ProductsCache } from "../../../services/CacheService";
 
-const productApi = new ProductApi();
-
+console.log('hej dziec');
 function useProduct(id) {
+  console.log('jezeli hcecie');
   let [product, setProduct] = useState();
 
+  console.log('zonzcyc smerfu');
   useEffect(() => {
+    console.log('hej', id, ProductsCache.getById(id));
     setProduct(ProductsCache.getById(id));
   }, []);
 
+  console.log('swiwaaAat');
   return product;
 }
 

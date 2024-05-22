@@ -9,23 +9,23 @@ import Review from "./components/Review";
 import useSummary from "./hooks/useSummary";
 import ReviewCounter from "./components/ReviewCounter";
 import usePlayerBought from "./hooks/usePlayerBought";
-import { PurchaseApi } from "../../services/api/PurchaseApi";
-import { PurchaseModel } from "../../services/model/PurchaseModel";
 import { useState } from "react";
 import ImagePopup from "./components/ImagePopup";
 import Rating from "../../components/rating/Rating";
-import { ReviewApi } from "../../services/api/ReviewApi";
 import { UserContext } from "../../contexts/UserContextProvider";
+import { DsLauncherApiClient } from "../../services/DsLauncherApiClient";
+import { DevelopersCache } from "../../services/CacheService";
 
 const MAX_REVIEWS = 3;
-const purchaseApi = new PurchaseApi();
-const reviewApi = new ReviewApi();
+// const purchaseApi = new PurchaseApi();
+// const reviewApi = new ReviewApi();
+const launcherApi = new DsLauncherApiClient();
 let userBought = null;
 
 function handlePurchase(productId, price) {
   let purchaseModel = new PurchaseModel();
   purchaseModel.productId = productId;
-  purchaseModel.userId = 11;
+  //purchaseModel.userGuid = 11; TODO OHARNAC TO
   purchaseModel._date = new Date().toISOString();
   purchaseModel.value = price;
 
@@ -70,7 +70,7 @@ function ProductPage() {
           rate: reviewRate,
           date: new Date().toISOString(),
           productId: productId,
-          userId: currentUser.id,
+          userId: currentUser.guid,
         }),
       },
       () => {
@@ -78,6 +78,8 @@ function ProductPage() {
       }
     );
   };
+
+  console.log('abra', product);
 
   return (
     <article>
@@ -95,7 +97,7 @@ function ProductPage() {
         >
           <div className="product-header">
             <h1 className="title">{product?.data.name}</h1>
-            <span className="developer">{product?.data.developer.name}</span>
+            <span className="developer">{DevelopersCache.getById(product?.data.developerGuid)?.name}</span>
             <button
               className="buy-button accent large"
               onClick={() => {

@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
-import { ReviewApi } from "@/services/api/ReviewApi";
+import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 
-const reviewsApi = new ReviewApi();
+const api = new DsLauncherApiClient();
 
 function useReviews(id) {
   let [reviews, setReviews] = useState();
 
   useEffect(() => {
-    reviewsApi.reviewProductsIdGet({skip:0, take:1000}, id, (error, data) => {
-      if (error === null) {
-        setReviews(data);
-      }
-    });
+    async function fetchReviews() {
+      const response = await api.getReviewsByProduct(id);
+      setReviews(response);
+    }
+    fetchReviews();
   }, []);
 
   return reviews;

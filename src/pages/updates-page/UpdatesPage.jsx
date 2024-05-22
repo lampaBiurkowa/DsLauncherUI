@@ -6,16 +6,15 @@ import "./UpdatesPage.scss";
 
 import getFilesData from "../../services/getFilesData";
 import { runList } from "../../services/CLIClient";
-import getToken from "../../services/getToken";
-import { ProductApi } from "../../services/api/ProductApi";
+// import getToken from "../../services/getToken";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { runInstall } from "../../services/CLIClient";
 import { runStatus } from "../../services/CLIClient";
 import useSettings from "../../hooks/useSettings";
+import { ProductsCache } from "../../services/CacheService";
 
 function UpdatesPage() {
-  const productApi = new ProductApi();
   const [settings, applySettings] = useSettings();
   const { currentUser } = useContext(UserContext);
   const [apps, setApps] = useState([]);
@@ -28,18 +27,18 @@ function UpdatesPage() {
       let result = [];
       for (let i = 0; i < appNames.length; i++)
       {
-        productApi.productGetNameGet(appNames[i], async (productError, productData) => {
-          if (productError !== null)
-            return;
-  
-          let icon = (await getFilesData(productData.name)).Icon;
-          let desc = (await runStatus(productData.name, currentUser.login)).VersionDescription;
-          result.push({icon: icon, title: productData.name, desc: desc});
-          if (result.length == appNames.length)
-          {
-            setApps(result);
-          }
-        });
+        var product = ProductsCache.getAll().find(x => x.name == appNames[i]);
+        // productApi.productGetNameGet(appNames[i], async (productError, productData) => {
+        if (product === null)
+          return;
+
+        let icon = (await getFilesData(product.data.name)).Icon;
+        let desc = (await runStatus(product.data.name, currentUser.login)).VersionDescription;
+        result.push({icon: icon, title: product.data.name, desc: desc});
+        if (result.length == appNames.length)
+        {
+          setApps(result);
+        }
       }
     }
 

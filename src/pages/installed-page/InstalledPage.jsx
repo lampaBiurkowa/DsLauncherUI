@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import LibraryEntry from "@/components/library-entry/LibraryEntry";
 import Dropdown from "@/components/dropdown/Dropdown";
 import "./InstalledPage.scss";
-import { GameActivityApi } from "@/services/api/GameActivityApi";
 import getFilesData from "../../services/getFilesData";
 import { runList } from "../../services/CLIClient";
-import getToken from "../../services/getToken";
-import { ProductApi } from "../../services/api/ProductApi";
+// import getToken from "../../services/getToken";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { runGame } from "../../services/CLIClient";
@@ -14,41 +12,41 @@ import { runPurge } from "../../services/CLIClient";
 import useSettings from "../../hooks/useSettings";
 
 function InstalledPage() {
-  const productApi = new ProductApi();
-  const activityApi = new GameActivityApi();
+  // const productApi = new ProductApi();
+  // const activityApi = new GameActivityApi();
   const { currentUser } = useContext(UserContext);
   const [settings, applySettings] = useSettings();
   const [apps, setApps] = useState([]);
 
   useEffect(() => {
-    async function getInstalled()
-    {
-      let appNames = (await runList(false, getToken(), currentUser.login)).Names;
+    // async function getInstalled()
+    // {
+    //   let appNames = (await runList(false, getToken(), currentUser.login)).Names;
 
-      let result = [];
-      for (let i = 0; i < appNames.length; i++)
-      {
-        productApi.productGetNameGet(appNames[i], (productError, productData) => {
-          if (productError !== null)
-            return;
+    //   let result = [];
+    //   for (let i = 0; i < appNames.length; i++)
+    //   {
+    //     productApi.productGetNameGet(appNames[i], (productError, productData) => {
+    //       if (productError !== null)
+    //         return;
 
-          activityApi.gameActivityTimeSpentUserIdProductIdGet(currentUser.id, productData.id, async (timeError, timeData) => {
-            if (timeError !== null)
-              return;
+    //       activityApi.gameActivityTimeSpentUserIdProductIdGet(currentUser.id, productData.id, async (timeError, timeData) => {
+    //         if (timeError !== null)
+    //           return;
   
-            let icon = (await getFilesData(productData.name)).Icon;
-            const [hours, minutes, seconds] = timeData.split(':').map(Number);
-            result.push({icon: icon, game: productData, hours: hours, minutes: minutes});
-            if (result.length == appNames.length)
-            {
-              setApps(result);
-            }
-          });
-        });
-      }
-    }
+    //         let icon = (await getFilesData(productData.name)).Icon;
+    //         const [hours, minutes, seconds] = timeData.split(':').map(Number);
+    //         result.push({icon: icon, game: productData, hours: hours, minutes: minutes});
+    //         if (result.length == appNames.length)
+    //         {
+    //           setApps(result);
+    //         }
+    //       });
+    //     });
+    //   }
+    // }
 
-    getInstalled();
+    // getInstalled();
   }, []);
 
   function run(appName, appId) {

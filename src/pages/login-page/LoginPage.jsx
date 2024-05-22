@@ -4,16 +4,15 @@ import Logo from "@/components/logo/Logo";
 import Spacer from "../../components/spacer/Spacer";
 import { Link, NavLink } from "react-router-dom";
 import Separator from "../../components/separator/Separator";
-import { AuthApi } from "../../services/api/AuthApi";
-import { ApiClient } from "../../services/ApiClient";
-import { UserApi } from "../../services/api/UserApi";
+import { DsAuthApiClient } from "../../services/DsAuthApiClient";
+import { DsCoreApiClient, User } from "../../services/DsCoreApiClient";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const authApi = new AuthApi(new ApiClient());
-const userApi = new UserApi();
+const authApi = new DsAuthApiClient();
+const userApi = new DsCoreApiClient();
 
 function LoginPage() {
   const [error, setError] = useState(null);
@@ -43,31 +42,28 @@ function LoginPage() {
               Remember me
             </label>
             <Spacer />
-            <button type="button" className="outlined" onClick={ () =>
+            <button type="button" className="outlined" onClick={async () =>
             {
               const loginInput = document.querySelector('input[name="login"]').value;
               const passwordInput = document.querySelector('input[name="password"]').value;
-              ApiClient.authentications.password = crypto.randomUUID();
-              authApi.authLoginLoginPasswordIdGet(loginInput, passwordInput, ApiClient.authentications.password, async (error, data) => {
-                if (error !== null || data === false)
-                {
-                  setError("Login failed. Please check your credentials.");
-                  return;
-                }
-                
-                console.log(`lohhed in with token ${ApiClient.authentications.password}`);
-                userApi.userGetAliasGet(loginInput, (userError, userData) => {
-                  if (userError !== null) {
-                    setError("An error occurred while fetching user data. Consider buying a new PC.");
-                    return;
-                  }
+              var userId= null;
 
-                  localStorage.setItem('token', ApiClient.authentications.password);
-                  localStorage.setItem('currentUser', userData.id);
-                  context.currentUser = userData;
-                  navigate("/home");
-                })
-              });
+              const x = await userApi.getIdByAlias(loginInput);
+              userId = x;
+              console.log("userid:", x);
+              try {
+                const t = await authApi.login(userId, btoa(passwordInput));
+                localStorage.setItem('token', t);
+                console.log("lohhed in with token:", t);
+              }
+              catch {
+                console.error("Error checking if user is online:", error);
+                setError("Login failed. Please check your credentials.");
+              }
+
+              localStorage.setItem('currentUser', userId);
+              context.currentUser = await userApi.getUserById(userId);
+              navigate("/home");
             }}>Log in</button>
           </div>
           {error && <p className="error-message">{error}</p>}

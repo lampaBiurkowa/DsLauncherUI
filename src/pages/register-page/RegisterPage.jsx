@@ -3,13 +3,12 @@ import "./RegisterPage.scss";
 import Logo from "@/components/logo/Logo";
 import { Form, NavLink } from "react-router-dom";
 import Separator from "../../components/separator/Separator";
-import { ApiClient } from "../../services/ApiClient";
-import { AuthApi } from "../../services/api/AuthApi";
+import { DsAuthApiClient } from "../../services/DsAuthApiClient";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-const authApi = new AuthApi(new ApiClient());
+const authApi = new DsAuthApiClient();
 
 function RegisterPage() {
   let { currentUser } = useContext(UserContext);
@@ -88,7 +87,7 @@ function RegisterPage() {
           </div>
           {/*Submit*/}
           <div style={{ gridArea: "submit" }} className="submit-area">
-            <button type="button" className="accent outlined sign-up" onClick={ () =>
+            <button type="button" className="accent outlined sign-up" onClick={async () =>
             {
               const emailInput = document.querySelector('input[name="email"]').value;
               const nameInput = document.querySelector('input[name="name"]').value;
@@ -103,12 +102,9 @@ function RegisterPage() {
                 return;
               }
 
-              authApi.authRegisterLoginPasswordEmailNameSurnameGet(loginInput, password1Input, emailInput, nameInput, surnameInput, async (error, data) => {
-                if (error !== null || data === false)
-                  return;
-
-                  navigate("/login");
-              });
+              var user = {alias: loginInput, email: emailInput, name:nameInput, surname: surnameInput, id: 0};
+              await authApi.register(user, btoa(password1Input));
+              navigate("/login");
             }}>Sign up</button>
           </div>
         </Form>

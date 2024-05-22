@@ -1,12 +1,10 @@
 import React, { useContext, useState } from "react";
 import "./SettingsPage.scss";
-import { UserImagesApi } from "../../services/api/UserImagesApi";
-import { UsersCache } from "../../services/CacheService";
 import { UserContext } from "../../contexts/UserContextProvider";
-import { UserApi } from "../../services/api/UserApi";
+import { DsCoreApiClient } from "../../services/DsCoreApiClient";
 import useSettings from "../../hooks/useSettings";
 
-const userApi = new UserApi();
+const userApi = new DsCoreApiClient();
 
 function SettingsPage() {
   let { currentUser } = useContext(UserContext);

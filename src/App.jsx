@@ -4,10 +4,23 @@ import TitleBar from "./components/titlebar/TitleBar";
 import Router from "./Router.jsx";
 import UserContextProvider from "./contexts/UserContextProvider";
 import SettingsContextProvider from "./contexts/SettingsContextProvider";
+import { DsAuthApiClient } from "./services/DsAuthApiClient.js";
 
-//import { UserApi } from "./pages";
-//import PlayingService from "./services/PlayingService";
-//import { ProductsCache, UsersCache } from "./services/CacheService";
+// import PlayingService from "./services/PlayingService";
+import { DevelopersCache, ProductsCache, UsersCache } from "./services/CacheService";
+console.log("a");
+
+const authApi = new DsAuthApiClient();
+setInterval(async () => {
+  const currentUserId = localStorage.getItem('currentUser');
+  if (currentUserId != null)
+  {
+    console.log("ustawiacz dla", currentUserId);
+    const t = await authApi.login(userId, btoa(passwordInput));
+    localStorage.setItem('token', t);
+    console.log("ustawiacz dal", t);
+  }
+}, 60000 * 3);
 
 // //report online loop
 // const userApi = new UserApi();
@@ -30,8 +43,9 @@ export const globalUpdateProgress = {
   progress: 0,
 };
 
-// await UsersCache.load();
-// await ProductsCache.load();
+await DevelopersCache.load();
+await UsersCache.load();
+await ProductsCache.load();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <div className="app">

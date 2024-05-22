@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
-import { ProductApi } from "@/services/api/ProductApi";
-import getFilesData from "../../../services/getFilesData";
 import { ProductsCache } from "../../../services/CacheService";
-
-const productApi = new ProductApi();
 
 function useStaticProducts() {
   const url = `https://raw.githubusercontent.com/DibrySoft/static/master/discover.json`;
