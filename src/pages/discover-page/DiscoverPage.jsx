@@ -35,9 +35,6 @@ function DiscoverPage() {
         return (
           <Shelf title={section.name} key={sectionIndex}>
             {section?.items.map((child, index) => {
-              console.log(section?.items);
-              console.log(index);
-              console.log(child);
               return (
                 <StoreEntry
                   key={index}

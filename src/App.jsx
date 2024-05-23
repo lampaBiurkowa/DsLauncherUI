@@ -5,6 +5,7 @@ import Router from "./Router.jsx";
 import UserContextProvider from "./contexts/UserContextProvider";
 import SettingsContextProvider from "./contexts/SettingsContextProvider";
 import { DsAuthApiClient } from "./services/DsAuthApiClient.js";
+import { DsStorageApiClient } from "./services/DsStorageApiClient.js";
 
 // import PlayingService from "./services/PlayingService";
 import { DevelopersCache, ProductsCache, UsersCache } from "./services/CacheService";
@@ -16,7 +17,7 @@ setInterval(async () => {
   if (currentUserId != null)
   {
     console.log("ustawiacz dla", currentUserId);
-    const t = await authApi.login(userId, btoa(passwordInput));
+    const t = await authApi.login(currentUserId, btoa(passwordInput));
     localStorage.setItem('token', t);
     console.log("ustawiacz dal", t);
   }
@@ -42,6 +43,9 @@ setInterval(async () => {
 export const globalUpdateProgress = {
   progress: 0,
 };
+
+const storageApi = new DsStorageApiClient();
+export const publicPath = await storageApi.getUrl();
 
 await DevelopersCache.load();
 await UsersCache.load();

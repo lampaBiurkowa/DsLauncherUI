@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../../../contexts/UserContextProvider";
 import "./ProfileButton.scss";
-import { getProfilePictureBase64 } from "../../../services/Base64Service";
+import { getProfilePictureUrl } from "../../../services/ProfileImageService";
 import { useState, useEffect } from "react";
 
 function UserButton({ to }) {
@@ -11,7 +11,7 @@ function UserButton({ to }) {
   function useProfileImage() {
     let [profileImage, setProfileImage] = useState();
     useEffect(() => {
-      setProfileImage(getProfilePictureBase64(currentUser?.id));
+      setProfileImage(getProfilePictureUrl(currentUser?.id));
     }, []);
 
     return profileImage;

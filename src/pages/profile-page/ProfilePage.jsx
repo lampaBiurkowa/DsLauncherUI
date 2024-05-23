@@ -4,7 +4,7 @@ import ProfilePicture from "./components/ProfilePicture";
 
 import "./ProfilePage.scss";
 import { UserContext } from "@/contexts/UserContextProvider";
-import { getProfilePictureBase64 } from "@/services/Base64Service";
+import { getProfilePictureUrl } from "@/services/ProfileImageService";
 import Navbar from "@/components/navbar/Navbar";
 import { NavLink, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -15,24 +15,21 @@ import * as fs from "@tauri-apps/plugin-fs";
 
 function ProfilePage() {
   let context = useContext(UserContext);
-  console.log(context.currentUser);
   let navigate = useNavigate();
 
-  const [profileImage, setProfileImage] = useState();
+  const [profileImage, setProfileImage] = useState(getProfilePictureUrl(context.currentUser?.guid));
   useEffect(() => {
-    setProfileImage(getProfilePictureBase64(context.currentUser?.id));
+    setProfileImage(getProfilePictureUrl(context.currentUser?.guid));
   }, []);
 
   async function onPictureSelected(path) {
     const api = new DsCoreApiClient();
-    console.log(path);
-    console.log(path.path);
     const bytes = (await fs.readFile(path.path)).buffer;
     const blob = new Blob([bytes], { type: 'image/jpeg' });
-    console.log(bytes);
-    console.log(blob);
-    var a = await api.uploadProfileImage(blob);
-    console.log(a);
+    var publicFileName = await api.uploadProfileImage(blob, path.path);
+    console.log(publicFileName);
+    UsersCache.setById(context.currentUser.guid, publicFileName);
+    setProfileImage();
     //MOCARNE - NI DZIALA BO COS Z CSP NWM JAK W TAURI.CONF TEN
     // fetch(convertFileSrc(path.path))
     //   .then((response) => response.blob())
@@ -66,7 +63,7 @@ function ProfilePage() {
       <section className="profile-summary">
         <div className="profile-basic">
           <ProfilePicture
-            src={profileImage}
+            src={`${profileImage}`}
             onSelected={onPictureSelected}
           ></ProfilePicture>
           <span className="profile-name">{`${context.currentUser?.name} ${context.currentUser?.surname}`}</span>

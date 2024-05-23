@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./ProfilePicture.scss";
 import useFileDialog from "../hooks/useFileDialog";
+import { publicPath } from "../../../App";
 
 function ProfilePicture({ src, readonly, onSelected }) {
   const { openedFiles, showDialog } = useFileDialog([
@@ -16,6 +17,7 @@ function ProfilePicture({ src, readonly, onSelected }) {
     }
   }, [openedFiles]);
 
+  console.log('src', src);
   return (
     <div className={`profile-picture`}>
       <div style={{ backgroundImage: `url(${src})` }} className="image" />

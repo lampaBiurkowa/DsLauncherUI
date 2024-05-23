@@ -93,10 +93,10 @@ export class DsCoreApiClient {
         return this.request(url, options);
     }
 
-    async uploadProfileImage(file) {
+    async uploadProfileImage(file, fileName) {
         const url = `${this.baseUrl}/User/UploadProfileImage`;
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('file', file, fileName);
 
         const options = {
             method: 'POST',

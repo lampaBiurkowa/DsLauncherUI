@@ -2,7 +2,7 @@ import React from "react";
 import "./Review.scss";
 import Spacer from "../../../components/spacer/Spacer";
 import Rating from "../../../components/rating/Rating";
-import { getProfilePictureBase64 } from "../../../services/Base64Service";
+import { getProfilePictureUrl } from "../../../services/ProfileImageService";
 import { DevelopersCache, UsersCache } from "../../../services/CacheService";
 
 function Review({ review }) {
@@ -10,11 +10,11 @@ function Review({ review }) {
     <div className="review-container">
       <div className="header">
         <img
-          src={getProfilePictureBase64(review.userGuid)}
+          src={getProfilePictureUrl(review.userGuid)}
           alt="Profile picture"
           className="profile-picture"
         />
-        <span className="username">{UsersCache.getById(review.userGuid)?.data.name}</span>
+        <span className="username">{UsersCache.getById(review.userGuid)?.name}</span>
         {DevelopersCache.getAll().filter(x => x.userGuid == review.userGuid).length > 0 ? (
           <i className="developer-badge las la-certificate" title="Developer" />
         ) : (
