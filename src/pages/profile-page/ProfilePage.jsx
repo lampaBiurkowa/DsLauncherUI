@@ -10,6 +10,8 @@ import { NavLink, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import NavButton from "@/components/navbar/NavButton";
 import { UsersCache } from "@/services/CacheService";
+import { DsCoreApiClient } from "../../services/DsCoreApiClient";
+import * as fs from "@tauri-apps/plugin-fs";
 
 function ProfilePage() {
   let context = useContext(UserContext);
@@ -21,32 +23,42 @@ function ProfilePage() {
     setProfileImage(getProfilePictureBase64(context.currentUser?.id));
   }, []);
 
-  function onPictureSelected(path) {
-    const api = new UserImagesApi();
-
-    //MOCARNE
-    fetch(convertFileSrc(path))
-      .then((response) => response.blob())
-      .then((blob) => {
-        let reader = new FileReader();
-        reader.onloadend = () => {
-          api.userImagesPut(
-            {
-              body: {
-                id: context.currentUser.id,
-                profileImageBase64: reader.result,
-              },
-            },
-            (error, data) => {
-              if (error === null) {
-                UsersCache.load();
-                setProfileImage(reader.result);
-              }
-            }
-          );
-        };
-        reader.readAsDataURL(blob);
-      });
+  async function onPictureSelected(path) {
+    const api = new DsCoreApiClient();
+    console.log(path);
+    console.log(path.path);
+    const bytes = (await fs.readFile(path.path)).buffer;
+    const blob = new Blob([bytes], { type: 'image/jpeg' });
+    console.log(bytes);
+    console.log(blob);
+    var a = await api.uploadProfileImage(blob);
+    console.log(a);
+    //MOCARNE - NI DZIALA BO COS Z CSP NWM JAK W TAURI.CONF TEN
+    // fetch(convertFileSrc(path.path))
+    //   .then((response) => response.blob())
+    //   .then((blob) => {
+    //     console.log(blob);
+      
+    //DO WYFSLENIA:
+        // let reader = new FileReader();
+        // reader.onloadend = () => {
+        //   api.userImagesPut(
+        //     {
+        //       body: {
+        //         id: context.currentUser.id,
+        //         profileImageBase64: reader.result,
+        //       },
+        //     },
+        //     (error, data) => {
+        //       if (error === null) {
+        //         UsersCache.load();
+        //         setProfileImage(reader.result);
+        //       }
+        //     }
+        //   );
+        // };
+        // reader.readAsDataURL(blob);
+      // });
   }
 
   return (

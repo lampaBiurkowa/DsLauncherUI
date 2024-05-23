@@ -1,5 +1,5 @@
 import getFilesData from "@/services/getFilesData";
-import { DsCoreApiClient, User } from "../services/DsCoreApiClient"
+import { DsCoreApiClient } from "../services/DsCoreApiClient"
 import { DsLauncherApiClient } from "../services/DsLauncherApiClient"
 class CachedObjects {
   constructor() {

@@ -1,5 +1,5 @@
 import React, { createContext } from "react";
-import { DsCoreApiClient, User } from "../services/DsCoreApiClient";
+import { DsCoreApiClient } from "../services/DsCoreApiClient";
 
 const currentUserId = localStorage.getItem('currentUser');
 let currentUser = null;

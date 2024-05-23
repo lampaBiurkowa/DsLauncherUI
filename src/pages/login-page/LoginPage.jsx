@@ -5,7 +5,7 @@ import Spacer from "../../components/spacer/Spacer";
 import { Link, NavLink } from "react-router-dom";
 import Separator from "../../components/separator/Separator";
 import { DsAuthApiClient } from "../../services/DsAuthApiClient";
-import { DsCoreApiClient, User } from "../../services/DsCoreApiClient";
+import { DsCoreApiClient } from "../../services/DsCoreApiClient";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";

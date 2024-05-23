@@ -1,30 +1,4 @@
-const API_BASE_URL = "http://localhost:5218";  // Replace with your API base URL
-
-export class User {
-    constructor() {
-        this.id = null;
-        this.guid = null;
-        this.alias = null;
-        this.email = null;
-        this.name = null;
-        this.surname = null;
-        this.profileImage = null;
-        this.backgroundImage = null;
-        this.lastOnline = null;
-        this.createdAt = null;
-        this.updatedAt = null;
-        this.isDeleted = null;
-    }
-}
-
-export class UserProfile {
-    constructor() {
-        this.id = null;
-        this.guid = null;
-        this.profileImage = null;
-        this.backgroundImage = null;
-    }
-}
+const API_BASE_URL = "http://localhost:5218";
 
 export class DsCoreApiClient {
     constructor() {
@@ -32,7 +6,7 @@ export class DsCoreApiClient {
         this.baseUrl = API_BASE_URL;
     }
     
-    async request(url, options = {}) {
+    async request(url, options = {}, isText = false) {
         options.headers = options.headers || {};
         options.headers['Authorization'] = `Bearer ${localStorage.getItem('token', )}`;
         const response = await fetch(url, options);
@@ -40,12 +14,10 @@ export class DsCoreApiClient {
             const error = await response.text();
             throw new Error(`HTTP error! status: ${response.status}, ${error}`);
         }
-        return response.json();
-    }
 
-    async getUserA() {
-        const url = `${this.baseUrl}/User/a`;
-        return this.request(url);
+        if (isText) return response.text();
+        
+        return response.json();
     }
 
     async reportOnline(id) {
@@ -120,37 +92,16 @@ export class DsCoreApiClient {
         };
         return this.request(url, options);
     }
+
+    async uploadProfileImage(file) {
+        const url = `${this.baseUrl}/User/UploadProfileImage`;
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const options = {
+            method: 'POST',
+            body: formData
+        };
+        return this.request(url, options, true);
+    }
 }
-
-// // Example usage:
-// const client = new DsCoreApiClient();
-
-// async function exampleUsage() {
-//     try {
-//         const userA = await client.getUserA();
-//         console.log('User A:', userA);
-
-//         const userId = 'some-uuid';  // Replace with actual UUID
-//         const onlineStatus = await client.isOnline(userId);
-//         console.log(`Is user ${userId} online?`, onlineStatus);
-
-//         const followers = await client.getFollowers(userId);
-//         console.log(`Followers of user ${userId}:`, followers);
-
-//         const newUser = {
-//             alias: 'newAlias',
-//             email: 'newEmail@example.com',
-//             name: 'New',
-//             surname: 'User'
-//             // Add other fields as necessary
-//         };
-//         const createdUserId = await client.createUser(newUser);
-//         console.log('Created User ID:', createdUserId);
-
-//         // More API calls as needed
-//     } catch (error) {
-//         console.error('API call failed:', error);
-//     }
-// }
-
-// exampleUsage();
