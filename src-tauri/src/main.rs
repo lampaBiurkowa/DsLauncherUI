@@ -3,11 +3,12 @@
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_websocket::init())
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_fs::init())
         .on_window_event(|_sender, event| match event {
-            tauri::WindowEvent::Resized(resized) => {
+            tauri::WindowEvent::Resized(_resized) => {
                 std::thread::sleep(std::time::Duration::from_nanos(1));
             }
             _ => {}

@@ -49,6 +49,8 @@
     "dialog:allow-open",
     "fs:default",
     "dialog:default",
-    "shell:default"
+    "shell:default",
+    "websocket:default",
+    "websocket:default"
   ]
 }
