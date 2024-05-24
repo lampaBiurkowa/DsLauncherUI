@@ -4,14 +4,14 @@ import TitleBar from "./components/titlebar/TitleBar";
 import Router from "./Router.jsx";
 import UserContextProvider from "./contexts/UserContextProvider";
 import SettingsContextProvider from "./contexts/SettingsContextProvider";
-import { DsAuthApiClient } from "./services/DsAuthApiClient.js";
+import { DsIdentityApiClient } from "./services/DsIdentityApiClient.js";
 import { DsStorageApiClient } from "./services/DsStorageApiClient.js";
 
 // import PlayingService from "./services/PlayingService";
 import { DevelopersCache, ProductsCache, UsersCache } from "./services/CacheService";
 console.log("a");
 
-const authApi = new DsAuthApiClient();
+const authApi = new DsIdentityApiClient();
 setInterval(async () => {
   const currentUserId = localStorage.getItem('currentUser');
   if (currentUserId != null)

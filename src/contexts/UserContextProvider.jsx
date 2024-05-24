@@ -1,9 +1,9 @@
 import React, { createContext } from "react";
-import { DsCoreApiClient } from "../services/DsCoreApiClient";
+import { DsIdentityApiClient } from "../services/DsIdentityApiClient";
 
 const currentUserId = localStorage.getItem('currentUser');
 let currentUser = null;
-const userApi = new DsCoreApiClient();
+const userApi = new DsIdentityApiClient();
 
 async function getUserData(userId) {
     if (!userId) return null;

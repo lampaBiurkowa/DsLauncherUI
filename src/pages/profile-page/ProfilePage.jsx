@@ -10,7 +10,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import NavButton from "@/components/navbar/NavButton";
 import { UsersCache } from "@/services/CacheService";
-import { DsCoreApiClient } from "../../services/DsCoreApiClient";
+import { DsIdentityApiClient } from "../../services/DsIdentityApiClient";
 import * as fs from "@tauri-apps/plugin-fs";
 
 function ProfilePage() {
@@ -23,7 +23,7 @@ function ProfilePage() {
   }, []);
 
   async function onPictureSelected(path) {
-    const api = new DsCoreApiClient();
+    const api = new DsIdentityApiClient();
     const bytes = (await fs.readFile(path.path)).buffer;
     const blob = new Blob([bytes], { type: 'image/jpeg' });
     var publicFileName = await api.uploadProfileImage(blob, path.path);

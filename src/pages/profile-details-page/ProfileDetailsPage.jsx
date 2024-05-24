@@ -2,14 +2,12 @@ import React, { useContext, useState } from "react";
 import "./ProfileDetailsPage.scss";
 import { UsersCache } from "../../services/CacheService";
 import { UserContext } from "../../contexts/UserContextProvider";
-import { DsCoreApiClient } from "../../services/DsCoreApiClient"
-import { DsAuthApiClient } from "../../services/DsAuthApiClient"
+import { DsIdentityApiClient } from "../../services/DsIdentityApiClient"
 
 function ProfileDetailsPage() {
   let { currentUser } = useContext(UserContext);
   console.log("cur", currentUser);
-  const userApi = new DsCoreApiClient();
-  const authApi = new DsAuthApiClient();
+  const api = new DsIdentityApiClient();
   function encodeImageFileAsURL(event) {
     const api = new UserImagesApi();
     var file = event.target.files[0];
@@ -56,7 +54,7 @@ function ProfileDetailsPage() {
     currentUser.name = newName;
     currentUser.surname = newSurname;
     currentUser.email = newEmail;
-    await userApi.updateUser(currentUser);
+    await api.updateUser(currentUser);
   };
 
   const changeUserPassword = async () => {
@@ -69,7 +67,7 @@ function ProfileDetailsPage() {
       setNewPassword(newPassword);
     }
 
-    await authApi.changePassword(currentUser.guid, btoa(existingPassword), btoa(newPassword));
+    await api.changePassword(currentUser.guid, btoa(existingPassword), btoa(newPassword));
     currentUser.password = newPassword;
     // userApi.userPut({body: currentUser}, (error, data) =>
     // {

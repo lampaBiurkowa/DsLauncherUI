@@ -1,5 +1,5 @@
 import getFilesData from "@/services/getFilesData";
-import { DsCoreApiClient } from "../services/DsCoreApiClient"
+import { DsIdentityApiClient } from "../services/DsIdentityApiClient"
 import { DsLauncherApiClient } from "../services/DsLauncherApiClient"
 class CachedObjects {
   constructor() {
@@ -30,7 +30,7 @@ class UsersCacheSingleton extends CachedObjects {
   }
 
   async fetchUsers() {
-    const userApi = new DsCoreApiClient();
+    const userApi = new DsIdentityApiClient();
     return await userApi.getUsers();
   };
 

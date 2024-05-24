@@ -3,12 +3,12 @@ import "./RegisterPage.scss";
 import Logo from "@/components/logo/Logo";
 import { Form, NavLink } from "react-router-dom";
 import Separator from "../../components/separator/Separator";
-import { DsAuthApiClient } from "../../services/DsAuthApiClient";
+import { DsIdentityApiClient } from "../../services/DsIdentityApiClient";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-const authApi = new DsAuthApiClient();
+const authApi = new DsIdentityApiClient();
 
 function RegisterPage() {
   let { currentUser } = useContext(UserContext);

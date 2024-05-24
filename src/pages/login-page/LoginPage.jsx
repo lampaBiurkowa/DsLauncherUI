@@ -4,15 +4,13 @@ import Logo from "@/components/logo/Logo";
 import Spacer from "../../components/spacer/Spacer";
 import { Link, NavLink } from "react-router-dom";
 import Separator from "../../components/separator/Separator";
-import { DsAuthApiClient } from "../../services/DsAuthApiClient";
-import { DsCoreApiClient } from "../../services/DsCoreApiClient";
+import { DsIdentityApiClient } from "../../services/DsIdentityApiClient";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const authApi = new DsAuthApiClient();
-const userApi = new DsCoreApiClient();
+const api = new DsIdentityApiClient();
 
 function LoginPage() {
   const [error, setError] = useState(null);
@@ -48,11 +46,11 @@ function LoginPage() {
               const passwordInput = document.querySelector('input[name="password"]').value;
               var userId= null;
 
-              const x = await userApi.getIdByAlias(loginInput);
+              const x = await api.getIdByAlias(loginInput);
               userId = x;
               console.log("userid:", x);
               try {
-                const t = await authApi.login(userId, btoa(passwordInput));
+                const t = await api.login(userId, btoa(passwordInput));
                 localStorage.setItem('token', t);
                 console.log("lohhed in with token:", t);
               }
@@ -62,7 +60,7 @@ function LoginPage() {
               }
 
               localStorage.setItem('currentUser', userId);
-              context.currentUser = await userApi.getUserById(userId);
+              context.currentUser = await api.getUserById(userId);
               navigate("/home");
             }}>Log in</button>
           </div>
