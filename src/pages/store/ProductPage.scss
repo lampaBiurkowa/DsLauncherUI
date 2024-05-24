@@ -157,6 +157,33 @@ article {
       font-weight: $text-bold;
       grid-area: header;
     }
+
+    div {
+      background-color: $dark-2;
+      border: 1px solid $dark-3;
+      border-radius: $radius-lg;
+      margin: $margin-md 0;
+      overflow: hidden;
+
+      h3 {
+        display: block;
+        background-color: $dark-3;
+        padding: $padding-md;
+        font-weight: $text-medium;
+      }
+
+      ul {
+        padding: $padding-md;
+        margin: 0 $margin-xl;
+        line-height: 1.3rem;
+        list-style: initial;
+        font-size: $text-sm;
+
+        .spec-type {
+          font-weight: $text-bold;
+        }
+      }
+    }
   }
 
   #add-review-dialog {
@@ -239,21 +266,5 @@ article {
         }
       }
     }
-  }
-
-  .vertical-container {
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
-  }
-
-  .content-item {
-    font-size: $text-xl;
-    padding: 10px;
-    border-bottom: 1px dashed #ccc;
-  }
-
-  .content-item:last-child {
-    border-bottom: none;
   }
 }

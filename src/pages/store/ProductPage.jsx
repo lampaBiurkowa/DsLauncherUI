@@ -118,8 +118,8 @@ function ProductPage() {
         <h2>About</h2>
         <span>{product?.data.description}</span>
       </section>
-      <section>
-        <Shelf className="screenshots" title="Screenshots">
+      <section className="screenshots">
+        <Shelf title="Screenshots">
           {product?.static?.Images.map((child, index) => {
             return (
               <img
@@ -136,6 +136,7 @@ function ProductPage() {
           <ImagePopup image={enlargedImage} onClose={handleClosePopup} />
         )}
       </section>
+
       <section className="reviews">
         <h2>Comments & Reviews</h2>
         <div className="reviews-summary">
@@ -175,18 +176,30 @@ function ProductPage() {
           </button>
         </div>
       </section>
+
       <section className="details">
         <h2>Details</h2>
-        <div class="vertical-container">
-          <div class="content-item">
-            <i class="las la-memory" /> Ram: {product?.static.RamMib}MB
-          </div>
-          <div class="content-item">
-            <i class="las la-hdd" /> Disk: {product?.static.DiskMib}MB
-          </div>
-          <div class="content-item">
-            <i class="las la-microchip" /> CPU: {product?.static.CpuMHz}MHz
-          </div>
+
+        <div class="specs-box">
+          <h3>System Requirements</h3>
+          <ul>
+            <li>
+              <span className="spec-type">RAM:&nbsp;</span>
+              {product?.static.RamMib}MB
+            </li>
+            <li>
+              <span className="spec-type">Disk space:&nbsp;</span>
+              {product?.static.DiskMib}MB
+            </li>
+            <li>
+              <span className="spec-type">CPU:&nbsp;</span>
+              {product?.static.CpuMHz}MHz
+            </li>
+          </ul>
+        </div>
+
+        <div className="additional-info-box">
+          <h3>Additional information</h3>
         </div>
       </section>
 
