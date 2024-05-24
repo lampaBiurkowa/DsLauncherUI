@@ -1,6 +1,7 @@
 import getFilesData from "@/services/getFilesData";
-import { DsIdentityApiClient } from "../services/DsIdentityApiClient"
-import { DsLauncherApiClient } from "../services/DsLauncherApiClient"
+import { DsIdentityApiClient } from "../services/DsIdentityApiClient";
+import { DsLauncherApiClient } from "../services/DsLauncherApiClient";
+
 class CachedObjects {
   constructor() {
     this.data = {};
@@ -11,7 +12,7 @@ class CachedObjects {
   }
 
   setById(id, item) {
-    return this.data[id] = item;
+    return (this.data[id] = item);
   }
 
   getAll() {
@@ -32,13 +33,13 @@ class UsersCacheSingleton extends CachedObjects {
   async fetchUsers() {
     const userApi = new DsIdentityApiClient();
     return await userApi.getUsers();
-  };
+  }
 
   async load() {
     var users = await this.fetchUsers();
-    
+
     for (var i = 0; i < users.length; i++) {
-      this.data[users[i].guid] = users[i]
+      this.data[users[i].guid] = users[i];
     }
   }
 }
@@ -48,17 +49,19 @@ class ProductsCacheSingleton extends CachedObjects {
     super();
   }
 
-  async fetchProducts()  {
-      const api = new DsLauncherApiClient();
-      return await api.getProducts();
-  };
+  async fetchProducts() {
+    const api = new DsLauncherApiClient();
+    return await api.getProducts();
+  }
 
   async getRates(productId) {
     const api = new DsLauncherApiClient();
     const data = await api.getReviewBreakdown(productId);
     return {
       rateCounts: data,
-      avg: data.reduce((sum, count, index) => sum + count * (index + 1), 0) / data.reduce((sum, count) => sum + count, 0)
+      avg:
+        data.reduce((sum, count, index) => sum + count * (index + 1), 0) /
+        data.reduce((sum, count) => sum + count, 0),
     };
   }
 
@@ -67,10 +70,14 @@ class ProductsCacheSingleton extends CachedObjects {
     var result = [];
     for (var i = 0; i < products.length; i++) {
       console.log(products[i]);
-      this.data[products[i].guid] = { data: products[i], static: await getFilesData(products[i].name), rates: await this.getRates(products[i].guid) };
+      this.data[products[i].guid] = {
+        data: products[i],
+        static: await getFilesData(products[i].name),
+        rates: await this.getRates(products[i].guid),
+      };
     }
     return result;
-  };
+  }
 }
 
 class DevelopersCacheSingleton extends CachedObjects {
@@ -81,7 +88,7 @@ class DevelopersCacheSingleton extends CachedObjects {
   async fetchDevelopers() {
     const api = new DsLauncherApiClient();
     return await api.getDevelopers();
-  };
+  }
 
   async load() {
     var developers = await this.fetchDevelopers();

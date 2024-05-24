@@ -6,25 +6,30 @@ import {
 } from "react-router-dom";
 import React from "react";
 
-import Protected from "./Protected";
+import Guard from "./Guard";
 
-import AppsPage from "@/pages/apps-page/AppsPage";
-import ArticlePage from "@/pages/article-page/ArticlePage";
-import DiscoverPage from "@/pages/discover-page/DiscoverPage";
-import GamesPage from "@/pages/games-page/GamesPage";
-import HomePage from "@/pages/home-page/HomePage";
-import LibraryPage from "@/pages/library-page/LibraryPage";
-import LoginPage from "@/pages/login-page/LoginPage";
-import MainPage from "@/pages/main-page/MainPage";
-import SettingsPage from "@/pages/settings-page/SettingsPage";
-import StorePage from "@/pages/store-page/StorePage";
-import ProductPage from "@/pages/product-page/ProductPage";
-import RegisterPage from "@/pages/register-page/RegisterPage";
-import InstalledPage from "@/pages/installed-page/InstalledPage";
-import UpdatesPage from "./pages/updates-page/UpdatesPage";
-import OwnedPage from "./pages/owned-page/OwnedPage";
-import ProfilePage from "./pages/profile-page/ProfilePage";
-import ProfileDetailsPage from "./pages/profile-details-page/ProfileDetailsPage";
+import MainPage from "@/pages/main/MainPage";
+import LoginPage from "@/pages/auth/LoginPage";
+import RegisterPage from "@/pages/auth/RegisterPage";
+
+import HomePage from "@/pages/home/HomePage";
+import ArticlePage from "@/pages/home/ArticlePage";
+
+import StorePage from "@/pages/store/StorePage";
+import DiscoverPage from "@/pages/store/DiscoverPage";
+import GamesPage from "@/pages/store/GamesPage";
+import AppsPage from "@/pages/store/AppsPage";
+import ProductPage from "@/pages/store/ProductPage";
+
+import LibraryPage from "@/pages/library/LibraryPage";
+import InstalledPage from "@/pages/library/InstalledPage";
+import UpdatesPage from "./pages/library/UpdatesPage";
+import OwnedPage from "./pages/library/OwnedPage";
+
+import ProfilePage from "./pages/profile/ProfilePage";
+import ProfileDetailsPage from "./pages/profile/ProfileDetailsPage";
+
+import SettingsPage from "@/pages/settings/SettingsPage";
 
 const router = createBrowserRouter([
   {
@@ -40,17 +45,17 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: (
-          <Protected>
+          <Guard>
             <ProfilePage />
-          </Protected>
+          </Guard>
         ),
         children: [
           {
             index: true,
             element: (
-              <Protected>
+              <Guard>
                 <ProfileDetailsPage />
-              </Protected>
+              </Guard>
             ),
           },
         ],
@@ -93,7 +98,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/library",
-        element: <LibraryPage />,
+        element: (
+          <Guard>
+            <LibraryPage />
+          </Guard>
+        ),
         children: [
           {
             element: <InstalledPage />,
