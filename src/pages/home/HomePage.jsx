@@ -35,9 +35,9 @@ function HomePage() {
             return (
               <NewsEntry
                 key={index}
-                id={article.id}
+                id={article.guid}
                 title={article.title}
-                date={article._date}
+                date={article.createdAt}
                 image={article.image}
                 summary={article.summary}
               />

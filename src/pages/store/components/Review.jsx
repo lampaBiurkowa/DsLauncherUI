@@ -25,7 +25,7 @@ function Review({ review }) {
         )}
         <Spacer />
         <p className="published">
-          {new Date(review._date).toLocaleDateString()}
+          {new Date(review.createdAt).toLocaleDateString()}
         </p>
         <Rating value={review.rate + 1} isReadOnly={true} />
       </div>
