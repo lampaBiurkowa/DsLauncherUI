@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import "./ProfilePicture.scss";
 import useFileDialog from "../hooks/useFileDialog";
-import { publicPath } from "../../../App";
 
 function ProfilePicture({ src, readonly, onSelected }) {
   const { openedFiles, showDialog } = useFileDialog([

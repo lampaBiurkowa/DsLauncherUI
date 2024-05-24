@@ -5,7 +5,6 @@ import Router from "./Router.jsx";
 import UserContextProvider from "./contexts/UserContextProvider";
 import SettingsContextProvider from "./contexts/SettingsContextProvider";
 import { DsIdentityApiClient } from "./services/DsIdentityApiClient.js";
-import { DsStorageApiClient } from "./services/DsStorageApiClient.js";
 
 // import PlayingService from "./services/PlayingService";
 import { DevelopersCache, ProductsCache, UsersCache } from "./services/CacheService";
@@ -44,8 +43,8 @@ export const globalUpdateProgress = {
   progress: 0,
 };
 
-const storageApi = new DsStorageApiClient();
-export const publicPath = await storageApi.getUrl();
+export const publicPath = "https://zzxaltzqtymfxzxphxje.supabase.co/storage/v1/object/public";
+export const deafultBucket = "testing2";
 
 await DevelopersCache.load();
 await UsersCache.load();
