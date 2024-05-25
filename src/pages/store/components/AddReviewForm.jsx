@@ -15,10 +15,8 @@ function AddReviewForm({ productId, userId, onCancelled, onSubmitted }) {
   async function addReview() {
     try {
       await apiClient.createReview({
-        id: 0,
         content: textboxRef.current.value,
-        productId: productId,
-        userId: userId,
+        productGuid: productId,
       });
     } catch (error) {
       console.log(`Failed to create a review: ${error}`);
