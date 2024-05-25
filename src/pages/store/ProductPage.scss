@@ -129,11 +129,39 @@ article {
         }
       }
 
-      .details {
+      .review-details {
         display: flex;
         flex-direction: column;
         gap: $margin-sm;
         margin: $margin-xl 0;
+
+        .rate-counter {
+          display: grid;
+          grid-template-columns: 15px 45px auto;
+          align-items: center;
+
+          .rate {
+            font-size: $text-lg;
+            font-weight: $text-medium;
+            justify-self: end;
+          }
+
+          .count {
+            font-size: $text-xs;
+            margin-left: $margin-xs;
+            margin-right: $margin-xl;
+          }
+
+          .bar {
+            height: 10px;
+            background: $text-inactive;
+            border-radius: $radius-round;
+
+            &.fill {
+              background: $accent-alt;
+            }
+          }
+        }
       }
     }
 
@@ -181,88 +209,6 @@ article {
 
         .spec-type {
           font-weight: $text-bold;
-        }
-      }
-    }
-  }
-
-  #add-review-dialog {
-    & > form {
-      width: 350px;
-      display: flex;
-      flex-direction: column;
-      gap: $margin-xl;
-
-      .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        font-size: $text-xl;
-        font-weight: $text-bold;
-
-        button {
-          padding: $padding-sm;
-        }
-      }
-
-      .rating-box {
-        display: flex;
-        flex-direction: column;
-        gap: $margin-sm;
-
-        span {
-          font-weight: $text-medium;
-          font-size: $text-sm;
-        }
-
-        .rating {
-          font-size: 2em;
-        }
-      }
-
-      .details-box {
-        display: flex;
-        flex-direction: column;
-        gap: $margin-sm;
-
-        span {
-          font-weight: $text-medium;
-          font-size: $text-sm;
-        }
-
-        textarea {
-          width: 100% !important;
-          height: 100px;
-          resize: none;
-        }
-      }
-
-      .submit-area {
-        display: flex;
-        flex-direction: row-reverse;
-        gap: $margin-md;
-      }
-    }
-  }
-
-  #all-reviews-dialog {
-    & > form {
-      width: 500px;
-      display: flex;
-      flex-direction: column;
-      gap: $margin-xl;
-
-      .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        font-size: $text-xl;
-        font-weight: $text-bold;
-
-        button {
-          padding: $padding-sm;
         }
       }
     }

@@ -1,0 +1,70 @@
+@use "@/styles" as *;
+
+dialog {
+  color: $text;
+  outline: none;
+  background-color: $dark-2;
+  border: 1px solid $dark-3;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  padding: $margin-md;
+
+  animation: fade-out 0.1s ease-out;
+
+  .dialog-container {
+    display: flex;
+    flex-direction: column;
+
+    .dialog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: $margin-md;
+
+      h1 {
+        font-size: $text-xl;
+        font-weight: $text-bold;
+      }
+
+      button {
+        padding: $padding-sm;
+      }
+    }
+  }
+
+  &[open] {
+    animation: fade-in 0.1s ease-out;
+  }
+
+  &::backdrop {
+    backdrop-filter: brightness(75%);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+    display: none;
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    display: block;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    display: block;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.95);
+    display: none;
+  }
+}

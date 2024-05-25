@@ -19,7 +19,7 @@ function ArticlePage() {
         <article>
           <h1>{article?.title}</h1>
           <span className="date">
-            {new Date(article?._date).toLocaleDateString()}
+            {new Date(article?.createdAt).toLocaleDateString()}
           </span>
           <p>{article?.summary}</p>
           <ArticleImage url={article?.image} caption={article?.image_caption} />

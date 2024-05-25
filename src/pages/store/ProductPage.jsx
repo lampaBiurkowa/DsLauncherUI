@@ -1,4 +1,3 @@
-import React, { useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
 import useProduct from "./hooks/useProduct";
 import AspectRatio from "@/components/aspect-ratio/AspectRatio";
@@ -7,14 +6,12 @@ import Shelf from "@/components/shelf/Shelf";
 import useReviews from "./hooks/useReviews";
 import Review from "./components/Review";
 import useSummary from "./hooks/useSummary";
-import ReviewCounter from "./components/ReviewCounter";
-import usePlayerBought from "./hooks/usePlayerBought";
-import { useState } from "react";
-import ImagePopup from "./components/ImagePopup";
-import Rating from "@/components/rating/Rating";
+import { useState, useContext } from "react";
 import { UserContext } from "@/contexts/UserContextProvider";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import { DevelopersCache } from "@/services/CacheService";
+import Dialog from "@/components/dialog/Dialog";
+import AddReviewForm from "./components/AddReviewForm";
 
 const MAX_REVIEWS = 3;
 // const purchaseApi = new PurchaseApi();
@@ -42,44 +39,13 @@ function handlePurchase(productId, price) {
 
 function ProductPage() {
   const { id: productId } = useParams();
-  const { currentUser } = useContext(UserContext);
+  const userId = useContext(UserContext)?.currentUser?.id;
 
   let product = useProduct(productId);
   let reviews = useReviews(productId);
   let summary = useSummary(productId);
-  userBought = usePlayerBought("d", productId);
 
-  const reviewTextRef = useRef();
-  const [reviewRate, setReviewRate] = useState();
-
-  const [enlargedImage, setEnlargedImage] = useState(null);
-
-  const handleImageClick = (event) => {
-    setEnlargedImage(event.target.currentSrc);
-  };
-
-  const handleClosePopup = () => {
-    setEnlargedImage(null);
-  };
-
-  const addReview = () => {
-    reviewApi.reviewPost(
-      {
-        body: JSON.stringify({
-          content: reviewTextRef.current?.value,
-          rate: reviewRate,
-          date: new Date().toISOString(),
-          productId: productId,
-          userId: currentUser.guid,
-        }),
-      },
-      () => {
-        console.log("retr");
-      }
-    );
-  };
-
-  console.log("abra", product);
+  const [reviewDialogOpen, setReviewDialogOpen] = useState();
 
   return (
     <article>
@@ -127,14 +93,10 @@ function ProductPage() {
                 alt="Screenshot"
                 className="screenshot"
                 key={index}
-                onClick={handleImageClick}
               />
             );
           })}
         </Shelf>
-        {enlargedImage && (
-          <ImagePopup image={enlargedImage} onClose={handleClosePopup} />
-        )}
       </section>
 
       <section className="reviews">
@@ -144,24 +106,50 @@ function ProductPage() {
             <span>{summary?.avg.toFixed(1)}</span>
             <span>({reviews?.length})</span>
           </div>
-          <div className="details">
+          <div className="review-details">
             {[5, 4, 3, 2, 1].map((rate, index) => (
-              <ReviewCounter
-                key={rate}
-                rate={rate}
-                count={summary?.rateCounts[index]}
-                totalCount={reviews?.length}
-              />
+              <div className="rate-counter">
+                <span className="rate">{rate}</span>
+                <span className="count">({summary?.rateCounts[index]})</span>
+                <div className="bar">
+                  <div
+                    className="fill bar"
+                    style={{
+                      width: `${
+                        (summary?.rateCounts[index] / reviews?.length) * 100
+                      }%`,
+                    }}
+                  ></div>
+                </div>
+              </div>
             ))}
           </div>
-          <button
-            className="accent"
-            onClick={() => {
-              document.getElementById("add-review-dialog").showModal();
-            }}
-          >
-            Add review
-          </button>
+          {userId == null ? (
+            <></>
+          ) : (
+            <>
+              <button
+                className="accent"
+                onClick={() => {
+                  setReviewDialogOpen(true);
+                }}
+              >
+                Add review
+              </button>
+              <Dialog
+                header="Add review"
+                open={reviewDialogOpen}
+                onClosed={() => setReviewDialogOpen(false)}
+              >
+                <AddReviewForm
+                  userId={userId}
+                  productId={productId}
+                  onCancelled={() => setReviewDialogOpen(false)}
+                  onSubmitted={() => setReviewDialogOpen(false)}
+                ></AddReviewForm>
+              </Dialog>
+            </>
+          )}
         </div>
         <div className="reviews-comments">
           {reviews?.slice(0, MAX_REVIEWS).map((review, index) => (
@@ -202,50 +190,6 @@ function ProductPage() {
           <h3>Additional information</h3>
         </div>
       </section>
-
-      {/*Dialogs*/}
-      <dialog id="add-review-dialog">
-        <form>
-          <div className="header">
-            <h1>Add review</h1>
-            <button className="capsule" formMethod="dialog">
-              <i className="las la-times" />
-            </button>
-          </div>
-          <div className="rating-box">
-            <span>Rating</span>
-            <Rating
-              onValueChanged={(rating) => {
-                setReviewRate(rating);
-              }}
-            />
-          </div>
-          <div className="details-box">
-            <span>Review (optional)</span>
-            <textarea ref={reviewTextRef} />
-          </div>
-          <div className="submit-area">
-            <button
-              className="accent outlined"
-              formMethod="dialog"
-              onClick={addReview}
-            >
-              Add review
-            </button>
-            <button formMethod="dialog">Cancel</button>
-          </div>
-        </form>
-      </dialog>
-      <dialog id="all-reviews-dialog">
-        <form>
-          <div className="header">
-            <h1>Reviews</h1>
-            <button className="capsule" formMethod="dialog">
-              <i className="las la-times" />
-            </button>
-          </div>
-        </form>
-      </dialog>
     </article>
   );
 }
