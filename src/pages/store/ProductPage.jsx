@@ -3,6 +3,8 @@ import useProduct from "./hooks/useProduct";
 import AspectRatio from "@/components/aspect-ratio/AspectRatio";
 import "./ProductPage.scss";
 import Shelf from "@/components/shelf/Shelf";
+import Dialog from "@/components/dialog/Dialog";
+import Carousel from "@/components/carousel/Carousel";
 import useReviews from "./hooks/useReviews";
 import Review from "./components/Review";
 import useSummary from "./hooks/useSummary";
@@ -10,7 +12,6 @@ import { useState, useContext } from "react";
 import { UserContext } from "@/contexts/UserContextProvider";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import { DevelopersCache } from "@/services/CacheService";
-import Dialog from "@/components/dialog/Dialog";
 import AddReviewForm from "./components/AddReviewForm";
 
 const MAX_REVIEWS = 3;
@@ -46,6 +47,7 @@ function ProductPage() {
   let summary = useSummary(productId);
 
   const [reviewDialogOpen, setReviewDialogOpen] = useState();
+  const [galleryDialogOpen, setGalleryDialogOpen] = useState();
 
   return (
     <article>
@@ -93,10 +95,24 @@ function ProductPage() {
                 alt="Screenshot"
                 className="screenshot"
                 key={index}
+                onClick={() => setGalleryDialogOpen(true)}
               />
             );
           })}
         </Shelf>
+        <Dialog
+          open={galleryDialogOpen}
+          header="Screenshots"
+          onClosed={() => setGalleryDialogOpen(false)}
+        >
+          <div className="screenshot-carousel-container">
+            <Carousel auto={false}>
+              {product?.static?.Images.map((child, index) => {
+                return <img src={child} alt="Screenshot" key={index} />;
+              })}
+            </Carousel>
+          </div>
+        </Dialog>
       </section>
 
       <section className="reviews">

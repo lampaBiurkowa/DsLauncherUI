@@ -4,7 +4,7 @@ dialog {
   color: $text;
   outline: none;
   background-color: $dark-2;
-  border: 1px solid $dark-3;
+  border: 1px solid $accent-alt;
   border-radius: $radius-lg;
   overflow: hidden;
   padding: $margin-md;
@@ -13,7 +13,9 @@ dialog {
 
   .dialog-container {
     display: flex;
+    position: relative;
     flex-direction: column;
+    overflow: hidden;
 
     .dialog-header {
       display: flex;

@@ -94,6 +94,17 @@ article {
       border-radius: $radius-sm;
       margin-top: $margin-md;
     }
+
+    .screenshot-carousel-container {
+      width: 75vw;
+      height: 75vh;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
   }
 
   section.reviews {

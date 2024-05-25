@@ -10,6 +10,14 @@ function Dialog({ open, header, onClosed, children }) {
     else dialogRef.current?.close();
   }, [open]);
 
+  useEffect(() => {
+    dialogRef.current?.addEventListener("close", onClosed);
+
+    return () => {
+      dialogRef.current?.removeEventListener("close", onClosed);
+    };
+  }, []);
+
   return (
     <dialog ref={dialogRef}>
       <div className="dialog-container">
