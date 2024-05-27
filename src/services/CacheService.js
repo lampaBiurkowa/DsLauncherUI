@@ -65,16 +65,29 @@ class ProductsCacheSingleton extends CachedObjects {
     };
   }
 
+  // async getLatestVersion(productId) {
+  //   const api = new DsLauncherApiClient();
+  //   const data = await api.getLatestProductPackage(productId);
+  //   return {
+  //     rateCounts: data,
+  //     avg:
+  //       data.reduce((sum, count, index) => sum + count * (index + 1), 0) /
+  //       data.reduce((sum, count) => sum + count, 0),
+  //   };
+  // }
+
   async load() {
     var products = await this.fetchProducts();
+    const api = new DsLauncherApiClient();
     var result = [];
     for (var i = 0; i < products.length; i++) {
-      console.log(products[i]);
       this.data[products[i].guid] = {
         data: products[i],
         static: await getFilesData(products[i].name),
         rates: await this.getRates(products[i].guid),
+        latestVersion: await api.getLatestProductPackage(products[i].guid)
       };
+      console.log(this.data[products[i].guid]);
     }
     return result;
   }

@@ -14,7 +14,11 @@ export class DsLauncherApiClient {
             const error = await response.text();
             throw new Error(`HTTP error! status: ${response.status}, ${error}`);
         }
-        return response.json();
+        
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json();
+        }
     }
 
     //Product
@@ -275,5 +279,10 @@ export class DsLauncherApiClient {
             body: JSON.stringify(ids)
         };
         return this.request(url, options);
+    }
+
+    async getLatestProductPackage(productId) {
+        const url = `${this.baseUrl}/Package/latest/${productId}`;
+        return this.request(url);
     }
 }

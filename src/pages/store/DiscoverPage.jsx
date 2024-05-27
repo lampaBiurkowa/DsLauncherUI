@@ -42,9 +42,9 @@ function DiscoverPage() {
                   name={child.data.name}
                   icon={child.static.Icon}
                   rating={child.rates.avg}
-                  platform={`${child.static.Linux ? "linux" : ""} ${
-                    child.static.Win ? "win" : ""
-                  } ${child.static.Mac ? "macos" : ""}`}
+                  platform={`${child.latestVersion?.isLinux ? "linux" : ""} ${
+                    child.latestVersion?.isWin ? "win" : ""
+                  } ${child.latestVersion?.isMac ? "macos" : ""}`}
                 ></StoreEntry>
               );
             })}

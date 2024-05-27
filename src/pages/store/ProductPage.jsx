@@ -189,21 +189,29 @@ function ProductPage() {
           <ul>
             <li>
               <span className="spec-type">RAM:&nbsp;</span>
-              {product?.static.RamMib}MB
+              {product?.latestVersion.ramMib}MB
             </li>
             <li>
               <span className="spec-type">Disk space:&nbsp;</span>
-              {product?.static.DiskMib}MB
+              {product?.latestVersion.diskMib}MB
             </li>
             <li>
               <span className="spec-type">CPU:&nbsp;</span>
-              {product?.static.CpuMHz}MHz
+              {product?.latestVersion.cpuMhz}MHz
             </li>
           </ul>
         </div>
 
         <div className="additional-info-box">
           <h3>Additional information</h3>
+          <li>
+            <span className="spec-type">Version:&nbsp;</span>
+            {product?.latestVersion.version}MB
+          </li>
+          <li>
+            <span className="spec-type">Updated:&nbsp;</span>
+            {product?.latestVersion.createdAt}MHz
+          </li>
         </div>
       </section>
     </article>
