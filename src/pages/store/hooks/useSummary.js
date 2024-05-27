@@ -5,7 +5,10 @@ function useSummary(id) {
   let [summary, setSummary] = useState();
 
   useEffect(() => {
-    setSummary(ProductsCache.getById(id).rates);
+    async function fetchSummary() {
+      setSummary((await ProductsCache.getById(id)).rates);
+    }
+    fetchSummary();
   }, []);
 
   return summary;

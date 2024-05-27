@@ -9,6 +9,7 @@ import useStaticProducts from "./hooks/useStaticProducts";
 import usePromoted from "./hooks/usePromoted";
 
 import "./DiscoverPage.scss";
+import { UsersCache } from "../../services/CacheService";
 
 function DiscoverPage() {
   let promoted = usePromoted();
@@ -38,13 +39,13 @@ function DiscoverPage() {
               return (
                 <StoreEntry
                   key={index}
-                  id={child.data.guid}
-                  name={child.data.name}
-                  icon={child.static.Icon}
-                  rating={child.rates.avg}
-                  platform={`${child.latestVersion?.isLinux ? "linux" : ""} ${
-                    child.latestVersion?.isWin ? "win" : ""
-                  } ${child.latestVersion?.isMac ? "macos" : ""}`}
+                  id={child?.model?.guid}
+                  name={child?.model?.name}
+                  icon={child?.static?.Icon}
+                  rating={child?.rates?.avg}
+                  platform={`${child?.latestVersion?.linuxExePath?.trim().length > 0 ? "linux" : ""}
+                    ${child?.latestVersion?.windowsExePath?.trim().length > 0 ? "win" : ""}
+                    ${child?.latestVersion?.maxExePath?.trim().length > 0 ? "macos" : ""}`}
                 ></StoreEntry>
               );
             })}

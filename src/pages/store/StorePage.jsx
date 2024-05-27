@@ -18,7 +18,7 @@ function StorePage() {
       setSearchResults([]);
       return;
     }
-    var searchedApps = ProductsCache.getAll().filter(item => item.data.name.toLowerCase().includes(text.toLowerCase()));
+    var searchedApps = [];//ProductsCache.getAll().filter(item => item.data.name.toLowerCase().includes(text.toLowerCase()));
     setSearchResults(searchedApps);
   };
 

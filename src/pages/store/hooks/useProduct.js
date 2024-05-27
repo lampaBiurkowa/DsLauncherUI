@@ -7,9 +7,13 @@ function useProduct(id) {
   let [product, setProduct] = useState();
 
   console.log("zonzcyc smerfu");
+  
   useEffect(() => {
-    console.log("hej", id, ProductsCache.getById(id));
-    setProduct(ProductsCache.getById(id));
+    async function fetchProduct() {
+      const response = await ProductsCache.getById(id);
+      setProduct(response);
+    }
+    fetchProduct();
   }, []);
 
   console.log("swiwaaAat");

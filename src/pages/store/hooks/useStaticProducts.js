@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { ProductsCache } from "@/services/CacheService";
-
+// import { ProductsCache } from "@/services/CacheService";
+import { ProductsCache } from "../../../services/CacheService";
 function useStaticProducts() {
   const url = `https://raw.githubusercontent.com/DibrySoft/static/master/discover.json`;
   let [products, setProducts] = useState();
@@ -13,24 +13,19 @@ function useStaticProducts() {
         }
         return response.json();
       })
-      .then((data) => {
-        var sections = [];
-        for (let i = 0; i < data.length; i++) {
-          const result = [];
-          var appIds = data[i].items;
-          for (let j = 0; j < appIds.length; j++) {
-            var product = ProductsCache.getById(appIds[j]);
-            result.push(product);
-          }
-          sections.push({ name: data[i].name, items: result });
-        }
+      .then(async (data) => {
+        const sectionsPromises = data.map(async (section) => {
+          const productPromises = section.items.map((appId) => ProductsCache.getById(appId));
+          const items = await Promise.all(productPromises);
+          return { name: section.name, items: items };
+        });
+  
+        const sections = await Promise.all(sectionsPromises);
+        console.log('sec', sections);
         setProducts(sections);
       })
       .catch((error) => {
-        console.error(
-          "There has been a problem with your fetch operation:",
-          error
-        );
+        console.error("There has been a problem with your fetch operation:", error);
       });
   }, []);
 

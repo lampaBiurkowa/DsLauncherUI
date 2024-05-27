@@ -20,17 +20,17 @@ function UpdatesPage() {
 
       let result = [];
       for (let i = 0; i < appNames.length; i++) {
-        var product = ProductsCache.getAll().find((x) => x.name == appNames[i]);
-        // productApi.productGetNameGet(appNames[i], async (productError, productData) => {
-        if (product === null) return;
+        // TODO APPNAMES SHOULD BE APPIDS
+        // var product = ProductsCache.getAll().find((x) => x.name == appNames[i]);
+        // if (product === null) return;
 
-        let icon = (await getFilesData(product.data.name)).Icon;
-        let desc = (await runStatus(product.data.name, currentUser.login))
-          .VersionDescription;
-        result.push({ icon: icon, title: product.data.name, desc: desc });
-        if (result.length == appNames.length) {
-          setApps(result);
-        }
+        // let icon = (await getFilesData(product.data.name)).Icon;
+        // let desc = (await runStatus(product.data.name, currentUser.login))
+        //   .VersionDescription;
+        // result.push({ icon: icon, title: product.data.name, desc: desc });
+        // if (result.length == appNames.length) {
+        //   setApps(result);
+        // }
       }
     }
 

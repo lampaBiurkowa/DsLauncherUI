@@ -8,6 +8,7 @@ import Carousel from "@/components/carousel/Carousel";
 import useReviews from "./hooks/useReviews";
 import Review from "./components/Review";
 import useSummary from "./hooks/useSummary";
+import useDeveloperForProduct from "./hooks/useDeveloperForProduct";
 import { useState, useContext } from "react";
 import { UserContext } from "@/contexts/UserContextProvider";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
@@ -45,10 +46,11 @@ function ProductPage() {
   let product = useProduct(productId);
   let reviews = useReviews(productId);
   let summary = useSummary(productId);
+  let developer = useDeveloperForProduct(productId);
 
   const [reviewDialogOpen, setReviewDialogOpen] = useState();
   const [galleryDialogOpen, setGalleryDialogOpen] = useState();
-
+  console.log('wazne!', product, productId);
   return (
     <article>
       <AspectRatio aspectRatio={12 / 5}>
@@ -64,27 +66,27 @@ function ProductPage() {
           }}
         >
           <div className="product-header">
-            <h1 className="title">{product?.data.name}</h1>
+            <h1 className="title">{product?.model?.name}</h1>
             <span className="developer">
-              {DevelopersCache.getById(product?.data.developerGuid)?.name}
+              {developer?.model?.name}
             </span>
             <button
               className="buy-button accent large"
               onClick={() => {
                 if (userBought);
-                else handlePurchase(productId, product?.data.price);
+                else handlePurchase(productId, product?.model?.price);
               }}
             >
               {userBought ? "Install" : "Buy"}
             </button>
-            <span className="price">{product?.data.price}₽</span>
+            <span className="price">{product?.model?.price}₽</span>
           </div>
         </div>
       </AspectRatio>
       <section className="description">
         <img src={product?.static?.Icon} alt="Application Icon" />
         <h2>About</h2>
-        <span>{product?.data.description}</span>
+        <span>{product?.model?.description}</span>
       </section>
       <section className="screenshots">
         <Shelf title="Screenshots">
@@ -119,7 +121,7 @@ function ProductPage() {
         <h2>Comments & Reviews</h2>
         <div className="reviews-summary">
           <div className="overall">
-            <span>{summary?.avg.toFixed(1)}</span>
+            <span>{summary?.avg}</span>
             <span>({reviews?.length})</span>
           </div>
           <div className="review-details">
@@ -189,15 +191,15 @@ function ProductPage() {
           <ul>
             <li>
               <span className="spec-type">RAM:&nbsp;</span>
-              {product?.latestVersion.ramMib}MB
+              {product?.latestVersion?.minRamMib}MB
             </li>
             <li>
               <span className="spec-type">Disk space:&nbsp;</span>
-              {product?.latestVersion.diskMib}MB
+              {product?.latestVersion?.minDiskMib}MB
             </li>
             <li>
               <span className="spec-type">CPU:&nbsp;</span>
-              {product?.latestVersion.cpuMhz}MHz
+              {product?.latestVersion?.minCpu}MHz
             </li>
           </ul>
         </div>
@@ -206,11 +208,11 @@ function ProductPage() {
           <h3>Additional information</h3>
           <li>
             <span className="spec-type">Version:&nbsp;</span>
-            {product?.latestVersion.version}MB
+            {product?.latestVersion?.version}MB
           </li>
           <li>
             <span className="spec-type">Updated:&nbsp;</span>
-            {product?.latestVersion.createdAt}MHz
+            {product?.latestVersion?.createdAt}MHz
           </li>
         </div>
       </section>

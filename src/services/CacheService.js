@@ -1,94 +1,89 @@
 import getFilesData from "@/services/getFilesData";
 import { DsIdentityApiClient } from "../services/DsIdentityApiClient";
 import { DsLauncherApiClient } from "../services/DsLauncherApiClient";
+import * as fs from "@tauri-apps/plugin-fs";
+
+const CACHE_PATH = 'cache.json';
 
 class CachedObjects {
   constructor() {
     this.data = {};
+    this.cachePath = `${this.constructor.name}-${CACHE_PATH}`;
   }
 
-  getById(id) {
-    return this.data[id];
+  async getById(id) {
+    if (this.data.hasOwnProperty(id) && this.data[id].expire > Date.now()) {
+      return this.data[id];
+    } else {
+      return await this.loadItem(id);
+    }
   }
 
   setById(id, item) {
     return (this.data[id] = item);
   }
 
-  getAll() {
-    var result = [];
-    for (var key in this.data) {
-      result.push(this.data[key]);
-    }
+  getExpirationTimestamp(minsAhead) {
+    return new Date(Date.now() + minsAhead * 60000);
+  }
 
-    return result;
+  async dump() {
+    await fs.writeFile(this.cachePath, JSON.stringify(this.data));
+  }
+
+  async load() {
+    if (await fs.exists(this.cachePath))
+      this.data = JSON.parse(await fs.readFile(this.cachePath));
   }
 }
 
 class UsersCacheSingleton extends CachedObjects {
   constructor() {
     super();
+    this.userApi = new DsIdentityApiClient();
+    this.launcherApi = new DsLauncherApiClient();
   }
 
-  async fetchUsers() {
-    const userApi = new DsIdentityApiClient();
-    return await userApi.getUsers();
-  }
+  async loadItem(id) {
+    var model = await this.userApi.getUserById(id);
+    var isDeveloper = await this.launcherApi.getDeveloperByUser(id);
+    this.data[id] = { model: model, isDeveloper: isDeveloper, expire: this.getExpirationTimestamp(30) }
 
-  async load() {
-    var users = await this.fetchUsers();
-
-    for (var i = 0; i < users.length; i++) {
-      this.data[users[i].guid] = users[i];
-    }
+    return this.data[id];
   }
 }
 
 class ProductsCacheSingleton extends CachedObjects {
   constructor() {
     super();
+    this.launcherApi = new DsLauncherApiClient();
   }
-
-  async fetchProducts() {
-    const api = new DsLauncherApiClient();
-    return await api.getProducts();
-  }
-
+  
   async getRates(productId) {
-    const api = new DsLauncherApiClient();
-    const data = await api.getReviewBreakdown(productId);
+    const data = await this.launcherApi.getReviewBreakdown(productId);
     return {
       rateCounts: data,
       avg:
-        data.reduce((sum, count, index) => sum + count * (index + 1), 0) /
-        data.reduce((sum, count) => sum + count, 0),
+        (data.reduce((sum, count, index) => sum + count * (index + 1), 0) /
+        data.reduce((sum, count) => sum + count, 0)).toFixed(1)
     };
   }
 
-  // async getLatestVersion(productId) {
-  //   const api = new DsLauncherApiClient();
-  //   const data = await api.getLatestProductPackage(productId);
-  //   return {
-  //     rateCounts: data,
-  //     avg:
-  //       data.reduce((sum, count, index) => sum + count * (index + 1), 0) /
-  //       data.reduce((sum, count) => sum + count, 0),
-  //   };
-  // }
-
-  async load() {
-    var products = await this.fetchProducts();
-    const api = new DsLauncherApiClient();
+  async loadItem(productGuid) {
+    const [model, rates, latestVersion] = await Promise.all([
+      this.launcherApi.getProductById(productGuid),
+      this.getRates(productGuid),
+      this.launcherApi.getLatestProductPackage(productGuid),
+    ]);
     var result = [];
-    for (var i = 0; i < products.length; i++) {
-      this.data[products[i].guid] = {
-        data: products[i],
-        static: await getFilesData(products[i].name),
-        rates: await this.getRates(products[i].guid),
-        latestVersion: await api.getLatestProductPackage(products[i].guid)
-      };
-      console.log(this.data[products[i].guid]);
-    }
+    this.data[productGuid] = {
+      model: model,
+      static: await getFilesData(model.name), //DEPRECATED TODO REMOVE
+      rates: rates,
+      latestVersion: latestVersion,
+      expire: this.getExpirationTimestamp(30)
+    };
+
     return result;
   }
 }
@@ -96,18 +91,14 @@ class ProductsCacheSingleton extends CachedObjects {
 class DevelopersCacheSingleton extends CachedObjects {
   constructor() {
     super();
+    this.launcherApi = new DsLauncherApiClient();
   }
 
-  async fetchDevelopers() {
-    const api = new DsLauncherApiClient();
-    return await api.getDevelopers();
-  }
-
-  async load() {
-    var developers = await this.fetchDevelopers();
-    for (var i = 0; i < developers.length; i++) {
-      this.data[developers[i].guid] = developers[i];
-    }
+  async loadItem(developerGuid) {
+    var model = await this.launcherApi.getDeveloperById(developerGuid);
+    this.data[developerGuid] = { model: model, expire: this.getExpirationTimestamp(30) };
+    
+    return this.data[developerGuid];
   }
 }
 

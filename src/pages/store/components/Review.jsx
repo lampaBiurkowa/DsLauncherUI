@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Review.scss";
 import Spacer from "@/components/spacer/Spacer";
 import Rating from "@/components/rating/Rating";
 import { getProfilePictureUrl } from "@/services/ProfileImageService";
 import { DevelopersCache, UsersCache } from "@/services/CacheService";
 
+function useUser(id) {
+  let [user, setUser] = useState();
+
+  useEffect(() => {
+    async function fetchUser() {
+      setUser(await UsersCache.getById(id));
+    }
+    fetchUser();
+  }, []);
+
+  return user;
+}
+
 function Review({ review }) {
+  let user = useUser(review.userGuid);
   return (
     <div className="review-container">
       <div className="header">
@@ -15,10 +29,9 @@ function Review({ review }) {
           className="profile-picture"
         />
         <span className="username">
-          {UsersCache.getById(review.userGuid)?.name}
+          {user?.model.name} {user?.model.surname}
         </span>
-        {DevelopersCache.getAll().filter((x) => x.userGuid == review.userGuid)
-          .length > 0 ? (
+        {user?.isDeveloper ? (
           <i className="developer-badge las la-certificate" title="Developer" />
         ) : (
           ""

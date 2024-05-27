@@ -173,6 +173,11 @@ export class DsLauncherApiClient {
         return this.request(url, options);
     }
 
+    async getDeveloperByUser(userGuid) {
+        const url = `${this.baseUrl}/Developer/user/${userGuid}`;
+        return this.request(url);
+    }
+
     //Review
     async getReviews(skip = 0, take = 1000) {
         const url = `${this.baseUrl}/Review?skip=${skip}&take=${take}`;
