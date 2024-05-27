@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./Review.scss";
 import Spacer from "@/components/spacer/Spacer";
 import Rating from "@/components/rating/Rating";
-import { getProfilePictureUrl } from "@/services/ProfileImageService";
+import useProfileImage from "@/services/ProfileImageService";
 import { DevelopersCache, UsersCache } from "@/services/CacheService";
 
 function useUser(id) {
@@ -20,11 +20,13 @@ function useUser(id) {
 
 function Review({ review }) {
   let user = useUser(review.userGuid);
+  console.log("wyt", review.userGuid);
+  let profileImage = useProfileImage(review.userGuid);
   return (
     <div className="review-container">
       <div className="header">
         <img
-          src={getProfilePictureUrl(review.userGuid)}
+          src={profileImage}
           alt="Profile picture"
           className="profile-picture"
         />

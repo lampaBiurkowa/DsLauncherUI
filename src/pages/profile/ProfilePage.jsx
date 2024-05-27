@@ -4,7 +4,7 @@ import ProfilePicture from "./components/ProfilePicture";
 
 import "./ProfilePage.scss";
 import { UserContext } from "@/contexts/UserContextProvider";
-import { getProfilePictureUrl } from "@/services/ProfileImageService";
+import useProfileImage from "@/services/ProfileImageService";
 import Navbar from "@/components/navbar/Navbar";
 import { NavLink, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -17,12 +17,14 @@ function ProfilePage() {
   let context = useContext(UserContext);
   let navigate = useNavigate();
 
-  const [profileImage, setProfileImage] = useState(
-    getProfilePictureUrl(context.currentUser?.guid)
-  );
-  useEffect(() => {
-    setProfileImage(getProfilePictureUrl(context.currentUser?.guid));
-  }, []);
+  // const [profileImage, setProfileImage] = useState(
+  //   getProfilePictureUrl(context.currentUser?.guid)
+  // );
+  // useEffect(() => {
+  //   setProfileImage(getProfilePictureUrl(context.currentUser?.guid));
+  // }, []);
+
+  
 
   async function onPictureSelected(path) {
     const api = new DsIdentityApiClient();
