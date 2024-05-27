@@ -2,9 +2,7 @@
   "identifier": "migrated",
   "description": "permissions that were migrated from v1",
   "local": true,
-  "windows": [
-    "main"
-  ],
+  "windows": ["main"],
   "permissions": [
     "path:default",
     "event:default",
@@ -24,14 +22,12 @@
     "fs:allow-exists",
     {
       "identifier": "fs:scope",
-      "allow": [
-        "**",
-        "$APPDATA/*"
-      ]
+      "allow": ["**", "$APPDATA/*"]
     },
     "window:allow-maximize",
     "window:allow-unmaximize",
     "window:allow-minimize",
+    "window:allow-toggle-maximize",
     "window:allow-close",
     "window:allow-start-dragging",
     {
@@ -51,6 +47,7 @@
     "dialog:default",
     "shell:default",
     "websocket:default",
-    "websocket:default"
+    "websocket:default",
+    "cli:default"
   ]
 }

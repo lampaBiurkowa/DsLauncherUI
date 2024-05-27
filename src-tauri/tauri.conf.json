@@ -19,7 +19,15 @@
   "productName": "dibstore-app",
   "version": "0.0.0",
   "identifier": "com.dibrysoft.launcher",
-  "plugins": {},
+  "plugins": {
+    "cli": {
+      "args": [
+        {
+          "name": "port"
+        }
+      ]
+    }
+  },
   "app": {
     "withGlobalTauri": true,
     "windows": [
