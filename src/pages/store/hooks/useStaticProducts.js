@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 // import { ProductsCache } from "@/services/CacheService";
 import { ProductsCache } from "../../../services/CacheService";
+import { deafultBucket, publicPath } from "@/App";
 function useStaticProducts() {
-  const url = `https://raw.githubusercontent.com/DibrySoft/static/master/discover.json`;
+  const url = `${publicPath}/${deafultBucket}/discover.json`;
   let [products, setProducts] = useState();
 
   useEffect(() => {

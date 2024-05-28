@@ -1,7 +1,8 @@
+import { deafultBucket, publicPath } from "@/App";
 import { useState, useEffect } from "react";
 
 function usePromoted() {
-  const url = `https://raw.githubusercontent.com/DibrySoft/static/master/promoted.json`;
+  const url = `${publicPath}/${deafultBucket}/promoted.json`;
   let [products, setPromoted] = useState();
 
   useEffect(() => {
