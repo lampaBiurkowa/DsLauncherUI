@@ -27,7 +27,7 @@
 
     .profile-basic {
       display: grid;
-      gap: $margin-xs $margin-xl;
+      gap: $margin-sm $margin-xl;
       grid-template-areas: "image name" "image actions";
 
       .profile-name {

@@ -14,6 +14,7 @@ import { UserContext } from "@/contexts/UserContextProvider";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import { DevelopersCache } from "@/services/CacheService";
 import AddReviewForm from "./components/AddReviewForm";
+import { executeCommand } from "@/services/DsLauncherService";
 
 const MAX_REVIEWS = 3;
 // const purchaseApi = new PurchaseApi();
@@ -50,14 +51,14 @@ function ProductPage() {
 
   const [reviewDialogOpen, setReviewDialogOpen] = useState();
   const [galleryDialogOpen, setGalleryDialogOpen] = useState();
-  console.log('wazne!', product, productId);
+  console.log("wazne!", product, productId);
   return (
     <article>
       <AspectRatio aspectRatio={12 / 5}>
         <div
           className="product-hero"
           style={{
-            background: `linear-gradient(
+            "background-image": `linear-gradient(
             0deg,
             rgba(0, 0, 0, 1) 0%,
             rgba(0, 0, 0, 0) 100%
@@ -67,9 +68,7 @@ function ProductPage() {
         >
           <div className="product-header">
             <h1 className="title">{product?.model?.name}</h1>
-            <span className="developer">
-              {developer?.model?.name}
-            </span>
+            <span className="developer">{developer?.model?.name}</span>
             <button
               className="buy-button accent large"
               onClick={() => {
@@ -175,7 +174,12 @@ function ProductPage() {
           ))}
           <button
             onClick={() => {
-              document.getElementById("all-reviews-dialog").showModal();
+              executeCommand("test", {
+                arg1: "caps",
+                arg2: "zaloz",
+                arg3array: ["student", "paka"],
+                arg4array: [1, 2, 3],
+              });
             }}
           >
             Show all reviews

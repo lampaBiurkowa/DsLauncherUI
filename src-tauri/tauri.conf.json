@@ -23,7 +23,9 @@
     "cli": {
       "args": [
         {
-          "name": "port"
+          "name": "port",
+          "takesValue": true,
+          "multiple": false
         }
       ]
     }

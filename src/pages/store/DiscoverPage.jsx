@@ -26,7 +26,7 @@ function DiscoverPage() {
                 name={child.name}
                 desc={child.desc}
                 link={child.link}
-                background={child.Background}
+                background={child.background}
               />
             );
           })}
@@ -43,9 +43,21 @@ function DiscoverPage() {
                   name={child?.model?.name}
                   icon={child?.static?.Icon}
                   rating={child?.rates?.avg}
-                  platform={`${child?.latestVersion?.linuxExePath?.trim().length > 0 ? "linux" : ""}
-                    ${child?.latestVersion?.windowsExePath?.trim().length > 0 ? "win" : ""}
-                    ${child?.latestVersion?.maxExePath?.trim().length > 0 ? "macos" : ""}`}
+                  platform={`${
+                    child?.latestVersion?.linuxExePath?.trim().length > 0
+                      ? "linux"
+                      : ""
+                  }
+                    ${
+                      child?.latestVersion?.windowsExePath?.trim().length > 0
+                        ? "win"
+                        : ""
+                    }
+                    ${
+                      child?.latestVersion?.maxExePath?.trim().length > 0
+                        ? "macos"
+                        : ""
+                    }`}
                 ></StoreEntry>
               );
             })}

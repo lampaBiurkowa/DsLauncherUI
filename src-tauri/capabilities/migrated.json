@@ -48,6 +48,7 @@
     "shell:default",
     "websocket:default",
     "websocket:default",
-    "cli:default"
+    "cli:default",
+    "process:allow-exit"
   ]
 }
