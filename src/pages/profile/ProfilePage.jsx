@@ -12,6 +12,7 @@ import NavButton from "@/components/navbar/NavButton";
 import { UsersCache } from "@/services/CacheService";
 import { DsIdentityApiClient } from "../../services/DsIdentityApiClient";
 import * as fs from "@tauri-apps/plugin-fs";
+import { LocalStorageHandler } from "../../services/LocalStorageService";
 
 function ProfilePage() {
   let context = useContext(UserContext);
@@ -75,8 +76,8 @@ function ProfilePage() {
             <button
               className="small"
               onClick={() => {
-                localStorage.setItem("token", "");
-                localStorage.setItem("currentUser", "");
+                LocalStorageHandler.setToken("");
+                LocalStorageHandler.setUser("");
                 context.currentUser = null;
                 navigate("/home", { replace: true });
                 navigate(0);

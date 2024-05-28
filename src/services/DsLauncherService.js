@@ -52,10 +52,10 @@ function formatArgs(args) {
     if (Array.isArray(args[propertyName])) {
       argList.push(`${propertyName}[]:${args[propertyName].length}`);
       args[propertyName].forEach((element, index) => {
-        argList.push(`${propertyName}[${index}]:${JSON.stringify(element)}`);
+        argList.push(`${propertyName}[${index}]:${Jelement}`);
       });
     } else {
-      argList.push(`${propertyName}:${JSON.stringify(args[propertyName])}`);
+      argList.push(`${propertyName}:${args[propertyName]}`);
     }
   }
 

@@ -1,3 +1,5 @@
+import { LocalStorageHandler } from "./LocalStorageService";
+
 const API_BASE_URL = "http://localhost:5216";
 
 export class DsLauncherApiClient {
@@ -8,7 +10,7 @@ export class DsLauncherApiClient {
     
     async request(url, options = {}) {
         options.headers = options.headers || {};
-        options.headers['Authorization'] = `Bearer ${localStorage.getItem('token', )}`;
+        options.headers['Authorization'] = `Bearer ${LocalStorageHandler.getToken()}`;
         const response = await fetch(url, options);
         if (!response.ok) {
             const error = await response.text();

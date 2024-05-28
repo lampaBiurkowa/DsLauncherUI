@@ -2,13 +2,15 @@ import React from "react";
 import "./LoginPage.scss";
 import Logo from "@/components/logo/Logo";
 import Spacer from "../../components/spacer/Spacer";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Separator from "../../components/separator/Separator";
 import { DsIdentityApiClient } from "../../services/DsIdentityApiClient";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { executeCommand } from "@/services/DsLauncherService";
+import { LocalStorageHandler } from "../../services/LocalStorageService";
 
 const api = new DsIdentityApiClient();
 
@@ -44,24 +46,30 @@ function LoginPage() {
             {
               const loginInput = document.querySelector('input[name="login"]').value;
               const passwordInput = document.querySelector('input[name="password"]').value;
-              var userId= null;
-
-              const x = await api.getIdByAlias(loginInput);
-              userId = x;
-              console.log("userid:", x);
+              const userId = await api.getIdByAlias(loginInput);
               try {
-                const t = await api.login(userId, btoa(passwordInput));
-                localStorage.setItem('token', t);
-                console.log("lohhed in with token:", t);
+                const passwordBase64 = btoa(passwordInput);
+                const token = await api.login(userId, passwordBase64);
+
+                api.getUserById(userId).then(user => {
+                  context.currentUser = user;
+                  navigate("/home");
+                });
+
+                console.log('zara wysyleczka');
+                executeCommand("login", { 
+                  userId: userId,
+                  passwordBase64: passwordBase64,
+                  token: token
+                });
+
+                LocalStorageHandler.setToken(token);
+                LocalStorageHandler.setUser(userId);
               }
               catch {
                 console.error("Error checking if user is online:", error);
                 setError("Login failed. Please check your credentials.");
               }
-
-              localStorage.setItem('currentUser', userId);
-              context.currentUser = await api.getUserById(userId);
-              navigate("/home");
             }}>Log in</button>
           </div>
           {error && <p className="error-message">{error}</p>}

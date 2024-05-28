@@ -1,7 +1,8 @@
 import React, { createContext } from "react";
 import { DsIdentityApiClient } from "../services/DsIdentityApiClient";
+import { LocalStorageHandler } from "../services/LocalStorageService";
 
-const currentUserId = localStorage.getItem('currentUser');
+const currentUserId = LocalStorageHandler.getUser();
 let currentUser = null;
 const userApi = new DsIdentityApiClient();
 
