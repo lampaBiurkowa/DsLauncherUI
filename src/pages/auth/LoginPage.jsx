@@ -4,7 +4,7 @@ import Logo from "@/components/logo/Logo";
 import Spacer from "../../components/spacer/Spacer";
 import { NavLink } from "react-router-dom";
 import Separator from "../../components/separator/Separator";
-import { DsIdentityApiClient } from "../../services/DsIdentityApiClient";
+import { DsCoreApiClient } from "../../services/DsCoreApiClient";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ import { useState } from "react";
 import { executeCommand } from "@/services/DsLauncherService";
 import { LocalStorageHandler } from "../../services/LocalStorageService";
 
-const api = new DsIdentityApiClient();
+const api = new DsCoreApiClient();
 
 function LoginPage() {
   const [error, setError] = useState(null);

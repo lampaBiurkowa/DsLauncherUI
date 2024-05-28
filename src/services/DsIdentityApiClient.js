@@ -2,7 +2,7 @@ import { LocalStorageHandler } from "./LocalStorageService";
 
 const API_BASE_URL = "http://localhost:5218";
 
-export class DsIdentityApiClient {
+export class DsCoreApiClient {
     constructor() {
         this.authToken = null;
         this.baseUrl = API_BASE_URL;

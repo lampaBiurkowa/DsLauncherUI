@@ -2,12 +2,12 @@ import React, { useContext, useState } from "react";
 import "./ProfileDetailsPage.scss";
 import { UsersCache } from "../../services/CacheService";
 import { UserContext } from "../../contexts/UserContextProvider";
-import { DsIdentityApiClient } from "../../services/DsIdentityApiClient";
+import { DsCoreApiClient } from "../../services/DsCoreApiClient";
 
 function ProfileDetailsPage() {
   let { currentUser } = useContext(UserContext);
   console.log("cur", currentUser);
-  const api = new DsIdentityApiClient();
+  const api = new DsCoreApiClient();
   function encodeImageFileAsURL(event) {
     const api = new UserImagesApi();
     var file = event.target.files[0];

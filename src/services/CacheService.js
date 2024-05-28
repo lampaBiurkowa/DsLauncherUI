@@ -1,5 +1,5 @@
 import getFilesData from "@/services/getFilesData";
-import { DsIdentityApiClient } from "../services/DsIdentityApiClient";
+import { DsCoreApiClient } from "../services/DsCoreApiClient";
 import { DsLauncherApiClient } from "../services/DsLauncherApiClient";
 import * as fs from "@tauri-apps/plugin-fs";
 
@@ -40,7 +40,7 @@ class CachedObjects {
 class UsersCacheSingleton extends CachedObjects {
   constructor() {
     super();
-    this.userApi = new DsIdentityApiClient();
+    this.userApi = new DsCoreApiClient();
     this.launcherApi = new DsLauncherApiClient();
   }
 
