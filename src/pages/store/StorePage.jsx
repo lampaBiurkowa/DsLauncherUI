@@ -4,6 +4,7 @@ import NavBar from "../../components/navbar/Navbar";
 import NavButton from "../../components/navbar/NavButton";
 import "./StorePage.scss";
 import { DsLauncherApiClient } from '../../services/DsLauncherApiClient';
+import getFilesData from '../../services/getFilesData';
 
 function debounce(func, delay) {
   let timeoutId;
@@ -19,7 +20,6 @@ function StorePage() {
   const [searchResults, setSearchResults] = useState([]);
 
   const debouncedSearch = debounce(async (text) => {
-    console.log(`a${text?.trim()}a`);
     if (text?.trim() === '') {
       setSearchResults([]);
       return;
@@ -57,7 +57,7 @@ function StorePage() {
                   {searchResults.map((result) => (
                     <div className="search-result-item">
                       <img
-                        src={result.static?.Icon}
+                        src={getFilesData(result).Icon}
                         alt={result.name}
                         className="product-image"
                       />
