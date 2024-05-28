@@ -18,8 +18,8 @@ function useRecentProducts(login) {
         await api.getProductsByIds(appIds);
         var result = [];
         for (let i = 0; i < data.length; i++) {
-          let icon = (await getFilesData(data[i].name)).Icon;
-          result.push({ product: data[i], icon: icon });
+          // let icon = (await getFilesData(data[i].name)).Icon;
+          // result.push({ product: data[i], icon: icon });
         }
         setProducts(result);
       }

@@ -78,7 +78,7 @@ class ProductsCacheSingleton extends CachedObjects {
     var result = [];
     this.data[productGuid] = {
       model: model,
-      static: await getFilesData(model.name), //DEPRECATED TODO REMOVE
+      static: getFilesData(model),
       rates: rates,
       latestVersion: latestVersion,
       expire: this.getExpirationTimestamp(30)
