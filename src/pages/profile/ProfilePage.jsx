@@ -24,7 +24,7 @@ function ProfilePage() {
   //   setProfileImage(getProfilePictureUrl(context.currentUser?.guid));
   // }, []);
 
-  
+
 
   async function onPictureSelected(path) {
     const api = new DsIdentityApiClient();
@@ -33,7 +33,7 @@ function ProfilePage() {
     var publicFileName = await api.uploadProfileImage(blob, path.path);
     console.log(publicFileName);
     UsersCache.setById(context.currentUser.guid, publicFileName);
-    setProfileImage();
+    //setProfileImage();
     //MOCARNE - NI DZIALA BO COS Z CSP NWM JAK W TAURI.CONF TEN
     // fetch(convertFileSrc(path.path))
     //   .then((response) => response.blob())
@@ -61,7 +61,7 @@ function ProfilePage() {
     // reader.readAsDataURL(blob);
     // });
   }
-
+  let profileImage = useProfileImage(context.currentUser.guid);
   return (
     <div className="profile-page">
       <section className="profile-summary">

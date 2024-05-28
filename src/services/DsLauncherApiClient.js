@@ -75,6 +75,11 @@ export class DsLauncherApiClient {
         return this.request(url);
     }
 
+    async searchProducts(query, skip = 0, take = 1000) {
+        const url = `${this.baseUrl}/Product/search/?query=${query}&skip=${skip}&take=${take}`;
+        return this.request(url);
+    }
+
     //News
     async getNews(skip = 0, take = 1000) {
         const url = `${this.baseUrl}/News?skip=${skip}&take=${take}`;

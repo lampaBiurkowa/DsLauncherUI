@@ -3,23 +3,34 @@ import { Outlet } from "react-router-dom";
 import NavBar from "../../components/navbar/Navbar";
 import NavButton from "../../components/navbar/NavButton";
 import "./StorePage.scss";
-import { ProductsCache } from '../../services/CacheService';
+import { DsLauncherApiClient } from '../../services/DsLauncherApiClient';
+
+function debounce(func, delay) {
+  let timeoutId;
+  return function (...args) {
+    const context = this;
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(context, args), delay);
+  };
+}
 
 function StorePage() {
-  const [searchValue, setSearchValue] = useState('');
+  const api = new DsLauncherApiClient();
   const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearchChange = (event) => {
-    var text = event.target.value;
-    setSearchValue(text);
+  const debouncedSearch = debounce(async (text) => {
     console.log(`a${text?.trim()}a`);
-    if (text?.trim() === '')
-    {
+    if (text?.trim() === '') {
       setSearchResults([]);
       return;
     }
-    var searchedApps = [];//ProductsCache.getAll().filter(item => item.data.name.toLowerCase().includes(text.toLowerCase()));
+    const searchedApps = await api.searchProducts(text);
     setSearchResults(searchedApps);
+  }, 250);
+  
+  const handleSearchChange = (event) => {
+    var text = event.target.value;
+    debouncedSearch(text);
   };
 
   return (
@@ -47,10 +58,10 @@ function StorePage() {
                     <div className="search-result-item">
                       <img
                         src={result.static?.Icon}
-                        alt={result.data.name}
+                        alt={result.name}
                         className="product-image"
                       />
-                      <a href={`/store/product/${result.data.guid}`}>{result.data.name}</a>
+                      <a href={`/store/product/${result.guid}`}>{result.name}</a>
                     </div>
                   ))}
                 </div>
