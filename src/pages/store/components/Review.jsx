@@ -4,6 +4,7 @@ import Spacer from "@/components/spacer/Spacer";
 import Rating from "@/components/rating/Rating";
 import useProfileImage from "@/services/ProfileImageService";
 import { DevelopersCache, UsersCache } from "@/services/CacheService";
+import CollapsedArea from "@/components/collapsed-area/CollapsedArea";
 
 function useUser(id) {
   let [user, setUser] = useState();
@@ -45,7 +46,9 @@ function Review({ review }) {
         <Rating value={review.rate + 1} isReadOnly={true} />
       </div>
 
-      <span className="content">{review.content}</span>
+      <CollapsedArea collapsedMaxHeight={75}>
+        <span className="content">{review.content}</span>
+      </CollapsedArea>
     </div>
   );
 }
