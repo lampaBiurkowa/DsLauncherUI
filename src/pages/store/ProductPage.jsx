@@ -15,6 +15,7 @@ import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import { DevelopersCache } from "@/services/CacheService";
 import AddReviewForm from "./components/AddReviewForm";
 import { executeCommand } from "@/services/DsLauncherService";
+import AllReviewsView from "./components/AllReviewsView";
 
 const MAX_REVIEWS = 3;
 // const purchaseApi = new PurchaseApi();
@@ -49,9 +50,10 @@ function ProductPage() {
   let summary = useSummary(productId);
   let developer = useDeveloperForProduct(productId);
 
-  const [reviewDialogOpen, setReviewDialogOpen] = useState();
+  const [addReviewDialogOpen, setAddReviewDialogOpen] = useState();
   const [galleryDialogOpen, setGalleryDialogOpen] = useState();
-  console.log("wazne!", product, productId);
+  const [allReviewsDialogOpen, setAllReviewsDialogOpen] = useState();
+
   return (
     <article>
       <AspectRatio aspectRatio={12 / 5}>
@@ -148,21 +150,21 @@ function ProductPage() {
               <button
                 className="accent"
                 onClick={() => {
-                  setReviewDialogOpen(true);
+                  setAddReviewDialogOpen(true);
                 }}
               >
                 Add review
               </button>
               <Dialog
                 header="Add review"
-                open={reviewDialogOpen}
-                onClosed={() => setReviewDialogOpen(false)}
+                open={addReviewDialogOpen}
+                onClosed={() => setAddReviewDialogOpen(false)}
               >
                 <AddReviewForm
                   userId={userId}
                   productId={productId}
-                  onCancelled={() => setReviewDialogOpen(false)}
-                  onSubmitted={() => setReviewDialogOpen(false)}
+                  onCancelled={() => setAddReviewDialogOpen(false)}
+                  onSubmitted={() => setAddReviewDialogOpen(false)}
                 ></AddReviewForm>
               </Dialog>
             </>
@@ -172,18 +174,16 @@ function ProductPage() {
           {reviews?.slice(0, MAX_REVIEWS).map((review, index) => (
             <Review review={review} key={index} />
           ))}
-          <button
-            onClick={() => {
-              executeCommand("test", {
-                arg1: "caps",
-                arg2: "zaloz",
-                arg3array: ["student", "paka"],
-                arg4array: [1, 2, 3],
-              });
-            }}
-          >
+          <button onClick={() => setAllReviewsDialogOpen(true)}>
             Show all reviews
           </button>
+          <Dialog
+            header="Reviews"
+            open={allReviewsDialogOpen}
+            onClosed={() => setAllReviewsDialogOpen(false)}
+          >
+            <AllReviewsView productId={productId} />
+          </Dialog>
         </div>
       </section>
 
