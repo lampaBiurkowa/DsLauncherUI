@@ -3,11 +3,11 @@ import "./UpdateSummary.scss";
 import { globalUpdateProgress } from "../../../App";
 
 function UpdateSummary() {
-  const [updateProgress, setUpdateProgress] = useState(0);
-  setInterval(async () => {
-    setUpdateProgress(globalUpdateProgress?.progress);
-  }, 100);
-
+  // const [updateProgress, setUpdateProgress] = useState(0);
+  // setInterval(async () => {
+  //   setUpdateProgress(globalUpdateProgress?.progress);
+  // }, 100);
+  let updateProgress = 0;
 
   return (
     <button className="update-summary">

@@ -12,8 +12,10 @@ const websocket = await WebSocket.connect(
 );
 websocket.addListener(processMessage);
 
-export function executeCommand(command, args) {
-  websocket.send(command + "\n" + formatArgs(args));
+export async function executeCommand(command, args, head) {
+  await websocket.send(
+    command + "\n" + formatArgs(head) + "\n\n" + formatArgs(args)
+  );
 }
 
 export function addListener(eventType, callback) {
@@ -38,9 +40,11 @@ function processMessage(msg) {
     exit(0);
   }
 
+  let command = parseCommand(msg.data);
+
   listeners.forEach((listener) => {
-    if (listener.eventType === msg.eventType) {
-      //listener.callback(msg.args ?? {});
+    if (listener.eventType === command.name) {
+      listener.callback(command.args ?? {});
     }
   });
 }
@@ -52,7 +56,7 @@ function formatArgs(args) {
     if (Array.isArray(args[propertyName])) {
       argList.push(`${propertyName}[]:${args[propertyName].length}`);
       args[propertyName].forEach((element, index) => {
-        argList.push(`${propertyName}[${index}]:${Jelement}`);
+        argList.push(`${propertyName}[${index}]:${element}`);
       });
     } else {
       argList.push(`${propertyName}:${args[propertyName]}`);
@@ -60,4 +64,26 @@ function formatArgs(args) {
   }
 
   return argList.join("\n");
+}
+
+function parseCommand(commandStr) {
+  let lines = commandStr.split(/\r?\n|\r|\n/g);
+  let command = { name: lines[0], head: {}, args: {} };
+
+  let lineIndex = 0;
+
+  while (lines[++lineIndex] != 0) {
+    let argName = lines[lineIndex].split(":")[0];
+    let argValue = lines[lineIndex].split(":")[1];
+
+    command.head[argName] = argValue;
+  }
+
+  while (lines[++lineIndex] != 0) {
+    let argName = lines[lineIndex].split(":")[0];
+    let argValue = lines[lineIndex].split(":")[1];
+    command.args[argName] = argValue;
+  }
+
+  return command;
 }
