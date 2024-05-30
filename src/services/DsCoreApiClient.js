@@ -146,4 +146,24 @@ export class DsCoreApiClient {
         };
         return this.request(url, options);
     }
+    
+    async getCurrencyById(id) {
+        const url = `${this.baseUrl}/Currency/${id}`;
+        return this.request(url);
+    }
+    
+    async getCurrencyByName(name) {
+        const url = `${this.baseUrl}/Currency/name/${name}`;
+        return this.request(url);
+    }
+
+    async getCurrencies() {
+        const url = `${this.baseUrl}/Currency`;
+        return this.request(url);
+    }
+
+    async getMoney(currencyGuid) {
+        const url = `${this.baseUrl}/Billing/money/${currencyGuid}`;
+        return this.request(url);
+    }
 }

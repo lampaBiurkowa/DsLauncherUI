@@ -13,6 +13,7 @@ class CachedObjects {
 
   async getById(id) {
     if (this.data.hasOwnProperty(id) && this.data[id].expire > Date.now()) {
+      console.log(this.data, 'curren');
       return this.data[id];
     } else {
       return await this.loadItem(id);
@@ -102,6 +103,22 @@ class DevelopersCacheSingleton extends CachedObjects {
   }
 }
 
+class CurrenciesCacheSingleton extends CachedObjects {
+  constructor() {
+    super();
+    this.coreApi = new DsCoreApiClient();
+  }
+
+  async loadItem(name) {
+    var model = await this.coreApi.getCurrencyByName(name);
+    this.data[name] = { model: model, expire: this.getExpirationTimestamp(30) };
+    
+    console.log(this.data[name], 'curren');
+    return this.data[name];
+  }
+}
+
+export const CurrenciesCache = new CurrenciesCacheSingleton();
 export const DevelopersCache = new DevelopersCacheSingleton();
 export const ProductsCache = new ProductsCacheSingleton();
 export const UsersCache = new UsersCacheSingleton();

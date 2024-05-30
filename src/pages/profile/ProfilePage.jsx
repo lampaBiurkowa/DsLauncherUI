@@ -13,10 +13,12 @@ import { UsersCache } from "@/services/CacheService";
 import { DsCoreApiClient } from "../../services/DsCoreApiClient";
 import * as fs from "@tauri-apps/plugin-fs";
 import { LocalStorageHandler } from "../../services/LocalStorageService";
+import useMoney from "./hooks/useMoney";
 
 function ProfilePage() {
   let context = useContext(UserContext);
   let navigate = useNavigate();
+  let money = useMoney();
 
   // const [profileImage, setProfileImage] = useState(
   //   getProfilePictureUrl(context.currentUser?.guid)
@@ -90,7 +92,7 @@ function ProfilePage() {
         <NavLink className="profile-currency" to="/profile/payment">
           <i class="las la-ruble-sign"></i>
           <span className="currency-name">Ruble</span>
-          <span className="currency-amount">{`$${context.currentUser?.money}`}</span>
+          <span className="currency-amount">{`$${money}`}</span>
         </NavLink>
       </section>
       <div className="profile-details">

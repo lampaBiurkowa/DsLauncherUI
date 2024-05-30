@@ -7,7 +7,7 @@ import SettingsContextProvider from "./contexts/SettingsContextProvider";
 import { DsCoreApiClient } from "./services/DsCoreApiClient.js";
 
 // import PlayingService from "./services/PlayingService";
-import { DevelopersCache, ProductsCache, UsersCache } from "./services/CacheService";
+import { CurrenciesCache, DevelopersCache, ProductsCache, UsersCache } from "./services/CacheService";
 import { LocalStorageHandler } from "./services/LocalStorageService.js";
 console.log("a");
 
@@ -47,7 +47,9 @@ export const globalUpdateProgress = {
 
 export const publicPath = "https://zzxaltzqtymfxzxphxje.supabase.co/storage/v1/object/public";
 export const deafultBucket = "testing2";
+export const defaultCurrency = "ruble";
 
+await CurrenciesCache.load();
 await DevelopersCache.load();
 await UsersCache.load();
 await ProductsCache.load();
