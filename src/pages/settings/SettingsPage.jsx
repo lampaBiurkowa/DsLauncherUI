@@ -1,27 +1,23 @@
+import { Outlet } from "react-router-dom";
+import NavBar from "@/components/navbar/Navbar";
+import NavButton from "@/components/navbar/NavButton";
+
 import "./SettingsPage.scss";
-import { addListener, executeCommand } from "@/services/DsLauncherService";
 
 function SettingsPage() {
-  addListener("testresponse", (args) => {
-    console.log(args);
-  });
-
   return (
-    <div>
-      <button
-        onClick={() => {
-          executeCommand(
-            "test",
-            { testNum: 1 },
-            {
-              workerRepetitions: 3,
-              workerInterval: 1000,
-            }
-          );
-        }}
-      >
-        Test command repetitions 3 interval 1000
-      </button>
+    <div className="settings-container">
+      <div className="settings-nav-container">
+        <NavBar horizontal>
+          <NavButton to="/settings" end>
+            General
+          </NavButton>
+          <NavButton to="/settings/libraries">Libraries</NavButton>
+          <NavButton to="/settings/updates">Updates</NavButton>
+          <NavButton to="/settings/notifications">Notifications</NavButton>
+        </NavBar>
+      </div>
+      <Outlet />
     </div>
   );
 }

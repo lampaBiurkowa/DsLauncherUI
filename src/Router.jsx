@@ -23,13 +23,15 @@ import ProductPage from "@/pages/store/ProductPage";
 
 import LibraryPage from "@/pages/library/LibraryPage";
 import InstalledPage from "@/pages/library/InstalledPage";
-import UpdatesPage from "./pages/library/UpdatesPage";
-import OwnedPage from "./pages/library/OwnedPage";
+import UpdatesPage from "@/pages/library/UpdatesPage";
+import OwnedPage from "@/pages/library/OwnedPage";
 
-import ProfilePage from "./pages/profile/ProfilePage";
-import ProfileDetailsPage from "./pages/profile/ProfileDetailsPage";
+import ProfilePage from "@/pages/profile/ProfilePage";
+import ProfileDetailsPage from "@/pages/profile/ProfileDetailsPage";
 
 import SettingsPage from "@/pages/settings/SettingsPage";
+import LibrariesSettingsPage from "@/pages/settings/LibrariesSettingsPage";
+import GeneralSettingsPage from "@/pages/settings/GeneralSettingsPage";
 
 const router = createBrowserRouter([
   {
@@ -121,6 +123,16 @@ const router = createBrowserRouter([
       {
         path: "/settings",
         element: <SettingsPage />,
+        children: [
+          {
+            element: <GeneralSettingsPage />,
+            index: true,
+          },
+          {
+            element: <LibrariesSettingsPage />,
+            path: "/settings/libraries",
+          },
+        ],
       },
     ],
   },

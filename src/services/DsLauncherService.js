@@ -39,14 +39,16 @@ function processMessage(msg) {
   if (msg.data.code >= 1000 && msg.data.code <= 4999) {
     exit(0);
   }
-  console.log(msg);
-  let command = parseCommand(msg.data);
 
-  listeners.forEach((listener) => {
-    if (listener.eventType === command.name) {
-      listener.callback(command.args ?? {});
-    }
-  });
+  if (msg.data) {
+    let command = parseCommand(msg.data);
+
+    listeners.forEach((listener) => {
+      if (listener.eventType === command.name) {
+        listener.callback(command.args ?? {});
+      }
+    });
+  }
 }
 
 function formatArgs(args) {
@@ -67,7 +69,6 @@ function formatArgs(args) {
 }
 
 function parseCommand(commandStr) {
-  console.log('aha', commandStr);
   let lines = commandStr.split(/\r?\n|\r|\n/g);
   let command = { name: lines[0], head: {}, args: {} };
 
