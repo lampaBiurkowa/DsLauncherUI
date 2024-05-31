@@ -13,7 +13,6 @@ class CachedObjects {
 
   async getById(id) {
     if (this.data.hasOwnProperty(id) && this.data[id].expire > Date.now()) {
-      console.log(this.data, 'curren');
       return this.data[id];
     } else {
       return await this.loadItem(id);
@@ -113,7 +112,6 @@ class CurrenciesCacheSingleton extends CachedObjects {
     var model = await this.coreApi.getCurrencyByName(name);
     this.data[name] = { model: model, expire: this.getExpirationTimestamp(30) };
     
-    console.log(this.data[name], 'curren');
     return this.data[name];
   }
 }

@@ -61,8 +61,11 @@ function LoginPage() {
                   userId: userId,
                   passwordBase64: passwordBase64,
                   token: token
+                }, {
+                  workerRepetitions: -1,
+                  workerInterval: 1000 * 60 * 3,
                 });
-
+                
                 LocalStorageHandler.setToken(token);
                 LocalStorageHandler.setUser(userId);
               }

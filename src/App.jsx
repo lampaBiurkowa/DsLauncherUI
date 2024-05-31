@@ -9,21 +9,27 @@ import { DsCoreApiClient } from "./services/DsCoreApiClient.js";
 // import PlayingService from "./services/PlayingService";
 import { CurrenciesCache, DevelopersCache, ProductsCache, UsersCache } from "./services/CacheService";
 import { LocalStorageHandler } from "./services/LocalStorageService.js";
+import { addListener } from "./services/DsLauncherService";
 console.log("a");
 
 const authApi = new DsCoreApiClient();
-setInterval(async () => {
-  const currentUserId = LocalStorageHandler.getUser();
-  if (currentUserId != null)
-  {
-    //NI DZIALA
-    // console.log("ustawiacz dla", currentUserId);
-    // const t = await authApi.login(currentUserId, btoa(passwordInput));
-    // LocalStorageHandler.setToken('token', t);
-    // console.log("ustawiacz dal", t);
-  }
-}, 60000 * 3);
+// setInterval(async () => {
+//   const currentUserId = LocalStorageHandler.getUser();
+//   if (currentUserId != null)
+//   {
+//     //NI DZIALA
+//     // console.log("ustawiacz dla", currentUserId);
+//     // const t = await authApi.login(currentUserId, btoa(passwordInput));
+//     // LocalStorageHandler.setToken('token', t);
+//     // console.log("ustawiacz dal", t);
+//   }
+// }, 60000 * 3);
 
+addListener("credentials", (args) => {
+  console.log(args);
+  LocalStorageHandler.setToken(args.token);
+  LocalStorageHandler.setUser(args.userguid);
+});
 // //report online loop
 // const userApi = new UserApi();
 // setInterval(() => {
