@@ -1,27 +1,15 @@
-import React, { createContext } from "react";
-import { DsCoreApiClient } from "../services/DsCoreApiClient";
-import { LocalStorageHandler } from "../services/LocalStorageService";
+import React, { createContext, useState } from "react";
 
-const currentUserId = LocalStorageHandler.getUser();
-let currentUser = null;
-const userApi = new DsCoreApiClient();
-
-async function getUserData(userId) {
-    if (!userId) return null;
-    currentUser = await userApi.getUserById(userId);
-    console.log(currentUser);
-}
-currentUser = await getUserData(currentUserId);
-const DefaultValue = {
-  currentUser: currentUser,
-};
-
-export const UserContext = createContext(DefaultValue);
+export const UserContext = createContext({
+  currentUser: undefined,
+  setCurrentUser: () => {},
+});
 
 function UserContextProvider({ children }) {
-  return (
-    <UserContext.Provider value={DefaultValue}>{children}</UserContext.Provider>
-  );
+  const [currentUser, setCurrentUser] = useState();
+  const value = { currentUser, setCurrentUser };
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
 
 export default UserContextProvider;

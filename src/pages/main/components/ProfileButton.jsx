@@ -3,19 +3,9 @@ import { NavLink } from "react-router-dom";
 import { UserContext } from "../../../contexts/UserContextProvider";
 import "./ProfileButton.scss";
 import useProfileImage from "../../../services/ProfileImageService";
-import { useState, useEffect } from "react";
 
 function UserButton({ to }) {
-  const { currentUser } = useContext(UserContext);
-
-  // function useProfileImage() {
-  //   let [profileImage, setProfileImage] = useState();
-  //   useEffect(() => {
-  //     setProfileImage(getProfilePictureUrl(currentUser?.id));
-  //   }, []);
-
-  //   return profileImage;
-  // }
+  const { currentUser, _ } = useContext(UserContext);
 
   function getUsername() {
     if (currentUser != null) {

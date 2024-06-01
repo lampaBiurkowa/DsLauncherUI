@@ -16,8 +16,9 @@ const api = new DsCoreApiClient();
 
 function LoginPage() {
   const [error, setError] = useState(null);
-  let context  = useContext(UserContext);
-  let navigate = useNavigate();
+  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
   return (
     <div className="login-page">
       <div className="login-container">
@@ -42,38 +43,51 @@ function LoginPage() {
               Remember me
             </label>
             <Spacer />
-            <button type="button" className="outlined" onClick={async () =>
-            {
-              const loginInput = document.querySelector('input[name="login"]').value;
-              const passwordInput = document.querySelector('input[name="password"]').value;
-              const userId = await api.getIdByAlias(loginInput);
-              try {
-                const passwordBase64 = btoa(passwordInput);
-                const token = await api.login(userId, passwordBase64);
+            <button
+              type="button"
+              className="outlined"
+              onClick={async () => {
+                const loginInput = document.querySelector(
+                  'input[name="login"]'
+                ).value;
+                const passwordInput = document.querySelector(
+                  'input[name="password"]'
+                ).value;
 
-                api.getUserById(userId).then(user => {
-                  context.currentUser = user;
-                  navigate("/home");
-                });
+                const userId = await api.getIdByAlias(loginInput);
 
-                console.log('zara wysyleczka');
-                executeCommand("login", { 
-                  userId: userId,
-                  passwordBase64: passwordBase64,
-                  token: token
-                }, {
-                  workerRepetitions: -1,
-                  workerInterval: 1000 * 60 * 3,
-                });
-                
-                LocalStorageHandler.setToken(token);
-                LocalStorageHandler.setUser(userId);
-              }
-              catch {
-                console.error("Error checking if user is online:", error);
-                setError("Login failed. Please check your credentials.");
-              }
-            }}>Log in</button>
+                try {
+                  const passwordBase64 = btoa(passwordInput);
+                  const token = await api.login(userId, passwordBase64);
+
+                  api.getUserById(userId).then((user) => {
+                    setCurrentUser(user);
+                    navigate("/home");
+                  });
+
+                  executeCommand(
+                    "login",
+                    {
+                      userId: userId,
+                      passwordBase64: passwordBase64,
+                      token: token,
+                    },
+                    {
+                      workerRepetitions: -1,
+                      workerInterval: 1000 * 60 * 3,
+                    }
+                  );
+
+                  LocalStorageHandler.setToken(token);
+                  LocalStorageHandler.setUser(userId);
+                } catch {
+                  console.error("Error checking if user is online:", error);
+                  setError("Login failed. Please check your credentials.");
+                }
+              }}
+            >
+              Log in
+            </button>
           </div>
           {error && <p className="error-message">{error}</p>}
         </form>

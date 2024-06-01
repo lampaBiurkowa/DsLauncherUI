@@ -1,203 +1,187 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./ProfileDetailsPage.scss";
 import { UsersCache } from "../../services/CacheService";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { DsCoreApiClient } from "../../services/DsCoreApiClient";
+import SettingsEntry from "@/components/settings-entry/SettingsEntry";
+import CredentialsEditor from "./components/CredentialsEditor";
+
+const api = new DsCoreApiClient();
 
 function ProfileDetailsPage() {
-  let { currentUser } = useContext(UserContext);
-  console.log("cur", currentUser);
-  const api = new DsCoreApiClient();
-  function encodeImageFileAsURL(event) {
-    const api = new UserImagesApi();
-    var file = event.target.files[0];
-    var reader = new FileReader();
-    reader.onloadend = function () {
-      api.userImagesPut(
-        { body: { id: currentUser.id, profileImageBase64: reader.result } },
-        (error, data) => {
-          if (error === null) {
-            UsersCache.load();
-            console.log("profile uploaded");
-          }
-        }
-      );
-    };
-    reader.readAsDataURL(file);
-  }
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
-  const [newName, setNewName] = useState(currentUser.name);
-  const [newSurname, setNewSurname] = useState(currentUser.surname);
-  const [newEmail, setNewEmail] = useState(currentUser.email);
-  const [newPassword, setNewPassword] = useState("");
-  const [existingPassword, setExistingPassword] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
+  const [email, setEmail] = useState(currentUser.email);
+  const [login, setLogin] = useState(currentUser.alias);
+  const [firstName, setFirstName] = useState(currentUser.name);
+  const [lastName, setLastName] = useState(currentUser.surname);
 
-  const handleNameChange = (e) => {
-    setNewName(e.target.value);
-  };
+  useEffect(() => {
+    (async () => {
+      try {
+        const newUser = {
+          ...currentUser,
+          email: email,
+          alias: login,
+          name: firstName,
+          surname: lastName,
+        };
 
-  const handleSurnameChange = (e) => {
-    setNewSurname(e.target.value);
-  };
-
-  const handleEmailChange = (e) => {
-    setNewEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setNewPassword(e.target.value);
-  };
-
-  const handleExistingPasswordChange = (e) => {
-    setExistingPassword(e.target.value);
-  };
-
-  const changeUserInfo = async () => {
-    currentUser.name = newName;
-    currentUser.surname = newSurname;
-    currentUser.email = newEmail;
-    await api.updateUser(currentUser);
-  };
-
-  const changeUserPassword = async () => {
-    // if (existingPassword !== currentUser.password) {
-    //   setPasswordError(true);
-    //   return;
-    // }
-
-    if (newPassword) {
-      setNewPassword(newPassword);
-    }
-
-    await api.changePassword(
-      currentUser.guid,
-      btoa(existingPassword),
-      btoa(newPassword)
-    );
-    currentUser.password = newPassword;
-    // userApi.userPut({body: currentUser}, (error, data) =>
-    // {
-    //   if (error !== null) {
-    //     setPasswordError(false); //zla wiadomosc wypisze :D/
-    //   }
-    //   else {
-    //     setPasswordError(false);
-    //   }
-    // });
-  };
+        await api.updateUser(newUser);
+        setCurrentUser(newUser);
+      } catch {}
+    })();
+  }, [email, login, firstName, lastName]);
 
   return (
     <div className="profile-details-page">
-      <section className="section-info">
-        <h2>Basic information</h2>
-        <form>
-          {/*E-Mail*/}
-          <div>
-            <label htmlFor="email" hidden>
-              E-Mail
-            </label>
-            <span className="label">E-Mail</span>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              value={newEmail}
-              onChange={handleEmailChange}
-              placeholder="E-Mail"
-            ></input>
-          </div>
-          {/*Login*/}
-          <div>
-            <label htmlFor="login" hidden>
-              Login
-            </label>
-            <span className="label">Login</span>
-            <input
-              type="text"
-              name="login"
-              id="login"
-              placeholder="Login"
-            ></input>
-          </div>
-          {/*Name*/}
-          <div>
-            <label htmlFor="name" hidden>
-              Name
-            </label>
-            <span className="label">Name</span>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              value={newName}
-              onChange={handleNameChange}
-              placeholder="Name"
-            ></input>
-          </div>
-          {/*Surname*/}
-          <div>
-            <label htmlFor="surname" hidden>
-              Surname
-            </label>
-            <span className="label">Surname</span>
-            <input
-              type="text"
-              name="surname"
-              id="surname"
-              value={newSurname}
-              onChange={handleSurnameChange}
-              placeholder="Surname"
-            ></input>
-          </div>
-        </form>
-        <button className="save-btn accent" onClick={changeUserInfo}>
-          Save
-        </button>
+      <section>
+        <h2>Account information</h2>
+        <SettingsEntry
+          name="E-Mail"
+          desc="Notifications will be delivered to this email address"
+        >
+          <CredentialsEditor
+            type="email"
+            label="E-Mail"
+            value={email}
+            setValue={setEmail}
+            validator={validateEmail}
+          ></CredentialsEditor>
+        </SettingsEntry>
+        <SettingsEntry name="Login">
+          <CredentialsEditor
+            type="text"
+            label="Login"
+            value={login}
+            setValue={setLogin}
+            validator={validateLogin}
+          ></CredentialsEditor>
+        </SettingsEntry>
+        <SettingsEntry name="First name">
+          <CredentialsEditor
+            type="text"
+            label="First name"
+            value={firstName}
+            setValue={setFirstName}
+            validator={validateName}
+          ></CredentialsEditor>
+        </SettingsEntry>
+        <SettingsEntry name="Last name">
+          <CredentialsEditor
+            type="text"
+            label="Last name"
+            value={lastName}
+            setValue={setLastName}
+            validator={validateName}
+          ></CredentialsEditor>
+        </SettingsEntry>
       </section>
-      <section className="section-info">
-        <h2>Password</h2>
-        <form>
-          {/*Password1*/}
-          <div>
-            <label htmlFor="password1" hidden>
-              Existing password
-            </label>
-            <span className="label">Existing pxassword</span>
-            <input
-              type="password"
-              name="password1"
-              id="password1"
-              value={existingPassword}
-              onChange={handleExistingPasswordChange}
-              placeholder="Password"
-            ></input>
+      <section>
+        <h2>Security</h2>
+        <div className="change-password-section">
+          <div className="password-form">
+            <h3>Current password</h3>
+            <div>
+              <label htmlFor="current-password" hidden>
+                Current password
+              </label>
+              <input
+                type="password"
+                name="current-password"
+                id="current-password"
+                placeholder="Current password"
+              ></input>
+            </div>
+            <div></div>
+            <h3>New password</h3>
+            <div>
+              <label htmlFor="new-password-1" hidden>
+                Current password
+              </label>
+              <input
+                type="password"
+                name="new-password-1"
+                id="new-password-1"
+                placeholder="New password"
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="new-password-2" hidden>
+                Current password
+              </label>
+              <input
+                type="password"
+                name="new-password-2"
+                id="new-password-2"
+                placeholder="Retype new password"
+              ></input>
+            </div>
+            <button className="accent">Save changes</button>
           </div>
-          {/*Password2*/}
-          <div>
-            <label htmlFor="password2" hidden>
-              New password
-            </label>
-            <span className="label">New password</span>
-            <input
-              type="password"
-              name="password2"
-              id="password2"
-              value={newPassword}
-              onChange={handlePasswordChange}
-              placeholder="Repeat Password"
-            ></input>
+          <div className="password-tip">
+            <h3>Password requirements</h3>
+            <ul>
+              <li>Avoid using any of your last 5 passwords</li>
+              <li>Use 8+ characters</li>
+              <li>Use at least 1 letter</li>
+              <li>Use at least 1 number</li>
+            </ul>
           </div>
-          {passwordError && (
-            <p style={{ color: "darkRed" }}>Incorrect existing password</p>
-          )}
-        </form>
-        <button className="save-btn accent" onClick={changeUserPassword}>
-          Save
-        </button>
+        </div>
+      </section>
+      <section>
+        <h2>Danger zone</h2>
+        <SettingsEntry
+          name="Delete account"
+          desc="Click request account deletion to start the process of permanently deleting your Dibrysoft Account including all personal information and purchases."
+        >
+          <button style={{ background: "red", textTransform: "uppercase" }}>
+            Request account deletion
+          </button>
+        </SettingsEntry>
       </section>
     </div>
   );
+}
+
+function validateEmail(email) {
+  const emailRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+  if (!email?.match(emailRegex)) {
+    return "Invalid e-mail";
+  }
+}
+
+function validateLogin(login) {
+  login = login.toLowerCase();
+
+  if (login.length < 3) {
+    return "Too short";
+  }
+  if (login.length > 32) {
+    return "Too long";
+  }
+  if (
+    login.includes("soczek") ||
+    login.includes("socheck") ||
+    login.includes("behemot2000pl")
+  ) {
+    return "caps)";
+  }
+
+  return undefined;
+}
+
+function validateName(name) {
+  if (name.length == 0) {
+    return "Too short";
+  }
+
+  if (name.match(/\d/) !== null) {
+    return "Numbers are not allowed";
+  }
 }
 
 export default ProfileDetailsPage;

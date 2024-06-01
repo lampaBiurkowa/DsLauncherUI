@@ -1,0 +1,31 @@
+@use "@/styles" as *;
+
+.settings-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: $padding-xl;
+
+  background-color: $dark-1;
+  border: 1px solid $dark-2;
+  border-radius: $radius-lg;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    gap: $margin-xs;
+
+    max-width: 66%;
+
+    .name {
+      font-size: $text-sm;
+      font-weight: $text-medium;
+    }
+
+    .desc {
+      font-size: $text-sm;
+      color: $text-alt;
+    }
+  }
+}

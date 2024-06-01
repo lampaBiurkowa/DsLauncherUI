@@ -4,45 +4,63 @@
   display: flex;
   flex-direction: column;
   gap: $margin-xl;
-  padding: $padding-xl;
+
+  padding: $padding-xl 5%;
   height: calc(100% - 2 * $padding-xl);
+
   overflow-y: auto;
 
-  .section-info {
+  section {
     display: flex;
     flex-direction: column;
-    padding: $padding-md;
-    gap: $margin-xl 0;
-
-    background-color: $dark-1;
-    border: 1px solid $dark-2;
-    border-radius: $radius-lg;
+    gap: $margin-sm;
 
     h2 {
+      font-size: $text-lg;
       font-weight: $text-medium;
+      margin-bottom: $margin-sm;
+    }
+  }
+
+  .change-password-section {
+    display: grid;
+    grid-template-columns: 10fr 8fr;
+    align-items: start;
+    gap: $margin-md;
+
+    & > div {
+      flex-grow: 1;
+      background-color: $dark-1;
+      border: 1px solid $dark-2;
+      border-radius: $radius-lg;
+
+      padding: $padding-xl;
+
+      h3 {
+        font-weight: $text-medium;
+      }
+
+      ul {
+        list-style-type: disc;
+        padding: $padding-sm $padding-lg;
+        font-size: $text-sm;
+        line-height: 1rem;
+      }
     }
 
-    form {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .password-form {
+      display: flex;
+      flex-direction: column;
       gap: $margin-md;
 
-      div {
-        display: grid;
-
-        input {
-          padding: $padding-sm;
-        }
+      input {
+        width: 100%;
+        padding: $padding-sm;
       }
 
-      .label {
-        font-size: $text-xs;
-        font-weight: $text-medium;
-        margin-bottom: $margin-xs;
+      button {
+        align-self: end;
       }
-    }
-    .save-btn {
-      align-self: end;
     }
   }
 }
