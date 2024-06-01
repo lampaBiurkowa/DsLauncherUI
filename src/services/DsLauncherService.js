@@ -40,6 +40,9 @@ function processMessage(msg) {
     exit(0);
   }
 
+  console.log("COMMAND");
+  console.log(msg);
+
   if (msg.data) {
     let command = parseCommand(msg.data);
 
@@ -75,17 +78,57 @@ function parseCommand(commandStr) {
   let lineIndex = 0;
 
   while (lines[++lineIndex] != 0) {
-    let argName = lines[lineIndex].split(":")[0];
-    let argValue = lines[lineIndex].split(":")[1];
-
-    command.head[argName] = argValue;
+    const arg = parseArgument(lines[lineIndex]);
+    const array = getArrayInfo(arg.name);
+    if (!array) {
+      command.head[arg.name] = arg.value;
+    } else {
+      if (array.index) {
+        command.head[arg.name][array.index] = arg.value;
+      } else {
+        command.head[arg.name] = [];
+      }
+    }
   }
 
   while (lines[++lineIndex] != 0) {
-    let argName = lines[lineIndex].split(":")[0];
-    let argValue = lines[lineIndex].split(":")[1];
-    command.args[argName] = argValue;
+    const arg = parseArgument(lines[lineIndex]);
+    const array = getArrayInfo(arg.name);
+    if (!array) {
+      command.args[arg.name] = arg.value;
+    } else {
+      if (array.index) {
+        command.args[array.name][array.index] = arg.value;
+      } else {
+        command.args[array.name] = [];
+      }
+    }
   }
 
   return command;
+}
+
+function parseArgument(line) {
+  const colonIndex = line.indexOf(":");
+  let argName = line.substring(0, colonIndex);
+  let argValue = line.substring(colonIndex + 1, line.length);
+
+  return {
+    name: argName,
+    value: argValue,
+  };
+}
+
+function getArrayInfo(argName) {
+  const arrayRegex = /^(?<name>[a-z]+)\[{1}(?<index>\d*)\]{1}$/g;
+
+  if (argName.match(arrayRegex)) {
+    const { name, index } = arrayRegex.exec(argName)?.groups;
+
+    return {
+      name: name,
+      index: index,
+    };
+  }
+  return false;
 }
