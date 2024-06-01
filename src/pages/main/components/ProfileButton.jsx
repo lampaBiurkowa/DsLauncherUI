@@ -5,7 +5,7 @@ import "./ProfileButton.scss";
 import useProfileImage from "../../../services/ProfileImageService";
 
 function UserButton({ to }) {
-  const { currentUser, _ } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
 
   function getUsername() {
     if (currentUser != null) {
