@@ -1,0 +1,63 @@
+@use "@/styles" as *;
+
+.info-bar {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "icon header content dismiss"
+    "icon text content dismiss";
+  column-gap: $margin-lg;
+  row-gap: $margin-xs;
+
+  padding: $padding-md;
+  border: 1px solid;
+  border-radius: $radius-sm;
+
+  &.info {
+    background-color: $info;
+    border-color: $info-alt;
+  }
+
+  &.success {
+    background-color: $success;
+    border-color: $success-alt;
+  }
+
+  &.warning {
+    background-color: $warning;
+    border-color: $warning-alt;
+  }
+
+  &.error {
+    background-color: $error;
+    border-color: $error-alt;
+  }
+
+  & > i {
+    grid-area: icon;
+    font-size: 2em;
+    align-self: center;
+  }
+
+  .header {
+    grid-area: header;
+    font-weight: $text-medium;
+  }
+
+  .text {
+    grid-area: text;
+    font-size: $text-sm;
+    color: $text-alt;
+  }
+
+  .content {
+    grid-area: content;
+  }
+
+  .dismiss {
+    grid-area: dismiss;
+    padding: $padding-sm;
+    align-self: center;
+  }
+}

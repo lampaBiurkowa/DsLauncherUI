@@ -22,7 +22,7 @@ textarea {
   }
 
   &.error {
-    border-color: $error;
-    outline-color: $error;
+    border-color: $error-alt;
+    outline-color: $error-alt;
   }
 }

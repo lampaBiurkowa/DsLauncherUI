@@ -12,10 +12,17 @@ const websocket = await WebSocket.connect(
 );
 websocket.addListener(processMessage);
 
-export async function executeCommand(command, args, head) {
-  await websocket.send(
-    command + "\n" + formatArgs(head) + "\n\n" + formatArgs(args)
-  );
+export async function executeCommand(commandName, args = {}, head = {}) {
+  let command = commandName + "\n";
+
+  if (Object.keys(head).length > 0) {
+    command += formatArgs(head) + "\n";
+  }
+  if (Object.keys(args).length > 0) {
+    command += "\n" + formatArgs(args);
+  }
+
+  await websocket.send(command);
 }
 
 export function addListener(eventType, callback) {
@@ -26,7 +33,7 @@ export function addListener(eventType, callback) {
 }
 
 export function removeListener(eventType, callback) {
-  for (let index = 0; index < array.length; index++) {
+  for (let index = 0; index < listeners.length; index++) {
     const listener = listeners[index];
 
     if (listener.eventType === eventType && listener.callback === callback) {

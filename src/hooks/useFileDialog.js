@@ -1,7 +1,7 @@
 import { open } from "@tauri-apps/plugin-dialog";
 import { useState } from "react";
 
-function useFileDialog(filter) {
+function useFileDialog(filter, openDirectory = false) {
   const [files, setFiles] = useState([]);
 
   const showDialog = () => {
@@ -9,6 +9,7 @@ function useFileDialog(filter) {
       (async () => {
         const selected = await open({
           multiple: true,
+          directory: openDirectory,
           filters: filter ?? [],
         });
 
