@@ -1,1 +1,37 @@
 @use "@/styles" as *;
+
+.libraries-page {
+  display: flex;
+  flex-direction: column;
+  gap: $margin-md;
+  padding: $padding-xl;
+
+  h2 {
+    font-size: $text-xxl;
+    font-weight: $text-bold;
+  }
+
+  .libraries-container {
+    display: grid;
+    align-items: start;
+    grid-template-columns: 1fr 1fr;
+    gap: $margin-md;
+
+    .libraries {
+      display: flex;
+      flex-direction: column;
+      gap: $margin-sm;
+
+      & > button {
+        align-self: end;
+      }
+    }
+
+    .library-content {
+      padding: $padding-md;
+      background-color: $dark-1;
+      border: 1px solid $dark-2;
+      border-radius: $radius-lg;
+    }
+  }
+}

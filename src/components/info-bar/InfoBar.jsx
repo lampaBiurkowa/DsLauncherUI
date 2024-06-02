@@ -23,13 +23,13 @@ function InfoBar({
       {(() => {
         switch (type) {
           case InfoBarType.Success:
-            return <i class="las la-check"></i>;
+            return <i className="las la-check"></i>;
           case InfoBarType.Warning:
-            return <i class="las la-exclamation-triangle"></i>;
+            return <i className="las la-exclamation-triangle"></i>;
           case InfoBarType.Error:
-            return <i class="las la-times-circle"></i>;
+            return <i className="las la-times-circle"></i>;
           default:
-            return <i class="las la-info-circle"></i>;
+            return <i className="las la-info-circle"></i>;
         }
       })()}
       <span className="header">{header}</span>
