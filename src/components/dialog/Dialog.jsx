@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 
 import "./Dialog.scss";
 
-function Dialog({ open, header, onClosed, children }) {
+function Dialog({ open, header, onClosed = () => {}, children }) {
   const dialogRef = useRef();
 
   useEffect(() => {

@@ -24,9 +24,13 @@ function Review({ review }) {
   const [profileImage, setProfileImage] = useState("/img/user.png");
 
   useEffect(() => {
-    setProfileImage(
-      `${publicPath}/${deafultBucket}/${user?.model.profileImage}`
-    );
+    if (user?.model.profileImage) {
+      setProfileImage(
+        `${publicPath}/${deafultBucket}/${user?.model.profileImage}`
+      );
+    } else {
+      setProfileImage("/img/user.png");
+    }
   }, [user]);
 
   return (

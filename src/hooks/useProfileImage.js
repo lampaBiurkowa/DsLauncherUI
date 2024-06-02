@@ -7,7 +7,7 @@ export default function useProfileImage() {
   const [profileImage, setProfileImage] = useState("/img/user.png");
 
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser?.profileImage) {
       setProfileImage(
         `${publicPath}/${deafultBucket}/${currentUser.profileImage}`
       );

@@ -10,8 +10,9 @@ import { LocalStorageHandler } from "../../services/LocalStorageService";
 import useMoney from "./hooks/useMoney";
 import { DsCoreApiClient } from "../../services/DsCoreApiClient";
 import * as fs from "@tauri-apps/plugin-fs";
-
 import "./ProfilePage.scss";
+
+const api = new DsCoreApiClient();
 
 function ProfilePage() {
   const profileImage = useProfileImage();
@@ -20,10 +21,13 @@ function ProfilePage() {
   const money = useMoney();
 
   async function uploadProfileImage(file) {
-    const api = new DsCoreApiClient();
-    const bytes = (await fs.readFile(file.path)).buffer;
-    const blob = new Blob([bytes], { type: "image/jpeg" });
-    const publicFileName = await api.uploadProfileImage(blob, file.name);
+    let publicFileName = "";
+
+    if (file.path) {
+      const bytes = (await fs.readFile(file.path)).buffer;
+      const blob = new Blob([bytes], { type: "image/jpeg" });
+      publicFileName = await api.uploadProfileImage(blob, file.name);
+    }
 
     setCurrentUser({
       ...currentUser,

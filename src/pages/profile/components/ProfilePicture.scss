@@ -35,4 +35,28 @@
       opacity: 1;
     }
   }
+
+  .change-picture-dialog {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr 1fr;
+    gap: $margin-md;
+
+    button {
+      display: flex;
+      flex-direction: column;
+      gap: $margin-md;
+
+      min-width: 175px;
+      padding: $padding-xl;
+
+      & > div {
+        padding: $padding-xl;
+
+        border-radius: $radius-round;
+        font-size: 4em;
+        background-color: $accent-alt;
+      }
+    }
+  }
 }
