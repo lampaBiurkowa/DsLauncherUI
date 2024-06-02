@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
-import "./Review.scss";
+import { deafultBucket, publicPath } from "@/App";
+import React, { useEffect, useState } from "react";
 import Spacer from "@/components/spacer/Spacer";
 import Rating from "@/components/rating/Rating";
-import useProfileImage from "@/services/ProfileImageService";
-import { DevelopersCache, UsersCache } from "@/services/CacheService";
+import { UsersCache } from "@/services/CacheService";
 import CollapsedArea from "@/components/collapsed-area/CollapsedArea";
+import "./Review.scss";
 
 function useUser(id) {
-  let [user, setUser] = useState();
+  const [user, setUser] = useState();
 
   useEffect(() => {
     async function fetchUser() {
@@ -20,9 +20,15 @@ function useUser(id) {
 }
 
 function Review({ review }) {
-  let user = useUser(review.userGuid);
-  console.log("wyt", review.userGuid);
-  let profileImage = useProfileImage(review.userGuid);
+  const user = useUser(review.userGuid);
+  const [profileImage, setProfileImage] = useState("/img/user.png");
+
+  useEffect(() => {
+    setProfileImage(
+      `${publicPath}/${deafultBucket}/${user?.model.profileImage}`
+    );
+  }, [user]);
+
   return (
     <div className="review-container">
       <div className="header">

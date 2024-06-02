@@ -40,9 +40,6 @@ function processMessage(msg) {
     exit(0);
   }
 
-  console.log("COMMAND");
-  console.log(msg);
-
   if (msg.data) {
     let command = parseCommand(msg.data);
 

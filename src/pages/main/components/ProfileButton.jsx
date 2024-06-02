@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { UserContext } from "../../../contexts/UserContextProvider";
+import { UserContext } from "@/contexts/UserContextProvider";
+import useProfileImage from "@/hooks/useProfileImage";
 import "./ProfileButton.scss";
-import useProfileImage from "../../../services/ProfileImageService";
 
 function UserButton({ to }) {
   const { currentUser } = useContext(UserContext);
+  const profileImage = useProfileImage();
 
   function getUsername() {
     if (currentUser != null) {
@@ -31,7 +32,6 @@ function UserButton({ to }) {
     return "/login";
   }
 
-  let profileImage = useProfileImage(currentUser?.guid);
   return (
     <NavLink className="user-button" to={getLink()}>
       <img src={profileImage} alt="Profile Picture" />
