@@ -27,6 +27,11 @@ function ProfilePage() {
       const bytes = (await fs.readFile(file.path)).buffer;
       const blob = new Blob([bytes], { type: "image/jpeg" });
       publicFileName = await api.uploadProfileImage(blob, file.name);
+    } else {
+      await api.updateUser({
+        ...currentUser,
+        profileImage: "",
+      });
     }
 
     setCurrentUser({
