@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Rating from "@/components/rating/Rating";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 
@@ -10,12 +10,14 @@ function AddReviewForm({ productId, userId, onCancelled, onSubmitted }) {
   if (productId == null) throw new Error("ProductId was null.");
   if (userId == null) throw new Error("UserId was null");
 
+  const [rating, setRating] = useState();
   const textboxRef = useRef();
 
   async function addReview() {
     try {
       await apiClient.createReview({
         content: textboxRef.current.value,
+        rate: rating,
         productGuid: productId,
       });
     } catch (error) {
@@ -27,7 +29,7 @@ function AddReviewForm({ productId, userId, onCancelled, onSubmitted }) {
     <div className="review-form">
       <div className="rating-box">
         <span>Rating</span>
-        <Rating />
+        <Rating onValueChanged={setRating} />
       </div>
       <div className="details-box">
         <span>Review (optional)</span>
