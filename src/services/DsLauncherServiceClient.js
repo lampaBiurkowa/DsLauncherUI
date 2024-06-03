@@ -29,4 +29,18 @@ export class DsLauncherServiceClient {
             }
         );
     }
+
+    execute(productGuid, exePath) {
+        executeCommand(
+            "execute",
+            {
+                productGuid: productGuid,
+                exePath: exePath
+            },
+            {
+                workerRepetitions: 1,
+                workerInterval: 1000,
+            }
+        );
+    }
 }
