@@ -57,7 +57,6 @@ function ProfilePage() {
                 LocalStorageHandler.setUser("");
                 setCurrentUser(undefined);
                 navigate("/home", { replace: true });
-                navigate(0);
               }}
             >
               Log out

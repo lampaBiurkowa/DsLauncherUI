@@ -51,7 +51,7 @@ function ProductPage() {
                 Buy for {product?.model?.price}₽
               </button>
             ) : (
-              <></>
+              <span className="price">{product?.model?.price}₽</span>
             )}
           </div>
         </div>

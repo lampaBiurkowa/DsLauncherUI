@@ -54,7 +54,9 @@ article {
 
       .price {
         font-size: $text-sm;
-        place-self: start end;
+        font-weight: $text-bold;
+        place-self: end end;
+        grid-area: action;
       }
     }
   }

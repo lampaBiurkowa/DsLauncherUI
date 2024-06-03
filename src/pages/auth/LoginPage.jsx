@@ -45,7 +45,7 @@ function LoginPage() {
             <Spacer />
             <button
               type="button"
-              className="outlined"
+              className="outlined accent"
               onClick={async () => {
                 const loginInput = document.querySelector(
                   'input[name="login"]'
@@ -93,7 +93,7 @@ function LoginPage() {
         </form>
         <div className="sign-up">
           <Separator>Create Dibrysoft Account</Separator>
-          <NavLink className="button outlined accent" to="/register">
+          <NavLink className="button outlined" to="/register">
             Sign up
           </NavLink>
         </div>
