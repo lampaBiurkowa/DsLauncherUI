@@ -113,7 +113,6 @@ function parseCommand(commandStr) {
 }
 
 function parseArgument(line) {
-  console.log(`mam problem z ${line}`);
   const colonIndex = line.indexOf(":");
   let argName = line.substring(0, colonIndex);
   let argValue = line.substring(colonIndex + 1, line.length);

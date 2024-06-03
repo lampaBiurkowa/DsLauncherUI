@@ -53,7 +53,7 @@ function Review({ review }) {
         <p className="published">
           {new Date(review.createdAt).toLocaleDateString()}
         </p>
-        <Rating value={review.rate + 1} isReadOnly={true} />
+        <Rating value={review.rate} isReadOnly={true} />
       </div>
 
       <CollapsedArea collapsedMaxHeight={75}>

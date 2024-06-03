@@ -30,6 +30,7 @@ article {
       display: grid;
       grid-template-columns: auto auto;
       grid-template-rows: 50% 50%;
+      grid-template-areas: "title action" "developer action";
       grid-auto-flow: column;
       gap: $margin-sm;
 
@@ -37,15 +38,18 @@ article {
         font-size: $text-xxl;
         font-weight: $text-bold;
         place-self: end start;
+        grid-area: title;
       }
 
       .developer {
         font-size: $text-sm;
         place-self: start;
+        grid-area: developer;
       }
 
-      .buy-button {
+      .action-button {
         place-self: end;
+        grid-area: action;
       }
 
       .price {
@@ -142,7 +146,7 @@ article {
 
       .review-details {
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
         gap: $margin-sm;
         margin: $margin-xl 0;
 

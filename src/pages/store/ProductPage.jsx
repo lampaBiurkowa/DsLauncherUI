@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
+import { useState, useContext } from "react";
+import { UserContext } from "@/contexts/UserContextProvider";
 import useProduct from "./hooks/useProduct";
 import AspectRatio from "@/components/aspect-ratio/AspectRatio";
-import "./ProductPage.scss";
 import Shelf from "@/components/shelf/Shelf";
 import Dialog from "@/components/dialog/Dialog";
 import Carousel from "@/components/carousel/Carousel";
@@ -9,46 +10,20 @@ import useReviews from "./hooks/useReviews";
 import Review from "./components/Review";
 import useSummary from "./hooks/useSummary";
 import useDeveloperForProduct from "./hooks/useDeveloperForProduct";
-import { useState, useContext } from "react";
-import { UserContext } from "@/contexts/UserContextProvider";
-import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
-import { DevelopersCache } from "@/services/CacheService";
 import AddReviewForm from "./components/AddReviewForm";
-import { executeCommand } from "@/services/DsLauncherService";
 import AllReviewsView from "./components/AllReviewsView";
-
-const MAX_REVIEWS = 3;
-// const purchaseApi = new PurchaseApi();
-// const reviewApi = new ReviewApi();
-const launcherApi = new DsLauncherApiClient();
-let userBought = null;
-
-function handlePurchase(productId, price) {
-  let purchaseModel = new PurchaseModel();
-  purchaseModel.productId = productId;
-  //purchaseModel.userGuid = 11; TODO OHARNAC TO
-  purchaseModel._date = new Date().toISOString();
-  purchaseModel.value = price;
-
-  purchaseApi.purchasePost(
-    { body: JSON.stringify(purchaseModel) },
-    (error, data) => {
-      if (error === null) {
-        console.log("kupilem se");
-        //userBought = true;//ni umiem odswiezyc :D/ usePlayerBought('d', productId);
-      }
-    }
-  );
-}
+import "./ProductPage.scss";
 
 function ProductPage() {
   const { id: productId } = useParams();
-  const userId = useContext(UserContext)?.currentUser?.id;
+  const { currentUser } = useContext(UserContext);
 
   let product = useProduct(productId);
-  let reviews = useReviews(productId);
+  let reviews = useReviews(productId, 0, 3);
   let summary = useSummary(productId);
   let developer = useDeveloperForProduct(productId);
+
+  console.log(summary);
 
   const [addReviewDialogOpen, setAddReviewDialogOpen] = useState();
   const [galleryDialogOpen, setGalleryDialogOpen] = useState();
@@ -71,16 +46,13 @@ function ProductPage() {
           <div className="product-header">
             <h1 className="title">{product?.model?.name}</h1>
             <span className="developer">{developer?.model?.name}</span>
-            <button
-              className="buy-button accent large"
-              onClick={() => {
-                if (userBought);
-                else handlePurchase(productId, product?.model?.price);
-              }}
-            >
-              {userBought ? "Install" : "Buy"}
-            </button>
-            <span className="price">{product?.model?.price}₽</span>
+            {currentUser ? (
+              <button className="action-button accent outlined large">
+                Buy for {product?.model?.price}₽
+              </button>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </AspectRatio>
@@ -123,10 +95,10 @@ function ProductPage() {
         <div className="reviews-summary">
           <div className="overall">
             <span>{summary?.avg}</span>
-            <span>({reviews?.length})</span>
+            <span>({summary?.rateCounts.reduce((x, y) => x + y, 0)})</span>
           </div>
           <div className="review-details">
-            {[5, 4, 3, 2, 1].map((rate, index) => (
+            {[1, 2, 3, 4, 5].map((rate, index) => (
               <div className="rate-counter">
                 <span className="rate">{rate}</span>
                 <span className="count">({summary?.rateCounts[index]})</span>
@@ -135,7 +107,9 @@ function ProductPage() {
                     className="fill bar"
                     style={{
                       width: `${
-                        (summary?.rateCounts[index] / reviews?.length) * 100
+                        (summary?.rateCounts[index] /
+                          summary?.rateCounts.reduce((x, y) => x + y, 0)) *
+                        100
                       }%`,
                     }}
                   ></div>
@@ -143,9 +117,7 @@ function ProductPage() {
               </div>
             ))}
           </div>
-          {userId == null ? (
-            <></>
-          ) : (
+          {currentUser ? (
             <>
               <button
                 className="accent"
@@ -161,17 +133,19 @@ function ProductPage() {
                 onClosed={() => setAddReviewDialogOpen(false)}
               >
                 <AddReviewForm
-                  userId={userId}
+                  userId={currentUser.id}
                   productId={productId}
                   onCancelled={() => setAddReviewDialogOpen(false)}
                   onSubmitted={() => setAddReviewDialogOpen(false)}
                 ></AddReviewForm>
               </Dialog>
             </>
+          ) : (
+            <></>
           )}
         </div>
         <div className="reviews-comments">
-          {reviews?.slice(0, MAX_REVIEWS).map((review, index) => (
+          {reviews?.map((review, index) => (
             <Review review={review} key={index} />
           ))}
           <button onClick={() => setAllReviewsDialogOpen(true)}>
