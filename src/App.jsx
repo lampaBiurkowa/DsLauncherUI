@@ -47,6 +47,7 @@ export const globalUpdateProgress = {
 
 export const publicPath = "https://zzxaltzqtymfxzxphxje.supabase.co/storage/v1/object/public";
 export const deafultBucket = "testing2";
+export const productsBucket = "products";
 export const defaultCurrency = "ruble";
 
 await CurrenciesCache.load();
