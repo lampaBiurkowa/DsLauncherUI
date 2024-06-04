@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { executeCommand } from "@/services/DsLauncherService";
 import { LocalStorageHandler } from "../../services/LocalStorageService";
+import InfoBar, { InfoBarType } from "@/components/info-bar/InfoBar";
 
 const api = new DsCoreApiClient();
 
@@ -54,9 +55,8 @@ function LoginPage() {
                   'input[name="password"]'
                 ).value;
 
-                const userId = await api.getIdByAlias(loginInput);
-
                 try {
+                  const userId = await api.getIdByAlias(loginInput);
                   const passwordBase64 = btoa(passwordInput);
                   const token = await api.login(userId, passwordBase64);
 
@@ -81,15 +81,20 @@ function LoginPage() {
                   LocalStorageHandler.setToken(token);
                   LocalStorageHandler.setUser(userId);
                 } catch {
-                  console.error("Error checking if user is online:", error);
-                  setError("Login failed. Please check your credentials.");
+                  setError("Please check your credentials.");
                 }
               }}
             >
               Log in
             </button>
           </div>
-          {error && <p className="error-message">{error}</p>}
+          {error && (
+            <InfoBar
+              type={InfoBarType.Error}
+              header="Login failed"
+              text={error}
+            ></InfoBar>
+          )}
         </form>
         <div className="sign-up">
           <Separator>Create Dibrysoft Account</Separator>

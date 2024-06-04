@@ -1,30 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useServiceListener } from "@/hooks/useServiceListener";
 import { executeCommand } from "@/services/DsLauncherService";
+import { useLibraries } from "./hooks/useLibraries";
 import InfoBar, { InfoBarType } from "@/components/info-bar/InfoBar";
 import useFileDialog from "@/hooks/useFileDialog";
 import LibraryPath from "./components/LibraryPath";
 import "./LibrariesSettingsPage.scss";
 
 function LibrariesPage() {
-  const response = useServiceListener("get-libraries");
-  const [libraries, setLibraries] = useState();
+  const libraries = useLibraries();
   const { openedFiles, showDialog } = useFileDialog([], true);
-
-  useEffect(() => {
-    executeCommand("get-libraries");
-  }, []);
-
-  useEffect(() => {
-    if (response) {
-      setLibraries(response.libraries ?? []);
-    }
-  }, [response]);
 
   useEffect(() => {
     if (openedFiles?.length == 1) {
       executeCommand("add-library", {
         library: openedFiles[0],
+        name: "Dibrysoft library",
       });
     }
   }, [openedFiles]);
@@ -52,7 +42,8 @@ function LibrariesPage() {
                 return (
                   <LibraryPath
                     key={key}
-                    path={lib}
+                    path={lib.path}
+                    name={lib.name}
                     onRemoved={(path) => {
                       executeCommand("remove-library", { library: path });
                     }}

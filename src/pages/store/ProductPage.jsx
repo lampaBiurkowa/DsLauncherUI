@@ -12,18 +12,17 @@ import useSummary from "./hooks/useSummary";
 import useDeveloperForProduct from "./hooks/useDeveloperForProduct";
 import AddReviewForm from "./components/AddReviewForm";
 import AllReviewsView from "./components/AllReviewsView";
+import ProductActionButton from "./components/ProductActionButton";
 import "./ProductPage.scss";
 
 function ProductPage() {
   const { id: productId } = useParams();
   const { currentUser } = useContext(UserContext);
 
-  let product = useProduct(productId);
-  let reviews = useReviews(productId, 0, 3);
-  let summary = useSummary(productId);
-  let developer = useDeveloperForProduct(productId);
-
-  console.log(summary);
+  const product = useProduct(productId);
+  const reviews = useReviews(productId, 0, 3);
+  const summary = useSummary(productId);
+  const developer = useDeveloperForProduct(productId);
 
   const [addReviewDialogOpen, setAddReviewDialogOpen] = useState();
   const [galleryDialogOpen, setGalleryDialogOpen] = useState();
@@ -47,9 +46,7 @@ function ProductPage() {
             <h1 className="title">{product?.model?.name}</h1>
             <span className="developer">{developer?.model?.name}</span>
             {currentUser ? (
-              <button className="action-button accent outlined large">
-                Buy for {product?.model?.price}₽
-              </button>
+              <ProductActionButton product={product}></ProductActionButton>
             ) : (
               <span className="price">{product?.model?.price}₽</span>
             )}
@@ -99,7 +96,7 @@ function ProductPage() {
           </div>
           <div className="review-details">
             {[1, 2, 3, 4, 5].map((rate, index) => (
-              <div className="rate-counter">
+              <div className="rate-counter" key={rate}>
                 <span className="rate">{rate}</span>
                 <span className="count">({summary?.rateCounts[index]})</span>
                 <div className="bar">

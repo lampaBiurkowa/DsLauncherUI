@@ -9,7 +9,6 @@ import useStaticProducts from "./hooks/useStaticProducts";
 import usePromoted from "./hooks/usePromoted";
 
 import "./DiscoverPage.scss";
-import { UsersCache } from "../../services/CacheService";
 
 function DiscoverPage() {
   let promoted = usePromoted();
