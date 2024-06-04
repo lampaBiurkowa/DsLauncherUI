@@ -1,0 +1,66 @@
+@use "@/styles" as *;
+
+.profile-details-page {
+  display: flex;
+  flex-direction: column;
+  gap: $margin-xl;
+
+  padding: $padding-xl 5%;
+  height: calc(100% - 2 * $padding-xl);
+
+  overflow-y: auto;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: $margin-sm;
+
+    h2 {
+      font-size: $text-lg;
+      font-weight: $text-medium;
+      margin-bottom: $margin-sm;
+    }
+  }
+
+  .change-password-section {
+    display: grid;
+    grid-template-columns: 10fr 8fr;
+    align-items: start;
+    gap: $margin-md;
+
+    & > div {
+      flex-grow: 1;
+      background-color: $dark-1;
+      border: 1px solid $dark-2;
+      border-radius: $radius-lg;
+
+      padding: $padding-xl;
+
+      h3 {
+        font-weight: $text-medium;
+      }
+
+      ul {
+        list-style-type: disc;
+        padding: $padding-sm $padding-lg;
+        font-size: $text-sm;
+        line-height: 1rem;
+      }
+    }
+
+    .password-form {
+      display: flex;
+      flex-direction: column;
+      gap: $margin-md;
+
+      input {
+        width: 100%;
+        padding: $padding-sm;
+      }
+
+      button {
+        align-self: end;
+      }
+    }
+  }
+}

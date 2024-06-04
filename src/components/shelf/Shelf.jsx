@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import "./Shelf.scss";
 
-function Shelf({ title, scrollAmount = 300, children }) {
+function Shelf({ title, scrollAmount = 300, className, children }) {
   const shelfRef = useRef();
 
   const scrollLeft = () => {
@@ -19,14 +19,20 @@ function Shelf({ title, scrollAmount = 300, children }) {
   };
 
   return (
-    <div className="shelf">
+    <div className={`${className} shelf`}>
       <div className="shelf-head">
         <h2>{title}</h2>
         <div className="shelf-controls">
-          <button onClick={() => scrollLeft()}>
+          <button
+            className="outlined small capsule"
+            onClick={() => scrollLeft()}
+          >
             <i className="las la-angle-left"></i>
           </button>
-          <button onClick={() => scrollRight()}>
+          <button
+            className="outlined small capsule"
+            onClick={() => scrollRight()}
+          >
             <i className="las la-angle-right"></i>
           </button>
         </div>

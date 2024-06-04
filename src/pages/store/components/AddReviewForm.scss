@@ -1,0 +1,59 @@
+@use "@/styles" as *;
+
+.review-form {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: $margin-xl;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: $text-xl;
+    font-weight: $text-bold;
+
+    button {
+      padding: $padding-sm;
+    }
+  }
+
+  .rating-box {
+    display: flex;
+    flex-direction: column;
+    gap: $margin-sm;
+
+    span {
+      font-weight: $text-medium;
+      font-size: $text-sm;
+    }
+
+    .rating {
+      font-size: 2em;
+    }
+  }
+
+  .details-box {
+    display: flex;
+    flex-direction: column;
+    gap: $margin-sm;
+
+    span {
+      font-weight: $text-medium;
+      font-size: $text-sm;
+    }
+
+    textarea {
+      width: 100% !important;
+      height: 100px;
+      resize: none;
+    }
+  }
+
+  .submit-area {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: $margin-md;
+  }
+}

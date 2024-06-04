@@ -1,0 +1,15 @@
+@use "@/styles/" as *;
+
+.reviews-container {
+  width: 50vw;
+  height: 80vh;
+
+  display: flex;
+  flex-direction: column;
+  gap: $margin-md;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-right: $padding-md;
+  margin-right: -$margin-md;
+}

@@ -1,0 +1,43 @@
+@use "@/styles" as *;
+
+.review-container {
+  background-color: $dark-2;
+  border: 1px solid $dark-3;
+  border-radius: $radius-lg;
+  padding: $padding-md;
+
+  .header {
+    display: flex;
+    gap: $margin-sm;
+    margin-bottom: $margin-md;
+    align-items: center;
+
+    .profile-picture {
+      width: 36px;
+      height: 36px;
+      border-radius: $radius-round;
+    }
+
+    .username {
+      font-weight: $text-medium;
+    }
+
+    .published {
+      color: $text-inactive;
+      font-size: $text-sm;
+    }
+
+    .developer-badge {
+      display: block;
+      padding: 2px;
+      background-color: $accent-alt;
+      border-radius: $radius-sm;
+    }
+  }
+
+  .content {
+    display: block;
+    font-size: $text-sm;
+    text-align: justify;
+  }
+}

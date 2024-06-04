@@ -1,0 +1,108 @@
+@use "../variables" as *;
+
+//ButtonBase
+.button,
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: $text-sm;
+  font-weight: $text-medium;
+  color: $text;
+  text-decoration: none;
+
+  background-color: rgba($text, 0.1);
+  transition: 0.1s background ease;
+
+  border-radius: $radius-sm;
+  padding: 9px $padding-xl;
+
+  &:hover {
+    background-color: rgba($text, 0.2);
+    cursor: pointer;
+  }
+
+  &:active {
+    background-color: rgba($text, 0.3);
+  }
+
+  &:disabled {
+    background-color: rgba($text, 0.4);
+    cursor: auto;
+  }
+}
+
+//Button themes
+.button.plain,
+button.plain {
+  background-color: rgba($text, 0);
+
+  &:hover {
+    background-color: rgba($text, 0.2);
+  }
+
+  &:active {
+    background-color: rgba($text, 0.3);
+  }
+}
+
+.button.outlined,
+button.outlined {
+  border: 1px solid rgba($text, 0.1);
+}
+
+.button.accent,
+button.accent {
+  background-color: $accent;
+
+  &:hover {
+    background-color: $accent-alt;
+  }
+
+  &:active {
+    background-color: darken($color: $accent-alt, $amount: 10%);
+  }
+}
+
+.button.menuitem,
+button.menuitem {
+  background-color: transparent;
+  border-radius: $radius-none;
+
+  &:hover {
+    background-color: rgba($text, 0.2);
+    cursor: pointer;
+  }
+
+  &:active {
+    background-color: rgba($text, 0.3);
+  }
+}
+
+//Button sizes
+.button.tiny,
+button.tiny {
+  padding: $padding-xs $padding-sm;
+  font-size: $text-xs;
+  font-weight: $text-regular;
+}
+
+.button.small,
+button.small {
+  padding: $padding-sm $padding-md;
+  font-size: $text-xs;
+  font-weight: $text-regular;
+}
+
+.button.large,
+button.large {
+  padding: $padding-lg calc(2 * $padding-xl);
+  font-size: $text-base;
+}
+
+//Button shapes
+.button.capsule,
+button.capsule {
+  border-radius: $radius-round;
+}

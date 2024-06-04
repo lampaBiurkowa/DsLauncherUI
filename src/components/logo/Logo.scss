@@ -1,0 +1,16 @@
+@use "@/styles" as *;
+
+.logo {
+  display: flex;
+  align-items: center;
+  column-gap: $padding-md;
+
+  img {
+    width: 40px;
+  }
+
+  a {
+    font-size: $text-xxl;
+    font-weight: $text-medium;
+  }
+}

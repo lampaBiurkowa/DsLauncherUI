@@ -1,0 +1,40 @@
+@use "@/styles" as *;
+
+.update-summary {
+  padding: $padding-md $padding-lg;
+  margin: $padding-lg 0;
+
+  display: grid;
+  grid-template-rows: 1fr auto;
+  grid-template-columns: auto 1fr;
+  justify-items: start;
+  align-items: center;
+
+  background-color: $dark-1;
+  border: 1px solid $dark-3;
+  border-radius: $radius-sm;
+  gap: $padding-xs $padding-md;
+
+  i {
+    font-size: $text-xl;
+  }
+
+  span {
+    font-size: $text-sm;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 5px;
+    grid-column: 2;
+    background-color: $dark-3;
+    border-radius: $radius-round;
+    overflow: hidden;
+
+    .progress {
+      width: 75%;
+      height: 100%;
+      background-color: $accent;
+    }
+  }
+}

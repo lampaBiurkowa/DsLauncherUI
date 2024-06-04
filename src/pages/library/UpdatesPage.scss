@@ -1,0 +1,46 @@
+@use "@/styles" as *;
+
+.updates-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: $padding-xl;
+  overflow-y: auto;
+
+  .header {
+    display: flex;
+    gap: $margin-sm;
+    align-items: center;
+
+    button {
+      padding: 4px;
+    }
+
+    h1 {
+      font-size: $text-xxl;
+      font-weight: $text-bold;
+    }
+  }
+
+  .apps-list {
+    display: flex;
+    flex-direction: column;
+    gap: $margin-sm;
+    margin-top: $margin-xl;
+  }
+
+  .dropdown-content {
+    display: flex;
+    flex-direction: column;
+    min-width: 175px;
+
+    button {
+      width: 100%;
+      justify-content: start;
+
+      i {
+        margin-right: $margin-sm;
+      }
+    }
+  }
+}

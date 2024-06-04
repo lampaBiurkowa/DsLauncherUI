@@ -1,0 +1,17 @@
+@use "@/styles" as *;
+
+.rating {
+  display: flex;
+
+  i {
+    margin: 1px;
+  }
+
+  .star-enabled {
+    color: $accent-alt;
+  }
+
+  .star-disabled {
+    color: $text-inactive;
+  }
+}

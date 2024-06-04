@@ -2,47 +2,36 @@
   "build": {
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build",
-    "devPath": "http://localhost:1420",
-    "distDir": "../dist",
-    "withGlobalTauri": false
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420"
   },
-  "package": {
-    "productName": "dibstore-app",
-    "version": "0.0.0"
+  "bundle": {
+    "active": true,
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "targets": "all"
   },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "shell": {
-        "all": false,
-        "open": true
-      },
-      "window": {
-        "startDragging": true,
-        "minimize": true,
-        "maximize": true,
-        "unmaximize": true,
-        "close": true
-      }
-    },
-    "bundle": {
-      "active": true,
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "identifier": "com.dibrysoft.launcher",
-      "targets": "all"
-    },
-    "security": {
-      "csp": null
-    },
-    "updater": {
-      "active": false
-    },
+  "productName": "dibstore-app",
+  "version": "0.0.0",
+  "identifier": "com.dibrysoft.launcher",
+  "plugins": {
+    "cli": {
+      "args": [
+        {
+          "name": "port",
+          "takesValue": true,
+          "multiple": false
+        }
+      ]
+    }
+  },
+  "app": {
+    "withGlobalTauri": true,
     "windows": [
       {
         "fullscreen": false,
@@ -54,6 +43,9 @@
         "minHeight": 500,
         "decorations": false
       }
-    ]
+    ],
+    "security": {
+      "csp": null
+    }
   }
 }

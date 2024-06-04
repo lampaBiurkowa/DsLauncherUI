@@ -1,0 +1,40 @@
+@use "@/styles" as *;
+
+.library-path {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "icon header action"
+    "icon path action";
+  column-gap: $margin-lg;
+  row-gap: $margin-xs;
+
+  padding: $padding-md;
+
+  background-color: $dark-1;
+  border: 1px solid $dark-2;
+  border-radius: $radius-lg;
+
+  & > i {
+    grid-area: icon;
+    font-size: 1.5em;
+    align-self: center;
+  }
+
+  .header {
+    grid-area: header;
+    font-weight: $text-medium;
+  }
+
+  .path {
+    grid-area: path;
+    font-size: $text-xs;
+    color: $text-alt;
+  }
+
+  button {
+    grid-area: action;
+    align-self: center;
+  }
+}

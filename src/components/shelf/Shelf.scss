@@ -9,23 +9,17 @@
     justify-content: space-between;
     align-items: center;
 
-    .shelf-controls button {
-      padding: $padding-sm;
-      margin-left: $margin-sm;
+    h2 {
+      font-size: $text-xxl;
+      font-weight: $text-bold;
+    }
 
-      border: 1px solid $dark-3;
-      border-radius: $radius-round;
-      background: $dark-2;
-      font-size: $text-xs;
-      transition: 0.1s background ease;
+    .shelf-controls {
+      display: flex;
+      gap: $margin-sm;
 
-      &:hover {
-        background: $dark-3;
-        cursor: pointer;
-      }
-
-      &:active {
-        background: lighten($color: $dark-3, $amount: 10%);
+      button {
+        padding: $padding-sm;
       }
     }
   }

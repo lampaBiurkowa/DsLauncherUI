@@ -1,0 +1,39 @@
+@use "@/styles" as *;
+
+.library-entry {
+  display: grid;
+  grid-template-columns: 48px 1fr 1fr auto;
+  align-items: center;
+  gap: $margin-md;
+
+  padding: $padding-md;
+
+  background-color: $dark-1;
+  border: 1px solid $dark-2;
+  border-radius: $radius-lg;
+
+  img {
+    width: 48px;
+    height: 48px;
+    border-radius: $radius-sm;
+  }
+
+  .title {
+    font-weight: $text-medium;
+  }
+
+  .secondary {
+    color: $text-inactive;
+  }
+
+  .actions {
+    display: flex;
+    gap: $margin-sm;
+
+    .menu {
+      top: calc(100% + $margin-sm);
+      right: 0;
+      white-space: nowrap;
+    }
+  }
+}
