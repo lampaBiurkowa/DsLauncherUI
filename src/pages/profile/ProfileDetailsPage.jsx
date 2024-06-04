@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./ProfileDetailsPage.scss";
-import { UsersCache } from "../../services/CacheService";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { DsCoreApiClient } from "../../services/DsCoreApiClient";
 import SettingsEntry from "@/components/settings-entry/SettingsEntry";
 import CredentialsEditor from "./components/CredentialsEditor";
+import { LocalStorageHandler } from "@/services/LocalStorageService";
 
 const api = new DsCoreApiClient();
 
@@ -15,6 +15,18 @@ function ProfileDetailsPage() {
   const [login, setLogin] = useState(currentUser.alias);
   const [firstName, setFirstName] = useState(currentUser.name);
   const [lastName, setLastName] = useState(currentUser.surname);
+
+  async function deleteAccount(currentUser) {
+    await api.deleteUser(currentUser.guid);
+    logout();
+  }
+
+  function logout() {
+    LocalStorageHandler.setToken("");
+    LocalStorageHandler.setUser("");
+    setCurrentUser(undefined);
+    navigate("/home", { replace: true });
+  }
 
   useEffect(() => {
     (async () => {
@@ -136,7 +148,7 @@ function ProfileDetailsPage() {
           name="Delete account"
           desc="Click request account deletion to start the process of permanently deleting your Dibrysoft Account including all personal information and purchases."
         >
-          <button style={{ background: "red", textTransform: "uppercase" }}>
+          <button style={{ background: "red", textTransform: "uppercase" }} onClick={() => deleteAccount(currentUser)}>
             Request account deletion
           </button>
         </SettingsEntry>

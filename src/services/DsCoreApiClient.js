@@ -78,11 +78,11 @@ export class DsCoreApiClient {
     }
 
     async deleteUser(id) {
-        const url = `${this.baseUrl}/User/${id}`;
+        const url = `${this.baseUrl}/User?id=${id}`;
         const options = {
             method: 'DELETE'
         };
-        return this.request(url, options);
+        return this.request(url, options, true);
     }
 
     async getUsersByIds(ids) {
