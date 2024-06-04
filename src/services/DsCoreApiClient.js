@@ -64,7 +64,14 @@ export class DsCoreApiClient {
 
     async getUserById(id) {
         const url = `${this.baseUrl}/User/${id}`;
-        return this.request(url);
+        try {
+            return await this.request(url);
+        } catch (error) {
+            if (error.message.includes('HTTP error! status: 404')) {
+                return { name: 'Deleted', surname: 'User' };
+            }
+            throw error;
+        }
     }
 
     async updateUser(user) {
