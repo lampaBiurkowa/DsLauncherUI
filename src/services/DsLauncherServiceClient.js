@@ -43,4 +43,16 @@ export class DsLauncherServiceClient {
             }
         );
     }
+    
+    getInstalled() {
+        executeCommand(
+            "get-installed",
+            {
+            },
+            {
+                workerRepetitions: 1,
+                workerInterval: 1000,
+            }
+        );
+    }
 }
