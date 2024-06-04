@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
-import { useOwnedProducts } from "../hooks/useOwnedProducts";
+import { useOwnedProducts } from "../../../hooks/useOwnedProducts";
 import { useServiceListener } from "@/hooks/useServiceListener";
 import { DsLauncherServiceClient } from "@/services/DsLauncherServiceClient";
 import "./ProductActionButton.scss";
@@ -16,20 +16,20 @@ function ProductActionButton({ product }) {
   const installedProducts = useServiceListener("get-installed");
 
   useEffect(() => {
-    setOwned(ownedProducts?.includes(product?.model.guid));
-    setInstalled(installedProducts?.products?.includes(product?.model.guid));
+    setOwned(ownedProducts?.includes(product?.model?.guid));
+    setInstalled(installedProducts?.products?.includes(product?.model?.guid));
   }, [product, ownedProducts, installedProducts]);
 
   async function handleClick() {
     if (!owned) {
       try {
-        if (await api.purchaseProduct(product?.model.guid)) {
+        if (await api.purchaseProduct(product?.model?.guid)) {
           setOwned(true);
         }
       } catch {}
     } else {
       if (installed) {
-        service.execute(product?.model.guid);
+        service.execute(product?.model?.guid);
       }
     }
   }
@@ -41,7 +41,7 @@ function ProductActionButton({ product }) {
     >
       {owned && installed ? "Run" : <></>}
       {owned && !installed ? "Install" : <></>}
-      {!owned ? `Buy for ${product?.model.price}₽` : <></>}
+      {!owned ? `Buy for ${product?.model?.price}₽` : <></>}
     </button>
   );
 }
