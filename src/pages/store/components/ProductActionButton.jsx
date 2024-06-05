@@ -57,7 +57,7 @@ function ProductActionButton({ product }) {
         <Installer
           onCancelled={() => setDialogOpen(false)}
           onConfirmed={(lib) => {
-            console.log(lib); // <------ INSTOL TUTAJ MLOTY Z CARDBOARD
+            service.install(product?.model.guid, lib.Path);
           }}
         ></Installer>
       </Dialog>

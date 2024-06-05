@@ -5,8 +5,10 @@ import getFilesData from "@/services/getFilesData";
 import Dialog from "@/components/dialog/Dialog";
 import Installer from "@/components/installer/Installer";
 import "./OwnedPage.scss";
+import { DsLauncherServiceClient } from "@/services/DsLauncherServiceClient";
 
 const api = new DsLauncherApiClient();
+const service = new DsLauncherServiceClient();
 
 function OwnedPage() {
   const [products, setProducts] = useState([]);
@@ -57,7 +59,8 @@ function OwnedPage() {
         <Installer
           onCancelled={() => setDialogOpen(false)}
           onConfirmed={(lib) => {
-            console.log(lib); // <------ INSTOL TUTAJ MLOTY Z CARDBOARD
+            //MKZLIWE ZE TO NI DZIALA :D/
+            service.install(selectedProduct?.model.guid, lib.Path);
           }}
         ></Installer>
       </Dialog>
