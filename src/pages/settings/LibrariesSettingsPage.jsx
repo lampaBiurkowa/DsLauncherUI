@@ -42,10 +42,10 @@ function LibrariesPage() {
                 return (
                   <LibraryPath
                     key={key}
-                    path={lib.path}
-                    name={lib.name}
-                    onRemoved={(path) => {
-                      executeCommand("remove-library", { library: path });
+                    path={lib.Path}
+                    name={lib.Name}
+                    onRemoved={(Path) => {
+                      executeCommand("remove-library", { library: Path });
                     }}
                   ></LibraryPath>
                 );

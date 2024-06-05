@@ -13,10 +13,10 @@ import { LocalStorageHandler } from "./services/LocalStorageService.js";
 import { addListener } from "./services/DsLauncherService";
 import "./styles/App.scss";
 
-addListener("credentials", (args) => {
+addListener("get-credentials", (args) => {
   console.log(args);
-  LocalStorageHandler.setToken(args.token);
-  LocalStorageHandler.setUser(args.userguid);
+  LocalStorageHandler.setToken(args.Token);
+  LocalStorageHandler.setUser(args.UserGuid);
 });
 
 export const globalUpdateProgress = {

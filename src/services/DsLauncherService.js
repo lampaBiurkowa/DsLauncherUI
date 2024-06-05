@@ -96,17 +96,7 @@ function parseCommand(commandStr) {
   }
 
   while (lines[++lineIndex] != 0) {
-    const arg = parseArgument(lines[lineIndex]);
-    const array = getArrayInfo(arg.name);
-    if (!array) {
-      command.args[arg.name] = arg.value;
-    } else {
-      if (array.index) {
-        command.args[array.name][array.index] = arg.value;
-      } else {
-        command.args[array.name] = [];
-      }
-    }
+    command.args = JSON.parse(lines[lineIndex]);
   }
 
   return command;

@@ -4,30 +4,19 @@ export class DsLauncherServiceClient {
     constructor() {
     }
 
-    install(productGuid, libraryPath) {
+    install(productGuid, libraryPath, exePath) {
         executeCommand(
             "install",
             {
                 productGuid: productGuid,
-                library: libraryPath
-            },
-            {
-                workerRepetitions: 1,
-                workerInterval: 1000,
+                library: libraryPath,
+                exePath: exePath
             }
         );
     }
 
     getInstallOperations() {
-        executeCommand(
-            "get-downloads",
-            {
-            },
-            {
-                workerRepetitions: 1,
-                workerInterval: 1000,
-            }
-        );
+        executeCommand("get-downloads");
     }
 
     execute(productGuid, exePath) {
@@ -36,23 +25,15 @@ export class DsLauncherServiceClient {
             {
                 productGuid: productGuid,
                 exePath: exePath
-            },
-            {
-                workerRepetitions: 1,
-                workerInterval: 1000,
             }
         );
     }
-    
+
     getInstalled() {
-        executeCommand(
-            "get-installed",
-            {
-            },
-            {
-                workerRepetitions: 1,
-                workerInterval: 1000,
-            }
-        );
+        executeCommand("get-installed");
+    }
+
+    getLibraries() {
+        executeCommand("get-libraries");
     }
 }

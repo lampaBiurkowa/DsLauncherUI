@@ -12,15 +12,7 @@ export function useLibraries() {
 
   useEffect(() => {
     if (response) {
-      console.log(response);
-      setLibraries(
-        Array.from({ length: response.count }, (_, i) => {
-          return {
-            path: response.paths[i],
-            name: response.names[i],
-          };
-        })
-      );
+      setLibraries(response.Libraries);
     }
   }, [response]);
 

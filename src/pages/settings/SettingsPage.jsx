@@ -7,7 +7,7 @@ import { DsLauncherServiceClient } from "@/services/DsLauncherServiceClient";
 
 function SettingsPage() {
   var client = new DsLauncherServiceClient();
-  client.execute("1705b1de-3c65-5325-2100-000000000000", "start.sh");
+  // client.install("1705b1de-3c65-5325-2e00-000000000000", "/home/dev/beka2","start.sh");
   return (
     <div className="settings-container">
       <div className="settings-nav-container">
