@@ -36,4 +36,11 @@ export class DsLauncherServiceClient {
     getLibraries() {
         executeCommand("get-libraries");
     }
+
+    getLibraryDetails(path) {
+        executeCommand("get-library-details",
+        {
+            path: path
+        });
+    }
 }
