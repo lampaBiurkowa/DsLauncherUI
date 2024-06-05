@@ -1,0 +1,50 @@
+@use "@/styles" as *;
+
+.library-selector {
+  display: flex;
+  flex-direction: column;
+  gap: $margin-sm;
+
+  min-width: 400px;
+
+  h2 {
+    font-weight: $text-medium;
+    font-size: $text-sm;
+  }
+
+  .install-btn {
+    align-self: end;
+  }
+
+  .library {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "icon header"
+      "icon path";
+    column-gap: $margin-lg;
+    row-gap: $margin-xs;
+
+    padding: $padding-md;
+
+    & > i {
+      grid-area: icon;
+      font-size: 1.5em;
+      align-self: center;
+    }
+
+    .header {
+      grid-area: header;
+      font-weight: $text-medium;
+      justify-self: start;
+    }
+
+    .path {
+      grid-area: path;
+      font-size: $text-xs;
+      color: $text-alt;
+      justify-self: start;
+    }
+  }
+}

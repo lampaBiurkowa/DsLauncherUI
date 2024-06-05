@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useOwnedProducts } from "@/hooks/useOwnedProducts";
-import LibraryEntry from "./components/library-entry/LibraryEntry";
-import "./OwnedPage.scss";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
+import LibraryEntry from "./components/library-entry/LibraryEntry";
 import getFilesData from "@/services/getFilesData";
+import "./OwnedPage.scss";
 
 const api = new DsLauncherApiClient();
 

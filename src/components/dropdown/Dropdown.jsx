@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Dropdown.scss";
 import useClickOutside from "./hooks/useClickOutside";
 
-function Dropdown({ className, hAlign, children }) {
+function Dropdown({ className, children }) {
   const [isOpen, setOpen] = useState(false);
   const clickOutsideTrigger = useClickOutside(() => {
     setOpen(false);
@@ -19,7 +19,7 @@ function Dropdown({ className, hAlign, children }) {
   }
 
   return (
-    <div className={`${className} dropdown`}>
+    <div className="dropdown">
       <button onClick={toggle} ref={clickOutsideTrigger}>
         <i className="la la-ellipsis-h" />
       </button>

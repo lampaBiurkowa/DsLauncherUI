@@ -4,6 +4,8 @@ import { useOwnedProducts } from "../../../hooks/useOwnedProducts";
 import { useServiceListener } from "@/hooks/useServiceListener";
 import { DsLauncherServiceClient } from "@/services/DsLauncherServiceClient";
 import "./ProductActionButton.scss";
+import Dialog from "@/components/dialog/Dialog";
+import LibrarySelector from "@/components/library-selector/LibrarySelector";
 
 const api = new DsLauncherApiClient();
 const service = new DsLauncherServiceClient();
@@ -11,6 +13,7 @@ const service = new DsLauncherServiceClient();
 function ProductActionButton({ product }) {
   const [owned, setOwned] = useState(false);
   const [installed, setInstalled] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const ownedProducts = useOwnedProducts();
   const installedProducts = useServiceListener("get-installed");
@@ -30,19 +33,30 @@ function ProductActionButton({ product }) {
     } else {
       if (installed) {
         service.execute(product?.model?.guid);
+      } else {
+        setDialogOpen(true);
       }
     }
   }
 
   return (
-    <button
-      className="action-button accent outlined large"
-      onClick={() => handleClick()}
-    >
-      {owned && installed ? "Run" : <></>}
-      {owned && !installed ? "Install" : <></>}
-      {!owned ? `Buy for ${product?.model?.price}₽` : <></>}
-    </button>
+    <>
+      <button
+        className="action-button accent outlined large"
+        onClick={() => handleClick()}
+      >
+        {owned && installed ? "Run" : <></>}
+        {owned && !installed ? "Install" : <></>}
+        {!owned ? `Buy for ${product?.model?.price}₽` : <></>}
+      </button>
+      <Dialog
+        open={dialogOpen}
+        onClosed={() => setDialogOpen(false)}
+        header={`Install - ${product?.model?.name}`}
+      >
+        <LibrarySelector></LibrarySelector>
+      </Dialog>
+    </>
   );
 }
 
