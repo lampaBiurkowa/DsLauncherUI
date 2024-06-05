@@ -4,13 +4,12 @@ export class DsLauncherServiceClient {
     constructor() {
     }
 
-    install(productGuid, libraryPath, exePath) {
+    install(productGuid, libraryPath) {
         executeCommand(
             "install",
             {
                 productGuid: productGuid,
-                library: libraryPath,
-                exePath: exePath
+                library: libraryPath
             }
         );
     }
