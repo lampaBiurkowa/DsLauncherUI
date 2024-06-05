@@ -3,14 +3,14 @@ import { useLibraries } from "@/pages/settings/hooks/useLibraries";
 import { NavLink } from "react-router-dom";
 import ComboBox from "../combo-box/ComboBox";
 import InfoBar, { InfoBarType } from "../info-bar/InfoBar";
-import "./LibrarySelector.scss";
+import "./Installer.scss";
 
-function LibrarySelector() {
+function Installer({ onConfirmed, onCancelled }) {
   const [selectedLib, setSelectedLib] = useState(undefined);
   const libraries = useLibraries();
 
   return (
-    <div className="library-selector">
+    <div className="installer">
       {libraries?.length == 0 ? (
         <InfoBar
           type={InfoBarType.Warning}
@@ -39,19 +39,29 @@ function LibrarySelector() {
               );
             })}
           </ComboBox>
-          <button
-            className="install-btn accent"
-            disabled={selectedLib === undefined}
-            onClick={() => {
-              console.log(`INSTOL LIB: ${libraries[selectedLib].Path}`);
-            }}
-          >
-            Install
-          </button>
+          <div className="buttons">
+            <button
+              className="install-btn accent"
+              disabled={selectedLib === undefined}
+              onClick={() => {
+                onConfirmed?.(libraries[selectedLib]);
+              }}
+            >
+              Install
+            </button>
+            <button
+              className="plain"
+              onClick={() => {
+                onCancelled?.();
+              }}
+            >
+              Cancel
+            </button>
+          </div>
         </>
       )}
     </div>
   );
 }
 
-export default LibrarySelector;
+export default Installer;

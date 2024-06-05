@@ -3,9 +3,9 @@ import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import { useOwnedProducts } from "../../../hooks/useOwnedProducts";
 import { useServiceListener } from "@/hooks/useServiceListener";
 import { DsLauncherServiceClient } from "@/services/DsLauncherServiceClient";
-import "./ProductActionButton.scss";
 import Dialog from "@/components/dialog/Dialog";
-import LibrarySelector from "@/components/library-selector/LibrarySelector";
+import Installer from "@/components/installer/Installer";
+import "./ProductActionButton.scss";
 
 const api = new DsLauncherApiClient();
 const service = new DsLauncherServiceClient();
@@ -54,7 +54,12 @@ function ProductActionButton({ product }) {
         onClosed={() => setDialogOpen(false)}
         header={`Install - ${product?.model?.name}`}
       >
-        <LibrarySelector></LibrarySelector>
+        <Installer
+          onCancelled={() => setDialogOpen(false)}
+          onConfirmed={(lib) => {
+            console.log(lib); // <------ INSTOL TUTAJ MLOTY Z CARDBOARD
+          }}
+        ></Installer>
       </Dialog>
     </>
   );

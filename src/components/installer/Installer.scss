@@ -1,6 +1,6 @@
 @use "@/styles" as *;
 
-.library-selector {
+.installer {
   display: flex;
   flex-direction: column;
   gap: $margin-sm;
@@ -12,8 +12,14 @@
     font-size: $text-sm;
   }
 
-  .install-btn {
-    align-self: end;
+  .buttons {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: $margin-sm;
+
+    .install-btn {
+      align-self: end;
+    }
   }
 
   .library {
