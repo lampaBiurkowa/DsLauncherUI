@@ -14,6 +14,15 @@ export class DsLauncherServiceClient {
         );
     }
 
+    uninstall(productGuid) {
+        executeCommand(
+            "uninstall",
+            {
+                productGuid: productGuid,
+            }
+        );
+    }
+
     getInstallOperations() {
         executeCommand("get-downloads");
     }

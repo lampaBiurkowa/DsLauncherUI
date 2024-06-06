@@ -14,15 +14,17 @@ import AddReviewForm from "./components/AddReviewForm";
 import AllReviewsView from "./components/AllReviewsView";
 import ProductActionButton from "./components/ProductActionButton";
 import "./ProductPage.scss";
+import usePegi from "./hooks/usePegi";
 
 function ProductPage() {
-  const { id: productId } = useParams();
+  const { id: productGuid } = useParams();
   const { currentUser } = useContext(UserContext);
 
-  const product = useProduct(productId);
-  const reviews = useReviews(productId, 0, 3);
-  const summary = useSummary(productId);
-  const developer = useDeveloperForProduct(productId);
+  const product = useProduct(productGuid);
+  const reviews = useReviews(productGuid, 0, 3);
+  const pegi = usePegi(productGuid);
+  const summary = useSummary(productGuid);
+  const developer = useDeveloperForProduct(productGuid);
 
   const [addReviewDialogOpen, setAddReviewDialogOpen] = useState();
   const [galleryDialogOpen, setGalleryDialogOpen] = useState();
@@ -54,6 +56,7 @@ function ProductPage() {
         </div>
       </AspectRatio>
       <section className="description">
+        <img src={pegi} />
         <img src={product?.static?.Icon} alt="Application Icon" />
         <h2>About</h2>
         <span>{product?.model?.description}</span>
@@ -131,7 +134,7 @@ function ProductPage() {
               >
                 <AddReviewForm
                   userId={currentUser.id}
-                  productId={productId}
+                  productId={productGuid}
                   onCancelled={() => setAddReviewDialogOpen(false)}
                   onSubmitted={() => setAddReviewDialogOpen(false)}
                 ></AddReviewForm>
@@ -153,7 +156,7 @@ function ProductPage() {
             open={allReviewsDialogOpen}
             onClosed={() => setAllReviewsDialogOpen(false)}
           >
-            <AllReviewsView productId={productId} />
+            <AllReviewsView productId={productGuid} />
           </Dialog>
         </div>
       </section>
