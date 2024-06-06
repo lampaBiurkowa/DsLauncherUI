@@ -75,7 +75,7 @@ class ProductsCacheSingleton extends CachedObjects {
       this.getRates(productGuid),
       this.launcherApi.getLatestProductPackage(productGuid),
     ]);
-    var result = [];
+
     this.data[productGuid] = {
       model: model,
       static: getFilesData(model),
@@ -84,7 +84,7 @@ class ProductsCacheSingleton extends CachedObjects {
       expire: this.getExpirationTimestamp(30)
     };
 
-    return result;
+    return this.data[productGuid];
   }
 }
 

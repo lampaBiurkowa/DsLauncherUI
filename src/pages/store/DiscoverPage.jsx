@@ -1,5 +1,4 @@
 import React from "react";
-
 import AspectRatio from "@/components/aspect-ratio/AspectRatio";
 import Carousel from "@/components/carousel/Carousel";
 import Shelf from "@/components/shelf/Shelf";
@@ -57,7 +56,7 @@ function DiscoverPage() {
                         ? "macos"
                         : ""
                     }`}
-                ></StoreEntry>
+                />
               );
             })}
           </Shelf>

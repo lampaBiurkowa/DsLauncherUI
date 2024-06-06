@@ -4,7 +4,7 @@ import { deafultBucket, publicPath } from "@/App";
 
 function useStaticProducts() {
   const url = `${publicPath}/${deafultBucket}/discover.json`;
-  let [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     fetch(url)
@@ -14,17 +14,33 @@ function useStaticProducts() {
         }
         return response.json();
       })
-      .then(async (data) => {
-        const sectionsPromises = data.map(async (section) => {
-          const productPromises = section.items.map((appId) =>
-            ProductsCache.getById(appId)
-          );
-          const items = await Promise.all(productPromises);
-          return { name: section.name, items: items };
-        });
+      .then((data) => {
+        data.forEach((section) => {
+          const sectionProducts = { name: section.name, items: [] };
+          setProducts((prevProducts) => [...prevProducts, sectionProducts]);
 
-        const sections = await Promise.all(sectionsPromises);
-        setProducts(sections);
+          section.items.forEach((appId) => {
+            ProductsCache.getById(appId)
+              .then((item) => {
+                setProducts((prevProducts) => {
+                  return prevProducts.map((prevSection) =>
+                    prevSection.name === section.name
+                      ? {
+                          ...prevSection,
+                          items: [...prevSection.items, item],
+                        }
+                      : prevSection
+                  );
+                });
+              })
+              .catch((error) => {
+                console.error(
+                  "There has been a problem with fetching product:",
+                  error
+                );
+              });
+          });
+        });
       })
       .catch((error) => {
         console.error(
