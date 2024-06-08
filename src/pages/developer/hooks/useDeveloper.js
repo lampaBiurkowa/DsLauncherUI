@@ -14,5 +14,5 @@ export function useDeveloper(guid) {
     })();
   }, []);
 
-  return developer;
+  return [developer, setDeveloper];
 }

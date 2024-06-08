@@ -15,28 +15,36 @@ import "./DeveloperProfilePage.scss";
 const api = new DsLauncherApiClient();
 
 function DeveloperProfilePage() {
-  const [imagePath, setImagePath] = useState();
   const { id: devId } = useParams();
   const { currentUser } = useContext(UserContext);
-  const developer = useDeveloper(devId);
+  const [developer, setDeveloper] = useDeveloper(devId);
 
   const isMember = useMemo(() => {
     return developer?.userGuids.includes(currentUser?.guid);
   }, [developer, currentUser]);
 
+  const logo = useMemo(() => {
+    if (developer?.profileImage?.length > 0) {
+      return `${publicPath}/${deafultBucket}/${developer?.profileImage}`;
+    }
+    return undefined;
+  }, [developer]);
+
   async function uploadProfileImage(file) {
+    let publicFileName = "";
+
     if (file.path) {
       const bytes = (await fs.readFile(file.path)).buffer;
       const blob = new Blob([bytes], { type: "image/jpeg" });
-      await api.uploadDeveloperLogo(devId, blob, file.name);
-      setImagePath(`${publicPath}/${deafultBucket}/${developer?.profileImage}`);
+      publicFileName = await api.uploadDeveloperLogo(devId, blob, file.name);
     } else {
       await api.updateDeveloper({
         ...developer,
         profileImage: "",
       });
-      setImagePath(undefined);
     }
+
+    setDeveloper({ ...developer, profileImage: publicFileName });
   }
 
   return (
@@ -45,7 +53,7 @@ function DeveloperProfilePage() {
         <div className="developer-basic">
           <ProfilePicture
             readonly={!isMember}
-            src={imagePath}
+            src={logo}
             onSelected={uploadProfileImage}
           ></ProfilePicture>
           <span className="developer-name">{developer?.name}</span>

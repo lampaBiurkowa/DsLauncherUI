@@ -8,7 +8,7 @@ export class DsLauncherApiClient {
     this.baseUrl = API_BASE_URL;
   }
 
-  async request(url, options = {}) {
+  async request(url, options = {}, isText = false) {
     options.headers = options.headers || {};
     options.headers[
       "Authorization"
@@ -19,10 +19,9 @@ export class DsLauncherApiClient {
       throw new Error(`HTTP error! status: ${response.status}, ${error}`);
     }
 
-    const contentType = response.headers.get("content-type");
-    if (contentType && contentType.includes("application/json")) {
-      return response.json();
-    }
+    if (isText) return response.text();
+
+    return response.json();
   }
 
   //Product
