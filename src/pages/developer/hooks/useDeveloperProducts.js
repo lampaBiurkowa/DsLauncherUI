@@ -1,6 +1,5 @@
 import { ProductsCache } from "@/services/CacheService";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
-import getFilesData from "@/services/getFilesData";
 import { useEffect, useState } from "react";
 
 const api = new DsLauncherApiClient();

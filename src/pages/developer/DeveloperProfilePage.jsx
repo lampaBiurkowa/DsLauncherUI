@@ -11,6 +11,7 @@ import NavButton from "@/components/navbar/NavButton";
 import * as fs from "@tauri-apps/plugin-fs";
 
 import "./DeveloperProfilePage.scss";
+import { useSubscriptions } from "./hooks/useSubscriptions";
 
 const api = new DsLauncherApiClient();
 
@@ -18,6 +19,7 @@ function DeveloperProfilePage() {
   const { id: devId } = useParams();
   const { currentUser } = useContext(UserContext);
   const [developer, setDeveloper] = useDeveloper(devId);
+  const subscriptions = useSubscriptions(devId);
 
   const isMember = useMemo(() => {
     return developer?.userGuids.includes(currentUser?.guid);
@@ -58,6 +60,7 @@ function DeveloperProfilePage() {
           ></ProfilePicture>
           <span className="developer-name">{developer?.name}</span>
           <div className="developer-actions">
+            subscriptions: {subscriptions}
             {!isMember ? (
               <button className="small">
                 Subscribe for {developer?.subscriptionPrice}₽

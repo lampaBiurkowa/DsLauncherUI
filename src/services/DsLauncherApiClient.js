@@ -223,7 +223,12 @@ export class DsLauncherApiClient {
   }
 
   async hasUserSubscribed(developerGuid) {
-    const url = `${this.baseUrl}/Developer/{developerGuid}/user-subscribed`;
+    const url = `${this.baseUrl}/Developer/${developerGuid}/user-subscribed`;
+    return this.request(url);
+  }
+
+  async getSubscriptions(developerGuid) {
+    const url = `${this.baseUrl}/Developer/${developerGuid}/subscriptions`;
     return this.request(url);
   }
   //Review
