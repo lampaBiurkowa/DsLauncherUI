@@ -46,7 +46,7 @@ class UsersCacheSingleton extends CachedObjects {
 
   async loadItem(id) {
     var model = await this.userApi.getUserById(id);
-    var isDeveloper = !model.isDeleted && await this.launcherApi.getDeveloperByUser(id);
+    var isDeveloper = !model.isDeleted && (await this.launcherApi.getDeveloperByUser(id)).length > 0;
     this.data[id] = { model: model, isDeveloper: isDeveloper, expire: this.getExpirationTimestamp(30) }
 
     return this.data[id];
