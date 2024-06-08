@@ -1,3 +1,4 @@
+import { ProductsCache } from "@/services/CacheService";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import getFilesData from "@/services/getFilesData";
 import { useEffect, useState } from "react";
@@ -6,17 +7,12 @@ const api = new DsLauncherApiClient();
 
 export function useDeveloperProducts(developerGuid) {
   const [products, setProducts] = useState();
-
   useEffect(() => {
     (async () => {
-      try {
-        // setProducts(await api.getProductsByDeveloper(developerGuid));
-        setProducts(
-          (await api.getProductsByDeveloper(developerGuid))?.map((p) => {
-            return { ...p, static: getFilesData(p) };
-          })
-        );
-      } catch {}
+      const productGuids = (await api.getProductsByDeveloper(developerGuid)).map(product => product.guid);
+      const productDetailsPromises = productGuids.map(guid => ProductsCache.getById(guid));
+      const detailedProducts = await Promise.all(productDetailsPromises);
+      setProducts(detailedProducts);
     })();
   }, []);
 

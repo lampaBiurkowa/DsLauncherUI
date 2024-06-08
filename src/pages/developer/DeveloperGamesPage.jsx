@@ -25,8 +25,8 @@ function DeveloperGamesPage() {
           return (
             <StoreEntry
               key={index}
-              id={product?.guid}
-              name={product?.name}
+              id={product?.model.guid}
+              name={product?.model.name}
               icon={product?.static?.Icon}
               rating={product?.rates?.avg}
               platform={`${

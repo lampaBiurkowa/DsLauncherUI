@@ -16,6 +16,7 @@ import AllReviewsView from "./components/AllReviewsView";
 import ProductActionButton from "./components/ProductActionButton";
 import "./ProductPage.scss";
 import usePegi from "./hooks/usePegi";
+import useUserSubscribed from "./hooks/useUserSubscribed";
 
 function ProductPage() {
   const { id: productGuid } = useParams();
@@ -26,6 +27,7 @@ function ProductPage() {
   const pegi = usePegi(productGuid);
   const summary = useSummary(productGuid);
   const developer = useDeveloperForProduct(productGuid);
+  const userSubscribed = useUserSubscribed(developer);
 
   const [addReviewDialogOpen, setAddReviewDialogOpen] = useState();
   const [galleryDialogOpen, setGalleryDialogOpen] = useState();
@@ -56,7 +58,7 @@ function ProductPage() {
             {currentUser ? (
               <ProductActionButton product={product}></ProductActionButton>
             ) : (
-              <span className="price">{product?.model?.price}₽</span>
+              <span className="price">{userSubscribed ? 0 : product?.model?.price}₽</span>
             )}
           </div>
         </div>
