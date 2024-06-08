@@ -1,11 +1,11 @@
 import React from "react";
+import { useContext } from "react";
+import { UserContext } from "@/contexts/UserContextProvider";
 import useArticles from "./hooks/useArticles";
 import useRecentProducts from "./hooks/useRecentProducts";
-import NewsEntry from "./components/NewsEntry";
+import NewsEntry from "@/components/news-entry/NewsEntry";
 import RecentApp from "./components/RecentApp";
 import "./HomePage.scss";
-import { useContext } from "react";
-import { UserContext } from "../../contexts/UserContextProvider";
 
 function HomePage() {
   const { currentUser } = useContext(UserContext);

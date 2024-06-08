@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
-import ProfilePicture from "./components/ProfilePicture";
 import { UserContext } from "@/contexts/UserContextProvider";
-import useProfileImage from "@/hooks/useProfileImage";
-import Navbar from "@/components/navbar/Navbar";
 import { NavLink, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { DsCoreApiClient } from "@/services/DsCoreApiClient";
+import { LocalStorageHandler } from "@/services/LocalStorageService";
+import ProfilePicture from "@/components/profile-picture/ProfilePicture";
+import useProfileImage from "@/hooks/useProfileImage";
+import Navbar from "@/components/navbar/Navbar";
 import NavButton from "@/components/navbar/NavButton";
-import { LocalStorageHandler } from "../../services/LocalStorageService";
 import useMoney from "./hooks/useMoney";
-import { DsCoreApiClient } from "../../services/DsCoreApiClient";
 import * as fs from "@tauri-apps/plugin-fs";
 import "./ProfilePage.scss";
 
@@ -45,7 +45,7 @@ function ProfilePage() {
       <section className="profile-summary">
         <div className="profile-basic">
           <ProfilePicture
-            src={`${profileImage}`}
+            src={profileImage}
             onSelected={uploadProfileImage}
           ></ProfilePicture>
           <span className="profile-name">{`${currentUser?.name} ${currentUser?.surname}`}</span>

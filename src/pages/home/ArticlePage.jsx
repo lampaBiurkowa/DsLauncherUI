@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import useSingleArticle from "./hooks/useSingleArticle";
 import ReactMarkdown from "react-markdown";
 
@@ -8,13 +8,18 @@ import ArticleImage from "./components/ArticleImage";
 
 function ArticlePage() {
   const { id: articleId } = useParams();
+  const navigate = useNavigate();
   const article = useSingleArticle(articleId);
 
   return (
     <div className="article-page">
-      <Link to="../">
+      <button
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
         <i className="las la-angle-left" />
-      </Link>
+      </button>
       {article ? (
         <article>
           <h1>{article?.title}</h1>

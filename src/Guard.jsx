@@ -7,13 +7,13 @@ export const GuardMode = {
   HIDE: "hide",
 };
 
-function Guard({ developerOnly, mode = GuardMode.NAVIGATE, children }) {
-  let { currentUser: user } = useContext(UserContext);
-  let navigate = useNavigate();
+function Guard({ developerGuid, mode = GuardMode.NAVIGATE, children }) {
+  const { currentUser: user } = useContext(UserContext);
+  const navigate = useNavigate();
 
   function canAccess() {
-    if (developerOnly === true) {
-      return user?.developer != null;
+    if (developerGuid) {
+      return user?.developers?.includes(developerGuid) ?? false;
     }
     return user != null;
   }
@@ -24,7 +24,7 @@ function Guard({ developerOnly, mode = GuardMode.NAVIGATE, children }) {
     }
   }, []);
 
-  return !canAccess() ? "" : children;
+  return canAccess() ? children : <></>;
 }
 
 export default Guard;

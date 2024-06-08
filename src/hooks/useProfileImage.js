@@ -4,7 +4,7 @@ import { useEffect, useContext, useState } from "react";
 
 export default function useProfileImage() {
   const { currentUser } = useContext(UserContext);
-  const [profileImage, setProfileImage] = useState("/img/user.png");
+  const [profileImage, setProfileImage] = useState();
 
   useEffect(() => {
     if (currentUser?.profileImage) {
@@ -12,7 +12,7 @@ export default function useProfileImage() {
         `${publicPath}/${deafultBucket}/${currentUser.profileImage}`
       );
     } else {
-      setProfileImage("/img/user.png");
+      setProfileImage(undefined);
     }
   }, [currentUser]);
 

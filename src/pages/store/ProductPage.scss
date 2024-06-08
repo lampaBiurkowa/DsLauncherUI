@@ -45,6 +45,8 @@ article {
         font-size: $text-sm;
         place-self: start;
         grid-area: developer;
+        color: $text;
+        text-decoration: none;
       }
 
       .action-button {

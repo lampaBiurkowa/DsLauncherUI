@@ -152,6 +152,11 @@ export class DsLauncherApiClient {
     return this.request(url, options);
   }
 
+  async getNewsByDeveloper(developerGuid) {
+    const url = `${this.baseUrl}/News/developer/${developerGuid}`;
+    return this.request(url);
+  }
+
   //DEVELOPER
   async getDevelopers(skip = 0, take = 1000) {
     const url = `${this.baseUrl}/Developer?skip=${skip}&take=${take}`;
@@ -204,6 +209,18 @@ export class DsLauncherApiClient {
   async getDeveloperByUser(userGuid) {
     const url = `${this.baseUrl}/Developer/user/${userGuid}`;
     return this.request(url);
+  }
+
+  async uploadDeveloperLogo(developerGuid, file, fileName) {
+    const url = `${this.baseUrl}/Developer/${developerGuid}/UploadProfileImage`;
+    const formData = new FormData();
+    formData.append("file", file, fileName);
+
+    const options = {
+      method: "POST",
+      body: formData,
+    };
+    return this.request(url, options, true);
   }
 
   //Review

@@ -1,0 +1,57 @@
+@use "@/styles" as *;
+@include slidein-mixin;
+
+.developer-page {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  animation: slidein 0.2s;
+  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+  .developer-summary {
+    display: flex;
+    justify-content: space-between;
+
+    padding: $padding-xl;
+    background-color: $dark-1;
+
+    .profile-picture {
+      width: 128px;
+      height: 128px;
+      grid-area: image;
+    }
+
+    .developer-basic {
+      display: grid;
+      gap: $margin-sm $margin-xl;
+      grid-template-areas: "image name" "image actions";
+
+      .developer-name {
+        align-self: end;
+        font-size: $text-xl;
+        font-weight: $text-bold;
+        text-transform: uppercase;
+      }
+
+      .developer-actions {
+        display: flex;
+        align-items: start;
+      }
+    }
+  }
+
+  .developer-details {
+    display: grid;
+    overflow: hidden;
+
+    .developer-nav-container {
+      background: $dark-1;
+      padding: $padding-xs $padding-xs;
+      padding-right: $padding-xl;
+    }
+  }
+}

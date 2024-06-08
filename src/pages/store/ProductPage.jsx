@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useContext } from "react";
 import { UserContext } from "@/contexts/UserContextProvider";
+import { NavLink } from "react-router-dom";
 import useProduct from "./hooks/useProduct";
 import AspectRatio from "@/components/aspect-ratio/AspectRatio";
 import Shelf from "@/components/shelf/Shelf";
@@ -46,7 +47,12 @@ function ProductPage() {
         >
           <div className="product-header">
             <h1 className="title">{product?.model?.name}</h1>
-            <span className="developer">{developer?.model?.name}</span>
+            <NavLink
+              className="developer"
+              to={`/developer/${developer?.model?.guid}`}
+            >
+              {developer?.model?.name}
+            </NavLink>
             {currentUser ? (
               <ProductActionButton product={product}></ProductActionButton>
             ) : (
@@ -56,7 +62,6 @@ function ProductPage() {
         </div>
       </AspectRatio>
       <section className="description">
-        <img src={pegi} />
         <img src={product?.static?.Icon} alt="Application Icon" />
         <h2>About</h2>
         <span>{product?.model?.description}</span>
@@ -191,6 +196,9 @@ function ProductPage() {
           <li>
             <span className="spec-type">Updated:&nbsp;</span>
             {product?.latestVersion?.createdAt}MHz
+          </li>
+          <li>
+            <img src={pegi} alt="Classification" height="20px" />
           </li>
         </div>
       </section>

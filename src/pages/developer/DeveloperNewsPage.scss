@@ -1,0 +1,17 @@
+@use "@/styles" as *;
+
+.developer-news-page {
+  display: grid;
+  overflow: hidden;
+
+  h1 {
+    margin: $margin-xl;
+    font-size: $text-xxl;
+    font-weight: $text-bold;
+  }
+
+  .news {
+    padding: 0 $padding-xl;
+    overflow-y: auto;
+  }
+}

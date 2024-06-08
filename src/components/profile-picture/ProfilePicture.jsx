@@ -1,12 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
-import { UserContext } from "@/contexts/UserContextProvider";
+import React, { useEffect, useState } from "react";
 import useFileDialog from "@/hooks/useFileDialog";
 import Dialog from "@/components/dialog/Dialog";
 import "./ProfilePicture.scss";
 
 function ProfilePicture({ src, readonly, onSelected }) {
   const [menuOpen, setMenuOpen] = useState();
-  const { currentUser } = useContext(UserContext);
 
   const { openedFiles, showDialog } = useFileDialog([
     {
@@ -23,12 +21,17 @@ function ProfilePicture({ src, readonly, onSelected }) {
 
   return (
     <div className={`profile-picture`}>
-      <div style={{ backgroundImage: `url(${src})` }} className="image" />
+      <div
+        style={{ backgroundImage: `url(${src ?? "/img/user.png"})` }}
+        className="image"
+      />
       {!readonly ? (
         <button
           className="select-btn"
           onClick={() => {
-            if (currentUser?.profileImage) {
+            console.log(src?.length);
+            console.log(src);
+            if (src?.length > 0) {
               setMenuOpen(true);
             } else {
               showDialog();
