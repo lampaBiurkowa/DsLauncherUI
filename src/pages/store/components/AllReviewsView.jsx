@@ -1,31 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./AllReviewsView.scss";
-import Review from "./Review";
-import { useScrolledToBottom } from "@/hooks/useScrolledToEnd";
+import { useScrolledToEnd } from "@/hooks/useScrolledToEnd";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
+import Review from "./Review";
+import "./AllReviewsView.scss";
 
 const api = new DsLauncherApiClient();
 
 function AllReviewsView({ productId }) {
-  const [reviews, setReviews] = useState();
+  const [reviews, setReviews] = useState([]);
 
-  const scrollViewRef = useRef();
-  const scrolledToBottom = useScrolledToBottom(scrollViewRef);
-
-  useEffect(() => {
-    if (scrolledToBottom || reviews == undefined) {
-      (async () => {
-        try {
-          let nextReviews = await api.getReviewsByProduct(
-            productId,
-            reviews?.length ?? 0,
-            10
-          );
-          setReviews([...(reviews ?? []), ...nextReviews]);
-        } catch (error) {}
-      })();
-    }
-  }, [scrolledToBottom]);
+  const scrollViewRef = useScrolledToEnd(async () => {
+    try {
+      let nextReviews = await api.getReviewsByProduct(
+        productId,
+        reviews?.length ?? 0,
+        10
+      );
+      if (nextReviews?.length > 0) {
+        setReviews([...(reviews ?? []), ...nextReviews]);
+      }
+    } catch (error) {}
+  });
 
   return (
     <div className="reviews-container" ref={scrollViewRef}>

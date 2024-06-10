@@ -60,16 +60,16 @@ function DeveloperProfilePage() {
           ></ProfilePicture>
           <span className="developer-name">{developer?.name}</span>
           <div className="developer-actions">
-            subscriptions: {subscriptions}
-            {!isMember ? (
-              <button className="small">
-                Subscribe for {developer?.subscriptionPrice}₽
-              </button>
-            ) : (
-              <></>
-            )}
+            <span>{subscriptions} subscriptions</span>
           </div>
         </div>
+        {!isMember ? (
+          <button className="accent outlined">
+            Subscribe for {developer?.subscriptionPrice}₽
+          </button>
+        ) : (
+          <></>
+        )}
       </section>
       <div className="developer-details">
         <div className="developer-nav-container">

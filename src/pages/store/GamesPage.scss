@@ -1,10 +1,20 @@
 @use "@/styles" as *;
 
 .games-container {
-  padding: $padding-xl;
+  display: grid;
+  overflow: hidden;
 
   h2 {
     font-size: $text-xxl;
     font-weight: $text-bold;
+    margin: $padding-xl;
+  }
+
+  & > ul {
+    display: flex;
+    flex-direction: column;
+    gap: $margin-md;
+    padding: 0 $padding-xl;
+    overflow-y: auto;
   }
 }

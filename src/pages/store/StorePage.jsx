@@ -1,37 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
-import NavBar from "../../components/navbar/Navbar";
-import NavButton from "../../components/navbar/NavButton";
+import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
+import { NavLink } from "react-router-dom";
+import NavBar from "@/components/navbar/Navbar";
+import NavButton from "@/components/navbar/NavButton";
+import Popup from "@/components/popup/Popup";
+import getFilesData from "@/services/getFilesData";
 import "./StorePage.scss";
-import { DsLauncherApiClient } from '../../services/DsLauncherApiClient';
-import getFilesData from '../../services/getFilesData';
 
-function debounce(func, delay) {
-  let timeoutId;
-  return function (...args) {
-    const context = this;
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => func.apply(context, args), delay);
-  };
-}
+const api = new DsLauncherApiClient();
 
 function StorePage() {
-  const api = new DsLauncherApiClient();
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState();
+  const [searchPopupOpen, setSearchPopupOpen] = useState();
+  const inputRef = useRef();
 
-  const debouncedSearch = debounce(async (text) => {
-    if (text?.trim() === '') {
-      setSearchResults([]);
-      return;
-    }
-    const searchedApps = await api.searchProducts(text);
-    setSearchResults(searchedApps);
-  }, 250);
-  
-  const handleSearchChange = (event) => {
-    var text = event.target.value;
-    debouncedSearch(text);
-  };
+  useEffect(() => {
+    const debouncedSearch = debounce(async (e) => {
+      const results = await api.searchProducts(e.target.value);
+
+      if (results?.length > 0) {
+        setSearchResults(results);
+        setSearchPopupOpen(true);
+      }
+    }, 500);
+
+    inputRef.current?.addEventListener("input", debouncedSearch);
+    return () => {
+      inputRef.current?.removeEventListener("input", debouncedSearch);
+    };
+  }, []);
 
   return (
     <div className="store-container">
@@ -42,37 +40,53 @@ function StorePage() {
           </NavButton>
           <NavButton to="/store/games">Games</NavButton>
           <NavButton to="/store/apps">Apps</NavButton>
-          <div className="search-container-wrapper">
-            <div className="search-container">
-              <input
-                navend="true"
-                className="search-input"
-                placeholder="Search"
-                type="search"
-                style={{ alignSelf: "center" }}
-                onChange={handleSearchChange}
-              />
-              {(
-                <div className="search-results-dropdown">
-                  {searchResults.map((result) => (
-                    <div className="search-result-item">
-                      <img
-                        src={getFilesData(result).Icon}
-                        alt={result.name}
-                        className="product-image"
-                      />
-                      <a href={`/store/product/${result.guid}`}>{result.name}</a>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+          <div className="search-container">
+            <input
+              ref={inputRef}
+              placeholder="Search"
+              type="search"
+              onChange={() => setSearchPopupOpen(false)}
+            />
+            <Popup
+              targetRef={inputRef}
+              open={searchPopupOpen}
+              setOpen={setSearchPopupOpen}
+            >
+              <ul
+                className="results-container"
+                onClick={() => {
+                  setSearchPopupOpen(false);
+                }}
+              >
+                {searchResults?.map((result, key) => {
+                  return (
+                    <NavLink
+                      key={key}
+                      className="search-result"
+                      to={`/store/product/${result.guid}`}
+                    >
+                      <img src={getFilesData(result).Icon} alt="App Icon" />
+                      <span>{result.name}</span>
+                    </NavLink>
+                  );
+                })}
+              </ul>
+            </Popup>
           </div>
         </NavBar>
       </div>
       <Outlet />
     </div>
   );
+}
+
+function debounce(func, delay) {
+  let timeoutId;
+  return function (...args) {
+    const context = this;
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(context, args), delay);
+  };
 }
 
 export default StorePage;

@@ -205,7 +205,7 @@ article {
       grid-area: header;
     }
 
-    div {
+    & > div {
       background-color: $dark-2;
       border: 1px solid $dark-3;
       border-radius: $radius-lg;
@@ -228,6 +228,48 @@ article {
 
         .spec-type {
           font-weight: $text-bold;
+        }
+      }
+      .additional-info-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $margin-md;
+        padding: $margin-md;
+
+        & > div {
+          width: 250px;
+          display: grid;
+          grid-template-columns: auto 1fr;
+          grid-template-areas:
+            "icon type"
+            "icon value";
+          gap: $margin-xs $margin-md;
+
+          border: 1px solid $dark-3;
+          border-radius: $radius-sm;
+
+          & > :first-child {
+            display: grid;
+            grid-area: icon;
+            align-content: center;
+            padding: $margin-lg;
+
+            font-size: $text-xxl;
+            background-color: $dark-3;
+          }
+
+          .info-type {
+            grid-area: type;
+            align-self: end;
+            font-size: $text-sm;
+            font-weight: $text-medium;
+          }
+
+          .info-value {
+            grid-area: value;
+            font-size: $text-xs;
+            color: $text-alt;
+          }
         }
       }
     }

@@ -97,8 +97,19 @@ export class DsLauncherApiClient {
   }
 
   //Game
+  async getGames(skip = 0, take = 1000) {
+    const url = `${this.baseUrl}/Game?skip=${skip}&take=${take}`;
+    return this.request(url);
+  }
+
   async getGameById(id) {
     const url = `${this.baseUrl}/Game/${id}`;
+    return this.request(url);
+  }
+
+  //App
+  async getApps(skip = 0, take = 1000) {
+    const url = `${this.baseUrl}/App?skip=${skip}&take=${take}`;
     return this.request(url);
   }
 

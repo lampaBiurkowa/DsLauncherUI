@@ -45,6 +45,7 @@
       background-repeat: no-repeat;
       background-size: 96px;
       filter: blur(64px);
+      scale: 2;
 
       opacity: 0;
       transition: 0.5s opacity ease;
@@ -98,7 +99,7 @@
     .platforms {
       align-self: end;
       justify-self: end;
-      font-size: $text-regular;
+      font-size: $text-sm;
       color: $text-inactive;
 
       i {

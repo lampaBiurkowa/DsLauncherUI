@@ -1,0 +1,132 @@
+@use "@/styles" as *;
+
+.detailed-store-entry {
+  display: flex;
+
+  background: $dark-1;
+  border: 1px solid $dark-3;
+  border-radius: $radius-sm;
+  contain: paint;
+
+  color: $text;
+  text-decoration: none;
+
+  &:hover {
+    & .icon-container .icon-shadow {
+      opacity: 0.5;
+    }
+  }
+
+  .icon-container {
+    margin: $margin-xl;
+    display: grid;
+    width: 96px;
+    height: 96px;
+
+    .icon-shadow {
+      grid-area: 1/1;
+      width: 96px;
+      height: 96px;
+
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 96px;
+      filter: blur(64px);
+      scale: 10;
+      z-index: -1;
+
+      opacity: 0;
+      transition: 0.5s opacity ease;
+    }
+
+    .icon {
+      grid-area: 1/1;
+      width: 96px;
+      height: 96px;
+      border-radius: $radius-sm;
+    }
+  }
+
+  .app-info {
+    padding: $padding-xl;
+    flex-grow: 1;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: $margin-sm;
+
+    background-color: rgba(18, 18, 18, 0.2);
+
+    .header {
+      display: grid;
+      align-items: center;
+      gap: $margin-md;
+      grid-template-columns: auto auto 1fr auto;
+
+      .app-name {
+        font-size: $text-lg;
+        font-weight: $text-bold;
+        grid-column: 1;
+      }
+
+      .app-rating {
+        padding: $padding-xs;
+        grid-column: 2;
+
+        display: flex;
+        align-items: baseline;
+        gap: $padding-xs;
+
+        font-size: $text-sm;
+        color: $text-inactive;
+        background: $dark-3;
+        border-radius: $radius-sm;
+      }
+
+      .platforms {
+        grid-column: 4;
+        font-size: $text-sm;
+        color: $text-inactive;
+
+        i {
+          padding: $padding-xs;
+          background: $dark-3;
+
+          &:first-child {
+            border-top-left-radius: $radius-sm;
+            border-bottom-left-radius: $radius-sm;
+          }
+
+          &:last-child {
+            border-top-right-radius: $radius-sm;
+            border-bottom-right-radius: $radius-sm;
+          }
+        }
+      }
+    }
+
+    .content {
+      overflow: hidden;
+      max-height: 2em;
+
+      span {
+        font-size: $text-sm;
+        color: $text-alt;
+      }
+    }
+
+    .footer {
+      display: flex;
+      gap: $margin-sm;
+
+      .tag {
+        display: block;
+        padding: $padding-xs;
+
+        font-size: $text-xs;
+        border-radius: $radius-sm;
+        background-color: $dark-3;
+        pointer-events: auto;
+      }
+    }
+  }
+}

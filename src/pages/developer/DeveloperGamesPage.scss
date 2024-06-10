@@ -12,7 +12,7 @@
 
   .products {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: $margin-md;
 
     padding: 0 $padding-xl;

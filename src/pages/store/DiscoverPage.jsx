@@ -52,7 +52,7 @@ function DiscoverPage() {
                         : ""
                     }
                     ${
-                      child?.latestVersion?.maxExePath?.trim().length > 0
+                      child?.latestVersion?.macExePath?.trim().length > 0
                         ? "macos"
                         : ""
                     }`}

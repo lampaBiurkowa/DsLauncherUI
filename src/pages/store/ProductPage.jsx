@@ -169,7 +169,7 @@ function ProductPage() {
       <section className="details">
         <h2>Details</h2>
 
-        <div class="specs-box">
+        <div>
           <h3>System Requirements</h3>
           <ul>
             <li>
@@ -187,19 +187,41 @@ function ProductPage() {
           </ul>
         </div>
 
-        <div className="additional-info-box">
+        <div>
           <h3>Additional information</h3>
-          <li>
-            <span className="spec-type">Version:&nbsp;</span>
-            {product?.latestVersion?.version}MB
-          </li>
-          <li>
-            <span className="spec-type">Updated:&nbsp;</span>
-            {product?.latestVersion?.createdAt}MHz
-          </li>
-          <li>
-            <img src={pegi} alt="Classification" height="20px" />
-          </li>
+          <div className="additional-info-container">
+            <div>
+              <i class="las la-box"></i>
+              <span className="info-type">Version</span>
+              <span className="info-value">
+                {product?.latestVersion?.version}
+              </span>
+            </div>
+            <div>
+              <i class="las la-calendar"></i>
+              <span className="info-type">Last updated</span>
+              <span className="info-value">
+                {new Date(
+                  product?.latestVersion?.createdAt
+                ).toLocaleDateString()}
+              </span>
+            </div>
+            <div>
+              <div>
+                <img
+                  src={pegi}
+                  alt="Classification"
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    objectFit: "contain",
+                  }}
+                />
+              </div>
+              <span className="info-type">Age classification</span>
+              <span className="info-value">PEGI 😐</span>
+            </div>
+          </div>
         </div>
       </section>
     </article>

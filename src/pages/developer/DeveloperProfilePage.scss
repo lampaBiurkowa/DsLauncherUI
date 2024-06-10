@@ -15,6 +15,7 @@
   .developer-summary {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     padding: $padding-xl;
     background-color: $dark-1;
@@ -40,7 +41,16 @@
       .developer-actions {
         display: flex;
         align-items: start;
+
+        & > span {
+          font-size: $text-sm;
+          color: $text-alt;
+        }
       }
+    }
+
+    & > button {
+      margin-right: $margin-xl;
     }
   }
 

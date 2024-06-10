@@ -1,7 +1,7 @@
 import React from "react";
 import { useDeveloperProducts } from "./hooks/useDeveloperProducts";
 import { useParams } from "react-router-dom";
-import StoreEntry from "../store/components/StoreEntry";
+import DetailedStoreEntry from "../store/components/DetailedStoreEntry";
 import "./DeveloperGamesPage.scss";
 
 function DeveloperGamesPage() {
@@ -23,28 +23,18 @@ function DeveloperGamesPage() {
         )}
         {products?.map((product, index) => {
           return (
-            <StoreEntry
+            <DetailedStoreEntry
               key={index}
               id={product?.model.guid}
               name={product?.model.name}
               icon={product?.static?.Icon}
               rating={product?.rates?.avg}
-              platform={`${
-                product?.latestVersion?.linuxExePath?.trim().length > 0
-                  ? "linux"
-                  : ""
-              }
-            ${
-              product?.latestVersion?.windowsExePath?.trim().length > 0
-                ? "win"
-                : ""
-            }
-            ${
-              product?.latestVersion?.maxExePath?.trim().length > 0
-                ? "macos"
-                : ""
-            }`}
-            ></StoreEntry>
+              description={product?.model.description}
+              tags={product?.model.tags}
+              platform={`${product?.latestVersion?.linuxExePath ? "linux" : ""} 
+                         ${product?.latestVersion?.windowsExePath ? "win" : ""} 
+                         ${product?.latestVersion?.macExePath ? "macos" : ""}`}
+            ></DetailedStoreEntry>
           );
         })}
       </div>

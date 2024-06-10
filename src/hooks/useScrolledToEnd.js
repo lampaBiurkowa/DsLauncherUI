@@ -1,21 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export function useScrolledToBottom(ref, threshold = 10) {
-  const [scrolledToBottom, setScrolledToBottom] = useState();
+export function useScrolledToEnd(callback, threshold = 10) {
+  const [scrolledToEnd, setScrolledToEnd] = useState();
+  const elementRef = useRef();
 
   useEffect(() => {
     function onScrolled(event) {
-      setScrolledToBottom(
-        ref.current.offsetHeight + ref.current.scrollTop >=
-          ref.current.scrollHeight - threshold
+      setScrolledToEnd(
+        elementRef.current.offsetHeight + elementRef.current.scrollTop >=
+          elementRef.current.scrollHeight - threshold
       );
     }
 
-    ref.current?.addEventListener("scroll", onScrolled);
+    if (elementRef.current.scrollHeight <= elementRef.current.offsetHeight) {
+      callback?.();
+    }
+
+    elementRef.current?.addEventListener("scroll", onScrolled);
     return () => {
-      ref.current?.removeEventListener("scroll", onScrolled);
+      elementRef.current?.removeEventListener("scroll", onScrolled);
     };
   }, []);
 
-  return scrolledToBottom;
+  useEffect(() => {
+    if (scrolledToEnd) {
+      callback?.();
+    }
+  }, [scrolledToEnd]);
+
+  return elementRef;
 }
