@@ -8,7 +8,7 @@ export class DsLauncherApiClient {
     this.baseUrl = API_BASE_URL;
   }
 
-  async request(url, options = {}, isText = false) {
+  async request(url, options = {}) {
     options.headers = options.headers || {};
     options.headers[
       "Authorization"
@@ -19,9 +19,17 @@ export class DsLauncherApiClient {
       throw new Error(`HTTP error! status: ${response.status}, ${error}`);
     }
 
-    if (isText) return response.text();
+    const contentType = response.headers.get('content-type');
+    if (!contentType) {
+        return null;
+    }
 
-    return response.json();
+    if (contentType.includes('application/json')) {
+      return response.json();
+    }
+    else {
+      return response.text();
+    }
   }
 
   //Product
@@ -230,7 +238,7 @@ export class DsLauncherApiClient {
       method: "POST",
       body: formData,
     };
-    return this.request(url, options, true);
+    return this.request(url, options);
   }
 
   async hasUserSubscribed(developerGuid) {

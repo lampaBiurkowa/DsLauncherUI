@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useScrolledToEnd } from "@/hooks/useScrolledToEnd";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import DetailedStoreEntry from "./components/DetailedStoreEntry";
-import getFilesData from "@/services/getFilesData";
 import "./GamesPage.scss";
+import { ProductsCache } from "@/services/CacheService";
 
 const api = new DsLauncherApiClient();
 
@@ -11,15 +11,12 @@ function GamesPage() {
   const [games, setGames] = useState([]);
 
   const scrollViewRef = useScrolledToEnd(async () => {
-    setGames([
-      ...games,
-      ...(await api.getGames(games.length, 10))?.map((game) => {
-        return {
-          model: game,
-          static: getFilesData(game),
-        };
-      }),
-    ]);
+    const newGames = await api.getGames(games.length, 10);
+    const updatedGames = await Promise.all(newGames.map(async (game) => {
+      console.log(await ProductsCache.getById(game.guid));
+      return await ProductsCache.getById(game.guid);
+    }));
+    setGames([...games, ...updatedGames]);
   });
 
   return (
@@ -27,15 +24,16 @@ function GamesPage() {
       <h2>Games</h2>
       <ul ref={scrollViewRef}>
         {games?.map((game, index) => {
+          console.log('zzz', game);
           return (
             <DetailedStoreEntry
               key={index}
-              id={game?.model.guid}
-              name={game?.model.name}
+              id={game?.model?.guid}
+              name={game?.model?.name}
               icon={game?.static?.Icon}
               rating={game?.rates?.avg}
-              description={game?.model.description}
-              tags={game?.model.tags}
+              description={game?.model?.description}
+              tags={game?.model?.tags}
               platform={`${game?.latestVersion?.linuxExePath ? "linux" : ""} 
                          ${game?.latestVersion?.windowsExePath ? "win" : ""} 
                          ${game?.latestVersion?.macExePath ? "macos" : ""}`}
