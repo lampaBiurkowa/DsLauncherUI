@@ -104,7 +104,7 @@ export class DsLauncherApiClient {
   }
 
   async purchaseDeveloperAccount(developer) {
-    const url = `${this.baseUrl}/Purchase/developer-access`;
+    const url = `${this.baseUrl}/Purchase/developer-access/new`;
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -113,8 +113,8 @@ export class DsLauncherApiClient {
     return this.request(url, options);
   }
 
-  async joinDeveloperAccount(developerGuid, developerKey) {
-    const url = `${this.baseUrl}/Purchase/developer-access/${developerGuid}?developerKey=${developerKey}`;
+  async joinDeveloperAccount(developerKey) {
+    const url = `${this.baseUrl}/Purchase/developer-access?developerKey=${developerKey}`;
     const options = {
       method: "POST",
     };

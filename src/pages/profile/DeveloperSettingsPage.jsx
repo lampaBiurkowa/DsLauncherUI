@@ -52,7 +52,7 @@ function DeveloperSettingsPage() {
     e.preventDefault();
 
     try {
-      await api.joinDeveloperAccount(":D\\", developerKeyRef.current?.value);
+      await api.joinDeveloperAccount(developerKeyRef.current?.value);
       setJoinErrorVisible(false);
     } catch (error) {
       setJoinErrorVisible(true);
