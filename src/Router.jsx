@@ -36,6 +36,7 @@ import GeneralSettingsPage from "@/pages/settings/GeneralSettingsPage";
 import DeveloperProfilePage from "@/pages/developer/DeveloperProfilePage";
 import DeveloperNewsPage from "@/pages/developer/DeveloperNewsPage";
 import DeveloperGamesPage from "@/pages/developer/DeveloperGamesPage";
+import DeveloperSettingsPage from "./pages/profile/DeveloperSettingsPage";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,22 @@ const router = createBrowserRouter([
             element: (
               <Guard>
                 <ProfileDetailsPage />
+              </Guard>
+            ),
+          },
+          {
+            path: "/profile/payments",
+            element: (
+              <Guard>
+                <></>
+              </Guard>
+            ),
+          },
+          {
+            path: "/profile/developer",
+            element: (
+              <Guard>
+                <DeveloperSettingsPage></DeveloperSettingsPage>
               </Guard>
             ),
           },

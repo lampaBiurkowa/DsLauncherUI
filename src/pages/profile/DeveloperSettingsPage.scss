@@ -1,0 +1,81 @@
+@use "@/styles" as *;
+
+.developer-settings-page {
+  display: flex;
+  flex-direction: column;
+  gap: $margin-xl;
+
+  padding: $padding-xl 5%;
+  height: calc(100% - 2 * $padding-xl);
+
+  overflow-y: auto;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: $margin-sm;
+
+    h2 {
+      font-size: $text-lg;
+      font-weight: $text-medium;
+      margin-bottom: $margin-sm;
+    }
+
+    form {
+      display: flex;
+      gap: $margin-sm;
+    }
+  }
+
+  .create-developer {
+    display: flex;
+    flex-direction: column;
+    min-width: 500px;
+
+    & > span {
+      font-size: $text-sm;
+      font-weight: $text-medium;
+    }
+
+    & > input[type="text"] {
+      padding: $padding-sm;
+    }
+
+    & > textarea {
+      width: 100% !important;
+      height: 150px;
+      resize: vertical;
+    }
+
+    & > div:last-child {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: $margin-sm;
+    }
+  }
+
+  .developer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: $padding-md $padding-xl;
+
+    background-color: $dark-1;
+    border: 1px solid $dark-2;
+    border-radius: $radius-lg;
+    font-weight: $text-medium;
+
+    div:first-child {
+      display: flex;
+      align-items: center;
+      gap: $margin-md;
+
+      img {
+        width: 48px;
+        height: 48px;
+        border-radius: $radius-sm;
+      }
+    }
+  }
+}

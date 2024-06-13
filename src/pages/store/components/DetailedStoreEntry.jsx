@@ -38,7 +38,7 @@ function DetailedStoreEntry({
           <span>{description}</span>
         </div>
         <div className="footer">
-          {tags?.split("b")?.map((tag, key) => {
+          {tags?.split(",")?.map((tag, key) => {
             return (
               <span className="tag" key={key}>
                 {tag}

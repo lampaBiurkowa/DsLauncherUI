@@ -170,24 +170,6 @@ function ProductPage() {
         <h2>Details</h2>
 
         <div>
-          <h3>System Requirements</h3>
-          <ul>
-            <li>
-              <span className="spec-type">RAM:&nbsp;</span>
-              {product?.latestVersion?.minRamMib}MB
-            </li>
-            <li>
-              <span className="spec-type">Disk space:&nbsp;</span>
-              {product?.latestVersion?.minDiskMib}MB
-            </li>
-            <li>
-              <span className="spec-type">CPU:&nbsp;</span>
-              {product?.latestVersion?.minCpu}MHz
-            </li>
-          </ul>
-        </div>
-
-        <div>
           <h3>Additional information</h3>
           <div className="additional-info-container">
             <div>
@@ -222,6 +204,24 @@ function ProductPage() {
               <span className="info-value">PEGI 😐</span>
             </div>
           </div>
+        </div>
+
+        <div>
+          <h3>System Requirements</h3>
+          <ul>
+            <li>
+              <span className="spec-type">RAM:&nbsp;</span>
+              {product?.latestVersion?.minRamMib}MB
+            </li>
+            <li>
+              <span className="spec-type">Disk space:&nbsp;</span>
+              {product?.latestVersion?.minDiskMib}MB
+            </li>
+            <li>
+              <span className="spec-type">CPU:&nbsp;</span>
+              {product?.latestVersion?.minCpu}
+            </li>
+          </ul>
         </div>
       </section>
     </article>

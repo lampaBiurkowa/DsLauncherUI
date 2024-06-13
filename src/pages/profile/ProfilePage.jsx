@@ -63,7 +63,7 @@ function ProfilePage() {
             </button>
           </div>
         </div>
-        <NavLink className="profile-currency" to="/profile/payment">
+        <NavLink className="profile-currency" to="/profile/payments">
           <i class="las la-ruble-sign"></i>
           <span className="currency-name">Ruble</span>
           <span className="currency-amount">{`$${money}`}</span>
@@ -75,7 +75,8 @@ function ProfilePage() {
             <NavButton to="/profile" end>
               Details
             </NavButton>
-            <NavButton to="/profile/payment">Payment</NavButton>
+            <NavButton to="/profile/payments">Payments</NavButton>
+            <NavButton to="/profile/developer">Developer</NavButton>
           </Navbar>
         </div>
         <Outlet />

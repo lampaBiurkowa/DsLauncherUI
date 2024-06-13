@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./InfoBar.scss";
 
 export const InfoBarType = Object.freeze({
@@ -14,10 +14,18 @@ function InfoBar({
   text,
   dismissable,
   children,
+  open = true,
+  setOpen,
 }) {
-  const [open, setOpen] = useState(true);
+  const [openInternal, setOpenInternal] = useState(open);
 
-  if (!open) return <></>;
+  useEffect(() => {
+    if (open) {
+      setOpenInternal(true);
+    }
+  }, [open]);
+
+  if (!open || !openInternal) return <></>;
   return (
     <div className={`info-bar ${type}`}>
       {(() => {
@@ -36,7 +44,13 @@ function InfoBar({
       <span className="text">{text}</span>
       <div className="content">{children}</div>
       {dismissable ? (
-        <button className="capsule dismiss" onClick={() => setOpen(false)}>
+        <button
+          className="capsule dismiss"
+          onClick={() => {
+            setOpen?.(false);
+            setOpenInternal(false);
+          }}
+        >
           <i class="las la-times"></i>
         </button>
       ) : (

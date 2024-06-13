@@ -1,6 +1,7 @@
 import React from "react";
 import { useDeveloperProducts } from "./hooks/useDeveloperProducts";
 import { useParams } from "react-router-dom";
+import InfoBar from "@/components/info-bar/InfoBar";
 import DetailedStoreEntry from "../store/components/DetailedStoreEntry";
 import "./DeveloperGamesPage.scss";
 

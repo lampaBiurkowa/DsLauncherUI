@@ -19,15 +19,14 @@ export class DsLauncherApiClient {
       throw new Error(`HTTP error! status: ${response.status}, ${error}`);
     }
 
-    const contentType = response.headers.get('content-type');
+    const contentType = response.headers.get("content-type");
     if (!contentType) {
-        return null;
+      return null;
     }
 
-    if (contentType.includes('application/json')) {
+    if (contentType.includes("application/json")) {
       return response.json();
-    }
-    else {
+    } else {
       return response.text();
     }
   }
@@ -98,6 +97,24 @@ export class DsLauncherApiClient {
 
   async purchaseProduct(guid) {
     const url = `${this.baseUrl}/Purchase/Product/${guid}`;
+    const options = {
+      method: "POST",
+    };
+    return this.request(url, options);
+  }
+
+  async purchaseDeveloperAccount(developer) {
+    const url = `${this.baseUrl}/Purchase/developer-access`;
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(developer),
+    };
+    return this.request(url, options);
+  }
+
+  async joinDeveloperAccount(developerGuid, developerKey) {
+    const url = `${this.baseUrl}/Purchase/developer-access/${developerGuid}?developerKey=${developerKey}`;
     const options = {
       method: "POST",
     };
@@ -250,6 +267,7 @@ export class DsLauncherApiClient {
     const url = `${this.baseUrl}/Developer/${developerGuid}/subscriptions`;
     return this.request(url);
   }
+
   //Review
   async getReviews(skip = 0, take = 1000) {
     const url = `${this.baseUrl}/Review?skip=${skip}&take=${take}`;

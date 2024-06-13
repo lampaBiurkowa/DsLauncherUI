@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import "./ProfileDetailsPage.scss";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { DsCoreApiClient } from "../../services/DsCoreApiClient";
+import { LocalStorageHandler } from "@/services/LocalStorageService";
 import SettingsEntry from "@/components/settings-entry/SettingsEntry";
 import CredentialsEditor from "./components/CredentialsEditor";
-import { LocalStorageHandler } from "@/services/LocalStorageService";
+import "./ProfileDetailsPage.scss";
 
 const api = new DsCoreApiClient();
 
@@ -148,7 +148,10 @@ function ProfileDetailsPage() {
           name="Delete account"
           desc="Click request account deletion to start the process of permanently deleting your Dibrysoft Account including all personal information and purchases."
         >
-          <button style={{ background: "red", textTransform: "uppercase" }} onClick={() => deleteAccount(currentUser)}>
+          <button
+            style={{ background: "red", textTransform: "uppercase" }}
+            onClick={() => deleteAccount(currentUser)}
+          >
             Request account deletion
           </button>
         </SettingsEntry>
