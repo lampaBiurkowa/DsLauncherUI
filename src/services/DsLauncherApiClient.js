@@ -121,6 +121,11 @@ export class DsLauncherApiClient {
     return this.request(url, options);
   }
 
+  async getDeveloperAccountPrice() {
+    const url = `${this.baseUrl}/Purchase/developer-access/price`;
+    return this.request(url);
+  }
+
   //Game
   async getGames(skip = 0, take = 1000) {
     const url = `${this.baseUrl}/Game?skip=${skip}&take=${take}`;

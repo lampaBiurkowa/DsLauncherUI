@@ -7,7 +7,7 @@ import SettingsEntry from "@/components/settings-entry/SettingsEntry";
 import "./DeveloperSettingsPage.scss";
 import Dialog from "@/components/dialog/Dialog";
 import InfoBar, { InfoBarType } from "@/components/info-bar/InfoBar";
-import { subscribe } from "superagent";
+import useDeveloperAccessPrice from "./hooks/useDeveloperAccessPrice";
 
 const api = new DsLauncherApiClient();
 
@@ -18,6 +18,8 @@ function DeveloperSettingsPage() {
   const [createDevDialogOpen, setCreateDevDialogOpen] = useState();
   const [creationErrorVisible, setCreationErrorVisible] = useState(false);
   const [joinErrorVisible, setJoinErrorVisible] = useState(false);
+
+  const developerAccessPrice = useDeveloperAccessPrice();
 
   const developerNameRef = useRef();
   const developerDescRef = useRef();
@@ -64,7 +66,7 @@ function DeveloperSettingsPage() {
       <section>
         <h2>Become a developer</h2>
         <SettingsEntry
-          name="Create developer account"
+          name={`Create developer account (${developerAccessPrice})`}
           desc="Create your own developer account"
         >
           <button
@@ -108,7 +110,7 @@ function DeveloperSettingsPage() {
           </Dialog>
         </SettingsEntry>
         <SettingsEntry
-          name="Join developer"
+          name={`Join developer (${developerAccessPrice})`}
           desc="Join an existing developer account"
         >
           <form onSubmit={joinDeveloper}>
