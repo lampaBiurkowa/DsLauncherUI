@@ -11,10 +11,9 @@ function GamesPage() {
   const [games, setGames] = useState([]);
 
   const scrollViewRef = useScrolledToEnd(async () => {
-    const newGames = await api.getGames(games.length, 10);
-    const updatedGames = await Promise.all(newGames.map(async (game) => {
-      console.log(await ProductsCache.getById(game.guid));
-      return await ProductsCache.getById(game.guid);
+    const newGames = await api.getGamesIds(games.length, 10);
+    const updatedGames = await Promise.all(newGames.map(async (guid) => {
+      return await ProductsCache.getById(guid);
     }));
     setGames([...games, ...updatedGames]);
   });

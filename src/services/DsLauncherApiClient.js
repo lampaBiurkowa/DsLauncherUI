@@ -137,12 +137,21 @@ export class DsLauncherApiClient {
     return this.request(url);
   }
 
+  async getGamesIds(skip = 0, take = 1000) {
+    const url = `${this.baseUrl}/Game/ids?skip=${skip}&take=${take}`;
+    return this.request(url);
+  }
+
   //App
   async getApps(skip = 0, take = 1000) {
     const url = `${this.baseUrl}/App?skip=${skip}&take=${take}`;
     return this.request(url);
   }
 
+  async getAppsIds(skip = 0, take = 1000) {
+    const url = `${this.baseUrl}/App/ids?skip=${skip}&take=${take}`;
+    return this.request(url);
+  }
   //News
   async getNews(skip = 0, take = 1000) {
     const url = `${this.baseUrl}/News?skip=${skip}&take=${take}`;
