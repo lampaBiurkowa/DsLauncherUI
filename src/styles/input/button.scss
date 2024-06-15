@@ -67,6 +67,11 @@ button.accent {
 
 .button.menuitem,
 button.menuitem {
+  width: 100%;
+  display: flex;
+  gap: $margin-sm;
+  justify-content: flex-start;
+
   background-color: transparent;
   border-radius: $radius-none;
 

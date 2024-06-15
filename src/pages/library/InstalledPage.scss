@@ -18,19 +18,4 @@
     gap: $margin-sm;
     margin-top: $margin-xl;
   }
-
-  .dropdown-content {
-    display: flex;
-    flex-direction: column;
-    min-width: 175px;
-
-    button {
-      width: 100%;
-      justify-content: start;
-
-      i {
-        margin-right: $margin-sm;
-      }
-    }
-  }
 }

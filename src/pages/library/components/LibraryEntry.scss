@@ -30,10 +30,8 @@
     display: flex;
     gap: $margin-sm;
 
-    .menu {
-      top: calc(100% + $margin-sm);
-      right: 0;
-      white-space: nowrap;
+    .dropdown-button {
+      padding: $padding-md;
     }
   }
 }

@@ -10,7 +10,9 @@
     top: 100%;
 
     height: auto;
+    width: max-content;
     min-width: 100%;
+    overflow: hidden;
 
     background-color: $dark-2;
     border: 1px solid $dark-3;

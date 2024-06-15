@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import useClickOutside from "./hooks/useClickOutside";
 import "./Popup.scss";
 
-function Popup({ open, setOpen, targetRef, children }) {
+export const PopupAlignment = Object.freeze({
+  Left: "left",
+  Right: "right",
+});
+
+function Popup({ open, setOpen, targetRef, alignment, children }) {
   const [dimensions, setDimensions] = useState({});
-  const clickOutsideRef = useClickOutside(() => {
+  const popupRef = useClickOutside(() => {
     setOpen(false);
   });
 
@@ -30,7 +35,14 @@ function Popup({ open, setOpen, targetRef, children }) {
       }}
     >
       {open ? (
-        <div className="popup" ref={clickOutsideRef}>
+        <div
+          className="popup"
+          ref={popupRef}
+          style={{
+            left: alignment == PopupAlignment.Left ? "0" : "unset",
+            right: alignment == PopupAlignment.Right ? "0" : "unset",
+          }}
+        >
           {children}
         </div>
       ) : (

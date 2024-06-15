@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import LibraryEntry from "./components/library-entry/LibraryEntry";
+import LibraryEntry from "./components/LibraryEntry";
 import Dropdown from "@/components/dropdown/Dropdown";
 
 import "./UpdatesPage.scss";
@@ -22,7 +22,6 @@ function UpdatesPage() {
         // TODO APPNAMES SHOULD BE APPIDS
         // var product = ProductsCache.getAll().find((x) => x.name == appNames[i]);
         // if (product === null) return;
-
         // let icon = (await getFilesData(product.data.name)).Icon;
         // let desc = (await runStatus(product.data.name, currentUser.login))
         //   .VersionDescription;
