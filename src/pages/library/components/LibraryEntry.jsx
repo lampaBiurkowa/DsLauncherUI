@@ -25,7 +25,7 @@ function LibraryEntry({ product, isInstalled, hasUpdate, secondary = "" }) {
             <button
               className="accent"
               onClick={() => {
-                service.execute(product?.model?.guid, "notepad");
+                service.execute(product?.model?.guid);
               }}
             >
               Run

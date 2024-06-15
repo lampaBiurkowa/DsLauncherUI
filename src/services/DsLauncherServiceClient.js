@@ -27,12 +27,11 @@ export class DsLauncherServiceClient {
         executeCommand("get-downloads");
     }
 
-    execute(productGuid, exePath) {
+    execute(productGuid) {
         executeCommand(
             "execute",
             {
                 productGuid: productGuid,
-                exePath: exePath
             }
         );
     }
