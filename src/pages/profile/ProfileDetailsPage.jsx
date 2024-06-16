@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../contexts/UserContextProvider";
 import { DsCoreApiClient } from "../../services/DsCoreApiClient";
 import { LocalStorageHandler } from "@/services/LocalStorageService";
 import SettingsEntry from "@/components/settings-entry/SettingsEntry";
 import CredentialsEditor from "./components/CredentialsEditor";
 import "./ProfileDetailsPage.scss";
+import InfoBar, { InfoBarType } from "@/components/info-bar/InfoBar";
 
 const api = new DsCoreApiClient();
 
@@ -16,6 +17,11 @@ function ProfileDetailsPage() {
   const [firstName, setFirstName] = useState(currentUser.name);
   const [lastName, setLastName] = useState(currentUser.surname);
 
+  const oldPassRef = useRef();
+  const newPass1Ref = useRef();
+  const newPass2Ref = useRef();
+  const [passwordError, setPasswordError] = useState();
+
   async function deleteAccount(currentUser) {
     await api.deleteUser(currentUser.guid);
     logout();
@@ -26,6 +32,27 @@ function ProfileDetailsPage() {
     LocalStorageHandler.setUser("");
     setCurrentUser(undefined);
     navigate("/home", { replace: true });
+  }
+
+  async function handlePasswordChange() {
+    const oldPass = oldPassRef.current.value;
+    const newPass1 = newPass1Ref.current.value;
+    const newPass2 = newPass2Ref.current.value;
+
+    const validationResult = validatePassword(newPass1);
+    if (validationResult) {
+      setPasswordError(validationResult);
+      return;
+    }
+    if (newPass1 !== newPass2) {
+      return;
+    }
+
+    try {
+      await api.changePassword(currentUser.guid, btoa(oldPass), btoa(newPass1));
+    } catch (error) {
+      setPasswordError(error.message);
+    }
   }
 
   useEffect(() => {
@@ -103,6 +130,7 @@ function ProfileDetailsPage() {
                 name="current-password"
                 id="current-password"
                 placeholder="Current password"
+                ref={oldPassRef}
               ></input>
             </div>
             <div></div>
@@ -116,6 +144,7 @@ function ProfileDetailsPage() {
                 name="new-password-1"
                 id="new-password-1"
                 placeholder="New password"
+                ref={newPass1Ref}
               ></input>
             </div>
             <div>
@@ -127,9 +156,18 @@ function ProfileDetailsPage() {
                 name="new-password-2"
                 id="new-password-2"
                 placeholder="Retype new password"
+                ref={newPass2Ref}
               ></input>
             </div>
-            <button className="accent">Save changes</button>
+            <InfoBar
+              type={InfoBarType.Error}
+              header="Error"
+              text={passwordError}
+              open={passwordError?.length > 0}
+            ></InfoBar>
+            <button className="accent" onClick={() => handlePasswordChange()}>
+              Save changes
+            </button>
           </div>
           <div className="password-tip">
             <h3>Password requirements</h3>
@@ -196,6 +234,12 @@ function validateName(name) {
 
   if (name.match(/\d/) !== null) {
     return "Numbers are not allowed";
+  }
+}
+
+function validatePassword(password) {
+  if (password.length == 0) {
+    return "Too short";
   }
 }
 
