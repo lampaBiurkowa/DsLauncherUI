@@ -35,3 +35,30 @@
     }
   }
 }
+.message-box {
+  display: grid;
+  grid-template-areas:
+    "icon text"
+    "actions actions";
+  gap: $margin-md;
+  align-items: center;
+
+  & > i {
+    font-size: 3em;
+    grid-area: icon;
+  }
+
+  & > span {
+    grid-area: text;
+  }
+
+  & > .actions {
+    grid-area: actions;
+    display: flex;
+    gap: $margin-md;
+
+    & > * {
+      flex: 1;
+    }
+  }
+}

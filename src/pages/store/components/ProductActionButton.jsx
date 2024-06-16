@@ -58,6 +58,7 @@ function ProductActionButton({ product }) {
           onCancelled={() => setDialogOpen(false)}
           onConfirmed={(lib) => {
             service.install(product?.model.guid, lib.Path);
+            setDialogOpen(false);
           }}
         ></Installer>
       </Dialog>

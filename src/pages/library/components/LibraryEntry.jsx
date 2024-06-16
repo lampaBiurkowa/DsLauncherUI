@@ -9,7 +9,9 @@ import "./LibraryEntry.scss";
 const service = new DsLauncherServiceClient();
 
 function LibraryEntry({ product, isInstalled, hasUpdate, secondary = "" }) {
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [installDialogOpen, setInstallDialogOpen] = useState(false);
+  const [uninstallDialogOpen, setUninstallDialogOpen] = useState(false);
+
   const [popupOpen, setPopupOpen] = useState(false);
   const popupRef = useRef();
 
@@ -34,7 +36,7 @@ function LibraryEntry({ product, isInstalled, hasUpdate, secondary = "" }) {
             <button
               className="accent"
               onClick={() => {
-                setDialogOpen(true);
+                setInstallDialogOpen(true);
               }}
             >
               Install
@@ -62,7 +64,12 @@ function LibraryEntry({ product, isInstalled, hasUpdate, secondary = "" }) {
                 <span>Store page</span>
               </NavLink>
               {isInstalled ? (
-                <button className="small menuitem">
+                <button
+                  className="small menuitem"
+                  onClick={() => {
+                    setUninstallDialogOpen(true);
+                  }}
+                >
                   <i className="las la-trash" />
                   <span>Uninstall</span>
                 </button>
@@ -75,17 +82,45 @@ function LibraryEntry({ product, isInstalled, hasUpdate, secondary = "" }) {
       </div>
 
       <Dialog
-        open={dialogOpen}
-        onClosed={() => setDialogOpen(false)}
+        open={installDialogOpen}
+        onClosed={() => setInstallDialogOpen(false)}
         header={`Install - ${product?.model?.name}`}
       >
         <Installer
-          onCancelled={() => setDialogOpen(false)}
+          onCancelled={() => setInstallDialogOpen(false)}
           onConfirmed={(lib) => {
-            //MKZLIWE ZE TO NI DZIALA :D/
             service.install(product?.model?.guid, lib.Path);
+            setInstallDialogOpen(false);
           }}
         ></Installer>
+      </Dialog>
+      <Dialog
+        open={uninstallDialogOpen}
+        onClosed={() => setUninstallDialogOpen(false)}
+        header={`Uninstall - ${product?.model?.name}`}
+      >
+        <div className="message-box">
+          <i className="las la-exclamation-triangle" />
+          <span>Are you sure you want to uninstall this application?</span>
+          <div className="actions">
+            <button
+              onClick={() => {
+                setUninstallDialogOpen(false);
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              className="accent"
+              onClick={() => {
+                service.uninstall(product?.model?.guid);
+                setUninstallDialogOpen(false);
+              }}
+            >
+              Uninstall
+            </button>
+          </div>
+        </div>
       </Dialog>
     </>
   );
