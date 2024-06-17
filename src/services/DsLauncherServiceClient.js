@@ -24,7 +24,15 @@ export class DsLauncherServiceClient {
     }
 
     getInstallOperations() {
-        executeCommand("get-downloads");
+        executeCommand(
+            "get-downloads",
+            {
+            },
+            {
+                workerRepetitions: -1,
+                workerInterval: 100,
+            }
+        );
     }
 
     execute(productGuid) {
