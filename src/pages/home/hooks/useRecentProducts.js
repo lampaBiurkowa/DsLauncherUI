@@ -1,33 +1,29 @@
-import { useState, useEffect } from "react";
-import { BaseDirectory, exists, readTextFile } from "@tauri-apps/plugin-fs";
-import { DsLauncherApiClient } from "../../../services/DsLauncherApiClient";
+import { useServiceListener } from "@/hooks/useServiceListener";
+import { ProductsCache } from "@/services/CacheService";
+import { DsLauncherServiceClient } from "@/services/DsLauncherServiceClient";
+import { useEffect, useState } from "react";
 
-const api = new DsLauncherApiClient();
+const service = new DsLauncherServiceClient();
 
-function useRecentProducts(login) {
-  const fileName = `${login}.recent.json`;
-  let [products, setProducts] = useState();
+export function useRecentProducts() {
+  const recent = useServiceListener("get-recent");
+  const [products, setProducts] = useState();
 
   useEffect(() => {
-    async function setData() {
-      //because "write the async function inside your effect"
-      if (await exists(fileName, { dir: BaseDirectory.AppData })) {
-        let appIds = JSON.parse(
-          await readTextFile(fileName, { dir: BaseDirectory.AppData })
-        );
-        await api.getProductsByIds(appIds);
-        var result = [];
-        for (let i = 0; i < data.length; i++) {
-          // let icon = (await getFilesData(data[i].name)).Icon;
-          // result.push({ product: data[i], icon: icon });
-        }
-        setProducts(result);
-      }
-    }
-    setData();
+    service.getRecent();
   }, []);
+
+  useEffect(() => {
+    if (recent) {
+      console.log(recent);
+      (async () => {
+        const productDetailsPromises = recent.Recents.map(guid => ProductsCache.getById(guid));
+        const detailedProducts = await Promise.all(productDetailsPromises);
+
+        setProducts(detailedProducts);
+      })();
+    }
+  }, [recent]);
 
   return products;
 }
-
-export default useRecentProducts;

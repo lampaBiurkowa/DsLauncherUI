@@ -48,6 +48,10 @@ export class DsLauncherServiceClient {
         executeCommand("get-installed");
     }
 
+    getRecent() {
+        executeCommand("get-recent");
+    }
+
     getLibraries() {
         executeCommand("get-libraries");
     }

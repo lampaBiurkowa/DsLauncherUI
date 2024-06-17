@@ -1,33 +1,33 @@
 import React from "react";
-import { useContext } from "react";
-import { UserContext } from "@/contexts/UserContextProvider";
+import Guard, { GuardMode } from "@/Guard";
 import useArticles from "./hooks/useArticles";
-import useRecentProducts from "./hooks/useRecentProducts";
+import { useRecentProducts } from "./hooks/useRecentProducts";
 import NewsEntry from "@/components/news-entry/NewsEntry";
 import RecentApp from "./components/RecentApp";
 import "./HomePage.scss";
 
 function HomePage() {
-  const { currentUser } = useContext(UserContext);
   let articles = useArticles();
-  let recentProducts = useRecentProducts(currentUser?.login);
+  let recentProducts = useRecentProducts();
 
   return (
     <div className="home-page">
-      {recentProducts?.length > 0 && (
-        <section className="recent-section">
-          <h1>Recently played</h1>
-          <div className="recent-apps">
-            {recentProducts.map((app, key) => {
-              return (
-                <RecentApp key={key} coverUrl={app.icon} id={app.product.id}>
-                  {app.product.name}
-                </RecentApp>
-              );
-            })}
-          </div>
-        </section>
-      )}
+      <Guard mode={GuardMode.HIDE}>
+        { recentProducts?.length > 0 && (
+          <section className="recent-section">
+            <h1>Recently played</h1>
+            <div className="recent-apps">
+              {recentProducts.map((app, key) => {
+                return (
+                  <RecentApp key={key} coverUrl={app.static.Icon} id={app.model.id}>
+                    {app.model.name}
+                  </RecentApp>
+                );
+              })}
+            </div>
+          </section>
+        )}
+      </Guard>
       <section className="news-section">
         <h1>What's new</h1>
         <div className="news">
