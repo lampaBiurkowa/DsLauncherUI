@@ -1,65 +1,54 @@
 import { executeCommand } from "./DsLauncherService";
 
 export class DsLauncherServiceClient {
-    constructor() {
-    }
+  constructor() {}
 
-    install(productGuid, libraryPath) {
-        executeCommand(
-            "install",
-            {
-                productGuid: productGuid,
-                library: libraryPath
-            }
-        );
-    }
+  install(productGuid, libraryPath) {
+    executeCommand("install", {
+      productGuid: productGuid,
+      library: libraryPath,
+    });
+    this.getInstallOperations();
+  }
 
-    uninstall(productGuid) {
-        executeCommand(
-            "uninstall",
-            {
-                productGuid: productGuid,
-            }
-        );
-    }
+  uninstall(productGuid) {
+    executeCommand("uninstall", {
+      productGuid: productGuid,
+    });
+  }
 
-    getInstallOperations() {
-        executeCommand(
-            "get-downloads",
-            {
-            },
-            {
-                workerRepetitions: -1,
-                workerInterval: 100,
-            }
-        );
-    }
+  getInstallOperations() {
+    executeCommand(
+      "get-downloads",
+      {},
+      {
+        workerRepetitions: -1,
+        workerInterval: 100,
+      }
+    );
+  }
 
-    execute(productGuid) {
-        executeCommand(
-            "execute",
-            {
-                productGuid: productGuid,
-            }
-        );
-    }
+  execute(productGuid) {
+    executeCommand("execute", {
+      productGuid: productGuid,
+    });
+  }
 
-    getInstalled() {
-        executeCommand("get-installed");
-    }
+  getInstalled() {
+    executeCommand("get-installed");
+  }
 
-    getRecent() {
-        executeCommand("get-recent");
-    }
+  getRecent() {
+    executeCommand("get-recent");
+  }
 
-    getLibraries() {
-        executeCommand("get-libraries");
-    }
+  getLibraries() {
+    executeCommand("get-libraries");
+  }
 
-    getLibraryDetails(path) {
-        executeCommand("get-library-details",
-        {
-            path: path
-        });
-    }
+  getLibraryDetails(path) {
+    executeCommand("get-library-details", {
+      path: path,
+    });
+  }
 }

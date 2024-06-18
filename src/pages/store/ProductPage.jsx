@@ -37,7 +37,7 @@ function ProductPage() {
         <div
           className="product-hero"
           style={{
-            "background-image": `linear-gradient(
+            backgroundImage: `linear-gradient(
             0deg,
             rgba(0, 0, 0, 1) 0%,
             rgba(0, 0, 0, 0) 100%

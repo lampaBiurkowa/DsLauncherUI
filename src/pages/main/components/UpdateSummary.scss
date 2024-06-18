@@ -1,40 +1,44 @@
 @use "@/styles" as *;
 
 .update-summary {
-  padding: $padding-md $padding-lg;
+  padding: $padding-lg;
   margin: $padding-lg 0;
 
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "icon header"
+    "icon progress";
   grid-template-columns: auto 1fr;
-  justify-items: start;
-  align-items: center;
+  gap: $padding-sm $padding-md;
 
   background-color: $dark-1;
   border: 1px solid $dark-3;
   border-radius: $radius-sm;
-  gap: $padding-xs $padding-md;
 
   i {
     font-size: $text-xl;
+    grid-area: icon;
   }
 
   span {
     font-size: $text-sm;
+    grid-area: header;
+    justify-self: start;
   }
 
   .progress-bar {
-    width: 100%;
+    grid-area: progress;
+    justify-self: stretch;
     height: 5px;
-    grid-column: 2;
+
     background-color: $dark-3;
     border-radius: $radius-round;
     overflow: hidden;
 
     .progress {
-      width: 75%;
       height: 100%;
-      background-color: $accent;
+      background-color: $accent-alt;
+      transition: 0.2s ease width;
     }
   }
 }
