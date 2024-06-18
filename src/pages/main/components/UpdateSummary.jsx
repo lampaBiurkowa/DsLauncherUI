@@ -10,15 +10,21 @@ function UpdateSummary() {
   const operations = useServiceListener("get-downloads");
 
   useEffect(() => {
-    if (updateProgress === undefined) {
-      service.getInstallOperations();
-    }
     if (Object.keys(operations?.Downloads ?? {}).length > 0) {
       const values = Object.values(operations?.Downloads);
       const sum = values.reduce((acc, val) => acc + val.Percentage, 0);
       setUpdateProgress(sum / values.length);
     } else {
-      setUpdateProgress(undefined);
+      console.log(updateProgress);
+      if (updateProgress !== undefined) {
+        setUpdateProgress(100);
+      }
+      console.log(updateProgress, 'rev');
+      if (updateProgress === 100) {
+        setTimeout(() => setUpdateProgress(undefined), 1000);
+      } else {
+        setUpdateProgress(undefined);
+      }
     }
   }, [operations]);
 
