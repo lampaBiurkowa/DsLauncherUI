@@ -13,13 +13,17 @@ function HomePage() {
   return (
     <div className="home-page">
       <Guard mode={GuardMode.HIDE}>
-        { recentProducts?.length > 0 && (
+        {recentProducts?.length > 0 && (
           <section className="recent-section">
             <h1>Recently played</h1>
             <div className="recent-apps">
               {recentProducts.map((app, key) => {
                 return (
-                  <RecentApp key={key} coverUrl={app.static.Icon} id={app.model.id}>
+                  <RecentApp
+                    key={key}
+                    coverUrl={app.static.Icon}
+                    guid={app.model.guid}
+                  >
                     {app.model.name}
                   </RecentApp>
                 );

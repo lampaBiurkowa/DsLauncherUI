@@ -1,14 +1,21 @@
 import React from "react";
+import { DsLauncherServiceClient } from "@/services/DsLauncherServiceClient";
 import "./RecentApp.scss";
 
-function RecentApp({ children, coverUrl, id }) {
-  const bgStyle = {
-    backgroundImage: `url("${coverUrl}")`,
-  };
+const service = new DsLauncherServiceClient();
 
+function RecentApp({ children, coverUrl, guid }) {
   return (
-    <button className="recent-app" style={bgStyle}>
-      <a href={`/store/product/${id}`}>{children}</a>
+    <button
+      className="recent-app"
+      style={{ backgroundImage: `url("${coverUrl}")` }}
+      onClick={() => {
+        service.execute(guid);
+      }}
+    >
+      <div>
+        <span>{children}</span>
+      </div>
     </button>
   );
 }
