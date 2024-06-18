@@ -19,7 +19,6 @@ function UpdateSummary() {
       if (updateProgress !== undefined) {
         setUpdateProgress(100);
       }
-      console.log(updateProgress, 'rev');
       if (updateProgress === 100) {
         setTimeout(() => setUpdateProgress(undefined), 1000);
       } else {
