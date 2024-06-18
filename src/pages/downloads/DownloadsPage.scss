@@ -1,0 +1,74 @@
+@use "@/styles" as *;
+
+.downloads-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $margin-md;
+  overflow: hidden;
+
+  h2 {
+    font-size: $text-xxl;
+    font-weight: $text-bold;
+    margin: $padding-xl;
+  }
+
+  & > ul {
+    display: flex;
+    flex-direction: column;
+    gap: $margin-md;
+    padding: 0 $padding-xl;
+    overflow-y: auto;
+  }
+
+  .download-entry {
+    display: grid;
+    grid-template-areas:
+      "icon title step"
+      "icon progress progress";
+    grid-template-columns: auto 1fr auto;
+    gap: $margin-sm $margin-md;
+
+    padding: $padding-md;
+
+    background-color: $dark-1;
+    border: 1px solid $dark-2;
+    border-radius: $radius-lg;
+
+    img {
+      width: 48px;
+      height: 48px;
+      grid-area: icon;
+      border-radius: $radius-sm;
+    }
+
+    .name {
+      grid-area: title;
+      font-weight: $text-medium;
+      align-self: center;
+    }
+
+    .step {
+      grid-area: step;
+      align-self: center;
+      color: $text-alt;
+      font-size: $text-sm;
+    }
+
+    .progress-bar {
+      height: 5px;
+      grid-area: progress;
+      align-self: start;
+
+      background-color: $dark-3;
+      border-radius: $radius-round;
+      overflow: hidden;
+
+      .progress {
+        height: 100%;
+        background-color: $accent-alt;
+        transition: 0.2s ease width;
+      }
+    }
+  }
+}

@@ -15,15 +15,28 @@
   border: 1px solid $dark-3;
   border-radius: $radius-sm;
 
+  color: $text;
+  text-decoration: none;
+  transition: 0.2s ease background-color;
+
   i {
     font-size: $text-xl;
     grid-area: icon;
+    align-self: center;
   }
 
-  span {
+  .header {
     font-size: $text-sm;
     grid-area: header;
     justify-self: start;
+  }
+
+  .no-downloads-info {
+    font-size: $text-xs;
+    color: $text-alt;
+    grid-area: progress;
+    justify-self: start;
+    line-height: 5px;
   }
 
   .progress-bar {
@@ -40,5 +53,9 @@
       background-color: $accent-alt;
       transition: 0.2s ease width;
     }
+  }
+
+  &:hover {
+    background-color: $dark-3;
   }
 }

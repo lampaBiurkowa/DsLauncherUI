@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useServiceListener } from "@/hooks/useServiceListener";
-import { DsLauncherServiceClient } from "@/services/DsLauncherServiceClient";
+import { NavLink } from "react-router-dom";
 import "./UpdateSummary.scss";
-
-const service = new DsLauncherServiceClient();
 
 function UpdateSummary() {
   const [updateProgress, setUpdateProgress] = useState();
@@ -15,35 +13,25 @@ function UpdateSummary() {
       const sum = values.reduce((acc, val) => acc + val.Percentage, 0);
       setUpdateProgress(sum / values.length);
     } else {
-      console.log(updateProgress);
-      if (updateProgress !== undefined) {
-        setUpdateProgress(100);
-      }
-      if (updateProgress === 100) {
-        setTimeout(() => setUpdateProgress(undefined), 1000);
-      } else {
-        setUpdateProgress(undefined);
-      }
+      setUpdateProgress(undefined);
     }
   }, [operations]);
 
   return (
-    <>
-      {updateProgress ? (
-        <button className="update-summary">
-          <i className="las la-download" />
-          <span>Downloading</span>
-          <div className="progress-bar">
-            <div
-              className="progress"
-              style={{ width: `${updateProgress ?? 0}%` }}
-            />
-          </div>
-        </button>
+    <NavLink className="update-summary" to="/downloads">
+      <i className="las la-download" />
+      <span className="header">Downloads</span>
+      {updateProgress != undefined ? (
+        <div className="progress-bar">
+          <div
+            className="progress"
+            style={{ width: `${updateProgress ?? 0}%` }}
+          />
+        </div>
       ) : (
-        <></>
+        <span className="no-downloads-info">No download operations</span>
       )}
-    </>
+    </NavLink>
   );
 }
 

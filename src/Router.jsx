@@ -36,7 +36,9 @@ import GeneralSettingsPage from "@/pages/settings/GeneralSettingsPage";
 import DeveloperProfilePage from "@/pages/developer/DeveloperProfilePage";
 import DeveloperNewsPage from "@/pages/developer/DeveloperNewsPage";
 import DeveloperGamesPage from "@/pages/developer/DeveloperGamesPage";
-import DeveloperSettingsPage from "./pages/profile/DeveloperSettingsPage";
+import DeveloperSettingsPage from "@/pages/profile/DeveloperSettingsPage";
+
+import DownloadsPage from "@/pages/downloads/DownloadsPage";
 
 const router = createBrowserRouter([
   {
@@ -140,6 +142,10 @@ const router = createBrowserRouter([
             path: "/library/owned",
           },
         ],
+      },
+      {
+        path: "/downloads",
+        element: <DownloadsPage />,
       },
       {
         path: "/settings",

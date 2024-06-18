@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useScrolledToEnd } from "@/hooks/useScrolledToEnd";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import DetailedStoreEntry from "./components/DetailedStoreEntry";
-import "./GamesPage.scss";
 import { ProductsCache } from "@/services/CacheService";
+import "./GamesPage.scss";
 
 const api = new DsLauncherApiClient();
 
@@ -12,9 +12,11 @@ function GamesPage() {
 
   const scrollViewRef = useScrolledToEnd(async () => {
     const newGames = await api.getGamesIds(games.length, 10);
-    const updatedGames = await Promise.all(newGames.map(async (guid) => {
-      return await ProductsCache.getById(guid);
-    }));
+    const updatedGames = await Promise.all(
+      newGames.map(async (guid) => {
+        return await ProductsCache.getById(guid);
+      })
+    );
     setGames([...games, ...updatedGames]);
   });
 
@@ -23,7 +25,7 @@ function GamesPage() {
       <h2>Games</h2>
       <ul ref={scrollViewRef}>
         {games?.map((game, index) => {
-          console.log('zzz', game);
+          console.log("zzz", game);
           return (
             <DetailedStoreEntry
               key={index}
