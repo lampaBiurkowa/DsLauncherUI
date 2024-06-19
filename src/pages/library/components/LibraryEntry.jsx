@@ -87,9 +87,10 @@ function LibraryEntry({ product, isInstalled, hasUpdate, secondary = "" }) {
         header={`Install - ${product?.model?.name}`}
       >
         <Installer
+          productGuid={product?.model?.guid}
           onCancelled={() => setInstallDialogOpen(false)}
-          onConfirmed={(lib) => {
-            service.install(product?.model?.guid, lib.Path);
+          onConfirmed={(lib, ver) => {
+            service.install(product?.model?.guid, ver.guid, lib.Path);
             service.getInstallOperations();
             setInstallDialogOpen(false);
           }}

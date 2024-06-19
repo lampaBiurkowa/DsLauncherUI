@@ -53,4 +53,15 @@
       justify-self: start;
     }
   }
+
+  .version {
+    display: flex;
+    justify-content: space-between;
+
+    padding: $padding-md;
+
+    span:last-child {
+      color: $text-alt;
+    }
+  }
 }

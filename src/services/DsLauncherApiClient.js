@@ -390,6 +390,11 @@ export class DsLauncherApiClient {
     return this.request(url, options);
   }
 
+  async getPackagesByProduct(productId) {
+    const url = `${this.baseUrl}/Package/product/${productId}`;
+    return this.request(url);
+  }
+
   async getLatestProductPackage(productId) {
     const url = `${this.baseUrl}/Package/latest/${productId}`;
     return this.request(url);

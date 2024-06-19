@@ -3,9 +3,10 @@ import { executeCommand } from "./DsLauncherService";
 export class DsLauncherServiceClient {
   constructor() {}
 
-  install(productGuid, libraryPath) {
+  install(productGuid, packageGuid, libraryPath) {
     executeCommand("install", {
       productGuid: productGuid,
+      packageGuid: packageGuid,
       library: libraryPath,
     });
     this.getInstallOperations();
