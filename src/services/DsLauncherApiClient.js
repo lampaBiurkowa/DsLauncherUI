@@ -394,4 +394,10 @@ export class DsLauncherApiClient {
     const url = `${this.baseUrl}/Package/latest/${productId}`;
     return this.request(url);
   }
+
+  // Activity
+  async getMinutesInGame(productId, userId) {
+    const url = `${this.baseUrl}/Activity/get-minutes-spent/${productId}/${userId}`;
+    return this.request(url);
+  }
 }
