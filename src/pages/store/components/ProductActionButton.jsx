@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import { useOwnedProducts } from "../../../hooks/useOwnedProducts";
-import { useServiceListener } from "@/hooks/useServiceListener";
 import { DsLauncherServiceClient } from "@/services/DsLauncherServiceClient";
+import { useInstalledProducts } from "@/pages/library/hooks/useInstalledProducts";
 import Dialog from "@/components/dialog/Dialog";
 import Installer from "@/components/installer/Installer";
 import "./ProductActionButton.scss";
@@ -16,11 +16,13 @@ function ProductActionButton({ product }) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const ownedProducts = useOwnedProducts();
-  const installedProducts = useServiceListener("get-installed");
+  const installedProducts = useInstalledProducts();
 
   useEffect(() => {
     setOwned(ownedProducts?.includes(product?.model?.guid));
-    setInstalled(installedProducts?.products?.includes(product?.model?.guid));
+    setInstalled(
+      installedProducts?.some((p) => p.model.guid == product?.model?.guid)
+    );
   }, [product, ownedProducts, installedProducts]);
 
   async function handleClick() {
@@ -55,6 +57,7 @@ function ProductActionButton({ product }) {
         header={`Install - ${product?.model?.name}`}
       >
         <Installer
+          productGuid={product?.model?.guid}
           onCancelled={() => setDialogOpen(false)}
           onConfirmed={(lib) => {
             service.install(product?.model.guid, lib.Path);
