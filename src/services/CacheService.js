@@ -86,6 +86,10 @@ class ProductsCacheSingleton extends CachedObjects {
 
     return this.data[productGuid];
   }
+
+  async refreshRates(productGuid) {
+    this.data[productGuid].rates = await this.getRates(productGuid);
+  }
 }
 
 class DevelopersCacheSingleton extends CachedObjects {

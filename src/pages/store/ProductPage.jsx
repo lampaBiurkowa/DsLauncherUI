@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from "@/contexts/UserContextProvider";
 import { NavLink } from "react-router-dom";
 import useProduct from "./hooks/useProduct";
@@ -21,15 +21,26 @@ function ProductPage() {
   const { id: productGuid } = useParams();
   const { currentUser } = useContext(UserContext);
 
+  const [refresh, setRefresh] = useState(true);
   const product = useProduct(productGuid);
   const reviews = useReviews(productGuid, 0, 3);
   const pegi = usePegi(productGuid);
-  const summary = useSummary(productGuid);
+  const summary = useSummary(productGuid, refresh);
   const developer = useDeveloperForProduct(productGuid);
 
   const [addReviewDialogOpen, setAddReviewDialogOpen] = useState();
   const [galleryDialogOpen, setGalleryDialogOpen] = useState();
   const [allReviewsDialogOpen, setAllReviewsDialogOpen] = useState();
+
+  const handleReviewSubmitted = () => {
+    setRefresh(true);
+    setAddReviewDialogOpen(false);
+  };
+  useEffect(() => {
+    if (refresh) {
+      setRefresh(false);
+    }
+  }, [refresh]);
 
   return (
     <article>
@@ -141,7 +152,7 @@ function ProductPage() {
                   userId={currentUser.id}
                   productId={productGuid}
                   onCancelled={() => setAddReviewDialogOpen(false)}
-                  onSubmitted={() => setAddReviewDialogOpen(false)}
+                  onSubmitted={handleReviewSubmitted}
                 ></AddReviewForm>
               </Dialog>
             </>

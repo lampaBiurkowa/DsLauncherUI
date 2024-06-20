@@ -9,6 +9,7 @@ function useProduct(id) {
       const response = await ProductsCache.getById(id);
       setProduct(response);
     }
+    
     fetchProduct();
   }, []);
 

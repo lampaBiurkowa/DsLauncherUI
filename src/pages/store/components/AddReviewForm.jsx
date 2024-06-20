@@ -3,6 +3,7 @@ import Rating from "@/components/rating/Rating";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 
 import "./AddReviewForm.scss";
+import { ProductsCache } from "@/services/CacheService";
 
 const apiClient = new DsLauncherApiClient();
 
@@ -14,14 +15,19 @@ function AddReviewForm({ productId, userId, onCancelled, onSubmitted }) {
   const textboxRef = useRef();
 
   async function addReview() {
+    let success = false;
     try {
       await apiClient.createReview({
         content: textboxRef.current.value,
         rate: rating,
         productGuid: productId,
       });
+      success = true;
     } catch (error) {
       console.log(`Failed to create a review: ${error}`);
+    }
+    if (success) {
+      await ProductsCache.refreshRates(productId);
     }
   }
 
