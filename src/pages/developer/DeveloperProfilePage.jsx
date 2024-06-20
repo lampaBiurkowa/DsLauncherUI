@@ -12,6 +12,8 @@ import * as fs from "@tauri-apps/plugin-fs";
 
 import "./DeveloperProfilePage.scss";
 import { useSubscriptions } from "./hooks/useSubscriptions";
+import useMoney from "../profile/hooks/useMoney";
+import useUserSubscribed from "../store/hooks/useUserSubscribed";
 
 const api = new DsLauncherApiClient();
 
@@ -20,6 +22,8 @@ function DeveloperProfilePage() {
   const { currentUser } = useContext(UserContext);
   const [developer, setDeveloper] = useDeveloper(devId);
   const subscriptions = useSubscriptions(devId);
+  const userSubscribed = useUserSubscribed(developer);
+  const money = useMoney();
 
   const isMember = useMemo(() => {
     return developer?.userGuids.includes(currentUser?.guid);
@@ -49,6 +53,15 @@ function DeveloperProfilePage() {
     setDeveloper({ ...developer, profileImage: publicFileName });
   }
 
+  async function subscribe() {
+    try {
+      await api.subscribeDeveloper(developer.guid);
+    }
+    catch {
+      console.log("Error subscribing dev");
+    }
+  }
+
   return (
     <div className="developer-page">
       <section className="developer-summary">
@@ -63,8 +76,8 @@ function DeveloperProfilePage() {
             <span>{subscriptions} subscriptions</span>
           </div>
         </div>
-        {!isMember ? (
-          <button className="accent outlined">
+        {(!isMember && !userSubscribed) ? (
+          <button className="accent outlined" onClick={() => subscribe()} disabled={money < developer?.subscriptionPrice}>
             Subscribe for {developer?.subscriptionPrice}₽
           </button>
         ) : (

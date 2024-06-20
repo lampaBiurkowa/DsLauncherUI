@@ -6,17 +6,19 @@ import { useInstalledProducts } from "@/pages/library/hooks/useInstalledProducts
 import Dialog from "@/components/dialog/Dialog";
 import Installer from "@/components/installer/Installer";
 import "./ProductActionButton.scss";
+import useUserSubscribed from "../hooks/useUserSubscribed";
 
 const api = new DsLauncherApiClient();
 const service = new DsLauncherServiceClient();
 
-function ProductActionButton({ product }) {
+function ProductActionButton({ product, developer }) {
   const [owned, setOwned] = useState(false);
   const [installed, setInstalled] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const ownedProducts = useOwnedProducts();
   const installedProducts = useInstalledProducts();
+  const userSubscribed = useUserSubscribed(developer);
 
   useEffect(() => {
     setOwned(ownedProducts?.includes(product?.model?.guid));
@@ -49,7 +51,7 @@ function ProductActionButton({ product }) {
       >
         {owned && installed ? "Run" : <></>}
         {owned && !installed ? "Install" : <></>}
-        {!owned ? `Buy for ${product?.model?.price}₽` : <></>}
+        {!owned ? `Buy for ${userSubscribed ? 0 : product?.model?.price}₽` : <></>}
       </button>
       <Dialog
         open={dialogOpen}

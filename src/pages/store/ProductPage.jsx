@@ -65,7 +65,7 @@ function ProductPage() {
               {developer?.model?.name}
             </NavLink>
             {currentUser ? (
-              <ProductActionButton product={product}></ProductActionButton>
+              <ProductActionButton product={product} developer={developer}></ProductActionButton>
             ) : (
               <span className="price">{product?.model?.price}₽</span>
             )}

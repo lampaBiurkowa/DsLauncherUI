@@ -95,6 +95,7 @@ export class DsLauncherApiClient {
     return this.request(url);
   }
 
+  // Purchase
   async purchaseProduct(guid) {
     const url = `${this.baseUrl}/Purchase/Product/${guid}`;
     const options = {
@@ -126,6 +127,13 @@ export class DsLauncherApiClient {
     return this.request(url);
   }
 
+  async subscribeDeveloper(developerGuid) {
+    const url = `${this.baseUrl}/Purchase/subscribe-developer/${developerGuid}`;
+    const options = {
+      method: "POST",
+    };
+    return this.request(url, options);
+  }
   //Game
   async getGames(skip = 0, take = 1000) {
     const url = `${this.baseUrl}/Game?skip=${skip}&take=${take}`;
