@@ -65,7 +65,10 @@ function ProductPage() {
               {developer?.model?.name}
             </NavLink>
             {currentUser ? (
-              <ProductActionButton product={product} developer={developer}></ProductActionButton>
+              <ProductActionButton
+                product={product}
+                developer={developer}
+              ></ProductActionButton>
             ) : (
               <span className="price">{product?.model?.price}₽</span>
             )}
@@ -199,21 +202,25 @@ function ProductPage() {
                 ).toLocaleDateString()}
               </span>
             </div>
-            <div>
+            {pegi ? (
               <div>
-                <img
-                  src={pegi}
-                  alt="Classification"
-                  style={{
-                    width: "20px",
-                    height: "20px",
-                    objectFit: "contain",
-                  }}
-                />
+                <div>
+                  <img
+                    src={pegi}
+                    alt="Classification"
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </div>
+                <span className="info-type">Age classification</span>
+                <span className="info-value">PEGI 😐</span>
               </div>
-              <span className="info-type">Age classification</span>
-              <span className="info-value">PEGI 😐</span>
-            </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
 
