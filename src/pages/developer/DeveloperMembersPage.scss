@@ -1,0 +1,80 @@
+@use "@/styles" as *;
+
+.developer-members-page {
+  display: flex;
+  flex-direction: column;
+  gap: $margin-xl;
+
+  padding: $padding-xl 5%;
+
+  overflow-y: auto;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: $margin-sm;
+
+    h2 {
+      font-size: $text-lg;
+      font-weight: $text-medium;
+      margin-bottom: $margin-sm;
+    }
+
+    .member {
+      display: grid;
+      grid-template-areas:
+        "image name"
+        "image login";
+      grid-template-columns: auto 1fr;
+      gap: $margin-xs $margin-md;
+
+      padding: $padding-md;
+
+      background-color: $dark-1;
+      border: 1px solid $dark-2;
+      border-radius: $radius-lg;
+
+      img {
+        grid-area: image;
+        width: 48px;
+        height: 48px;
+        border-radius: $radius-round;
+      }
+
+      .name {
+        grid-area: name;
+        font-weight: $text-medium;
+        align-self: end;
+      }
+
+      .login {
+        grid-area: login;
+        font-size: $text-sm;
+        color: $text-alt;
+      }
+    }
+
+    .code-dialog {
+      max-width: 50vw;
+      display: flex;
+      flex-direction: column;
+      gap: $margin-md;
+
+      .notice {
+        color: $text-alt;
+      }
+
+      .code {
+        display: block;
+        padding: $padding-xl;
+
+        border-radius: $radius-sm;
+        background-color: $dark-3;
+      }
+
+      button {
+        align-self: end;
+      }
+    }
+  }
+}

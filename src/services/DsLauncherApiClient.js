@@ -290,6 +290,11 @@ export class DsLauncherApiClient {
     return this.request(url);
   }
 
+  async generateInvitationCode(developerGuid) {
+    const url = `${this.baseUrl}/Purchase/developer-access/${developerGuid}/generate-key`;
+    return this.request(url);
+  }
+
   //Review
   async getReviews(skip = 0, take = 1000) {
     const url = `${this.baseUrl}/Review?skip=${skip}&take=${take}`;

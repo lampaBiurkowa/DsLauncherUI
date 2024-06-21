@@ -14,20 +14,17 @@ import "./DeveloperProfilePage.scss";
 import { useSubscriptions } from "./hooks/useSubscriptions";
 import useMoney from "../profile/hooks/useMoney";
 import useUserSubscribed from "../store/hooks/useUserSubscribed";
+import { useIsDeveloperMember } from "./hooks/useIsDeveloperMember";
 
 const api = new DsLauncherApiClient();
 
 function DeveloperProfilePage() {
   const { id: devId } = useParams();
-  const { currentUser } = useContext(UserContext);
   const [developer, setDeveloper] = useDeveloper(devId);
   const subscriptions = useSubscriptions(devId);
   const userSubscribed = useUserSubscribed(developer);
+  const isMember = useIsDeveloperMember(devId);
   const money = useMoney();
-
-  const isMember = useMemo(() => {
-    return developer?.userGuids.includes(currentUser?.guid);
-  }, [developer, currentUser]);
 
   const logo = useMemo(() => {
     if (developer?.profileImage?.length > 0) {
@@ -56,8 +53,7 @@ function DeveloperProfilePage() {
   async function subscribe() {
     try {
       await api.subscribeDeveloper(developer.guid);
-    }
-    catch {
+    } catch {
       console.log("Error subscribing dev");
     }
   }
@@ -76,8 +72,12 @@ function DeveloperProfilePage() {
             <span>{subscriptions} subscriptions</span>
           </div>
         </div>
-        {(!isMember && !userSubscribed) ? (
-          <button className="accent outlined" onClick={() => subscribe()} disabled={money < developer?.subscriptionPrice}>
+        {!isMember && !userSubscribed ? (
+          <button
+            className="accent outlined"
+            onClick={() => subscribe()}
+            disabled={money < developer?.subscriptionPrice}
+          >
             Subscribe for {developer?.subscriptionPrice}₽
           </button>
         ) : (
@@ -91,6 +91,11 @@ function DeveloperProfilePage() {
               News
             </NavButton>
             <NavButton to={`/developer/${devId}/games`}>Games</NavButton>
+            {isMember ? (
+              <NavButton to={`/developer/${devId}/members`}>Members</NavButton>
+            ) : (
+              <></>
+            )}
           </Navbar>
         </div>
         <Outlet />

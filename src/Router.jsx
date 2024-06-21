@@ -37,6 +37,7 @@ import DeveloperProfilePage from "@/pages/developer/DeveloperProfilePage";
 import DeveloperNewsPage from "@/pages/developer/DeveloperNewsPage";
 import DeveloperGamesPage from "@/pages/developer/DeveloperGamesPage";
 import DeveloperSettingsPage from "@/pages/profile/DeveloperSettingsPage";
+import DeveloperMembersPage from "@/pages/developer/DeveloperMembersPage";
 
 import DownloadsPage from "@/pages/downloads/DownloadsPage";
 
@@ -172,6 +173,14 @@ const router = createBrowserRouter([
           {
             element: <DeveloperGamesPage />,
             path: "/developer/:id/games",
+          },
+          {
+            element: (
+              <Guard>
+                <DeveloperMembersPage />
+              </Guard>
+            ),
+            path: "/developer/:id/members",
           },
         ],
       },

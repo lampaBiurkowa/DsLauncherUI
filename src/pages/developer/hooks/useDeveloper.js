@@ -12,7 +12,7 @@ export function useDeveloper(guid) {
         setDeveloper(await api.getDeveloperById(guid));
       } catch {}
     })();
-  }, []);
+  }, [guid]);
 
   return [developer, setDeveloper];
 }
