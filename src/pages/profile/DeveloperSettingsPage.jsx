@@ -28,7 +28,6 @@ function DeveloperSettingsPage() {
   useEffect(() => {
     (async () => {
       setDevs(await api.getDeveloperByUser(currentUser.guid));
-      console.log(devs);
     })();
   }, []);
 
