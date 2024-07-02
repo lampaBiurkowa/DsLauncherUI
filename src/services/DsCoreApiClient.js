@@ -146,6 +146,14 @@ export class DsCoreApiClient {
         return this.request(url, options);
     }
 
+    async regenerateActivationCode(userId) {
+        const url = `${this.baseUrl}/Auth/activate/${userId}/regenerate-code`;
+        const options = {
+            method: 'POST'
+        };
+        return this.request(url, options);
+    }
+
     async changePassword(userId, oldPasswordBase64, newPasswordBase64) {
         const url = `${this.baseUrl}/Auth/changePassword/${userId}?oldPasswordBase64=${encodeURIComponent(oldPasswordBase64)}&newPasswordBase64=${encodeURIComponent(newPasswordBase64)}`;
         const options = {

@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import "./RegisterPage.scss";
 import Logo from "@/components/logo/Logo";
 import { Form, NavLink } from "react-router-dom";
 import Separator from "../../components/separator/Separator";
 import { DsCoreApiClient } from "../../services/DsCoreApiClient";
-import { UserContext } from "../../contexts/UserContextProvider";
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import Dialog from "@/components/dialog/Dialog";
+import VerifyAccount from "./components/VerifyAccount";
 
-const authApi = new DsCoreApiClient();
+const coreApi = new DsCoreApiClient();
 
 function RegisterPage() {
-  let { currentUser } = useContext(UserContext);
-  let navigate = useNavigate();
+  const [verifyDialogOpen, setVerifyDialogOpen] = useState();
+  const [userGuid, setUserGuid] = useState();
+  // let navigate = useNavigate();
   return (
     <div className="register-page">
       <div className="register-container">
@@ -98,13 +98,15 @@ function RegisterPage() {
               
               if (password1Input !== password2Input)
               {
-                //do cos
+                //todo cos
                 return;
               }
 
               var user = {alias: loginInput, email: emailInput, name:nameInput, surname: surnameInput, id: 0};
-              await authApi.register(user, btoa(password1Input));
-              navigate("/login");
+              setUserGuid(await coreApi.register(user, btoa(password1Input)));
+              console.log(userGuid);
+              setVerifyDialogOpen(true);
+              // navigate("/login");
             }}>Sign up</button>
           </div>
         </Form>
@@ -114,6 +116,15 @@ function RegisterPage() {
             Log in
           </NavLink>
         </div>
+        <Dialog
+            open={verifyDialogOpen}
+            onClosed={() => setVerifyDialogOpen(false)}
+            header="Verify account"
+          >
+          <VerifyAccount
+            userGuid={userGuid}
+          ></VerifyAccount>
+        </Dialog>
       </div>
     </div>
   );

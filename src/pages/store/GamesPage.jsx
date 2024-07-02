@@ -25,7 +25,6 @@ function GamesPage() {
       <h2>Games</h2>
       <ul ref={scrollViewRef}>
         {games?.map((game, index) => {
-          console.log("zzz", game);
           return (
             <DetailedStoreEntry
               key={index}

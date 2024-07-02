@@ -10,7 +10,6 @@ function useUserSubscribed(developer) {
     async function fetchUserSubscribed() {
       var developerGuid = developer?.model?.guid;
       if (developerGuid) {
-        console.log("no iks de", await api.hasUserSubscribed(developerGuid));
         setUserSubscribed(await api.hasUserSubscribed(developerGuid));
       }
     }

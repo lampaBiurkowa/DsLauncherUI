@@ -12,6 +12,8 @@ import { useState } from "react";
 import { executeCommand } from "@/services/DsLauncherService";
 import { LocalStorageHandler } from "../../services/LocalStorageService";
 import InfoBar, { InfoBarType } from "@/components/info-bar/InfoBar";
+import Dialog from "@/components/dialog/Dialog";
+import VerifyAccount from "./components/VerifyAccount";
 
 const api = new DsCoreApiClient();
 
@@ -19,6 +21,7 @@ function LoginPage() {
   const [error, setError] = useState(null);
   const { currentUser, setCurrentUser } = useContext(UserContext);
   const navigate = useNavigate();
+  const [verifyDialogOpen, setVerifyDialogOpen] = useState();
 
   return (
     <div className="login-page">
@@ -102,8 +105,18 @@ function LoginPage() {
             Sign up
           </NavLink>
         </div>
-        <a className="password-help">Forgot password?</a>
+        <a className="password-help" onClick={() => setVerifyDialogOpen(true)}>Verify an existing accont</a>
       </div>
+
+      <Dialog
+          open={verifyDialogOpen}
+          onClosed={() => setVerifyDialogOpen(false)}
+          header="Verify account"
+        >
+        <VerifyAccount
+          enableLoginInput={true}
+        ></VerifyAccount>
+      </Dialog>
     </div>
   );
 }

@@ -1,0 +1,29 @@
+@use "@/styles" as *;
+
+.form2 {
+  display: grid;
+  grid-template-columns: repeat(2, calc(50% - ($margin-md / 2)));
+  grid-template-rows: repeat(3, auto);
+  grid-template-areas: "code-login code-login" "code code" "submit submit";
+  gap: $margin-md;
+
+  margin-top: $margin-xl;
+
+  div {
+    display: grid;
+
+    input {
+      padding: $padding-sm;
+    }
+  }
+
+  .submit-area {
+    display: flex;
+    flex-direction: column;
+    gap: $margin-md;
+
+    .verify {
+      align-self: end;
+    }
+  }
+}
