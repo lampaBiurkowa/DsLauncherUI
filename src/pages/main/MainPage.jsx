@@ -31,7 +31,7 @@ function MainPage() {
             </NavButton>
           </Guard>
           <UpdateSummary navend="true" />
-          <NavButton to="/settings" icon="las la-cog" navend="true">
+          <NavButton to="/settings/libraries" icon="las la-cog" navend="true">
             Settings
           </NavButton>
         </NavBar>
