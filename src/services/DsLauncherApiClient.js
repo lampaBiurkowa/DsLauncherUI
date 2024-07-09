@@ -160,6 +160,7 @@ export class DsLauncherApiClient {
     const url = `${this.baseUrl}/App/ids?skip=${skip}&take=${take}`;
     return this.request(url);
   }
+
   //News
   async getNews(skip = 0, take = 1000) {
     const url = `${this.baseUrl}/News?skip=${skip}&take=${take}`;
@@ -346,6 +347,11 @@ export class DsLauncherApiClient {
 
   async getReviewsByProduct(productId, skip = 0, take = 1000) {
     const url = `${this.baseUrl}/Review/product/${productId}?skip=${skip}&take=${take}`;
+    return this.request(url);
+  }
+
+  async getReviewsByProductAndUser(productId, userId) {
+    const url = `${this.baseUrl}/Review/product/${productId}/user/${userId}`;
     return this.request(url);
   }
 
