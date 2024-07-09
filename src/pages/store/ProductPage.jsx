@@ -16,6 +16,7 @@ import AllReviewsView from "./components/AllReviewsView";
 import ProductActionButton from "./components/ProductActionButton";
 import usePegi from "./hooks/usePegi";
 import "./ProductPage.scss";
+import useOwnsProduct from "./hooks/useOwnsProduct";
 
 function ProductPage() {
   const { id: productGuid } = useParams();
@@ -27,6 +28,7 @@ function ProductPage() {
   const pegi = usePegi(productGuid);
   const summary = useSummary(productGuid, refresh);
   const developer = useDeveloperForProduct(productGuid);
+  const ownsProduct = useOwnsProduct(productGuid);
 
   const [addReviewDialogOpen, setAddReviewDialogOpen] = useState();
   const [galleryDialogOpen, setGalleryDialogOpen] = useState();
@@ -136,7 +138,7 @@ function ProductPage() {
               </div>
             ))}
           </div>
-          {currentUser ? (
+          {currentUser && ownsProduct ? (
             <>
               <button
                 className="accent"
