@@ -52,4 +52,10 @@ export class DsLauncherServiceClient {
       path: path,
     });
   }
+
+  removeLibrary(path) {
+    executeCommand("remove-library", {
+      library: path,
+    });
+  }
 }

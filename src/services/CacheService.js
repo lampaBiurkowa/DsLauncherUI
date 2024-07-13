@@ -1,14 +1,10 @@
 import getFilesData from "@/services/getFilesData";
 import { DsCoreApiClient } from "../services/DsCoreApiClient";
 import { DsLauncherApiClient } from "../services/DsLauncherApiClient";
-import * as fs from "@tauri-apps/plugin-fs";
-
-const CACHE_PATH = 'cache.json';
 
 class CachedObjects {
   constructor() {
     this.data = {};
-    this.cachePath = `${this.constructor.name}-${CACHE_PATH}`;
   }
 
   async getById(id) {
@@ -19,21 +15,32 @@ class CachedObjects {
     }
   }
 
+  async getByIds(ids) {
+    const results = [];
+    const idsToLoad = [];
+
+    for (const id of ids) {
+      if (this.data.hasOwnProperty(id) && this.data[id].expire > Date.now()) {
+        results.push(this.data[id]);
+      } else {
+        idsToLoad.push(id);
+      }
+    }
+
+    if (idsToLoad.length > 0) {
+      const loadedItems = await Promise.all(idsToLoad.map(id => this.loadItem(id)));
+      results.push(...loadedItems);
+    }
+
+    return results;
+  }
+
   setById(id, item) {
     return (this.data[id] = item);
   }
 
   getExpirationTimestamp(minsAhead) {
     return new Date(Date.now() + minsAhead * 60000);
-  }
-
-  async dump() {
-    await fs.writeFile(this.cachePath, JSON.stringify(this.data));
-  }
-
-  async load() {
-    if (await fs.exists(this.cachePath))
-      this.data = JSON.parse(await fs.readFile(this.cachePath));
   }
 }
 
