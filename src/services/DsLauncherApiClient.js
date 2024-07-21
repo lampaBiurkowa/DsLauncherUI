@@ -172,6 +172,11 @@ export class DsLauncherApiClient {
     return this.request(url);
   }
 
+  async getTracks(musicGuid) {
+    const url = `${this.baseUrl}/Music/get-tracks/${musicGuid}`;
+    return this.request(url);
+  }
+
   //Video
   async getVideos(skip = 0, take = 1000) {
     const url = `${this.baseUrl}/Video?skip=${skip}&take=${take}`;

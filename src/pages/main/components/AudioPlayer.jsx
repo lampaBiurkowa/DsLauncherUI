@@ -9,7 +9,7 @@ async function loadFiles(directoryPath) {
   return entries.map(entry => `${directoryPath}/${entry.name}`);
 }
 
-function AudioPlayer({ path, backgroundImage }) {
+function AudioPlayer({ path, backgroundImage, tracks }) {
   const [audioTracks, setAudioTracks] = useState([]);
   const [currentAudioIndex, setCurrentAudioIndex] = useState(0);
   const [currentAudioSrc, setCurrentAudioSrc] = useState('');
@@ -60,7 +60,7 @@ function AudioPlayer({ path, backgroundImage }) {
 
   return (
     <div className="player-container" style={{ backgroundImage: `url(${backgroundImage})` }}>
-      <h1 className="player-title">{"a"}</h1>
+      <h1 className="player-title">{tracks?.length > 0 ? tracks[currentAudioIndex].name : ""}</h1>
       {currentAudioSrc && (
         <>
           <audio
