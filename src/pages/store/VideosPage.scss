@@ -1,0 +1,10 @@
+@use "@/styles" as *;
+
+.videos-container {
+  padding: $padding-xl;
+
+  h2 {
+    font-size: $text-xxl;
+    font-weight: $text-bold;
+  }
+}

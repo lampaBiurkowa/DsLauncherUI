@@ -19,6 +19,8 @@ import StorePage from "@/pages/store/StorePage";
 import DiscoverPage from "@/pages/store/DiscoverPage";
 import GamesPage from "@/pages/store/GamesPage";
 import AppsPage from "@/pages/store/AppsPage";
+import VideosPage from "@/pages/store/VideosPage";
+import MusicPage from "@/pages/store/MusicPage";
 import ProductPage from "@/pages/store/ProductPage";
 
 import LibraryPage from "@/pages/library/LibraryPage";
@@ -40,6 +42,7 @@ import DeveloperSettingsPage from "@/pages/profile/DeveloperSettingsPage";
 import DeveloperMembersPage from "@/pages/developer/DeveloperMembersPage";
 
 import DownloadsPage from "@/pages/downloads/DownloadsPage";
+import AudioPage from "./pages/library/AudioPage";
 
 const router = createBrowserRouter([
   {
@@ -117,6 +120,14 @@ const router = createBrowserRouter([
             path: "/store/apps",
           },
           {
+            element: <MusicPage />,
+            path: "/store/music",
+          },
+          {
+            element: <VideosPage />,
+            path: "/store/videos",
+          },
+          {
             element: <ProductPage />,
             path: "/store/product/:id",
           },
@@ -141,6 +152,10 @@ const router = createBrowserRouter([
           {
             element: <OwnedPage />,
             path: "/library/owned",
+          },
+          {
+            element: <AudioPage />,
+            path: "/library/audio/:id",
           },
         ],
       },

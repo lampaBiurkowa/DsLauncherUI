@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { DsLauncherServiceClient } from "@/services/DsLauncherServiceClient";
 import Popup, { PopupAlignment } from "@/components/popup/Popup";
 import Dialog from "@/components/dialog/Dialog";
@@ -14,6 +14,7 @@ function LibraryEntry({ product, isInstalled, hasUpdate, secondary = "" }) {
 
   const [popupOpen, setPopupOpen] = useState(false);
   const popupRef = useRef();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -27,7 +28,12 @@ function LibraryEntry({ product, isInstalled, hasUpdate, secondary = "" }) {
             <button
               className="accent"
               onClick={() => {
-                service.execute(product?.model?.guid);
+                if (product.model.productType == "Game" || product.model.productType == "App") {
+                  service.execute(product?.model?.guid);
+                }
+                else if (product.model.productType == "Music") {
+                  navigate(`/library/audio/${product.model.guid}`);
+                }
               }}
             >
               Run

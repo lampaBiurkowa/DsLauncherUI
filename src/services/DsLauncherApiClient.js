@@ -161,6 +161,28 @@ export class DsLauncherApiClient {
     return this.request(url);
   }
 
+  //Music
+  async getMusic(skip = 0, take = 1000) {
+    const url = `${this.baseUrl}/Music?skip=${skip}&take=${take}`;
+    return this.request(url);
+  }
+
+  async getMusicIds(skip = 0, take = 1000) {
+    const url = `${this.baseUrl}/Music/ids?skip=${skip}&take=${take}`;
+    return this.request(url);
+  }
+
+  //Video
+  async getVideos(skip = 0, take = 1000) {
+    const url = `${this.baseUrl}/Video?skip=${skip}&take=${take}`;
+    return this.request(url);
+  }
+
+  async getVideosIds(skip = 0, take = 1000) {
+    const url = `${this.baseUrl}/Video/ids?skip=${skip}&take=${take}`;
+    return this.request(url);
+  }
+
   //News
   async getNews(skip = 0, take = 1000) {
     const url = `${this.baseUrl}/News?skip=${skip}&take=${take}`;

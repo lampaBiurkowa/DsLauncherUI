@@ -15,7 +15,6 @@ export function useRecentProducts() {
 
   useEffect(() => {
     if (recent) {
-      console.log(recent);
       (async () => {
         const productDetailsPromises = recent.Recents.map(guid => ProductsCache.getById(guid));
         const detailedProducts = await Promise.all(productDetailsPromises);

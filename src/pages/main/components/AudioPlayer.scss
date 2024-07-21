@@ -1,0 +1,70 @@
+@use "@/styles" as *;
+
+.player-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: white;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  text-align: center;
+}
+
+.player-title {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+audio {
+  margin: 20px 0;
+}
+
+button {
+  margin: 5px;
+  padding: 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.track-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.track-list li {
+  cursor: pointer;
+  padding: 5px;
+}
+
+.track-list li:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+
+// .player-container {
+//   margin: 20px;
+// }
+
+// .track-list {
+//   list-style: none;
+//   padding: 0;
+// }
+
+// .track-list li {
+//   cursor: pointer;
+//   padding: 5px;
+// }
+
+// .track-list li:hover {
+//   background-color: #f0f0f0;
+// }

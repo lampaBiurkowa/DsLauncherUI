@@ -39,6 +39,12 @@ export class DsLauncherServiceClient {
     executeCommand("get-installed");
   }
 
+  getInstalledPath(productGuid) {
+    executeCommand("get-installed-path", {
+      productGuid: productGuid,
+    });
+  }
+
   getRecent() {
     executeCommand("get-recent");
   }

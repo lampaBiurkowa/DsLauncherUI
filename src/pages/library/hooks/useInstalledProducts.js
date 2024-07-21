@@ -21,7 +21,7 @@ export function useInstalledProducts() {
         const ownedProducts = await api.getProductsByIds(
           Object.keys(installed.Installed)
         );
-
+        console.log(ownedProducts);
         setProducts(
           ownedProducts.map((product) => {
             return {

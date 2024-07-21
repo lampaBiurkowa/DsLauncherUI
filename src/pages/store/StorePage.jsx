@@ -40,6 +40,8 @@ function StorePage() {
           </NavButton>
           <NavButton to="/store/games">Games</NavButton>
           <NavButton to="/store/apps">Apps</NavButton>
+          <NavButton to="/store/music">Music</NavButton>
+          <NavButton to="/store/videos">Video</NavButton>
           <div className="search-container">
             <input
               ref={inputRef}
