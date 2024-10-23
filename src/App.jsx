@@ -25,14 +25,12 @@ export const globalUpdateProgress = {
 
 export const publicPath =
   "https://zzxaltzqtymfxzxphxje.supabase.co/storage/v1/object/public";
-export const deafultBucket = "testing2";
-export const productsBucket = "products";
+export const deafultBucket = "DsLauncher";
+export const productsBucket = "DsNdib";
+export const usersBucket = "DsCore";
+export const launcherBucket = "DsLauncher";
+export const developerPublicPathPart = "DsLauncher";
 export const defaultCurrency = "ruble";
-
-// await CurrenciesCache.load();
-// await DevelopersCache.load();
-// await UsersCache.load();
-// await ProductsCache.load();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <div className="app">

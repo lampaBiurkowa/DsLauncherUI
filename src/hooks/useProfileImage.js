@@ -1,5 +1,5 @@
 import { UserContext } from "@/contexts/UserContextProvider";
-import { deafultBucket, publicPath } from "@/App";
+import { publicPath, usersBucket } from "@/App";
 import { useEffect, useContext, useState } from "react";
 
 export default function useProfileImage() {
@@ -9,7 +9,7 @@ export default function useProfileImage() {
   useEffect(() => {
     if (currentUser?.profileImage) {
       setProfileImage(
-        `${publicPath}/${deafultBucket}/${currentUser.profileImage}`
+        `${publicPath}/${usersBucket}/${currentUser.profileImage}`
       );
     } else {
       setProfileImage(undefined);

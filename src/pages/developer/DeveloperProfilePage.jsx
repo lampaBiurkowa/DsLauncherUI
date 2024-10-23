@@ -2,7 +2,7 @@ import React, { useContext, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { useDeveloper } from "./hooks/useDeveloper";
-import { deafultBucket, publicPath } from "@/App";
+import { deafultBucket, launcherBucket, publicPath } from "@/App";
 import { UserContext } from "@/contexts/UserContextProvider";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import ProfilePicture from "../../components/profile-picture/ProfilePicture";
@@ -28,7 +28,7 @@ function DeveloperProfilePage() {
 
   const logo = useMemo(() => {
     if (developer?.profileImage?.length > 0) {
-      return `${publicPath}/${deafultBucket}/${developer?.profileImage}`;
+      return `${publicPath}/${launcherBucket}/${developer?.profileImage}`;
     }
     return undefined;
   }, [developer]);
