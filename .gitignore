@@ -128,3 +128,5 @@ dist
 
 .vscode/
 src-tauri/target/
+
+.env.development

@@ -1,11 +1,13 @@
 import { LocalStorageHandler } from "./LocalStorageService";
 
-const API_BASE_URL = "http://localhost:5216";
+const API_BASE_URL = import.meta.env.VITE_LAUNCHER_API_URL;
+
 
 export class DsLauncherApiClient {
   constructor() {
     this.authToken = null;
     this.baseUrl = API_BASE_URL;
+    console.log("ENV", API_BASE_URL);
   }
 
   async request(url, options = {}) {

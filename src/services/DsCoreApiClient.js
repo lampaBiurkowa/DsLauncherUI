@@ -1,6 +1,6 @@
 import { LocalStorageHandler } from "./LocalStorageService";
 
-const API_BASE_URL = "http://localhost:5218";
+const API_BASE_URL = import.meta.env.VITE_CORE_API_URL;
 
 export class DsCoreApiClient {
     constructor() {
