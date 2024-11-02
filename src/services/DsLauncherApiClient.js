@@ -7,7 +7,6 @@ export class DsLauncherApiClient {
   constructor() {
     this.authToken = null;
     this.baseUrl = API_BASE_URL;
-    console.log("ENV", API_BASE_URL);
   }
 
   async request(url, options = {}) {

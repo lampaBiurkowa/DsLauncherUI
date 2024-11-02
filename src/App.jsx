@@ -10,11 +10,13 @@ import {
   UsersCache,
 } from "./services/CacheService";
 import { LocalStorageHandler } from "./services/LocalStorageService.js";
-import { addListener } from "./services/DsLauncherService";
+import { listen } from '@tauri-apps/api/event';
+
 import "./styles/App.scss";
 
-addListener("get-credentials", (args) => {
-  console.log(args);
+
+listen("get-credentials", (event) => {
+  let args = JSON.parse(event.payload);
   LocalStorageHandler.setToken(args.Token);
   LocalStorageHandler.setUser(args.UserGuid);
 });

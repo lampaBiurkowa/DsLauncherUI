@@ -29,8 +29,6 @@ function ProfilePicture({ src, readonly, onSelected }) {
         <button
           className="select-btn"
           onClick={() => {
-            console.log(src?.length);
-            console.log(src);
             if (src?.length > 0) {
               setMenuOpen(true);
             } else {
