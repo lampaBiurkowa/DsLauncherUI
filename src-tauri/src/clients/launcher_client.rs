@@ -6,23 +6,35 @@ use std::fs::File;
 use std::path::Path;
 use std::io::Read;
 
-pub struct DsLauncherClient {
+use crate::configuration::env_var::EnvVar;
+
+pub(crate) struct DsLauncherClient {
     base_url: String,
     client: Client,
 }
 
 #[derive(Deserialize)]
-pub struct Developer {
+pub(crate) struct Developer {
     pub name: String,
     pub guid: String
 }
 
 impl DsLauncherClient {
-    pub fn new(base_url: &str) -> Self {
+    pub(crate) fn new() -> Self {
         Self {
-            base_url: base_url.to_string(),
+            base_url: EnvVar::LauncherApiUrl.get_value().expect("Error getting launcher api url"),
             client: Client::new(),
         }
+    }
+    pub(crate) async fn get_bucket_name(&self) -> Result<String, Error> {
+        let url = format!("{}/Configuration/bucket-name", self.base_url);
+
+        let response = self.client.get(&url)
+            .send()
+            .await?;
+
+        let bucket = response.text().await?.trim_matches('"').to_string();
+        Ok(bucket)
     }
 
     fn read_file_to_buffer(file_path: &Path) -> (String, Vec<u8>) {
@@ -39,7 +51,7 @@ impl DsLauncherClient {
         (file_name, buffer)
     }
 
-    pub async fn upload(&self, token: &str, developer_guid: &Uuid, metadata_path: &Path) -> Result<String, Error> {
+    pub(crate) async fn upload(&self, token: &str, developer_guid: &Uuid, metadata_path: &Path) -> Result<String, Error> {
         let url = format!("{}/Ndib/upload/{}", self.base_url, developer_guid);
         
         let (metadata_file_name, metadata_buffer) = Self::read_file_to_buffer(metadata_path);

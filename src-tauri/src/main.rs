@@ -3,7 +3,8 @@
 
 use std::fs::File;
 
-use launcher_service::websocket_manager::{connect_websocket, execute_command};
+use configuration::remote_var::RemoteVars;
+use launcher_service::{commands::execute::execute, websocket_manager::connect_websocket};
 use ndib::commands::{add::add, init::init, update_metadata::update_metadata, remove::remove, pull::pull, publish::publish};
 use tauri::Manager;
 
@@ -11,6 +12,7 @@ mod ndib;
 mod clients;
 mod launcher_service;
 mod cache;
+mod configuration;
 
 #[tokio::main]
 async fn main() {
@@ -30,6 +32,11 @@ async fn main() {
         .setup(|app| {
             let (sender, receiver) = tokio::sync::mpsc::channel(100);
             app.manage(sender);
+            let remote_vars = tauri::async_runtime::block_on(async move {
+                RemoteVars::load().await
+            })?;
+            app.manage(remote_vars);
+
             let handle = app.handle().clone();
             tauri::async_runtime::spawn(async move {
                 Ok(match connect_websocket(receiver, &handle).await {
@@ -40,7 +47,7 @@ async fn main() {
 
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![init, add, remove, publish, update_metadata, pull, execute_command])
+        .invoke_handler(tauri::generate_handler![init, add, remove, publish, update_metadata, pull, execute])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

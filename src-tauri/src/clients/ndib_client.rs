@@ -4,17 +4,30 @@ use std::fs::File;
 use std::path::Path;
 use std::io::Read;
 
+use crate::configuration::env_var::EnvVar;
+
 pub struct DsNdibClient {
     base_url: String,
     client: Client,
 }
 
 impl DsNdibClient {
-    pub fn new(base_url: &str) -> Self {
+    pub(crate) fn new() -> Self {
         Self {
-            base_url: base_url.to_string(),
+            base_url: EnvVar::NdibApiUrl.get_value().expect("Error getting ndib api url"),
             client: Client::new(),
         }
+    }
+    
+    pub(crate) async fn get_bucket_name(&self) -> Result<String, Error> {
+        let url = format!("{}/Configuration/bucket-name", self.base_url);
+
+        let response = self.client.get(&url)
+            .send()
+            .await?;
+
+        let bucket = response.text().await?.trim_matches('"').to_string();
+        Ok(bucket)
     }
 
     fn read_file_to_buffer(file_path: &Path) -> (String, Vec<u8>) {
