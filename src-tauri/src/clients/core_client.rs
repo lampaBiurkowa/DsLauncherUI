@@ -1,4 +1,5 @@
 use reqwest::{Error, Client};
+use serde_json::Value;
 
 use crate::configuration::env_var::EnvVar;
 
@@ -24,6 +25,26 @@ impl DsCoreClient {
 
         let bucket = response.text().await?.trim_matches('"').to_string();
         Ok(bucket)
+    }
+
+    pub(crate) async fn get_currency(&self, id: &str) -> Result<Value, Error> {
+        let url = format!("{}/Currency/{}", self.base_url, id);
+
+        let response = self.client.get(&url)
+            .send()
+            .await?;
+
+        Ok(response.json().await?)
+    }
+
+    pub(crate) async fn get_user(&self, id: &str) -> Result<Value, Error> {
+        let url = format!("{}/User/{}", self.base_url, id);
+
+        let response = self.client.get(&url)
+            .send()
+            .await?;
+
+        Ok(response.json().await?)
     }
 
     pub async fn login(&self, user_id: &str, password_base64: &str) -> Result<String, Error> {

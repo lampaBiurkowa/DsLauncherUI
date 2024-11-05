@@ -35,9 +35,9 @@ pub(crate) fn publish(developer: Uuid) -> Result<(), NdibError>{
 
     let rt = Runtime::Tokio(TokioRuntime::new()?);
     rt.block_on(async {
-        let launcher_api = DsLauncherClient::new("http://localhost:5216");
+        let launcher_api = DsLauncherClient::new();
         let product_guid = launcher_api.upload(&get_cache(TOKEN_KEY).unwrap(), &developer, Path::new(METADATA_NAME)).await.unwrap();
-        let ndib_api = DsNdibClient::new("http://localhost:5215");
+        let ndib_api = DsNdibClient::new();
         ndib_api.upload(&get_cache(TOKEN_KEY).unwrap(), &product_guid.replace("\"", ""),
             Path::new(&format!("{}.zip", MANIFEST_CORE)),
             Path::new(&format!("{}.zip", MANIFEST_WIN)),

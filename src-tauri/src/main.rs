@@ -3,6 +3,7 @@
 
 use std::fs::File;
 
+use cache::db::Database;
 use configuration::remote_var::RemoteVars;
 use launcher_service::{commands::execute::execute, websocket_manager::connect_websocket};
 use ndib::commands::{add::add, init::init, update_metadata::update_metadata, remove::remove, pull::pull, publish::publish};
@@ -35,6 +36,7 @@ async fn main() {
             let remote_vars = tauri::async_runtime::block_on(async move {
                 RemoteVars::load().await
             })?;
+            app.manage(Database::try_initialize(remote_vars.clone()));
             app.manage(remote_vars);
 
             let handle = app.handle().clone();

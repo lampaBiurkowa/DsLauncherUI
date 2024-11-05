@@ -26,8 +26,8 @@ pub(crate) fn update_metadata(name: &str) -> Result<(), NdibError> {
     
     let rt = Runtime::Tokio(TokioRuntime::new()?);
     rt.block_on(async {
-        let launcher_api = DsLauncherClient::new("http://localhost:5216");
-        let ndib_api = DsNdibClient::new("http://localhost:5215");
+        let launcher_api = DsLauncherClient::new();
+        let ndib_api = DsNdibClient::new();
         let product_guid = launcher_api.get_product_guid(name).await.unwrap();
         ndib_api.update_metadata(&get_cache(TOKEN_KEY).unwrap(), &product_guid, Path::new(METADATA_NAME)).await.unwrap();
     });

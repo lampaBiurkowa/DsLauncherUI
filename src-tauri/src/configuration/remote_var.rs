@@ -2,10 +2,13 @@ use crate::clients::{core_client::DsCoreClient, launcher_client::DsLauncherClien
 
 use super::error::ConfigurationError;
 
+#[derive(Clone)]
 pub(crate) struct RemoteVars {
-    core_bucket: String,
-    launcher_bucket: String,
-    ndib_bucket: String
+    pub(crate) core_bucket: String,
+    pub(crate) launcher_bucket: String,
+    pub(crate) ndib_bucket: String,
+    pub(crate) ndib_icon_id: String,
+    pub(crate) ndib_bg_id: String
 }
 
 impl RemoteVars {
@@ -14,12 +17,14 @@ impl RemoteVars {
         let launcher_client = DsLauncherClient::new();
         let ndib_client = DsNdibClient::new();
 
-        let (core_bucket, launcher_bucket, ndib_bucket) = tokio::join!(
+        let (core_bucket, launcher_bucket, ndib_bucket, ndib_bg_id, ndib_icon_id) = tokio::join!(
             core_client.get_bucket_name(),
             launcher_client.get_bucket_name(),
-            ndib_client.get_bucket_name()
+            ndib_client.get_bucket_name(),
+            ndib_client.get_background_id(),
+            ndib_client.get_icon_id()
         );
 
-        Ok(Self { core_bucket: core_bucket?, launcher_bucket: launcher_bucket?, ndib_bucket: ndib_bucket? })
+        Ok(Self { core_bucket: core_bucket?, launcher_bucket: launcher_bucket?, ndib_bucket: ndib_bucket?, ndib_bg_id: ndib_bg_id?, ndib_icon_id: ndib_icon_id? })
     }
 }

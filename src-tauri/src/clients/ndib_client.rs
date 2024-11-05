@@ -30,6 +30,28 @@ impl DsNdibClient {
         Ok(bucket)
     }
 
+    pub(crate) async fn get_icon_id(&self) -> Result<String, Error> {
+        let url = format!("{}/Configuration/icon-id", self.base_url);
+
+        let response = self.client.get(&url)
+            .send()
+            .await?;
+
+        let bucket = response.text().await?.trim_matches('"').to_string();
+        Ok(bucket)
+    }
+
+    pub(crate) async fn get_background_id(&self) -> Result<String, Error> {
+        let url = format!("{}/Configuration/background-id", self.base_url);
+
+        let response = self.client.get(&url)
+            .send()
+            .await?;
+
+        let bucket = response.text().await?.trim_matches('"').to_string();
+        Ok(bucket)
+    }
+
     fn read_file_to_buffer(file_path: &Path) -> (String, Vec<u8>) {
         let file_name = file_path
             .file_name()

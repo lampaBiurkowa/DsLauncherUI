@@ -4,16 +4,17 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 #[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub(crate) struct Product {
     pub(crate) model: Value,
-    pub(crate) is_developer: bool,
-    pub(crate) rates: RatesCount,
+    pub(crate) rates: RatesBreakdown,
     pub(crate) latest_version: Value,
     pub(crate) files_data: FilesData,
 }
 
 #[derive(Serialize, Deserialize)]
-pub(crate) struct RatesCount {
+#[serde(rename_all = "camelCase")]
+pub(crate) struct RatesBreakdown {
     pub(crate) avg: f32,
     pub(crate) rate_counts: HashMap<u8, u32>
 }

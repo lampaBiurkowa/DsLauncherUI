@@ -1,6 +1,7 @@
 use reqwest::{Error, Client};
 use reqwest::multipart;
 use serde::Deserialize;
+use serde_json::Value;
 use uuid::Uuid;
 use std::fs::File;
 use std::path::Path;
@@ -26,6 +27,7 @@ impl DsLauncherClient {
             client: Client::new(),
         }
     }
+    
     pub(crate) async fn get_bucket_name(&self) -> Result<String, Error> {
         let url = format!("{}/Configuration/bucket-name", self.base_url);
 
@@ -93,5 +95,55 @@ impl DsLauncherClient {
 
         let id = response.text().await?.trim_matches('"').to_string();
         Ok(id)
+    }
+
+    pub(crate) async fn get_developer(&self, id: &str) -> Result<Value, Error> {
+        let url = format!("{}/Developer/{}", self.base_url, id);
+
+        let response = self.client.get(&url)
+            .send()
+            .await?;
+
+        Ok(response.json().await?)
+    }
+
+    pub(crate) async fn get_developer_by_user(&self, id: &str) -> Result<Value, Error> {
+        let url = format!("{}/Developer/user/{}", self.base_url, id);
+
+        let response = self.client.get(&url)
+            .send()
+            .await?;
+
+        Ok(response.json().await?)
+    }
+
+    pub(crate) async fn get_product(&self, id: &str) -> Result<Value, Error> {
+        let url = format!("{}/Product/{}", self.base_url, id);
+
+        let response = self.client.get(&url)
+            .send()
+            .await?;
+
+        Ok(response.json().await?)
+    }
+
+    pub(crate) async fn get_latest_product_package(&self, id: &str) -> Result<Value, Error> {
+        let url = format!("{}/Package/latest/{}", self.base_url, id);
+
+        let response = self.client.get(&url)
+            .send()
+            .await?;
+
+        Ok(response.json().await?)
+    }
+
+    pub(crate) async fn get_review_breakdown(&self, id: &str) -> Result<Value, Error> {
+        let url = format!("{}/Review/product/{}/breakdown", self.base_url, id);
+
+        let response = self.client.get(&url)
+            .send()
+            .await?;
+
+        Ok(response.json().await?)
     }
 }
