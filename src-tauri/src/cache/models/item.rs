@@ -21,9 +21,9 @@ pub(crate) struct ItemType {
     pub item: Item,
 }
 
-impl ItemType {
+impl Type {
     pub(crate) fn as_str(&self) -> &str {
-        match self.item_type {
+        match self {
             Type::Developer => "Developer",
             Type::User => "User",
             Type::Product => "Product",

@@ -24,6 +24,7 @@ pub(crate) struct Database {
 
 const DB_NAME: &str = "cache";
 const CACHE_NAME: &str = "cache";
+const EXPIRATION_MINUTES: u64 = 2;
 
 impl Database {
     pub(crate) async fn try_initialize(remote_vars: RemoteVars) -> Result<Self, CacheError> {
@@ -48,22 +49,22 @@ impl Database {
         Ok(db)
     }
 
-    pub(crate) async fn get_item(&self, entity: ItemType, id: &str, expiration_minutes: u64) -> Result<Option<Item>, CacheError> {
-        let item: Option<ItemType> = self.db.select((entity.as_str(), id)).await?;
+    pub(crate) async fn get_item(&self, entity_type: Type, id: &str) -> Result<Option<Item>, CacheError> {
+        let item: Option<ItemType> = self.db.select((entity_type.as_str(), id)).await?;
         
         if let Some(mut cache_item) = item {
             if cache_item.item.expire > current_timestamp() {
                 return Ok(Some(cache_item.item));
             } else {
-                cache_item.item.data = self.refresh(entity.item_type, id).await?;
-                cache_item.item.expire = expiration_timestamp(expiration_minutes);
-                let result: Option<Item> = self.db.update((entity.as_str(), id)).content(cache_item.item).await?;
+                cache_item.item.data = self.refresh(entity_type, id).await?;
+                cache_item.item.expire = expiration_timestamp(EXPIRATION_MINUTES);
+                let result: Option<Item> = self.db.update((entity_type.as_str(), id)).content(cache_item.item).await?;
                 return Ok(result);
             }
         } else {
-            let model = self.refresh(entity.item_type, id).await?;
-            let cache_item = ItemType { item_type: entity.item_type, item: Item { data: model.clone(), expire: expiration_timestamp(expiration_minutes) } };
-            let result: Option<Item> = self.db.create((entity.as_str(), id)).content(cache_item.item).await?;
+            let model = self.refresh(entity_type, id).await?;
+            let cache_item = ItemType { item_type: entity_type, item: Item { data: model.clone(), expire: expiration_timestamp(EXPIRATION_MINUTES) } };
+            let result: Option<Item> = self.db.create((entity_type.as_str(), id)).content(cache_item.item).await?;
             Ok(result)
         }
     }
