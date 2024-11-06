@@ -1,12 +1,12 @@
+import { getProduct } from "@/services/CacheService";
 import { useState, useEffect } from "react";
-import { ProductsCache } from "@/services/CacheService";
 
 function useMusic(id) {
   let [music, setMusic] = useState();
 
   useEffect(() => {
     async function fetchMusic() {
-      const response = await ProductsCache.getById(id);
+      const response = await getProduct(id);
       setMusic(response);
     }
     

@@ -3,12 +3,12 @@ import TitleBar from "./components/titlebar/TitleBar";
 import Router from "./Router.jsx";
 import UserContextProvider from "./contexts/UserContextProvider";
 import SettingsContextProvider from "./contexts/SettingsContextProvider";
-import {
-  CurrenciesCache,
-  DevelopersCache,
-  ProductsCache,
-  UsersCache,
-} from "./services/CacheService";
+// import {
+//   CurrenciesCache,
+//   DevelopersCache,
+//   ProductsCache,
+//   UsersCache,
+// } from "./services/CacheService";
 import { LocalStorageHandler } from "./services/LocalStorageService.js";
 import { listen } from '@tauri-apps/api/event';
 

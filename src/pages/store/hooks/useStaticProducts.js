@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { ProductsCache } from "@/services/CacheService";
 import { deafultBucket, publicPath } from "@/App";
+import { getProduct } from "@/services/CacheService";
 
 function useStaticProducts() {
   const url = `${publicPath}/${deafultBucket}/discover.json`;
@@ -20,7 +20,7 @@ function useStaticProducts() {
           setProducts((prevProducts) => [...prevProducts, sectionProducts]);
 
           section.items.forEach((appId) => {
-            ProductsCache.getById(appId)
+            getProduct(appId)
               .then((item) => {
                 setProducts((prevProducts) => {
                   return prevProducts.map((prevSection) =>

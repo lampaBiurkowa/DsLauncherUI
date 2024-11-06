@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useScrolledToEnd } from "@/hooks/useScrolledToEnd";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import DetailedStoreEntry from "./components/DetailedStoreEntry";
-import { ProductsCache } from "@/services/CacheService";
 import "./GamesPage.scss";
+import { getProduct } from "@/services/CacheService";
 
 const api = new DsLauncherApiClient();
 
@@ -14,7 +14,7 @@ function GamesPage() {
     const newGames = await api.getGamesIds(games.length, 10);
     const updatedGames = await Promise.all(
       newGames.map(async (guid) => {
-        return await ProductsCache.getById(guid);
+        return await getProduct(guid);
       })
     );
     setGames([...games, ...updatedGames]);

@@ -1,4 +1,4 @@
-import { ProductsCache } from "@/services/CacheService";
+import { getProduct } from "@/services/CacheService";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import { useEffect, useState } from "react";
 
@@ -9,7 +9,7 @@ export function useDeveloperProducts(developerGuid) {
   useEffect(() => {
     (async () => {
       const productGuids = (await api.getProductsByDeveloper(developerGuid)).map(product => product.guid);
-      const productDetailsPromises = productGuids.map(guid => ProductsCache.getById(guid));
+      const productDetailsPromises = productGuids.map(guid => getProduct(guid));
       const detailedProducts = await Promise.all(productDetailsPromises);
       setProducts(detailedProducts);
     })();

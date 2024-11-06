@@ -1,133 +1,155 @@
-import getFilesData from "@/services/getFilesData";
-import { DsCoreApiClient } from "../services/DsCoreApiClient";
-import { DsLauncherApiClient } from "../services/DsLauncherApiClient";
+// import getFilesData from "@/services/getFilesData";
+// import { DsCoreApiClient } from "../services/DsCoreApiClient";
+// import { DsLauncherApiClient } from "../services/DsLauncherApiClient";
+import { invoke } from '@tauri-apps/api/core'
 
-class CachedObjects {
-  constructor() {
-    this.data = {};
-  }
 
-  async getById(id) {
-    if (this.data.hasOwnProperty(id) && this.data[id].expire > Date.now()) {
-      return this.data[id];
-    } else {
-      return await this.loadItem(id);
-    }
-  }
+// class CachedObjects {
+//   constructor() {
+//     this.data = {};
+//   }
 
-  async getByIds(ids) {
-    const results = [];
-    const idsToLoad = [];
+//   async getById(id) {
+//     if (this.data.hasOwnProperty(id) && this.data[id].expire > Date.now()) {
+//       return this.data[id];
+//     } else {
+//       return await this.loadItem(id);
+//     }
+//   }
 
-    for (const id of ids) {
-      if (this.data.hasOwnProperty(id) && this.data[id].expire > Date.now()) {
-        results.push(this.data[id]);
-      } else {
-        idsToLoad.push(id);
-      }
-    }
+//   async getByIds(ids) {
+//     const results = [];
+//     const idsToLoad = [];
 
-    if (idsToLoad.length > 0) {
-      const loadedItems = await Promise.all(idsToLoad.map(id => this.loadItem(id)));
-      results.push(...loadedItems);
-    }
+//     for (const id of ids) {
+//       if (this.data.hasOwnProperty(id) && this.data[id].expire > Date.now()) {
+//         results.push(this.data[id]);
+//       } else {
+//         idsToLoad.push(id);
+//       }
+//     }
 
-    return results;
-  }
+//     if (idsToLoad.length > 0) {
+//       const loadedItems = await Promise.all(idsToLoad.map(id => this.loadItem(id)));
+//       results.push(...loadedItems);
+//     }
 
-  setById(id, item) {
-    return (this.data[id] = item);
-  }
+//     return results;
+//   }
 
-  getExpirationTimestamp(minsAhead) {
-    return new Date(Date.now() + minsAhead * 60000);
-  }
-}
+//   setById(id, item) {
+//     return (this.data[id] = item);
+//   }
 
-class UsersCacheSingleton extends CachedObjects {
-  constructor() {
-    super();
-    this.userApi = new DsCoreApiClient();
-    this.launcherApi = new DsLauncherApiClient();
-  }
+//   getExpirationTimestamp(minsAhead) {
+//     return new Date(Date.now() + minsAhead * 60000);
+//   }
+// }
 
-  async loadItem(id) {
-    var model = await this.userApi.getUserById(id);
-    var isDeveloper = !model.isDeleted && (await this.launcherApi.getDeveloperByUser(id)).length > 0;
-    this.data[id] = { model: model, isDeveloper: isDeveloper, expire: this.getExpirationTimestamp(30) }
+// class UsersCacheSingleton extends CachedObjects {
+//   constructor() {
+//     super();
+//     this.userApi = new DsCoreApiClient();
+//     this.launcherApi = new DsLauncherApiClient();
+//   }
 
-    return this.data[id];
-  }
-}
+//   async loadItem(id) {
+//     var model = await this.userApi.getUserById(id);
+//     var isDeveloper = !model.isDeleted && (await this.launcherApi.getDeveloperByUser(id)).length > 0;
+//     this.data[id] = { model: model, isDeveloper: isDeveloper, expire: this.getExpirationTimestamp(30) }
 
-class ProductsCacheSingleton extends CachedObjects {
-  constructor() {
-    super();
-    this.launcherApi = new DsLauncherApiClient();
-  }
+//     return this.data[id];
+//   }
+// }
+
+// class ProductsCacheSingleton extends CachedObjects {
+//   constructor() {
+//     super();
+//     this.launcherApi = new DsLauncherApiClient();
+//   }
   
-  async getRates(productId) {
-    const data = await this.launcherApi.getReviewBreakdown(productId);
-    return {
-      rateCounts: data,
-      avg:
-        (data.reduce((sum, count, index) => sum + count * (index + 1), 0) /
-        data.reduce((sum, count) => sum + count, 0)).toFixed(1)
-    };
-  }
+//   async getRates(productId) {
+//     const data = await this.launcherApi.getReviewBreakdown(productId);
+//     return {
+//       rateCounts: data,
+//       avg:
+//         (data.reduce((sum, count, index) => sum + count * (index + 1), 0) /
+//         data.reduce((sum, count) => sum + count, 0)).toFixed(1)
+//     };
+//   }
 
-  async loadItem(productGuid) {
-    const [model, rates, latestVersion] = await Promise.all([
-      this.launcherApi.getProductById(productGuid),
-      this.getRates(productGuid),
-      this.launcherApi.getLatestProductPackage(productGuid),
-    ]);
+//   async loadItem(productGuid) {
+//     const [model, rates, latestVersion] = await Promise.all([
+//       this.launcherApi.getProductById(productGuid),
+//       this.getRates(productGuid),
+//       this.launcherApi.getLatestProductPackage(productGuid),
+//     ]);
 
-    this.data[productGuid] = {
-      model: model,
-      static: getFilesData(model),
-      rates: rates,
-      latestVersion: latestVersion,
-      expire: this.getExpirationTimestamp(30)
-    };
+//     this.data[productGuid] = {
+//       model: model,
+//       static: getFilesData(model),
+//       rates: rates,
+//       latestVersion: latestVersion,
+//       expire: this.getExpirationTimestamp(30)
+//     };
 
-    return this.data[productGuid];
-  }
+//     return this.data[productGuid];
+//   }
 
-  async refreshRates(productGuid) {
-    this.data[productGuid].rates = await this.getRates(productGuid);
-  }
-}
+//   async refreshRates(productGuid) {
+//     this.data[productGuid].rates = await this.getRates(productGuid);
+//   }
+// }
 
-class DevelopersCacheSingleton extends CachedObjects {
-  constructor() {
-    super();
-    this.launcherApi = new DsLauncherApiClient();
-  }
+// class DevelopersCacheSingleton extends CachedObjects {
+//   constructor() {
+//     super();
+//     this.launcherApi = new DsLauncherApiClient();
+//   }
 
-  async loadItem(developerGuid) {
-    var model = await this.launcherApi.getDeveloperById(developerGuid);
-    this.data[developerGuid] = { model: model, expire: this.getExpirationTimestamp(30) };
+//   async loadItem(developerGuid) {
+//     var model = await this.launcherApi.getDeveloperById(developerGuid);
+//     this.data[developerGuid] = { model: model, expire: this.getExpirationTimestamp(30) };
     
-    return this.data[developerGuid];
-  }
-}
+//     return this.data[developerGuid];
+//   }
+// }
 
-class CurrenciesCacheSingleton extends CachedObjects {
-  constructor() {
-    super();
-    this.coreApi = new DsCoreApiClient();
-  }
+// class CurrenciesCacheSingleton extends CachedObjects {
+//   constructor() {
+//     super();
+//     this.coreApi = new DsCoreApiClient();
+//   }
 
-  async loadItem(name) {
-    var model = await this.coreApi.getCurrencyByName(name);
-    this.data[name] = { model: model, expire: this.getExpirationTimestamp(30) };
+//   async loadItem(name) {
+//     var model = await this.coreApi.getCurrencyByName(name);
+//     this.data[name] = { model: model, expire: this.getExpirationTimestamp(30) };
     
-    return this.data[name];
-  }
+//     return this.data[name];
+//   }
+// }
+
+
+async function getById(type, id) {
+  await invoke("get_item", { type, id });
 }
 
-export const CurrenciesCache = new CurrenciesCacheSingleton();
-export const DevelopersCache = new DevelopersCacheSingleton();
-export const ProductsCache = new ProductsCacheSingleton();
-export const UsersCache = new UsersCacheSingleton();
+export async function getDeveloper(id) {
+  await getById("developer", id);
+}
+
+export async function getCurrency(id) {
+  await getById("currency", id);
+}
+
+export async function getProduct(id) {
+  await getById("product", id);
+}
+
+export async function getUser(id) {
+  await getById("user", id);
+}
+// export const CurrenciesCache = new CurrenciesCacheSingleton();
+// // export const DevelopersCache = new DevelopersCacheSingleton();
+// export const ProductsCache = new ProductsCacheSingleton();
+// export const UsersCache = new UsersCacheSingleton();

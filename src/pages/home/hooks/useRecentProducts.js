@@ -1,5 +1,5 @@
 import { useServiceListener } from "@/hooks/useServiceListener";
-import { ProductsCache } from "@/services/CacheService";
+import { getProduct } from "@/services/CacheService";
 import { DsLauncherServiceClient } from "@/services/DsLauncherServiceClient";
 import { useEffect, useState } from "react";
 
@@ -16,7 +16,7 @@ export function useRecentProducts() {
   useEffect(() => {
     if (recent) {
       (async () => {
-        const productDetailsPromises = recent.Recents.map(guid => ProductsCache.getById(guid));
+        const productDetailsPromises = recent.Recents.map(guid => getProduct(guid));
         const detailedProducts = await Promise.all(productDetailsPromises);
 
         setProducts(detailedProducts);

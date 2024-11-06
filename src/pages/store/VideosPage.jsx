@@ -3,7 +3,7 @@ import { useScrolledToEnd } from "@/hooks/useScrolledToEnd";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import DetailedStoreEntry from "./components/DetailedStoreEntry";
 import "./VideosPage.scss";
-import { ProductsCache } from "@/services/CacheService";
+import { getProduct } from "@/services/CacheService";
 
 const api = new DsLauncherApiClient();
 
@@ -13,7 +13,7 @@ function VideosPage() {
   const scrollViewRef = useScrolledToEnd(async () => {
     const newVideos = await api.getVideosIds(videos.length, 10);
     const updatedVideos = await Promise.all(newVideos.map(async (guid) => {
-      return await ProductsCache.getById(guid);
+      return await getProduct(guid);
     }));
     setVideos([...videos, ...updatedVideos]);
   });
