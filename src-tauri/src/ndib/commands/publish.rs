@@ -3,10 +3,10 @@ use tauri::{async_runtime::Runtime, command};
 use tauri::async_runtime::TokioRuntime;
 use uuid::Uuid;
 
-use crate::{cache::{get_cache, TOKEN_KEY}, clients::{launcher_client::DsLauncherClient, ndib_client::DsNdibClient}, ndib::{error::NdibError, helpers::{consts::{MANIFEST_CORE, MANIFEST_LINUX, MANIFEST_MAC, MANIFEST_WIN, METADATA_FILE, METADATA_NAME, NDIB_FOLDER}, utils::{create_zip, read_serialized_object}, vec_extensions::VecStringExt}, models::ndib_data::NdibData}};
+use crate::{clients::{launcher_client::DsLauncherClient, ndib_client::DsNdibClient}, ndib::{error::NdibError, helpers::{consts::{MANIFEST_CORE, MANIFEST_LINUX, MANIFEST_MAC, MANIFEST_WIN, METADATA_FILE, METADATA_NAME, NDIB_FOLDER}, utils::{create_zip, read_serialized_object}, vec_extensions::VecStringExt}, models::ndib_data::NdibData}, session_data::{keys::TOKEN_KEY, store::Store}};
 
 #[command]
-pub(crate) fn publish(developer: Uuid) -> Result<(), NdibError>{
+pub(crate) fn publish(store: tauri::State<'_, Store>, developer: Uuid) -> Result<(), NdibError>{
     let ndib_data: NdibData = read_serialized_object(&Path::new(NDIB_FOLDER).join(METADATA_FILE))?;
     let mut extra_paths: Vec<String> = Vec::new();
     extra_paths.add_if_non_empty(ndib_data.icon);
@@ -34,22 +34,26 @@ pub(crate) fn publish(developer: Uuid) -> Result<(), NdibError>{
     create_zip(extra_paths.into_iter().map(Ok), METADATA_NAME.to_string());
 
     let rt = Runtime::Tokio(TokioRuntime::new()?);
-    rt.block_on(async {
-        let launcher_api = DsLauncherClient::new();
-        let product_guid = launcher_api.upload(&get_cache(TOKEN_KEY).unwrap(), &developer, Path::new(METADATA_NAME)).await.unwrap();
-        let ndib_api = DsNdibClient::new();
-        ndib_api.upload(&get_cache(TOKEN_KEY).unwrap(), &product_guid.replace("\"", ""),
-            Path::new(&format!("{}.zip", MANIFEST_CORE)),
-            Path::new(&format!("{}.zip", MANIFEST_WIN)),
-            Path::new(&format!("{}.zip", MANIFEST_MAC)),
-            Path::new(&format!("{}.zip", MANIFEST_LINUX)),
-            Path::new(METADATA_NAME)).await.unwrap();
-    });
+    rt.block_on(upload(store, developer))?;
 
     for &manifest_file in &manifest_files {
         remove_file(format!("{}.zip", manifest_file))?;
     }
     remove_file(METADATA_NAME)?;
 
+    Ok(())
+}
+
+async fn upload(store: tauri::State<'_, Store>, developer: Uuid) -> Result<(), NdibError> {
+    let launcher_api = DsLauncherClient::new();
+    let product_guid = launcher_api.upload(&store.get(TOKEN_KEY)?, &developer, Path::new(METADATA_NAME)).await.unwrap();
+    let ndib_api = DsNdibClient::new();
+    ndib_api.upload(&store.get(TOKEN_KEY)?, &product_guid.replace("\"", ""),
+        Path::new(&format!("{}.zip", MANIFEST_CORE)),
+        Path::new(&format!("{}.zip", MANIFEST_WIN)),
+        Path::new(&format!("{}.zip", MANIFEST_MAC)),
+        Path::new(&format!("{}.zip", MANIFEST_LINUX)),
+        Path::new(METADATA_NAME)).await?;
+    
     Ok(())
 }

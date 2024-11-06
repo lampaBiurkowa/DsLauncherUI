@@ -4,6 +4,8 @@ use std::io;
 use serde_json;
 use std::path::PathBuf;
 
+use crate::session_data::error::SessionDataError;
+
 #[derive(Error, Debug)]
 pub(crate) enum NdibError {
     #[error("Failed to create directory: {0}")]
@@ -18,6 +20,10 @@ pub(crate) enum NdibError {
     GlobError(#[from] glob::GlobError),
     #[error("Failure while trying to do sth with pattern 😐 : {0}")]
     PatternError(#[from] glob::PatternError),
+    #[error("Problem with HTTP")]
+    ProblemWithHttp(#[from] reqwest::Error),
+    #[error("Problem with SessionData")]
+    ProblemWithSessionData(#[from] SessionDataError),
     #[error("Invalid product type")]
     ValidationError,
 }

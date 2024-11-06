@@ -1,8 +1,9 @@
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use serde_json::Value;
 use surrealdb::Surreal;
 use surrealdb::engine::local::{Db, Mem};
+use tokio::time::sleep;
 
 use crate::configuration::remote_var::RemoteVars;
 
@@ -24,7 +25,9 @@ pub(crate) struct Database {
 
 const DB_NAME: &str = "cache";
 const CACHE_NAME: &str = "cache";
+const CACHE_FILE_NAME: &str = ".cache";
 const EXPIRATION_MINUTES: u64 = 2;
+const REFRESH_MINUTES: u64 = 2;
 
 impl Database {
     pub(crate) async fn try_initialize(remote_vars: RemoteVars) -> Result<Self, CacheError> {
@@ -34,6 +37,9 @@ impl Database {
         let developer = DeveloperDataProvider::new();
         let product = ProductDataProvider::new(remote_vars);
 
+        db.import(CACHE_FILE_NAME).await?;
+        let db_clone = db.clone();
+        tokio::spawn(Self::persist_cache_worker(db_clone));
         Ok(Self {
             db,
             currency,
@@ -75,6 +81,17 @@ impl Database {
             Type::User => Ok(self.user.get_data_as_json(id).await?),
             Type::Product => Ok(self.product.get_data_as_json(id).await?),
             Type::Currency => Ok(self.currency.get_data_as_json(id).await?)
+        }
+    }
+
+    async fn export_to_file(&self) -> Result<(), surrealdb::Error> {
+        Ok(self.db.export(CACHE_FILE_NAME).await?)
+    }
+
+    async fn persist_cache_worker(db: Surreal<Db>) {
+        loop {
+            sleep(Duration::from_secs(60 * REFRESH_MINUTES)).await;
+            db.export(CACHE_FILE_NAME).await.unwrap();
         }
     }
 }

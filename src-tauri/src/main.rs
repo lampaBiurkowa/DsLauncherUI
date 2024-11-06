@@ -4,9 +4,10 @@
 use std::fs::File;
 
 use cache::db::Database;
-use configuration::remote_var::RemoteVars;
+use configuration::{commands::{get_env::get_env, get_remote_vars::get_remote_vars}, remote_var::RemoteVars};
 use launcher_service::{commands::execute::execute, websocket_manager::connect_websocket};
 use ndib::commands::{add::add, init::init, update_metadata::update_metadata, remove::remove, pull::pull, publish::publish};
+use session_data::{commands::{set_session_value::set_session_value, get_session_value::get_session_value}, store::Store};
 use tauri::Manager;
 
 mod ndib;
@@ -14,6 +15,7 @@ mod clients;
 mod launcher_service;
 mod cache;
 mod configuration;
+mod session_data;
 
 #[tokio::main]
 async fn main() {
@@ -39,6 +41,7 @@ async fn main() {
             app.manage(Database::try_initialize(remote_vars.clone()));
             app.manage(remote_vars);
 
+            app.manage(Store::new());
             let handle = app.handle().clone();
             tauri::async_runtime::spawn(async move {
                 Ok(match connect_websocket(receiver, &handle).await {
@@ -49,7 +52,11 @@ async fn main() {
 
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![init, add, remove, publish, update_metadata, pull, execute])
+        .invoke_handler(tauri::generate_handler![
+            init, add, remove, publish, update_metadata, pull,
+            execute,
+            get_remote_vars, get_env,
+            set_session_value, get_session_value])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

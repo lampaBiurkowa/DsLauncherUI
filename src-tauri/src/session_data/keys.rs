@@ -1,0 +1,1 @@
+pub(crate) const TOKEN_KEY: &str = "TOKEN";

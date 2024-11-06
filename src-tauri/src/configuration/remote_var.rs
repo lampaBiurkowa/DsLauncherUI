@@ -1,8 +1,10 @@
+use serde::Serialize;
+
 use crate::clients::{core_client::DsCoreClient, launcher_client::DsLauncherClient, ndib_client::DsNdibClient};
 
 use super::error::ConfigurationError;
 
-#[derive(Clone)]
+#[derive(Serialize, Clone)]
 pub(crate) struct RemoteVars {
     pub(crate) core_bucket: String,
     pub(crate) launcher_bucket: String,
