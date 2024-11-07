@@ -14,12 +14,6 @@ pub(crate) struct DsLauncherClient {
     client: Client,
 }
 
-#[derive(Deserialize)]
-pub(crate) struct Developer {
-    pub name: String,
-    pub guid: String
-}
-
 impl DsLauncherClient {
     pub(crate) fn new() -> Self {
         Self {
@@ -33,9 +27,9 @@ impl DsLauncherClient {
 
         let response = self.client.get(&url)
             .send()
-            .await?;
+            .await.unwrap();
 
-        let bucket = response.text().await?.trim_matches('"').to_string();
+        let bucket = response.text().await.unwrap().trim_matches('"').to_string();
         Ok(bucket)
     }
 
@@ -91,9 +85,9 @@ impl DsLauncherClient {
 
         let response = self.client.get(&url)
             .send()
-            .await?;
+            .await.unwrap();
 
-        let id = response.text().await?.trim_matches('"').to_string();
+        let id = response.text().await.unwrap().trim_matches('"').to_string();
         Ok(id)
     }
 
@@ -102,9 +96,9 @@ impl DsLauncherClient {
 
         let response = self.client.get(&url)
             .send()
-            .await?;
+            .await.unwrap();
 
-        Ok(response.json().await?)
+        Ok(response.json().await.unwrap())
     }
 
     pub(crate) async fn get_developer_by_user(&self, id: &str) -> Result<Value, Error> {
@@ -112,9 +106,9 @@ impl DsLauncherClient {
 
         let response = self.client.get(&url)
             .send()
-            .await?;
+            .await.unwrap();
 
-        Ok(response.json().await?)
+        Ok(response.json().await.unwrap())
     }
 
     pub(crate) async fn get_product(&self, id: &str) -> Result<Value, Error> {
@@ -122,9 +116,9 @@ impl DsLauncherClient {
 
         let response = self.client.get(&url)
             .send()
-            .await?;
+            .await.unwrap();
 
-        Ok(response.json().await?)
+        Ok(response.json().await.unwrap())
     }
 
     pub(crate) async fn get_latest_product_package(&self, id: &str) -> Result<Value, Error> {
@@ -132,9 +126,9 @@ impl DsLauncherClient {
 
         let response = self.client.get(&url)
             .send()
-            .await?;
+            .await.unwrap();
 
-        Ok(response.json().await?)
+        Ok(response.json().await.unwrap())
     }
 
     pub(crate) async fn get_review_breakdown(&self, id: &str) -> Result<Value, Error> {
@@ -142,8 +136,8 @@ impl DsLauncherClient {
 
         let response = self.client.get(&url)
             .send()
-            .await?;
+            .await.unwrap();
 
-        Ok(response.json().await?)
+        Ok(response.json().await.unwrap())
     }
 }

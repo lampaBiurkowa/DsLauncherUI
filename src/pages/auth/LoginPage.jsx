@@ -9,11 +9,11 @@ import { UserContext } from "../../contexts/UserContextProvider";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { executeCommand } from "@/services/DsLauncherService";
 import { LocalStorageHandler } from "../../services/LocalStorageService";
 import InfoBar, { InfoBarType } from "@/components/info-bar/InfoBar";
 import Dialog from "@/components/dialog/Dialog";
 import VerifyAccount from "./components/VerifyAccount";
+import { executeCommand } from "@/services/DsLauncherServiceClient";
 
 const api = new DsCoreApiClient();
 

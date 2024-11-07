@@ -1,13 +1,14 @@
 import { useServiceListener } from "@/hooks/useServiceListener";
-import { executeCommand } from "@/services/DsLauncherService";
+import { DsLauncherServiceClient } from "@/services/DsLauncherServiceClient";
 import { useEffect, useState } from "react";
 
 export function useLibraries() {
   const response = useServiceListener("get-libraries");
+  const service = new DsLauncherServiceClient();
   const [libraries, setLibraries] = useState();
 
   useEffect(() => {
-    executeCommand("get-libraries");
+    service.getLibraries();
   }, []);
 
   useEffect(() => {

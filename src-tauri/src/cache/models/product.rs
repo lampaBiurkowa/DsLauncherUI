@@ -20,19 +20,9 @@ pub(crate) struct RatesBreakdown {
 }
 
 #[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
 pub(crate) struct FilesData {
     pub(crate) icon: String,
     pub(crate) background: String,
     pub(crate) images: Vec<String>
 }
-
-// function getFilesData(product) {
-//     let data = {};
-//     data.Icon = `${publicPath}/${productsBucket}/${product.guid}/icon.png`;
-//     data.Background = `${publicPath}/${productsBucket}/${product.guid}/bg.png`;
-//     data.Images = [];
-//     for (let i = 0; i < product.imageCount; i++)
-//         data.Images[i] = `${publicPath}/${productsBucket}/${product.guid}/${i + 1}.png`;
-
-//     return data;
-// }

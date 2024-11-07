@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use serde_json::Value;
 
-use crate::{cache::{error::CacheError, models::product::{FilesData, Product, RatesBreakdown}}, clients::{core_client::DsCoreClient, launcher_client::DsLauncherClient}, configuration::{env_var::EnvVar, remote_var}};
+use crate::{cache::{error::CacheError, models::product::{FilesData, Product, RatesBreakdown}}, clients::launcher_client::DsLauncherClient, configuration::{env_var::EnvVar, remote_var}};
 
 use self::remote_var::RemoteVars;
 
@@ -10,7 +10,6 @@ use super::data_provider::DataProvider;
 
 pub(crate) struct ProductDataProvider {
     launcher_client: DsLauncherClient,
-    core_client: DsCoreClient,
     remote_vars: RemoteVars
 }
 
@@ -18,13 +17,12 @@ impl ProductDataProvider {
     pub(crate) fn new(remote_vars: RemoteVars) -> Self {
         Self {
             launcher_client: DsLauncherClient::new(),
-            core_client: DsCoreClient::new(),
             remote_vars
         }
     }
 
     async fn get_rates(&self, id: &str) -> Result<RatesBreakdown, CacheError> {
-        let data = self.launcher_client.get_review_breakdown(id).await?;
+        let data = self.launcher_client.get_review_breakdown(id).await.unwrap();
         match data {
             Value::Array(x) => {
                 let mut rate_counts = HashMap::new();
@@ -75,13 +73,13 @@ impl DataProvider<Product> for ProductDataProvider {
             self.get_rates(id)
         );
 
-        let model = model?;
+        let model = model.unwrap();
         let images_count = match model.get("imageCount").and_then(|x| x.as_i64()) {
             Some(x) => x,
-            _ => return Err(CacheError::InternalCacheError("Failed to get images count of product".to_owned()))
+            None => 0
         };
     
         let files_data = self.get_files_data(id, images_count);    
-        Ok(Product { model, rates: rates?, latest_version: latest_version?, files_data })
+        Ok(Product { model, rates: rates.unwrap(), latest_version: latest_version.unwrap(), files_data })
     }
 }

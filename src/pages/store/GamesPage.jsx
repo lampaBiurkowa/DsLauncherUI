@@ -30,7 +30,7 @@ function GamesPage() {
               key={index}
               id={game?.model?.guid}
               name={game?.model?.name}
-              icon={game?.static?.Icon}
+              icon={game?.filesData?.Icon}
               rating={game?.rates?.avg}
               description={game?.model?.description}
               tags={game?.model?.tags}

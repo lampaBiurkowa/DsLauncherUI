@@ -1,11 +1,11 @@
 import { invoke } from '@tauri-apps/api/core'
 
 async function getSessionData(key) {
-  return await invoke("execute_command", { key });
+  return await invoke("get_session_value", { key });
 }
 
 async function setSessionData(key, value) {
-  await invoke("execute_command", { key, value});
+  await invoke("set_session_value", { key, value});
 }
 
 const TOKEN_KEY = 'token';

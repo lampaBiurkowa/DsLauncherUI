@@ -6,7 +6,6 @@ use surrealdb::engine::local::{Db, Mem};
 use tokio::time::sleep;
 
 use crate::configuration::remote_var::RemoteVars;
-
 use super::data_providers::currency_data_provider::CurrencyDataProvider;
 use super::data_providers::data_provider::DataProvider;
 use super::data_providers::developer_data_provider::DeveloperDataProvider;
@@ -31,67 +30,114 @@ const REFRESH_MINUTES: u64 = 2;
 
 impl Database {
     pub(crate) async fn try_initialize(remote_vars: RemoteVars) -> Result<Self, CacheError> {
-        let db = Self::try_connect().await?;
+        let db = Self::try_connect().await.unwrap();
         let currency = CurrencyDataProvider::new();
         let user = UserDataProvider::new();
         let developer = DeveloperDataProvider::new();
         let product = ProductDataProvider::new(remote_vars);
 
-        db.import(CACHE_FILE_NAME).await?;
-        let db_clone = db.clone();
-        tokio::spawn(Self::persist_cache_worker(db_clone));
+        _ = db.import(CACHE_FILE_NAME).await;
+        tokio::spawn(Self::persist_cache_worker(db.clone()));
+        
         Ok(Self {
             db,
             currency,
             user,
             developer,
-            product
+            product,
         })
     }
 
     async fn try_connect() -> Result<Surreal<Db>, CacheError> {
-        let db = Surreal::new::<Mem>(()).await?;
-        db.use_ns(CACHE_NAME).use_db(DB_NAME).await?;
+        let db = Surreal::new::<Mem>(()).await.unwrap();
+        db.use_ns(CACHE_NAME).use_db(DB_NAME).await.unwrap();
         Ok(db)
     }
 
     pub(crate) async fn get_item(&self, entity_type: Type, id: &str) -> Result<Option<Item>, CacheError> {
-        let item: Option<ItemType> = self.db.select((entity_type.as_str(), id)).await?;
-        
-        if let Some(mut cache_item) = item {
-            if cache_item.item.expire > current_timestamp() {
-                return Ok(Some(cache_item.item));
+        if let Some(cache_item) = self.fetch_item_from_db(&entity_type, id).await.unwrap() {
+            if cache_item.expire > current_timestamp() {
+                Ok(Some(cache_item))
             } else {
-                cache_item.item.data = self.refresh(entity_type, id).await?;
-                cache_item.item.expire = expiration_timestamp(EXPIRATION_MINUTES);
-                let result: Option<Item> = self.db.update((entity_type.as_str(), id)).content(cache_item.item).await?;
-                return Ok(result);
+                let refreshed_item = self.refresh_and_update_cache(entity_type, id).await.unwrap();
+                Ok(refreshed_item)
             }
         } else {
-            let model = self.refresh(entity_type, id).await?;
-            let cache_item = ItemType { item_type: entity_type, item: Item { data: model.clone(), expire: expiration_timestamp(EXPIRATION_MINUTES) } };
-            let result: Option<Item> = self.db.create((entity_type.as_str(), id)).content(cache_item.item).await?;
-            Ok(result)
+            Ok(self.fetch_and_cache_new_item(entity_type, id).await.unwrap())
         }
     }
 
-    pub(crate) async fn refresh(&self, item_type: Type, id: &str) -> Result<Value, CacheError> {
+    pub(crate) async fn get_items(&self, entity_type: Type, ids: &[&str]) -> Result<Vec<Item>, CacheError> {
+        let query = format!(
+            "SELECT * FROM {} WHERE id IN [{}]",
+            entity_type.as_str(),
+            ids.iter().map(|id| format!("'{}'", id)).collect::<Vec<_>>().join(", ")
+        );
+    
+        let mut query_result = self.db.query(query).await.unwrap();
+        let found_items: Vec<ItemType> = query_result.take(0).unwrap();
+        let found_ids: Vec<String> = query_result.take("id").unwrap();
+    
+        let mut items_to_return = Vec::new();
+        for i in 0..found_items.len() {
+            if found_items[i].item.expire > current_timestamp() {
+                items_to_return.push(found_items[i].item.clone());
+            } else {
+                if let Some(refreshed_item) = self.refresh_and_update_cache(entity_type.clone(), &found_ids[i]).await.unwrap() {
+                    items_to_return.push(refreshed_item);
+                }
+            }
+        }
+
+        let ids_to_fetch: Vec<&str> = ids.iter().filter(|id| !found_ids.contains(&id.to_string())).cloned().collect();
+        for id in ids_to_fetch {
+            let refreshed_item = self.refresh_and_update_cache(entity_type.clone(), &id).await.unwrap();
+            items_to_return.push(refreshed_item.unwrap());
+        }
+    
+        Ok(items_to_return)
+    }
+    
+
+    async fn fetch_item_from_db(&self, entity_type: &Type, id: &str) -> Result<Option<Item>, surrealdb::Error> {
+        self.db.select((entity_type.as_str(), id)).await
+    }
+
+    async fn refresh_and_update_cache(&self, entity_type: Type, id: &str) -> Result<Option<Item>, CacheError> {
+        let data = self.refresh(&entity_type, id).await.unwrap();
+        let expire = expiration_timestamp(EXPIRATION_MINUTES);
+        Ok(self.db.update((entity_type.as_str(), id)).content(Item { data, expire }).await.unwrap())
+    }
+
+    async fn fetch_and_cache_new_item(&self, entity_type: Type, id: &str) -> Result<Option<Item>, CacheError> {
+        let model = self.refresh(&entity_type, id).await.unwrap();
+        let new_item = Item {
+            data: model,
+            expire: expiration_timestamp(EXPIRATION_MINUTES),
+        };
+        let cache_item = ItemType {
+            item_type: entity_type,
+            item: new_item.clone(),
+        };
+
+        Ok(self.db.create((entity_type.as_str(), id)).content(cache_item.item).await.unwrap())
+    }
+
+    async fn refresh(&self, item_type: &Type, id: &str) -> Result<Value, CacheError> {
         match item_type {
-            Type::Developer => Ok(self.developer.get_data_as_json(id).await?),
-            Type::User => Ok(self.user.get_data_as_json(id).await?),
-            Type::Product => Ok(self.product.get_data_as_json(id).await?),
-            Type::Currency => Ok(self.currency.get_data_as_json(id).await?)
+            Type::Developer => self.developer.get_data_as_json(id).await,
+            Type::User => self.user.get_data_as_json(id).await,
+            Type::Product => self.product.get_data_as_json(id).await,
+            Type::Currency => self.currency.get_data_as_json(id).await,
         }
-    }
-
-    async fn export_to_file(&self) -> Result<(), surrealdb::Error> {
-        Ok(self.db.export(CACHE_FILE_NAME).await?)
     }
 
     async fn persist_cache_worker(db: Surreal<Db>) {
         loop {
             sleep(Duration::from_secs(60 * REFRESH_MINUTES)).await;
-            db.export(CACHE_FILE_NAME).await.unwrap();
+            if let Err(e) = db.export(CACHE_FILE_NAME).await {
+                eprintln!("Failed to export cache: {}", e);
+            }
         }
     }
 }
@@ -101,9 +147,5 @@ fn current_timestamp() -> u64 {
 }
 
 fn expiration_timestamp(minutes: u64) -> u64 {
-    SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .unwrap()
-        .as_secs()
-        + minutes * 60
+    current_timestamp() + minutes * 60
 }

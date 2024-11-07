@@ -130,8 +130,12 @@ import { invoke } from '@tauri-apps/api/core'
 // }
 
 
-async function getById(type, id) {
-  await invoke("get_item", { type, id });
+async function getById(itemType, id) {
+  await invoke("get_item", { itemType: itemType, id: id });
+}
+
+async function getByIds(itemType, ids) {
+  await invoke("get_items", { itemType: itemType, ids: ids });
 }
 
 export async function getDeveloper(id) {
@@ -144,6 +148,10 @@ export async function getCurrency(id) {
 
 export async function getProduct(id) {
   await getById("product", id);
+}
+
+export async function getProducts(ids) {
+  await getByIds("product", ids);
 }
 
 export async function getUser(id) {

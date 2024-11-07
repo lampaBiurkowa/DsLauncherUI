@@ -29,7 +29,7 @@ function AppsPage() {
               key={index}
               id={app?.model?.guid}
               name={app?.model?.name}
-              icon={app?.static?.Icon}
+              icon={app?.filesData?.Icon}
               rating={app?.rates?.avg}
               description={app?.model?.description}
               tags={app?.model?.tags}

@@ -3,12 +3,14 @@
 
 use std::fs::File;
 
-use cache::{commands::get_item::get_item, db::Database};
+use cache::{commands::{get_item::get_item, get_items::get_items}, db::Database};
 use configuration::{commands::{get_env::get_env, get_remote_vars::get_remote_vars}, remote_var::RemoteVars};
 use launcher_service::{commands::execute::execute, websocket_manager::connect_websocket};
 use ndib::commands::{add::add, init::init, update_metadata::update_metadata, remove::remove, pull::pull, publish::publish};
 use session_data::{commands::{set_session_value::set_session_value, get_session_value::get_session_value}, store::Store};
 use tauri::Manager;
+use tokio::sync::mpsc;
+use dotenv::dotenv;
 
 mod ndib;
 mod clients;
@@ -33,21 +35,28 @@ async fn main() {
             _ => {}
         })
         .setup(|app| {
-            let (sender, receiver) = tokio::sync::mpsc::channel(100);
-            app.manage(sender);
-            let remote_vars = tauri::async_runtime::block_on(async move {
-                RemoteVars::load().await
-            })?;
-            app.manage(Database::try_initialize(remote_vars.clone()));
-            app.manage(remote_vars);
+            dotenv().ok();
+            let app_handle = app.handle().clone();
 
-            app.manage(Store::new());
-            let handle = app.handle().clone();
             tauri::async_runtime::spawn(async move {
-                Ok(match connect_websocket(receiver, &handle).await {
-                    Ok(x) => x,
-                    Err(e) => return Err(format!("Failed to connect WebSocket: {e}"))
-                })
+                let (sender, receiver) = mpsc::channel(100);
+                app_handle.manage(sender);
+                match RemoteVars::load().await {
+                    Ok(remote_vars) => {
+                        app_handle.manage(remote_vars.clone());
+                        
+                        match Database::try_initialize(remote_vars.clone()).await {
+                            Ok(database) => _ = app_handle.manage(database),
+                            Err(e) => eprintln!("Failed to initialize database: {:?}", e),
+                        }
+
+                        app_handle.manage(Store::new());
+                        if let Err(e) = connect_websocket(receiver, &app_handle).await {
+                            eprintln!("Failed to connect WebSocket: {:?}", e);
+                        }
+                    },
+                    Err(e) => eprintln!("Failed to load remote variables: {:?}", e),
+                }
             });
 
             Ok(())
@@ -55,7 +64,7 @@ async fn main() {
         .invoke_handler(tauri::generate_handler![
             init, add, remove, publish, update_metadata, pull,
             execute,
-            get_item,
+            get_item, get_items,
             get_remote_vars, get_env,
             set_session_value, get_session_value])
         .run(tauri::generate_context!())

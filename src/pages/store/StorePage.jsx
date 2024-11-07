@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import NavBar from "@/components/navbar/Navbar";
 import NavButton from "@/components/navbar/NavButton";
 import Popup from "@/components/popup/Popup";
-import getFilesData from "@/services/getFilesData";
+// import getFilesData from "@/services/getFilesData";
 import "./StorePage.scss";
 
 const api = new DsLauncherApiClient();
@@ -67,7 +67,7 @@ function StorePage() {
                       className="search-result"
                       to={`/store/product/${result.guid}`}
                     >
-                      <img src={getFilesData(result).Icon} alt="App Icon" />
+                      {/* <img src={getFilesData(result).Icon} alt="App Icon" /> */}
                       <span>{result.name}</span>
                     </NavLink>
                   );

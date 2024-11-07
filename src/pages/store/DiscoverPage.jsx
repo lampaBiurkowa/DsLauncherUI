@@ -39,7 +39,7 @@ function DiscoverPage() {
                   key={index}
                   id={child?.model?.guid}
                   name={child?.model?.name}
-                  icon={child?.static?.Icon}
+                  icon={child?.filesData?.Icon}
                   rating={child?.rates?.avg}
                   platform={`${
                     child?.latestVersion?.linuxExePath?.trim().length > 0

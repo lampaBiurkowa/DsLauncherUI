@@ -29,7 +29,7 @@ function MusicPage() {
               key={index}
               id={item?.model?.guid}
               name={item?.model?.name}
-              icon={item?.static?.Icon}
+              icon={item?.filesData?.Icon}
               rating={item?.rates?.avg}
               description={item?.model?.description}
               tags={item?.model?.tags}

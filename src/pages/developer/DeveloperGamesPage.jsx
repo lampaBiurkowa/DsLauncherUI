@@ -28,7 +28,7 @@ function DeveloperGamesPage() {
               key={index}
               id={product?.model.guid}
               name={product?.model.name}
-              icon={product?.static?.Icon}
+              icon={product?.filesData?.Icon}
               rating={product?.rates?.avg}
               description={product?.model.description}
               tags={product?.model.tags}

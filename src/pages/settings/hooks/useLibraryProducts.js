@@ -1,4 +1,4 @@
-import { ProductsCache } from "@/services/CacheService";
+import { getProducts } from "@/services/CacheService";
 import { useEffect, useState } from "react";
 
 export function useLibraryProducts(productGuids) {
@@ -7,7 +7,7 @@ export function useLibraryProducts(productGuids) {
   useEffect(() => {
     (async () => {
       if (productGuids) {
-        setProducts(await ProductsCache.getByIds(productGuids));
+        setProducts(await getProducts(productGuids));
       }
     })();
   }, [productGuids]);

@@ -21,7 +21,7 @@ function HomePage() {
                 return (
                   <RecentApp
                     key={key}
-                    coverUrl={app.static.Icon}
+                    coverUrl={app.filesData.Icon}
                     guid={app.model.guid}
                   >
                     {app.model.name}
