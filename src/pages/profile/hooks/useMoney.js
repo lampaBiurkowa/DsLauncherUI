@@ -1,7 +1,7 @@
 import { defaultCurrency } from "@/App";
 import { DsCoreApiClient } from "@/services/DsCoreApiClient";
 import { useState, useEffect } from "react";
-import { CurrenciesCache } from "@/services/CacheService";
+import { getCurrency } from "@/services/CacheService";
 
 const api = new DsCoreApiClient();
 
@@ -10,7 +10,7 @@ function useMoney() {
 
   useEffect(() => {
     async function fetchMoney() {
-      const currency = await CurrenciesCache.getById(defaultCurrency);
+      const currency = await getCurrency(defaultCurrency);
       const response = await api.getMoney(currency.model.guid);
       setMoney(response);
     }

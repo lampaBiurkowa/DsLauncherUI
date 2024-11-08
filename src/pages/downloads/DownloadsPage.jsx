@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { ProductsCache } from "@/services/CacheService";
+import { getProduct } from "@/services/CacheService";
 import { useServiceListener } from "@/hooks/useServiceListener";
 import InfoBar, { InfoBarType } from "@/components/info-bar/InfoBar";
 import "./DownloadsPage.scss";
@@ -13,7 +12,7 @@ function DownloadsPage() {
       const guids = Object.keys(operations?.Downloads ?? {});
       const products = await Promise.all(
         guids.map(async (guid) => {
-          let product = await ProductsCache.getById(guid);
+          let product = await getProduct(guid);
           product.downloadState = operations.Downloads[guid];
           return product;
         })
@@ -38,7 +37,7 @@ function DownloadsPage() {
         {products?.map((product, key) => {
           return (
             <div className="download-entry" key={key}>
-              <img src={product.static.Icon} alt="App icon" />
+              <img src={product.filesData.Icon} alt="App icon" />
               <span className="name">{product.model.name}</span>
               <span className="step">
                 {(() => {

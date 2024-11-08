@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 
 import "./ArticlePage.scss";
 import ArticleImage from "./components/ArticleImage";
-import { publicPath } from "@/App";
+import { ConfigurationHandler } from "@/services/ConfigurationService";
 
 function ArticlePage() {
   const { id: articleId } = useParams();
@@ -28,7 +28,7 @@ function ArticlePage() {
             {new Date(article?.createdAt).toLocaleDateString()}
           </span>
           <p>{article?.summary}</p>
-          <ArticleImage url={`${publicPath}/DsLauncher/news/${articleId}/cover.png`} caption={article?.image_caption} />
+          <ArticleImage url={`${ConfigurationHandler.getSupabaseUrl()}/${ConfigurationHandler.getLauncherBucketName()}/news/${articleId}/cover.png`} caption={article?.image_caption} />
           <ReactMarkdown>{article?.content}</ReactMarkdown>
         </article>
       ) : (

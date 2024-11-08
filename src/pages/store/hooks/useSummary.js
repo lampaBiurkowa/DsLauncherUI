@@ -1,12 +1,12 @@
+import { getProduct } from "@/services/CacheService";
 import { useState, useEffect } from "react";
-import { ProductsCache } from "@/services/CacheService";
 
 function useSummary(id, refresh) {
   let [summary, setSummary] = useState();
 
   useEffect(() => {
     async function fetchSummary() {
-      setSummary((await ProductsCache.getById(id)).rates);
+      setSummary((await getProduct(id)).rates);
     }
     
     if (refresh) {

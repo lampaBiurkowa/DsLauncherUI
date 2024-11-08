@@ -1,20 +1,18 @@
-import { LocalStorageHandler } from "./LocalStorageService";
-
-const API_BASE_URL = import.meta.env.VITE_LAUNCHER_API_URL;
-
+import { ConfigurationHandler } from "./ConfigurationService";
+import { SessionDataHandler } from "./SessionDataService";
 
 export class DsLauncherApiClient {
   constructor() {
     this.authToken = null;
-    this.baseUrl = API_BASE_URL;
-    console.log("ENV", API_BASE_URL);
+    console.log(`LAUNCH RIKLEST ${ConfigurationHandler.getLauncherApiUrl()}`);
+    this.baseUrl = ConfigurationHandler.getLauncherApiUrl();
   }
 
   async request(url, options = {}) {
     options.headers = options.headers || {};
     options.headers[
       "Authorization"
-    ] = `Bearer ${LocalStorageHandler.getToken()}`;
+    ] = `Bearer ${SessionDataHandler.getToken()}`;
     const response = await fetch(url, options);
     if (!response.ok) {
       const error = await response.text();

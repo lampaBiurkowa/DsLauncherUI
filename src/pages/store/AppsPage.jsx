@@ -3,7 +3,7 @@ import { useScrolledToEnd } from "@/hooks/useScrolledToEnd";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import DetailedStoreEntry from "./components/DetailedStoreEntry";
 import "./AppsPage.scss";
-import { ProductsCache } from "@/services/CacheService";
+import { getProduct } from "@/services/CacheService";
 
 const api = new DsLauncherApiClient();
 
@@ -13,7 +13,7 @@ function AppsPage() {
   const scrollViewRef = useScrolledToEnd(async () => {
     const newApps = await api.getAppsIds(apps.length, 10);
     const updatedApps = await Promise.all(newApps.map(async (guid) => {
-      return await ProductsCache.getById(guid);
+      return await getProduct(guid);
     }));
     setApps([...apps, ...updatedApps]);
   });
@@ -29,8 +29,8 @@ function AppsPage() {
               key={index}
               id={app?.model?.guid}
               name={app?.model?.name}
-              icon={app?.static?.Icon}
-              rating={app?.rates?.avg}
+              icon={app?.filesData?.Icon}
+              rating={app?.rates?.avg.toFixed(1)}
               description={app?.model?.description}
               tags={app?.model?.tags}
               platform={`${app?.latestVersion?.linuxExePath ? "linux" : ""} 

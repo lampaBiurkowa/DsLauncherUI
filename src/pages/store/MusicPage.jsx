@@ -3,7 +3,7 @@ import { useScrolledToEnd } from "@/hooks/useScrolledToEnd";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import DetailedStoreEntry from "./components/DetailedStoreEntry";
 import "./MusicPage.scss";
-import { ProductsCache } from "@/services/CacheService";
+import { getProduct } from "@/services/CacheService";
 
 const api = new DsLauncherApiClient();
 
@@ -13,7 +13,7 @@ function MusicPage() {
   const scrollViewRef = useScrolledToEnd(async () => {
     const newItems = await api.getMusicIds(items.length, 10);
     const updatedItems = await Promise.all(newItems.map(async (guid) => {
-      return await ProductsCache.getById(guid);
+      return await getProduct(guid);
     }));
     setItems([...items, ...updatedItems]);
   });
@@ -29,8 +29,8 @@ function MusicPage() {
               key={index}
               id={item?.model?.guid}
               name={item?.model?.name}
-              icon={item?.static?.Icon}
-              rating={item?.rates?.avg}
+              icon={item?.filesData?.Icon}
+              rating={item?.rates?.avg.toFixed(1)}
               description={item?.model?.description}
               tags={item?.model?.tags}
             ></DetailedStoreEntry>

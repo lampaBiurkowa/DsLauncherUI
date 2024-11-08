@@ -2,8 +2,7 @@ import { useServiceListener } from "@/hooks/useServiceListener";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import { DsLauncherServiceClient } from "@/services/DsLauncherServiceClient";
 import { useEffect, useState } from "react";
-import getFilesData from "@/services/getFilesData";
-
+import { getProducts } from "@/services/CacheService";
 const api = new DsLauncherApiClient();
 const service = new DsLauncherServiceClient();
 
@@ -18,18 +17,10 @@ export function useInstalledProducts() {
   useEffect(() => {
     if (installed) {
       (async () => {
-        const ownedProducts = await api.getProductsByIds(
+        const ownedProducts = await getProducts(
           Object.keys(installed.Installed)
         );
-        console.log(ownedProducts);
-        setProducts(
-          ownedProducts.map((product) => {
-            return {
-              model: product,
-              static: getFilesData(product),
-            };
-          })
-        );
+        setProducts(ownedProducts);
       })();
     }
   }, [installed]);

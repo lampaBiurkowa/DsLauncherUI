@@ -1,8 +1,8 @@
-import { deafultBucket, publicPath } from "@/App";
+import { ConfigurationHandler } from "@/services/ConfigurationService";
 import { useState, useEffect } from "react";
 
 function usePromoted() {
-  const url = `${publicPath}/${deafultBucket}/promoted.json`;
+  const url = `${ConfigurationHandler.getSupabaseUrl()}/${ConfigurationHandler.getLauncherBucketName()}/promoted.json`;
   let [products, setPromoted] = useState();
 
   useEffect(() => {

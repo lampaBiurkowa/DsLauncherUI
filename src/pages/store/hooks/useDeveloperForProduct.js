@@ -1,13 +1,13 @@
+import { getDeveloper, getProduct } from "@/services/CacheService";
 import { useState, useEffect } from "react";
-import { DevelopersCache, ProductsCache } from "@/services/CacheService";
 
 function useDeveloperForProduct(productGuid) {
   let [developer, setDeveloper] = useState();
 
   useEffect(() => {
     async function fetchDeveloper() {
-      const product = await ProductsCache.getById(productGuid);
-      const developer = await DevelopersCache.getById(
+      const product = await getProduct(productGuid);
+      const developer = await getDeveloper(
         product.model.developerGuid
       );
       setDeveloper(developer);

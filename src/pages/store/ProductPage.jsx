@@ -57,7 +57,7 @@ function ProductPage() {
             rgba(0, 0, 0, 1) 0%,
             rgba(0, 0, 0, 0) 100%
           ),
-          url("${product?.static?.Background}")`,
+          url("${product?.filesData?.Background}")`,
           }}
         >
           <div className="product-header">
@@ -80,13 +80,13 @@ function ProductPage() {
         </div>
       </AspectRatio>
       <section className="description">
-        <img src={product?.static?.Icon} alt="Application Icon" />
+        <img src={product?.filesData?.Icon} alt="Application Icon" />
         <h2>About</h2>
         <span>{product?.model?.description}</span>
       </section>
       <section className="screenshots">
         <Shelf title="Screenshots">
-          {product?.static?.Images.map((child, index) => {
+          {product?.filesData?.Images.map((child, index) => {
             return (
               <img
                 src={child}
@@ -105,7 +105,7 @@ function ProductPage() {
         >
           <div className="screenshot-carousel-container">
             <Carousel auto={false}>
-              {product?.static?.Images.map((child, index) => {
+              {product?.filesData?.Images.map((child, index) => {
                 return <img src={child} alt="Screenshot" key={index} />;
               })}
             </Carousel>

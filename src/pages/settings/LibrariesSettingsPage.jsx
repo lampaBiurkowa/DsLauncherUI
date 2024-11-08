@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { executeCommand } from "@/services/DsLauncherService";
 import { useLibraries } from "./hooks/useLibraries";
 import InfoBar, { InfoBarType } from "@/components/info-bar/InfoBar";
 import useFileDialog from "@/hooks/useFileDialog";
 import LibraryPath from "./components/LibraryPath";
 import "./LibrariesSettingsPage.scss";
-import { DsLauncherServiceClient } from "@/services/DsLauncherServiceClient";
+import { DsLauncherServiceClient, executeCommand } from "@/services/DsLauncherServiceClient";
 import { useServiceListener } from "@/hooks/useServiceListener";
 import { useLibraryProducts } from "./hooks/useLibraryProducts";
 import LibraryEntry from "../library/components/LibraryEntry";

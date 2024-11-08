@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../contexts/UserContextProvider";
-import { DsCoreApiClient } from "../../services/DsCoreApiClient";
-import { LocalStorageHandler } from "@/services/LocalStorageService";
+import { DsCoreApiClient } from "@/services/DsCoreApiClient";
+import { SessionDataHandler } from "@/services/SessionDataService";
 import SettingsEntry from "@/components/settings-entry/SettingsEntry";
 import CredentialsEditor from "./components/CredentialsEditor";
 import "./ProfileDetailsPage.scss";
@@ -28,8 +28,8 @@ function ProfileDetailsPage() {
   }
 
   function logout() {
-    LocalStorageHandler.setToken("");
-    LocalStorageHandler.setUser("");
+    SessionDataHandler.setToken("");
+    SessionDataHandler.setUser("");
     setCurrentUser(undefined);
     navigate("/home", { replace: true });
   }

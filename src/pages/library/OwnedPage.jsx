@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import LibraryEntry from "./components/LibraryEntry";
-import getFilesData from "@/services/getFilesData";
 import "./OwnedPage.scss";
+import { getProducts } from "@/services/CacheService";
 
 const api = new DsLauncherApiClient();
 
@@ -13,12 +13,7 @@ function OwnedPage() {
     (async () => {
       const owned = await api.getProductsByUser();
       setProducts(
-        (await api.getProductsByIds(owned)).map((product) => {
-          return {
-            model: product,
-            static: getFilesData(product),
-          };
-        })
+        (await getProducts(owned))
       );
     })();
   }, []);

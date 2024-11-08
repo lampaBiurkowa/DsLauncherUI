@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useScrolledToEnd } from "@/hooks/useScrolledToEnd";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import DetailedStoreEntry from "./components/DetailedStoreEntry";
-import { ProductsCache } from "@/services/CacheService";
 import "./GamesPage.scss";
+import { getProduct } from "@/services/CacheService";
 
 const api = new DsLauncherApiClient();
 
@@ -14,7 +14,11 @@ function GamesPage() {
     const newGames = await api.getGamesIds(games.length, 10);
     const updatedGames = await Promise.all(
       newGames.map(async (guid) => {
-        return await ProductsCache.getById(guid);
+        try {
+          return await getProduct(guid);
+        } catch {
+          return null;
+        }
       })
     );
     setGames([...games, ...updatedGames]);
@@ -30,8 +34,8 @@ function GamesPage() {
               key={index}
               id={game?.model?.guid}
               name={game?.model?.name}
-              icon={game?.static?.Icon}
-              rating={game?.rates?.avg}
+              icon={game?.filesData?.Icon}
+              rating={game?.rates?.avg.toFixed(1)}
               description={game?.model?.description}
               tags={game?.model?.tags}
               platform={`${game?.latestVersion?.linuxExePath ? "linux" : ""} 

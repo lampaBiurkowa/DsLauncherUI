@@ -104,7 +104,6 @@ function RegisterPage() {
 
               var user = {alias: loginInput, email: emailInput, name:nameInput, surname: surnameInput, id: 0};
               setUserGuid(await coreApi.register(user, btoa(password1Input)));
-              console.log(userGuid);
               setVerifyDialogOpen(true);
               // navigate("/login");
             }}>Sign up</button>

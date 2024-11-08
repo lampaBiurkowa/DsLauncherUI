@@ -1,16 +1,16 @@
-import { LocalStorageHandler } from "./LocalStorageService";
-
-const API_BASE_URL = import.meta.env.VITE_CORE_API_URL;
+import { ConfigurationHandler } from "./ConfigurationService";
+import { SessionDataHandler } from "./SessionDataService";
 
 export class DsCoreApiClient {
     constructor() {
         this.authToken = null;
-        this.baseUrl = API_BASE_URL;
+        console.log("RIKLEST");
+        this.baseUrl = ConfigurationHandler.getCoreApiUrl();
     }
     
     async request(url, options = {}, isText = false) {
         options.headers = options.headers || {};
-        options.headers['Authorization'] = `Bearer ${LocalStorageHandler.getToken()}`;
+        options.headers['Authorization'] = `Bearer ${SessionDataHandler.getToken()}`;
         const response = await fetch(url, options);
         if (!response.ok) {
             const error = await response.text();

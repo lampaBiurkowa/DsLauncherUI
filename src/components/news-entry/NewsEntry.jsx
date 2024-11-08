@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./NewsEntry.scss";
-import { launcherBucket, publicPath } from "@/App";
+import { ConfigurationHandler } from "@/services/ConfigurationService";
 
 function NewsEntry({ id, title, date, summary, target }) {
   return (
     <Link className="news-entry" to={`/home/article/${id}`}>
-      <div className="cover" style={{ backgroundImage: `url(${publicPath}/${launcherBucket}/news/${id}/cover.png)` }}>
+      <div className="cover" style={{ backgroundImage: `url(${ConfigurationHandler.getSupabaseUrl()}/${ConfigurationHandler.getLauncherBucketName()}/news/${id}/cover.png)` }}>
         {target ? (
           <img
             src={getAppIconUrl(target)}

@@ -7,7 +7,6 @@ import "./UpdatesPage.scss";
 import { useContext } from "react";
 import { UserContext } from "@/contexts/UserContextProvider";
 import useSettings from "../../hooks/useSettings";
-import { ProductsCache } from "@/services/CacheService";
 
 function UpdatesPage() {
   const [settings, applySettings] = useSettings();
@@ -74,7 +73,6 @@ function UpdatesPage() {
                   <li>
                     <button
                       className="menuitem small"
-                      onClick={console.log("pliz")}
                     >
                       <i className="las la-trash" />
                       <span>Uninstall</span>

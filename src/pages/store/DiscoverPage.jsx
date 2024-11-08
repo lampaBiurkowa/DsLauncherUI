@@ -12,7 +12,6 @@ import "./DiscoverPage.scss";
 function DiscoverPage() {
   let promoted = usePromoted();
   let sections = useStaticProducts();
-
   return (
     <div className="discover-container">
       <AspectRatio aspectRatio={12 / 5}>
@@ -39,8 +38,8 @@ function DiscoverPage() {
                   key={index}
                   id={child?.model?.guid}
                   name={child?.model?.name}
-                  icon={child?.static?.Icon}
-                  rating={child?.rates?.avg}
+                  icon={child?.filesData?.Icon}
+                  rating={child?.rates?.avg.toFixed(1)}
                   platform={`${
                     child?.latestVersion?.linuxExePath?.trim().length > 0
                       ? "linux"

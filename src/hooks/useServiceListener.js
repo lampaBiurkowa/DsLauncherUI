@@ -1,21 +1,18 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { addListener, removeListener } from "@/services/DsLauncherService";
+import { listen } from '@tauri-apps/api/event';
+
 
 export function useServiceListener(command) {
   const [response, setResponse] = useState();
 
   useEffect(() => {
-    function listener(args) {
-      setResponse(args);
-    }
+    listen(command, (event) => {
+      setResponse(JSON.parse(event.payload));
+    });
 
-    addListener(command, listener);
-
-    return () => {
-      removeListener(command, listener);
-    };
   }, []);
 
   return response;
 }
+  

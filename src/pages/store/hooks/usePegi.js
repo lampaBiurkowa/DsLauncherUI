@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
-import { ProductsCache } from "@/services/CacheService";
+import { getProduct } from "@/services/CacheService";
 
 const api = new DsLauncherApiClient();
 
@@ -17,7 +17,7 @@ function usePegi(productGuid) {
 
   useEffect(() => {
     async function fetchPegi() {
-      var product = await ProductsCache.getById(productGuid);
+      var product = await getProduct(productGuid);
       if (product.model.productType != "Game" && product.model.productType != "Video") return null;
 
       const game = await api.getGameById(productGuid);

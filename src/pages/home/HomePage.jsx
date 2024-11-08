@@ -5,6 +5,7 @@ import { useRecentProducts } from "./hooks/useRecentProducts";
 import NewsEntry from "@/components/news-entry/NewsEntry";
 import RecentApp from "./components/RecentApp";
 import "./HomePage.scss";
+import { ConfigurationHandler } from "@/services/ConfigurationService";
 
 function HomePage() {
   let articles = useArticles();
@@ -21,7 +22,7 @@ function HomePage() {
                 return (
                   <RecentApp
                     key={key}
-                    coverUrl={app.static.Icon}
+                    coverUrl={app.filesData.Icon}
                     guid={app.model.guid}
                   >
                     {app.model.name}
@@ -35,6 +36,7 @@ function HomePage() {
       <section className="news-section">
         <h1>What's new</h1>
         <div className="news">
+          {console.log(`${ConfigurationHandler.getLauncherApiUrl()} jest tu`)}
           {articles?.map((article, index) => {
             return (
               <NewsEntry

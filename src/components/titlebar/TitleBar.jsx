@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getCurrent } from "@tauri-apps/api/window";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import "./TitleBar.scss";
 
 let prevMaximized = false;
@@ -7,8 +7,8 @@ let prevMaximized = false;
 function TitleBar() {
   const [maximized, setMaximized] = useState(false);
 
-  getCurrent().onResized(async ({ payload: size }) => {
-    let isMaximized = await getCurrent().isMaximized();
+  getCurrentWindow().onResized(async ({ payload: size }) => {
+    let isMaximized = await getCurrentWindow().isMaximized();
 
     if (prevMaximized != isMaximized) {
       setMaximized(isMaximized);
@@ -17,15 +17,15 @@ function TitleBar() {
   });
 
   const handleOnMinimize = () => {
-    getCurrent().minimize();
+    getCurrentWindow().minimize();
   };
 
   const handleOnMaximizeToggled = () => {
-    getCurrent().toggleMaximize();
+    getCurrentWindow().toggleMaximize();
   };
 
   const handleOnClose = () => {
-    getCurrent().close();
+    getCurrentWindow().close();
   };
 
   return (

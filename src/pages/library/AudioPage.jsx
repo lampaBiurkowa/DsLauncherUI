@@ -20,7 +20,7 @@ function AudioPage() {
     <div className="owned-page">
       <h1>{music?.model.name}</h1>
       <div className="apps-list">
-        <AudioPlayer path={installed?.Path} backgroundImage={music?.static.Icon} tracks={tracks} />
+        <AudioPlayer path={installed?.Path} backgroundImage={music?.filesData.Icon} tracks={tracks} />
       </div>
     </div>
   );

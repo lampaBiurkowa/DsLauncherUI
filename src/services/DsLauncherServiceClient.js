@@ -1,4 +1,8 @@
-import { executeCommand } from "./DsLauncherService";
+import { invoke } from '@tauri-apps/api/core'
+
+export async function executeCommand(commandName, args = {}, head = {}) {
+  await invoke("execute", { commandName, args, head });
+}
 
 export class DsLauncherServiceClient {
   constructor() {}

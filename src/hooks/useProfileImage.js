@@ -1,5 +1,5 @@
 import { UserContext } from "@/contexts/UserContextProvider";
-import { publicPath, usersBucket } from "@/App";
+import { ConfigurationHandler } from "@/services/ConfigurationService";
 import { useEffect, useContext, useState } from "react";
 
 export default function useProfileImage() {
@@ -9,7 +9,7 @@ export default function useProfileImage() {
   useEffect(() => {
     if (currentUser?.profileImage) {
       setProfileImage(
-        `${publicPath}/${usersBucket}/${currentUser.profileImage}`
+        `${ConfigurationHandler.getSupabaseUrl()}/${ConfigurationHandler.getCoreBucketName()}/${currentUser.profileImage}`
       );
     } else {
       setProfileImage(undefined);

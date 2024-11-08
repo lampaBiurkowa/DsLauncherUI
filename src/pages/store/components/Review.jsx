@@ -1,17 +1,17 @@
-import { deafultBucket, publicPath } from "@/App";
 import React, { useEffect, useState } from "react";
 import Spacer from "@/components/spacer/Spacer";
 import Rating from "@/components/rating/Rating";
-import { UsersCache } from "@/services/CacheService";
 import CollapsedArea from "@/components/collapsed-area/CollapsedArea";
 import "./Review.scss";
+import { getUser } from "@/services/CacheService";
+import { ConfigurationHandler } from "@/services/ConfigurationService";
 
 function useUser(id) {
   const [user, setUser] = useState();
 
   useEffect(() => {
     async function fetchUser() {
-      setUser(await UsersCache.getById(id));
+      setUser(await getUser(id));
     }
     fetchUser();
   }, []);
@@ -26,7 +26,7 @@ function Review({ review }) {
   useEffect(() => {
     if (user?.model.profileImage) {
       setProfileImage(
-        `${publicPath}/${deafultBucket}/${user?.model.profileImage}`
+        `${ConfigurationHandler.getSupabaseUrl()}/${ConfigurationHandler.getCoreApiUrl()}/${user?.model.profileImage}`
       );
     } else {
       setProfileImage("/img/user.png");
