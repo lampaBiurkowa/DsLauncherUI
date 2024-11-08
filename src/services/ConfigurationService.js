@@ -61,10 +61,8 @@ class ConfigurationSingleton {
 
 async function createConfig() {
     const config = new ConfigurationSingleton();
-    await config.init(); // This ensures initialization is completed before use
+    await config.init();
     return config;
 }
 
-// Create a fully initialized ConfigurationSingleton
 export const ConfigurationHandler = await createConfig(); 
-// export const ConfigurationHandler = new ConfigurationSingleton();
