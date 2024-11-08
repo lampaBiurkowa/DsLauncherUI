@@ -13,7 +13,7 @@ pub(crate) async fn connect_websocket(mut receiver: tokio::sync::mpsc::Receiver<
 
     tokio::spawn(async move {
         while let Some(msg) = receiver.recv().await {
-            write.send(Message::Text(msg.clone())).await.unwrap();
+            _ = write.send(Message::Text(msg.clone())).await;
         }
     });
 
@@ -33,7 +33,7 @@ pub(crate) async fn connect_websocket(mut receiver: tokio::sync::mpsc::Receiver<
 }
 
 async fn process_message(msg: &str, handle: &AppHandle) -> Result<(), tauri::Error>{
-    let command = parse_command(&msg);
+    let command = parse_command(msg);
     handle.emit(&command.name, command.args)
 }
 

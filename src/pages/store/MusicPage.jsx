@@ -30,7 +30,7 @@ function MusicPage() {
               id={item?.model?.guid}
               name={item?.model?.name}
               icon={item?.filesData?.Icon}
-              rating={item?.rates?.avg}
+              rating={item?.rates?.avg.toFixed(1)}
               description={item?.model?.description}
               tags={item?.model?.tags}
             ></DetailedStoreEntry>

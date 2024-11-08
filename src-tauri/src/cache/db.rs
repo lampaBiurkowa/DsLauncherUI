@@ -30,7 +30,7 @@ const REFRESH_MINUTES: u64 = 2;
 
 impl Database {
     pub(crate) async fn try_initialize(remote_vars: RemoteVars) -> Result<Self, CacheError> {
-        let db = Self::try_connect().await.unwrap();
+        let db = Self::try_connect().await?;
         let currency = CurrencyDataProvider::new();
         let user = UserDataProvider::new();
         let developer = DeveloperDataProvider::new();
@@ -49,21 +49,21 @@ impl Database {
     }
 
     async fn try_connect() -> Result<Surreal<Db>, CacheError> {
-        let db = Surreal::new::<Mem>(()).await.unwrap();
-        db.use_ns(CACHE_NAME).use_db(DB_NAME).await.unwrap();
+        let db = Surreal::new::<Mem>(()).await?;
+        db.use_ns(CACHE_NAME).use_db(DB_NAME).await?;
         Ok(db)
     }
 
     pub(crate) async fn get_item(&self, entity_type: Type, id: &str) -> Result<Option<Item>, CacheError> {
-        if let Some(cache_item) = self.fetch_item_from_db(&entity_type, id).await.unwrap() {
+        if let Some(cache_item) = self.fetch_item_from_db(&entity_type, id).await? {
             if cache_item.expire > current_timestamp() {
                 Ok(Some(cache_item))
             } else {
-                let refreshed_item = self.refresh_and_update_cache(entity_type, id).await.unwrap();
+                let refreshed_item = self.refresh_and_update_cache(entity_type, id).await?;
                 Ok(refreshed_item)
             }
         } else {
-            Ok(self.fetch_and_cache_new_item(entity_type, id).await.unwrap())
+            Ok(self.fetch_and_cache_new_item(entity_type, id).await?)
         }
     }
 
@@ -74,25 +74,24 @@ impl Database {
             ids.iter().map(|id| format!("'{}'", id)).collect::<Vec<_>>().join(", ")
         );
     
-        let mut query_result = self.db.query(query).await.unwrap();
-        let found_items: Vec<ItemType> = query_result.take(0).unwrap();
-        let found_ids: Vec<String> = query_result.take("id").unwrap();
+        let mut query_result = self.db.query(query).await?;
+        let found_items: Vec<ItemType> = query_result.take(0)?;
+        let found_ids: Vec<String> = query_result.take("id")?;
     
         let mut items_to_return = Vec::new();
         for i in 0..found_items.len() {
             if found_items[i].item.expire > current_timestamp() {
                 items_to_return.push(found_items[i].item.clone());
-            } else {
-                if let Some(refreshed_item) = self.refresh_and_update_cache(entity_type.clone(), &found_ids[i]).await.unwrap() {
-                    items_to_return.push(refreshed_item);
-                }
+            } else if let Some(refreshed_item) = self.refresh_and_update_cache(entity_type, &found_ids[i]).await? {
+                items_to_return.push(refreshed_item);
             }
         }
 
         let ids_to_fetch: Vec<&str> = ids.iter().filter(|id| !found_ids.contains(&id.to_string())).cloned().collect();
         for id in ids_to_fetch {
-            let refreshed_item = self.refresh_and_update_cache(entity_type.clone(), &id).await.unwrap();
-            items_to_return.push(refreshed_item.unwrap());
+            if let Some(refreshed_item) = self.refresh_and_update_cache(entity_type, id).await? {
+                items_to_return.push(refreshed_item);
+            }
         }
     
         Ok(items_to_return)
@@ -104,13 +103,13 @@ impl Database {
     }
 
     async fn refresh_and_update_cache(&self, entity_type: Type, id: &str) -> Result<Option<Item>, CacheError> {
-        let data = self.refresh(&entity_type, id).await.unwrap();
+        let data = self.refresh(&entity_type, id).await?;
         let expire = expiration_timestamp(EXPIRATION_MINUTES);
-        Ok(self.db.update((entity_type.as_str(), id)).content(Item { data, expire }).await.unwrap())
+        Ok(self.db.update((entity_type.as_str(), id)).content(Item { data, expire }).await?)
     }
 
     async fn fetch_and_cache_new_item(&self, entity_type: Type, id: &str) -> Result<Option<Item>, CacheError> {
-        let model = self.refresh(&entity_type, id).await.unwrap();
+        let model = self.refresh(&entity_type, id).await?;
         let new_item = Item {
             data: model,
             expire: expiration_timestamp(EXPIRATION_MINUTES),
@@ -120,7 +119,7 @@ impl Database {
             item: new_item.clone(),
         };
 
-        Ok(self.db.create((entity_type.as_str(), id)).content(cache_item.item).await.unwrap())
+        Ok(self.db.create((entity_type.as_str(), id)).content(cache_item.item).await?)
     }
 
     async fn refresh(&self, item_type: &Type, id: &str) -> Result<Value, CacheError> {

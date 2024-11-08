@@ -14,7 +14,11 @@ function GamesPage() {
     const newGames = await api.getGamesIds(games.length, 10);
     const updatedGames = await Promise.all(
       newGames.map(async (guid) => {
-        return await getProduct(guid);
+        try {
+          return await getProduct(guid);
+        } catch {
+          return null;
+        }
       })
     );
     setGames([...games, ...updatedGames]);
@@ -31,7 +35,7 @@ function GamesPage() {
               id={game?.model?.guid}
               name={game?.model?.name}
               icon={game?.filesData?.Icon}
-              rating={game?.rates?.avg}
+              rating={game?.rates?.avg.toFixed(1)}
               description={game?.model?.description}
               tags={game?.model?.tags}
               platform={`${game?.latestVersion?.linuxExePath ? "linux" : ""} 

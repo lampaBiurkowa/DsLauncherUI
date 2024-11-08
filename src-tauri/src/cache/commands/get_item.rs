@@ -11,6 +11,6 @@ pub(crate) async fn get_item(
 ) -> Result<Value, CacheError> {
     match cache.get_item(item_type, id).await? {
         Some(x) => Ok(x.data),
-        None => Err(CacheError::InternalCacheError("Failed to get item".to_owned()))
+        None => Err(CacheError::InternalError("Failed to get item".to_owned()))
     }
 }

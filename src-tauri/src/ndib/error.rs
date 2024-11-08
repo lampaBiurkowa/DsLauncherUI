@@ -1,10 +1,10 @@
 use tauri::ipc::InvokeError;
 use thiserror::Error;
+use zip::result::ZipError;
 use std::io;
-use serde_json;
 use std::path::PathBuf;
 
-use crate::session_data::error::SessionDataError;
+use crate::{clients::error::ClientError, session_data::error::SessionDataError};
 
 #[derive(Error, Debug)]
 pub(crate) enum NdibError {
@@ -21,7 +21,9 @@ pub(crate) enum NdibError {
     #[error("Failure while trying to do sth with pattern 😐 : {0}")]
     PatternError(#[from] glob::PatternError),
     #[error("Problem with HTTP")]
-    ProblemWithHttp(#[from] reqwest::Error),
+    ProblemWithHttp(#[from] ClientError),
+    #[error("Problem with zip")]
+    ProblemWithZip(#[from] ZipError),
     #[error("Problem with SessionData")]
     ProblemWithSessionData(#[from] SessionDataError),
     #[error("Invalid product type")]

@@ -24,7 +24,7 @@ impl DataProvider<User> for UserDataProvider {
         let developers = self.launcher_client.get_developer_by_user(id).await?;
         let mut is_developer = false;
         if let Value::Array(x) = developers {
-            is_developer = x.len() > 0;
+            is_developer = !x.is_empty();
         }
         
         Ok(User { model, is_developer })

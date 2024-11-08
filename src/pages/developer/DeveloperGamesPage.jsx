@@ -29,7 +29,7 @@ function DeveloperGamesPage() {
               id={product?.model.guid}
               name={product?.model.name}
               icon={product?.filesData?.Icon}
-              rating={product?.rates?.avg}
+              rating={product?.rates?.avg.toFixed(1)}
               description={product?.model.description}
               tags={product?.model.tags}
               platform={`${product?.latestVersion?.linuxExePath ? "linux" : ""} 

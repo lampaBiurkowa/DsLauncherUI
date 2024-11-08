@@ -1,7 +1,6 @@
 use tauri::ipc::InvokeError;
 use thiserror::Error;
 use std::io;
-use serde_json;
 
 #[derive(Error, Debug)]
 pub(crate) enum LauncherServiceError {

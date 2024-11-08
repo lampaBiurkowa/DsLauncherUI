@@ -12,7 +12,7 @@ pub(crate) fn remove(patterns: Vec<String>, manifest: &str) -> Result<(), NdibEr
     let manifest_path = Path::new(NDIB_FOLDER).join(manifest_file);
     let entries: Vec<String> = BufReader::new(fs::File::open(&manifest_path)?)
         .lines()
-        .filter_map(Result::ok)
+        .map_while(Result::ok)
         .collect();
 
     let mut new_entries = entries.clone();

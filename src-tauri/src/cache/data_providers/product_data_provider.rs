@@ -22,7 +22,7 @@ impl ProductDataProvider {
     }
 
     async fn get_rates(&self, id: &str) -> Result<RatesBreakdown, CacheError> {
-        let data = self.launcher_client.get_review_breakdown(id).await.unwrap();
+        let data = self.launcher_client.get_review_breakdown(id).await?;
         match data {
             Value::Array(x) => {
                 let mut rate_counts = HashMap::new();
@@ -37,16 +37,16 @@ impl ProductDataProvider {
                     rate_counts
                 })
             },
-            _ => Err(CacheError::InternalCacheError("Failed to get rates breakdown, expected collection got something else".to_owned()))
+            _ => Err(CacheError::InternalError("Failed to get rates breakdown, expected collection got something else".to_owned()))
         }
         
     }
 
     fn get_files_data(&self, id: &str, image_count: i64) -> FilesData {
         let path = EnvVar::SupabaseUrl.get_value().expect("Error getting supabase url");
-        let icon = format!("{path}/{}/{id}/{}", self.remote_vars.launcher_bucket, self.remote_vars.ndib_icon_id);
-        let background = format!("{path}/{}/{id}/{}", self.remote_vars.launcher_bucket, self.remote_vars.ndib_bg_id);
-        let images = (0..image_count).map(|x| format!("{path}/{}/{id}/{}", self.remote_vars.launcher_bucket, x + 1)).collect();
+        let icon = format!("{path}/{}/{id}/{}", self.remote_vars.ndib_bucket, self.remote_vars.ndib_icon_id);
+        let background = format!("{path}/{}/{id}/{}", self.remote_vars.ndib_bucket, self.remote_vars.ndib_bg_id);
+        let images = (0..image_count).map(|x| format!("{path}/{}/{id}/{}", self.remote_vars.ndib_bucket, x + 1)).collect();
     
         FilesData { icon, background, images }
     }
@@ -73,13 +73,10 @@ impl DataProvider<Product> for ProductDataProvider {
             self.get_rates(id)
         );
 
-        let model = model.unwrap();
-        let images_count = match model.get("imageCount").and_then(|x| x.as_i64()) {
-            Some(x) => x,
-            None => 0
-        };
+        let model = model?;
+        let images_count = model.get("imageCount").and_then(|x| x.as_i64()).unwrap_or_default();
     
         let files_data = self.get_files_data(id, images_count);    
-        Ok(Product { model, rates: rates.unwrap(), latest_version: latest_version.unwrap(), files_data })
+        Ok(Product { model, rates: rates?, latest_version: latest_version?, files_data })
     }
 }

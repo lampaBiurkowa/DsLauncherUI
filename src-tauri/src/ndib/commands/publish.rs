@@ -29,9 +29,9 @@ pub(crate) fn publish(store: tauri::State<'_, Store>, developer: Uuid) -> Result
         let file = fs::File::open(&manifest_path).expect("Failed to open manifest file");
         let reader = BufReader::new(file);
         let all_lines = reader.lines();
-        create_zip(all_lines, format!("{}.zip", manifest_file));
+        create_zip(all_lines, format!("{}.zip", manifest_file))?;
     }
-    create_zip(extra_paths.into_iter().map(Ok), METADATA_NAME.to_string());
+    create_zip(extra_paths.into_iter().map(Ok), METADATA_NAME.to_string())?;
 
     let rt = Runtime::Tokio(TokioRuntime::new()?);
     rt.block_on(upload(store, developer))?;
@@ -46,7 +46,7 @@ pub(crate) fn publish(store: tauri::State<'_, Store>, developer: Uuid) -> Result
 
 async fn upload(store: tauri::State<'_, Store>, developer: Uuid) -> Result<(), NdibError> {
     let launcher_api = DsLauncherClient::new();
-    let product_guid = launcher_api.upload(&store.get(TOKEN_KEY)?, &developer, Path::new(METADATA_NAME)).await.unwrap();
+    let product_guid = launcher_api.upload(&store.get(TOKEN_KEY)?, &developer, Path::new(METADATA_NAME)).await?;
     let ndib_api = DsNdibClient::new();
     ndib_api.upload(&store.get(TOKEN_KEY)?, &product_guid.replace("\"", ""),
         Path::new(&format!("{}.zip", MANIFEST_CORE)),

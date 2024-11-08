@@ -20,7 +20,6 @@ export function useInstalledProducts() {
         const ownedProducts = await getProducts(
           Object.keys(installed.Installed)
         );
-        console.log(ownedProducts);
         setProducts(ownedProducts);
       })();
     }

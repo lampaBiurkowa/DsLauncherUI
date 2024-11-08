@@ -3,8 +3,9 @@ use reqwest::multipart;
 use std::fs::File;
 use std::path::Path;
 use std::io::Read;
-
 use crate::configuration::env_var::EnvVar;
+use super::error::ClientError;
+use super::utils::read_file_to_buffer;
 
 pub struct DsNdibClient {
     base_url: String,
@@ -30,7 +31,7 @@ impl DsNdibClient {
         Ok(bucket)
     }
 
-    pub(crate) async fn get_icon_id(&self) -> Result<String, Error> {
+    pub(crate) async fn get_icon_id(&self) -> Result<String, reqwest::Error> {
         let url = format!("{}/Configuration/icon-id", self.base_url);
 
         let response = self.client.get(&url)
@@ -41,7 +42,7 @@ impl DsNdibClient {
         Ok(bucket)
     }
 
-    pub(crate) async fn get_background_id(&self) -> Result<String, Error> {
+    pub(crate) async fn get_background_id(&self) -> Result<String, reqwest::Error> {
         let url = format!("{}/Configuration/background-id", self.base_url);
 
         let response = self.client.get(&url)
@@ -52,28 +53,14 @@ impl DsNdibClient {
         Ok(bucket)
     }
 
-    fn read_file_to_buffer(file_path: &Path) -> (String, Vec<u8>) {
-        let file_name = file_path
-            .file_name()
-            .and_then(|name| name.to_str())
-            .unwrap()
-            .to_string();
-
-        let mut file = File::open(file_path).unwrap();
-        let mut buffer = Vec::new();
-        file.read_to_end(&mut buffer).unwrap();
-
-        (file_name, buffer)
-    }
-
-    pub async fn upload(&self, token: &str, product_guid: &str, core_path: &Path, win_path: &Path, mac_path: &Path, linux_path: &Path, metadata_path: &Path) -> Result<(), Error> {
+    pub async fn upload(&self, token: &str, product_guid: &str, core_path: &Path, win_path: &Path, mac_path: &Path, linux_path: &Path, metadata_path: &Path) -> Result<(), ClientError> {
         let url = format!("{}/Upload/{}", self.base_url, product_guid);
 
-        let (core_file_name, core_buffer) = Self::read_file_to_buffer(core_path);
-        let (linux_file_name, linux_buffer) = Self::read_file_to_buffer(linux_path);
-        let (win_file_name, win_buffer) = Self::read_file_to_buffer(win_path);
-        let (mac_file_name, mac_buffer) = Self::read_file_to_buffer(mac_path);
-        let (metadata_file_name, metadata_buffer) = Self::read_file_to_buffer(metadata_path);
+        let (core_file_name, core_buffer) = read_file_to_buffer(core_path)?;
+        let (linux_file_name, linux_buffer) = read_file_to_buffer(linux_path)?;
+        let (win_file_name, win_buffer) = read_file_to_buffer(win_path)?;
+        let (mac_file_name, mac_buffer) = read_file_to_buffer(mac_path)?;
+        let (metadata_file_name, metadata_buffer) = read_file_to_buffer(metadata_path)?;
 
         let form = multipart::Form::new()
             .part("coreFile", multipart::Part::bytes(core_buffer).file_name(core_file_name.to_string()))
@@ -103,12 +90,12 @@ impl DsNdibClient {
             }
             Err(e) => {
                 eprintln!("Failed to send request: {}", e);
-                Err(e)
+                Err(ClientError::ProblemWithHttp(e))
             }
         }
     }
 
-    pub async fn update_metadata(&self, token: &str, product_id: &str, metadata_path: &Path) -> Result<(), Error> {
+    pub async fn update_metadata(&self, token: &str, product_id: &str, metadata_path: &Path) -> Result<(), ClientError> {
         let url = format!("{}/Upload/update-metadata/{}", self.base_url, product_id);
 
         let metadata_file_name = metadata_path
@@ -116,9 +103,9 @@ impl DsNdibClient {
             .and_then(|name| name.to_str())
             .unwrap();
 
-        let mut metadata_file = File::open(metadata_path).unwrap();
+        let mut metadata_file = File::open(metadata_path)?;
         let mut metadata_buffer = Vec::new();
-        metadata_file.read_to_end(&mut metadata_buffer).unwrap();
+        metadata_file.read_to_end(&mut metadata_buffer)?;
 
         let form = multipart::Form::new()
             .part("metadataFile", multipart::Part::bytes(metadata_buffer).file_name(metadata_file_name.to_string()));
@@ -128,9 +115,8 @@ impl DsNdibClient {
             .bearer_auth(token)
             .multipart(form)
             .send()
-            .await
-            .unwrap();
+            .await?;
 
-        return Ok(());
+        Ok(())
     }
 }

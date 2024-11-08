@@ -7,5 +7,5 @@ pub(crate) fn get_session_value(
     store: tauri::State<'_, Store>,
     key: &str
 ) -> Result<String, SessionDataError> {
-    Ok(store.get(key)?)
+    store.get(key)
 }

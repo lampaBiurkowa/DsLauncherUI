@@ -2,3 +2,4 @@ dibApps
 dibUpdater
 binaries
 *.ndibver
+.cache

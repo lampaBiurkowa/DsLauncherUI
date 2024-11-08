@@ -8,7 +8,11 @@ pub(crate) enum ClientError {
     #[error("Problem with configuration: {0}")]
     ProblemWithConfiguration(#[from] ConfigurationError),
     #[error("Error with tauri 😐😐😐 : {0}")]
-    TauriError(#[from] tauri::Error)
+    TauriError(#[from] tauri::Error),
+    #[error("Problem with http: {0}")]
+    ProblemWithHttp(#[from] reqwest::Error),
+    #[error("Problem with IO: {0}")]
+    ProblemWithIO(#[from] std::io::Error),
 }
 
 impl From<ClientError> for InvokeError {

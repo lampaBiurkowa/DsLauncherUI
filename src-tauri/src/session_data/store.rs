@@ -6,7 +6,7 @@ pub(crate) struct Store(Mutex<HashMap<String, String>>);
 
 impl Store {
     pub(crate) fn new() -> Self {
-        Self { 0: Mutex::new(HashMap::new()) }
+        Self(Mutex::new(HashMap::new()))
     }
 
     pub(crate) fn set(&self, key: &str, value: &str) -> Result<Option<String>, SessionDataError> {

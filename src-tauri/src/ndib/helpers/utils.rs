@@ -40,28 +40,27 @@ pub(crate) fn get_manifest_file_name(manifest: &str) -> Result<&str, NdibError> 
 }
 
 
-pub(crate) fn create_zip<I>(all_lines: I, zip_name: String)
+pub(crate) fn create_zip<I>(all_lines: I, zip_name: String) -> Result<(), NdibError>
 where
     I: IntoIterator<Item = Result<String, io::Error>>,
 {
-    let zip_file = fs::File::create(zip_name).unwrap();
+    let zip_file = fs::File::create(zip_name)?;
     let mut zip = ZipWriter::new(zip_file);
     let options = FileOptions::default().compression_method(zip::CompressionMethod::Stored);
 
-    for line in all_lines {
-        if let Ok(path_str) = line {
-            let path = Path::new(&path_str);
-            if path.exists() {
-                if let Err(e) = add_path_to_zip(&mut zip, path, &options, Path::new("")) {
-                    eprintln!("Failed to add {}: {}", path.display(), e);
-                }
-            } else {
-                eprintln!("Path does not exist: {}", path.display());
+    for line in all_lines.into_iter().flatten() {
+        let path = Path::new(&line);
+        if path.exists() {
+            if let Err(e) = add_path_to_zip(&mut zip, path, &options, Path::new("")) {
+                eprintln!("Failed to add {}: {}", path.display(), e);
             }
+        } else {
+            eprintln!("Path does not exist: {}", path.display());
         }
     }
 
-    zip.finish().unwrap();
+    zip.finish()?;
+    Ok(())
 }
 
 fn add_path_to_zip<W: Write + io::Seek>(
