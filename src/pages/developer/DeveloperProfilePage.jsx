@@ -2,7 +2,6 @@ import React, { useContext, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { useDeveloper } from "./hooks/useDeveloper";
-import { deafultBucket, launcherBucket, publicPath } from "@/App";
 import { UserContext } from "@/contexts/UserContextProvider";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import ProfilePicture from "../../components/profile-picture/ProfilePicture";
@@ -15,6 +14,7 @@ import { useSubscriptions } from "./hooks/useSubscriptions";
 import useMoney from "../profile/hooks/useMoney";
 import useUserSubscribed from "../store/hooks/useUserSubscribed";
 import { useIsDeveloperMember } from "./hooks/useIsDeveloperMember";
+import { ConfigurationHandler } from "@/services/ConfigurationService";
 
 const api = new DsLauncherApiClient();
 
@@ -28,7 +28,7 @@ function DeveloperProfilePage() {
 
   const logo = useMemo(() => {
     if (developer?.profileImage?.length > 0) {
-      return `${publicPath}/${launcherBucket}/${developer?.profileImage}`;
+      return `${ConfigurationHandler.getSupabaseUrl()}/${ConfigurationHandler.getLauncherApiUrl()}/${developer?.profileImage}`;
     }
     return undefined;
   }, [developer]);

@@ -2,9 +2,9 @@ use std::collections::HashMap;
 
 use serde_json::Value;
 
-use crate::{cache::{error::CacheError, models::product::{FilesData, Product, RatesBreakdown}}, clients::launcher_client::DsLauncherClient, configuration::{env_var::EnvVar, remote_var}};
+use crate::{cache::{error::CacheError, models::product::{FilesData, Product, RatesBreakdown}}, clients::launcher_client::DsLauncherClient, configuration::{env_var::EnvVar, remote_vars}};
 
-use self::remote_var::RemoteVars;
+use self::remote_vars::RemoteVars;
 
 use super::data_provider::DataProvider;
 

@@ -1,6 +1,6 @@
 use tauri::command;
 
-use crate::configuration::remote_var::RemoteVars;
+use crate::configuration::remote_vars::RemoteVars;
 
 #[command]
 pub(crate) fn get_remote_vars(

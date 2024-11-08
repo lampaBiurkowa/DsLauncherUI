@@ -5,18 +5,20 @@ async function getSessionData(key) {
 }
 
 async function setSessionData(key, value) {
-  await invoke("set_session_value", { key, value});
+  await invoke("set_session_value", { key, value });
 }
 
 const TOKEN_KEY = 'token';
 const CURRENT_USER_KEY = 'currentUser';
 
-class LocalStorageHandlerSingleton {
+class SessionDataHandlerSingleton {
     getToken() {
+        console.log("ASDASDSAD");
         return getSessionData(TOKEN_KEY);
     }
 
     setToken(token) {
+        console.log("424324234");
         setSessionData(TOKEN_KEY, token);
     }
 
@@ -29,4 +31,4 @@ class LocalStorageHandlerSingleton {
     }
 }
 
-export const LocalStorageHandler = new LocalStorageHandlerSingleton();
+export const SessionDataHandler = new SessionDataHandlerSingleton();

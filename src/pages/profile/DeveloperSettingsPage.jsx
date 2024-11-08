@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { deafultBucket, publicPath } from "@/App";
 import { UserContext } from "@/contexts/UserContextProvider";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import { NavLink } from "react-router-dom";
@@ -8,6 +7,7 @@ import "./DeveloperSettingsPage.scss";
 import Dialog from "@/components/dialog/Dialog";
 import InfoBar, { InfoBarType } from "@/components/info-bar/InfoBar";
 import useDeveloperAccessPrice from "./hooks/useDeveloperAccessPrice";
+import { ConfigurationHandler } from "@/services/ConfigurationService";
 
 const api = new DsLauncherApiClient();
 
@@ -137,7 +137,7 @@ function DeveloperSettingsPage() {
             <div className="developer" key={key}>
               <div>
                 <img
-                  src={`${publicPath}/${deafultBucket}/${dev?.profileImage}`}
+                  src={`${ConfigurationHandler.getSupabaseUrl()}/${ConfigurationHandler.getCoreApiUrl()}/${dev?.profileImage}`}
                   alt="Developer logo"
                 />
                 <span>{dev.name}</span>

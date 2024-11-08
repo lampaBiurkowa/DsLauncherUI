@@ -3,7 +3,7 @@ import { UserContext } from "@/contexts/UserContextProvider";
 import { NavLink, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { DsCoreApiClient } from "@/services/DsCoreApiClient";
-import { LocalStorageHandler } from "@/services/LocalStorageService";
+import { SessionDataHandler } from "@/services/SessionDataService";
 import ProfilePicture from "@/components/profile-picture/ProfilePicture";
 import useProfileImage from "@/hooks/useProfileImage";
 import Navbar from "@/components/navbar/Navbar";
@@ -53,8 +53,8 @@ function ProfilePage() {
             <button
               className="small"
               onClick={() => {
-                LocalStorageHandler.setToken("");
-                LocalStorageHandler.setUser("");
+                SessionDataHandler.setToken("");
+                SessionDataHandler.setUser("");
                 setCurrentUser(undefined);
                 navigate("/home", { replace: true });
               }}

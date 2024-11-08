@@ -73,7 +73,6 @@ function UpdatesPage() {
                   <li>
                     <button
                       className="menuitem small"
-                      onClick={console.log("pliz")}
                     >
                       <i className="las la-trash" />
                       <span>Uninstall</span>

@@ -5,6 +5,7 @@ use crate::clients::{core_client::DsCoreClient, launcher_client::DsLauncherClien
 use super::error::ConfigurationError;
 
 #[derive(Serialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub(crate) struct RemoteVars {
     pub(crate) core_bucket: String,
     pub(crate) launcher_bucket: String,

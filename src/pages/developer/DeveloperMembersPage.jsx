@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { deafultBucket, publicPath } from "@/App";
 import { useParams } from "react-router-dom";
 import { useDeveloperMembers } from "./hooks/useDeveloperMembers";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 import SettingsEntry from "@/components/settings-entry/SettingsEntry";
 import Dialog from "@/components/dialog/Dialog";
 import "./DeveloperMembersPage.scss";
+import { ConfigurationHandler } from "@/services/ConfigurationService";
 
 const api = new DsLauncherApiClient();
 
@@ -60,7 +60,7 @@ function DeveloperMembersPage() {
           return (
             <div className="member" key={key}>
               <img
-                src={`${publicPath}/${deafultBucket}/${member?.profileImage}`}
+                src={`${ConfigurationHandler.getSupabaseUrl()}/${ConfigurationHandler.getCoreApiUrl()}/${member?.profileImage}`}
                 alt="Member profile image"
               />
               <span className="name">

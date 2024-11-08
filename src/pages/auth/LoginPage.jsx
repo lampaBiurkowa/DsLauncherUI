@@ -9,7 +9,7 @@ import { UserContext } from "../../contexts/UserContextProvider";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { LocalStorageHandler } from "../../services/LocalStorageService";
+import { SessionDataHandler } from "../../services/SessionDataService";
 import InfoBar, { InfoBarType } from "@/components/info-bar/InfoBar";
 import Dialog from "@/components/dialog/Dialog";
 import VerifyAccount from "./components/VerifyAccount";
@@ -81,8 +81,8 @@ function LoginPage() {
                     }
                   );
 
-                  LocalStorageHandler.setToken(token);
-                  LocalStorageHandler.setUser(userId);
+                  SessionDataHandler.setToken(token);
+                  SessionDataHandler.setUser(userId);
                 } catch {
                   setError("Please check your credentials.");
                 }

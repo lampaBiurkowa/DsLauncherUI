@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
-import { LocalStorageHandler } from "@/services/LocalStorageService";
+import { SessionDataHandler } from "@/services/SessionDataService";
 
 const api = new DsLauncherApiClient();
 
@@ -9,7 +9,7 @@ function useAlreadyReviewed(productGuid, refresh) {
 
   useEffect(() => {
     async function fetchAlreadyReviewed() {
-      setAlreadyReviewed((await api.getReviewsByProductAndUser(productGuid, LocalStorageHandler.getUser())) != null);
+      setAlreadyReviewed((await api.getReviewsByProductAndUser(productGuid, SessionDataHandler.getUser())) != null);
     }
     
     if (refresh) {

@@ -5,7 +5,7 @@ use surrealdb::Surreal;
 use surrealdb::engine::local::{Db, Mem};
 use tokio::time::sleep;
 
-use crate::configuration::remote_var::RemoteVars;
+use crate::configuration::remote_vars::RemoteVars;
 use super::data_providers::currency_data_provider::CurrencyDataProvider;
 use super::data_providers::data_provider::DataProvider;
 use super::data_providers::developer_data_provider::DeveloperDataProvider;

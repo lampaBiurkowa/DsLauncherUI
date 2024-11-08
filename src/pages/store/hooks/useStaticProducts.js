@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { deafultBucket, publicPath } from "@/App";
 import { getProduct } from "@/services/CacheService";
+import { ConfigurationHandler } from "@/services/ConfigurationService";
 
 function useStaticProducts() {
-  const url = `${publicPath}/${deafultBucket}/discover.json`;
+  const url = `${ConfigurationHandler.getSupabaseUrl()}/${ConfigurationHandler.getLauncherBucketName()}/discover.json`;
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
