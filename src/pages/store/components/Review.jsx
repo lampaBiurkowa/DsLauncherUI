@@ -24,13 +24,9 @@ function Review({ review }) {
   const [profileImage, setProfileImage] = useState("/img/user.png");
 
   useEffect(() => {
-    if (user?.model.profileImage) {
-      setProfileImage(
-        `${ConfigurationHandler.getSupabaseUrl()}/${ConfigurationHandler.getCoreApiUrl()}/${user?.model.profileImage}`
-      );
-    } else {
-      setProfileImage("/img/user.png");
-    }
+    setProfileImage(
+      getProfilePath(user?.model.guid)
+    );
   }, [user]);
 
   return (

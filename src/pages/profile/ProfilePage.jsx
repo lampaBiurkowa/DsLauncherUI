@@ -21,23 +21,17 @@ function ProfilePage() {
   const money = useMoney();
 
   async function uploadProfileImage(file) {
-    let publicFileName = "";
-
+    console.log(file);
     if (file.path) {
       const bytes = (await fs.readFile(file.path)).buffer;
       const blob = new Blob([bytes], { type: "image/jpeg" });
-      publicFileName = await api.uploadProfileImage(blob, file.name);
-    } else {
-      await api.updateUser({
-        ...currentUser,
-        profileImage: "",
-      });
+      await api.uploadProfileImage(blob);
     }
 
-    setCurrentUser({
-      ...currentUser,
-      profileImage: publicFileName,
-    });
+    //TODO jakis iwent
+    // setCurrentUser({
+    //   ...currentUser,
+    // });
   }
 
   return (

@@ -5,7 +5,7 @@ use std::path::Path;
 use std::io::Read;
 use crate::configuration::env_var::EnvVar;
 use super::error::ClientError;
-use super::utils::read_file_to_buffer;
+use super::utils::{get_as_text, read_file_to_buffer};
 
 pub struct DsNdibClient {
     base_url: String,
@@ -22,35 +22,17 @@ impl DsNdibClient {
     
     pub(crate) async fn get_bucket_name(&self) -> Result<String, Error> {
         let url = format!("{}/Configuration/bucket-name", self.base_url);
-
-        let response = self.client.get(&url)
-            .send()
-            .await?;
-
-        let bucket = response.text().await?.trim_matches('"').to_string();
-        Ok(bucket)
+        get_as_text(&self.client, &url).await
     }
 
     pub(crate) async fn get_icon_id(&self) -> Result<String, reqwest::Error> {
         let url = format!("{}/Configuration/icon-id", self.base_url);
-
-        let response = self.client.get(&url)
-            .send()
-            .await?;
-
-        let bucket = response.text().await?.trim_matches('"').to_string();
-        Ok(bucket)
+        get_as_text(&self.client, &url).await
     }
 
     pub(crate) async fn get_background_id(&self) -> Result<String, reqwest::Error> {
         let url = format!("{}/Configuration/background-id", self.base_url);
-
-        let response = self.client.get(&url)
-            .send()
-            .await?;
-
-        let bucket = response.text().await?.trim_matches('"').to_string();
-        Ok(bucket)
+        get_as_text(&self.client, &url).await
     }
 
     pub async fn upload(&self, token: &str, product_guid: &str, core_path: &Path, win_path: &Path, mac_path: &Path, linux_path: &Path, metadata_path: &Path) -> Result<(), ClientError> {

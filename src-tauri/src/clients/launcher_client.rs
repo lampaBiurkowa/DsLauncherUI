@@ -5,6 +5,8 @@ use uuid::Uuid;
 use std::path::Path;
 use crate::configuration::env_var::EnvVar;
 use super::error::ClientError;
+use super::utils::get_as_json;
+use super::utils::get_as_text;
 use super::utils::read_file_to_buffer;
 
 pub(crate) struct DsLauncherClient {
@@ -22,13 +24,7 @@ impl DsLauncherClient {
     
     pub(crate) async fn get_bucket_name(&self) -> Result<String, reqwest::Error> {
         let url = format!("{}/Configuration/bucket-name", self.base_url);
-
-        let response = self.client.get(&url)
-            .send()
-            .await?;
-
-        let bucket = response.text().await?.trim_matches('"').to_string();
-        Ok(bucket)
+        get_as_text(&self.client, &url).await
     }
 
     pub(crate) async fn upload(&self, token: &str, developer_guid: &Uuid, metadata_path: &Path) -> Result<String, ClientError> {
@@ -66,62 +62,31 @@ impl DsLauncherClient {
 
     pub async fn get_product_guid(&self, product_name: &str) -> Result<String, ClientError> {
         let url = format!("{}/Product/get-id/{}", self.base_url, product_name);
-
-        let response = self.client.get(&url)
-            .send()
-            .await?;
-
-        let id = response.text().await?.trim_matches('"').to_string();
-        Ok(id)
+        Ok(get_as_text(&self.client, &url).await?)
     }
 
     pub(crate) async fn get_developer(&self, id: &str) -> Result<Value, ClientError> {
         let url = format!("{}/Developer/{}", self.base_url, id);
-
-        let response = self.client.get(&url)
-            .send()
-            .await?;
-
-        Ok(response.json().await?)
+        get_as_json(&self.client, &url).await
     }
 
     pub(crate) async fn get_developer_by_user(&self, id: &str) -> Result<Value, ClientError> {
         let url = format!("{}/Developer/user/{}", self.base_url, id);
-
-        let response = self.client.get(&url)
-            .send()
-            .await?;
-
-        Ok(response.json().await?)
+        get_as_json(&self.client, &url).await
     }
 
     pub(crate) async fn get_product(&self, id: &str) -> Result<Value, ClientError> {
         let url = format!("{}/Product/{}", self.base_url, id);
-
-        let response = self.client.get(&url)
-            .send()
-            .await?;
-
-        Ok(response.json::<Value>().await?)
+        get_as_json(&self.client, &url).await
     }
 
     pub(crate) async fn get_latest_product_package(&self, id: &str) -> Result<Value, ClientError> {
         let url = format!("{}/Package/latest/{}", self.base_url, id);
-
-        let response = self.client.get(&url)
-            .send()
-            .await?;
-
-        Ok(response.json().await?)
+        get_as_json(&self.client, &url).await
     }
 
     pub(crate) async fn get_review_breakdown(&self, id: &str) -> Result<Value, ClientError> {
         let url = format!("{}/Review/product/{}/breakdown", self.base_url, id);
-
-        let response = self.client.get(&url)
-            .send()
-            .await?;
-
-        Ok(response.json().await?)
+        get_as_json(&self.client, &url).await
     }
 }

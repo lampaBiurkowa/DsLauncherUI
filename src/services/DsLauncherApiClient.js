@@ -12,7 +12,7 @@ export class DsLauncherApiClient {
     options.headers = options.headers || {};
     options.headers[
       "Authorization"
-    ] = `Bearer ${SessionDataHandler.getToken()}`;
+    ] = `Bearer ${await SessionDataHandler.getToken()}`;
     const response = await fetch(url, options);
     if (!response.ok) {
       const error = await response.text();

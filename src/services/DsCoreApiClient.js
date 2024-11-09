@@ -10,7 +10,7 @@ export class DsCoreApiClient {
     
     async request(url, options = {}, isText = false) {
         options.headers = options.headers || {};
-        options.headers['Authorization'] = `Bearer ${SessionDataHandler.getToken()}`;
+        options.headers['Authorization'] = `Bearer ${await SessionDataHandler.getToken()}`;
         const response = await fetch(url, options);
         if (!response.ok) {
             const error = await response.text();
@@ -102,10 +102,10 @@ export class DsCoreApiClient {
         return this.request(url, options);
     }
 
-    async uploadProfileImage(file, fileName) {
+    async uploadProfileImage(file) {
         const url = `${this.baseUrl}/User/UploadProfileImage`;
         const formData = new FormData();
-        formData.append('file', file, fileName);
+        formData.append('file', file);
 
         const options = {
             method: 'POST',

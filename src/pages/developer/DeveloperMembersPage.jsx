@@ -60,7 +60,7 @@ function DeveloperMembersPage() {
           return (
             <div className="member" key={key}>
               <img
-                src={`${ConfigurationHandler.getSupabaseUrl()}/${ConfigurationHandler.getCoreApiUrl()}/${member?.profileImage}`}
+                src={getProfilePath(member?.guid)}
                 alt="Member profile image"
               />
               <span className="name">

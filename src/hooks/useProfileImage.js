@@ -1,5 +1,5 @@
 import { UserContext } from "@/contexts/UserContextProvider";
-import { ConfigurationHandler } from "@/services/ConfigurationService";
+import { getProfilePath } from "@/services/PathResolver";
 import { useEffect, useContext, useState } from "react";
 
 export default function useProfileImage() {
@@ -7,13 +7,9 @@ export default function useProfileImage() {
   const [profileImage, setProfileImage] = useState();
 
   useEffect(() => {
-    if (currentUser?.profileImage) {
-      setProfileImage(
-        `${ConfigurationHandler.getSupabaseUrl()}/${ConfigurationHandler.getCoreBucketName()}/${currentUser.profileImage}`
-      );
-    } else {
-      setProfileImage(undefined);
-    }
+    setProfileImage(
+      getProfilePath(currentUser?.guid)
+    );
   }, [currentUser]);
 
   return profileImage;

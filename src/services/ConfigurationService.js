@@ -21,10 +21,6 @@ class ConfigurationSingleton {
         this.remoteVars = remoteVars;
         console.log("META");
     }
-    // this.coreApiUrl = invoke("get_env", { name: "CORE_API_URL" }),
-    // this.launcherApiUrl = invoke("get_env", { name: "LAUNCHER_API_URL" }),
-    // this.supabaseUrl = invoke("get_env", { name: "SUPABASE_URL" }),
-    // this.remoteVars = invoke("get_remote_vars")
 
     getCoreApiUrl() {
         return this.coreApiUrl;
@@ -40,6 +36,18 @@ class ConfigurationSingleton {
 
     getCoreBucketName() {
         return this.remoteVars.coreBucket;
+    }
+
+    getCoreUserProfileId() {
+        return this.remoteVars.coreUserProfileId;
+    }
+
+    getCoreUserBgId() {
+        return this.remoteVars.coreUserBgId;
+    }
+
+    getCoreUserStorageFolder() {
+        return this.remoteVars.coreUserStorageFolder;
     }
 
     getLauncherBucketName() {

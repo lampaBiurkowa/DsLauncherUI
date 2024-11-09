@@ -7,6 +7,7 @@ import "./UpdatesPage.scss";
 import { useContext } from "react";
 import { UserContext } from "@/contexts/UserContextProvider";
 import useSettings from "../../hooks/useSettings";
+import { SessionDataHandler } from "@/services/SessionDataService";
 
 function UpdatesPage() {
   const [settings, applySettings] = useSettings();
@@ -15,7 +16,7 @@ function UpdatesPage() {
 
   useEffect(() => {
     async function getUpdatable() {
-      let appNames = (await runList(true, getToken(), currentUser.login)).Names;
+      let appNames = (await runList(true, await SessionDataHandler.getToken(), currentUser.login)).Names;
       let result = [];
       for (let i = 0; i < appNames.length; i++) {
         // TODO APPNAMES SHOULD BE APPIDS
@@ -38,7 +39,7 @@ function UpdatesPage() {
     await runInstall(
       appName,
       settings.games[appName],
-      getToken(),
+      await SessionDataHandler.getToken(),
       currentUser.login
     );
   }

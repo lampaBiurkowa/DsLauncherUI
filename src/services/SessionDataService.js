@@ -12,22 +12,20 @@ const TOKEN_KEY = 'token';
 const CURRENT_USER_KEY = 'currentUser';
 
 class SessionDataHandlerSingleton {
-    getToken() {
-        console.log("ASDASDSAD");
-        return getSessionData(TOKEN_KEY);
+    async getToken() {
+        return await getSessionData(TOKEN_KEY);
     }
 
-    setToken(token) {
-        console.log("424324234");
-        setSessionData(TOKEN_KEY, token);
+    async setToken(token) {
+        await setSessionData(TOKEN_KEY, token);
     }
 
-    getUser() {
-        return getSessionData(CURRENT_USER_KEY);
+    async getUser() {
+        return await getSessionData(CURRENT_USER_KEY);
     }
 
-    setUser(user) {
-        setSessionData(CURRENT_USER_KEY, user);
+    async setUser(user) {
+        await setSessionData(CURRENT_USER_KEY, user);
     }
 }
 

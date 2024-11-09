@@ -15,7 +15,8 @@ function ProfilePicture({ src, readonly, onSelected }) {
 
   useEffect(() => {
     if (openedFiles.length == 1) {
-      onSelected({ path: openedFiles[0].path, name: openedFiles[0].name });
+      console.log(openedFiles[0]);
+      onSelected({ path: openedFiles[0] });
     }
   }, [openedFiles]);
 
@@ -54,7 +55,7 @@ function ProfilePicture({ src, readonly, onSelected }) {
             }}
           >
             <div>
-              <i class="las la-upload"></i>
+              <i className="las la-upload"></i>
             </div>
             <span>Upload</span>
           </button>
@@ -65,7 +66,7 @@ function ProfilePicture({ src, readonly, onSelected }) {
             }}
           >
             <div>
-              <i class="las la-trash"></i>
+              <i className="las la-trash"></i>
             </div>
             <span>Remove</span>
           </button>
