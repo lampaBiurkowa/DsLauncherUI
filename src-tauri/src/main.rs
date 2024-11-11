@@ -6,8 +6,9 @@ use std::fs::File;
 use cache::{commands::{get_item::get_item, get_items::get_items}, db::Database};
 use configuration::{commands::{get_env::get_env, get_remote_vars::get_remote_vars}, remote_vars::RemoteVars};
 use launcher_service::{commands::execute::execute, websocket_manager::connect_websocket};
-use ndib::commands::{add::add, init::init, update_metadata::update_metadata, remove::remove, pull::pull, publish::publish};
+use ndib::commands::{add::add, init::init, update_metadata::update_metadata, remove::remove, pull::pull, publish::publish, get_repositories::get_repositories, get_repository_metadata::get_repository_metadata};
 use session_data::{commands::{set_session_value::set_session_value, get_session_value::get_session_value}, store::Store};
+use utility::read_file_as_base64::read_file_as_base64;
 use tauri::Manager;
 use tokio::sync::mpsc;
 use dotenv::dotenv;
@@ -18,6 +19,7 @@ mod launcher_service;
 mod cache;
 mod configuration;
 mod session_data;
+mod utility;
 
 #[tokio::main]
 async fn main() {
@@ -62,8 +64,9 @@ async fn main() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
-            init, add, remove, publish, update_metadata, pull,
+            init, add, remove, publish, update_metadata, pull, get_repositories, get_repository_metadata,
             execute,
+            read_file_as_base64,
             get_item, get_items,
             get_remote_vars, get_env,
             set_session_value, get_session_value])

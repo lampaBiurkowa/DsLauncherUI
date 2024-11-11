@@ -6,6 +6,7 @@ import SettingsEntry from "@/components/settings-entry/SettingsEntry";
 import Dialog from "@/components/dialog/Dialog";
 import "./DeveloperMembersPage.scss";
 import { ConfigurationHandler } from "@/services/ConfigurationService";
+import { getProfilePath } from "@/services/PathResolver";
 
 const api = new DsLauncherApiClient();
 

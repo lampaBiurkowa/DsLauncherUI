@@ -15,7 +15,7 @@ pub(crate) async fn execute(
         command += &format!("{}\n", format_args(head_args));
     }
     if let Some(command_args) = &args {
-        command += &format!("\n{}", format_args(command_args));
+        command += &format!("{}\n", format_args(command_args));
     }
  
     sender

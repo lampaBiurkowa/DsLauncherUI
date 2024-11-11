@@ -40,9 +40,11 @@ import DeveloperNewsPage from "@/pages/developer/DeveloperNewsPage";
 import DeveloperGamesPage from "@/pages/developer/DeveloperGamesPage";
 import DeveloperSettingsPage from "@/pages/profile/DeveloperSettingsPage";
 import DeveloperMembersPage from "@/pages/developer/DeveloperMembersPage";
+import DeveloperNdibPage from "@/pages/profile/DeveloperNdibPage";
 
 import DownloadsPage from "@/pages/downloads/DownloadsPage";
 import AudioPage from "./pages/library/AudioPage";
+import NdibPage from "./pages/ndib/NdibPage";
 
 const router = createBrowserRouter([
   {
@@ -87,6 +89,14 @@ const router = createBrowserRouter([
               </Guard>
             ),
           },
+          // {
+          //   path: "/profile/ndib",
+          //   element: (
+          //     <Guard>
+          //       <DeveloperNdibPage></DeveloperNdibPage>
+          //     </Guard>
+          //   ),
+          // },
         ],
       },
       {
@@ -158,6 +168,14 @@ const router = createBrowserRouter([
             path: "/library/audio/:id",
           },
         ],
+      },
+      {
+        path: "/ndib",
+        element: <NdibPage />,
+      },
+      {
+        element: <DeveloperNdibPage />,
+        path: "/ndib/repo",
       },
       {
         path: "/downloads",

@@ -4,7 +4,7 @@ import Rating from "@/components/rating/Rating";
 import CollapsedArea from "@/components/collapsed-area/CollapsedArea";
 import "./Review.scss";
 import { getUser } from "@/services/CacheService";
-import { ConfigurationHandler } from "@/services/ConfigurationService";
+import { getProfilePath } from "@/services/PathResolver";
 
 function useUser(id) {
   const [user, setUser] = useState();

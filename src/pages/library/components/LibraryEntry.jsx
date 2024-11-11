@@ -19,7 +19,7 @@ function LibraryEntry({ product, isInstalled, hasUpdate, secondary = "" }) {
   return (
     <>
       <div className="library-entry">
-        <img src={product?.filesDatafilesData?.Icon} alt="App Icon" />
+        <img src={product?.filesData?.Icon} alt="App Icon" />
         <span className="title">{product?.model?.name}</span>
         <span className="secondary">{secondary}</span>
         <div className="actions">

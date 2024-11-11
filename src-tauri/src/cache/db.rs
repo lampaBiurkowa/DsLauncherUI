@@ -89,7 +89,7 @@ impl Database {
 
         let ids_to_fetch: Vec<&str> = ids.iter().filter(|id| !found_ids.contains(&id.to_string())).cloned().collect();
         for id in ids_to_fetch {
-            if let Some(refreshed_item) = self.refresh_and_update_cache(entity_type, id).await? {
+            if let Ok(Some(refreshed_item)) = self.refresh_and_update_cache(entity_type, id).await {
                 items_to_return.push(refreshed_item);
             }
         }

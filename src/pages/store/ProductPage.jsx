@@ -115,31 +115,34 @@ function ProductPage() {
 
       <section className="reviews">
         <h2>Comments & Reviews</h2>
-        <div className="reviews-summary">
-          <div className="overall">
-            <span>{summary?.avg}</span>
-            <span>({summary?.rateCounts.reduce((x, y) => x + y, 0)})</span>
-          </div>
-          <div className="review-details">
-            {[1, 2, 3, 4, 5].map((rate, index) => (
+        <div className="reviews-summary"><div className="overall">
+          <span>{summary?.avg.toFixed(1)}</span>
+          <span>({summary?.rateCounts ? Object.values(summary.rateCounts).reduce((x, y) => x + y, 0) : 0})</span>
+        </div>
+        <div className="review-details">
+          {[1, 2, 3, 4, 5].map((rate) => {
+            const count = summary?.rateCounts?.[rate] || 0;
+            const totalCount = summary?.rateCounts
+              ? Object.values(summary.rateCounts).reduce((x, y) => x + y, 0)
+              : 0;
+            const percentage = totalCount ? (count / totalCount) * 100 : 0;
+
+            return (
               <div className="rate-counter" key={rate}>
                 <span className="rate">{rate}</span>
-                <span className="count">({summary?.rateCounts[index]})</span>
+                <span className="count">({count})</span>
                 <div className="bar">
                   <div
                     className="fill bar"
                     style={{
-                      width: `${
-                        (summary?.rateCounts[index] /
-                          summary?.rateCounts.reduce((x, y) => x + y, 0)) *
-                        100
-                      }%`,
+                      width: `${percentage}%`,
                     }}
                   ></div>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
+        </div>
           {currentUser && ownsProduct && !alreadyReviewed ? (
             <>
               <button

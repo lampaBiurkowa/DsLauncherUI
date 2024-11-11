@@ -30,6 +30,11 @@ function MainPage() {
               Library
             </NavButton>
           </Guard>
+          <Guard mode={GuardMode.HIDE}>
+            <NavButton to="/ndib" icon="las la-th-large">
+              Ndib
+            </NavButton>
+          </Guard>
           <UpdateSummary navend="true" />
           <NavButton to="/settings/libraries" icon="las la-cog" navend="true">
             Settings

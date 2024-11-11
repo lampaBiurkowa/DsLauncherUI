@@ -1,0 +1,1 @@
+pub(crate) mod read_file_as_base64;

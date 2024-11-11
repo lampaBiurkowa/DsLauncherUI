@@ -57,6 +57,10 @@ export class DsLauncherServiceClient {
     executeCommand("get-libraries");
   }
 
+  getDeveloperLibraries() {
+    executeCommand("get-developer-libraries");
+  }
+
   getLibraryDetails(path) {
     executeCommand("get-library-details", {
       path: path,
@@ -66,6 +70,14 @@ export class DsLauncherServiceClient {
   removeLibrary(path) {
     executeCommand("remove-library", {
       library: path,
+    });
+  }
+
+  addLibrary(path, name, isDeveloper) {
+    executeCommand("add-library", {
+      library: path,
+      name: name,
+      isDeveloper: isDeveloper
     });
   }
 }

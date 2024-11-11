@@ -71,6 +71,7 @@ function ProfilePage() {
             </NavButton>
             <NavButton to="/profile/payments">Payments</NavButton>
             <NavButton to="/profile/developer">Developer</NavButton>
+            <NavButton to="/profile/ndib">ndib</NavButton>
           </Navbar>
         </div>
         <Outlet />
