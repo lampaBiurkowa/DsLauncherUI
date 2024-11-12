@@ -23,6 +23,8 @@ function NdibPage() {
           );
         })}
       </div>
+      <button>Pull</button>
+      <button>New</button>
     </div>
   );
 }

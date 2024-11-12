@@ -6,3 +6,4 @@ pub(crate) mod remove;
 pub(crate) mod update_metadata;
 pub(crate) mod get_repositories;
 pub(crate) mod get_repository_metadata;
+pub(crate) mod get_repository_files;

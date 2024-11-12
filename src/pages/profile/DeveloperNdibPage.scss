@@ -87,6 +87,13 @@ article {
       border-radius: $radius-sm;
       width: 15%;
     }
+
+    /*DODANE DLA NDIB */
+    img:hover {
+      cursor: pointer;
+      opacity: 0.5;
+    }
+    /*END DODANE DLA NDIB */
   }
 
   .screenshots {
@@ -281,4 +288,50 @@ article {
       }
     }
   }
+}
+
+/*NDIB*/
+.file-tree-root {
+  overflow-y: auto;
+  max-height: 200px;
+  padding-right: 10px; /* Avoid hiding parts under the scrollbar */
+}
+
+/* Optional scrollbar styling */
+.file-tree-root::-webkit-scrollbar {
+  width: 12px;
+}
+.file-tree-root::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.5);
+  border-radius: 6px;
+}
+
+
+.file-tree {
+  margin-top: 2rem;
+}
+
+.file-tree-directory {
+  margin-bottom: 1rem;
+}
+
+.file-tree-directory h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  padding: 0.3rem 0;
+}
+
+.file-item img {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.5rem;
+}
+
+.file-item span {
+  font-size: 1rem;
 }

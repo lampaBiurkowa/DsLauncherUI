@@ -7,3 +7,7 @@ export async function getRepositories(paths) {
 export async function getRepositoryMetadata(path) {
   return await invoke("get_repository_metadata", { path });
 }
+
+export async function getRepositoryFiles(path) {
+  return await invoke("get_repository_files", { path });
+}

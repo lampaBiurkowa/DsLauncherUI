@@ -15,7 +15,6 @@ function ProfilePicture({ src, readonly, onSelected }) {
 
   useEffect(() => {
     if (openedFiles.length == 1) {
-      console.log(openedFiles[0]);
       onSelected({ path: openedFiles[0] });
     }
   }, [openedFiles]);

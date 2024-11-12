@@ -6,16 +6,70 @@ import Shelf from "@/components/shelf/Shelf";
 import Dialog from "@/components/dialog/Dialog";
 import Carousel from "@/components/carousel/Carousel";
 import "./DeveloperNdibPage.scss";
-import { getRepositoryMetadata } from "@/services/NdibService";
+import { getRepositoryFiles, getRepositoryMetadata } from "@/services/NdibService";
 import useBase64Image from "./hooks/useBase64Image";
 import useBase64ImageCollection from "./hooks/useBase64ImageCollection";
+import useFileDialog from "@/hooks/useFileDialog";
 
 function DeveloperNdibPage() {
   const [galleryDialogOpen, setGalleryDialogOpen] = useState(false);
 
   const [searchParams] = useSearchParams();
   const path = searchParams.get("path");
+
   const [productData, setRepoInfo] = useState(null);
+  const { openedFiles: iconFile, showDialog: showIconDialog } = useFileDialog([
+    {
+      name: "Images",
+      extensions: ["png", "jpg"],
+    },
+  ]);
+
+  useEffect(() => {
+    if (iconFile.length == 1) {
+      if (iconFile[0].startsWith(path)) {
+        handleChange({ target: { name: "icon", value: iconFile[0].substring(path.length) } })
+      } else {
+        console.error("Path is outside of the ndib repository")
+      }
+    }
+  }, [iconFile]);
+
+  const { openedFiles: bgFile, showDialog: showBgDialog } = useFileDialog([
+    {
+      name: "Images",
+      extensions: ["png", "jpg"],
+    },
+  ]);
+
+  useEffect(() => {
+    if (bgFile.length == 1) {
+      if (bgFile[0].startsWith(path)) {
+        handleChange({ target: { name: "background", value: bgFile[0].substring(path.length) } })
+      } else {
+        console.error("Path is outside of the ndib repository")
+      }
+    }
+  }, [bgFile]);
+
+
+  const { openedFiles: screenshotFile, showDialog: showScreenshotDialog } = useFileDialog([
+    {
+      name: "Images",
+      extensions: ["png", "jpg"],
+    },
+  ]);
+
+  useEffect(() => {
+    if (screenshotFile.length == 1) {
+      if (screenshotFile[0].startsWith(path)) {
+        const newImagesArray = [...productData.images, screenshotFile[0].substring(path.length)];
+        handleChange({ target: { name: "images", value: newImagesArray } });
+      } else {
+        console.error("Path is outside of the ndib repository")
+      }
+    }
+  }, [screenshotFile]);
 
   useEffect(() => {
     async function fetchRepoInfo() {
@@ -35,8 +89,123 @@ function DeveloperNdibPage() {
   const icon = useBase64Image(`${path}/${productData?.icon}`, productData?.icon);
   const backgroundImage = useBase64Image(`${path}/${productData?.background}`, productData?.background);
   const images = useBase64ImageCollection(productData?.images.map(x => `${path}/${x}`), productData?.images);
-  // const minCpu = 
+  const [productFilesData, setRepoFilesInfo] = useState(null);
 
+  useEffect(() => {
+    async function fetchRepoInfo() {
+      if (path) {
+        const filesData = await getRepositoryFiles(path);
+        setRepoFilesInfo(filesData);
+      }
+    }
+    fetchRepoInfo();
+  }, [path]);
+
+  const handleFilesChange = (e) => {
+    const { name, value } = e.target;
+    setRepoFilesInfo((prevData) => ({ ...prevData, [name]: value }));
+  };
+  const removeFile = (filePath, platform) => {
+    filePath = filePath.substring(1);
+    console.log(`${filePath} ${platform}`);
+    setRepoFilesInfo((prevFilesData) => {
+      if (!prevFilesData[platform]) return prevFilesData; 
+  
+      console.log(prevFilesData[platform]?.length);
+      console.log(prevFilesData[platform]);
+      const updatedFiles = prevFilesData[platform].filter((file) => file !== filePath);
+      
+      console.log(updatedFiles?.length);
+      return {
+        ...prevFilesData,
+        [platform]: updatedFiles,
+      };
+    });
+  };
+  const renderFileTree = (filesData) => {
+    const getFileIcon = (platform) => {
+      switch (platform) {
+        case "core":
+          return "/img/core.jpg";
+        case "windows":
+          return "/img/windows.jpg";
+        case "linux":
+          return "/img/linux.jpg";
+        case "mac":
+          return "/img/mac.jpg";
+        default:
+          return "/img/file.jpg";
+      }
+    };
+  
+    const renderDirectoryStructure = (filePath, platform) => {
+      const pathParts = filePath.split("/");
+      const fileName = pathParts.pop();
+      // const subPath = pathParts.join("/");
+  
+      return (
+        <li key={filePath} className="file-tree-item">
+          <div className="file-tree-entry">
+            <img src={getFileIcon(platform)} style={{height:24}} alt={platform} className="file-icon" onClick={
+              () => removeFile(filePath, platform)
+              } />
+            <span>{fileName}</span>
+          </div>
+        </li>
+      );
+    };
+  
+    const buildFileTree = (filesData) => {
+      const fileTree = {};
+  
+      Object.entries(filesData).forEach(([platform, files]) => {
+        files.forEach((filePath) => {
+          const pathParts = filePath.split("/");
+  
+          let currentNode = fileTree;
+          pathParts.forEach((part, index) => {
+            if (!currentNode[part]) {
+              currentNode[part] = index === pathParts.length - 1 ? { platform } : {};
+            }
+            currentNode = currentNode[part];
+          });
+        });
+      });
+  
+      return fileTree;
+    };
+  
+    const renderTreeNodes = (node, parentPath = "") => {
+      return Object.keys(node).map((key) => {
+        const fullPath = `${parentPath}/${key}`;
+        const isFile = node[key].platform;
+  
+        if (isFile) {
+          return renderDirectoryStructure(fullPath, node[key].platform);
+        }
+  
+        return (
+          <li key={fullPath} className="file-tree-folder">
+            <div className="folder-name">{key}</div>
+            <ul className="folder-contents">
+              {renderTreeNodes(node[key], fullPath)}
+            </ul>
+          </li>
+        );
+      });
+    };
+  
+    const fileTree = buildFileTree(filesData);
+    return (
+      <div className="file-tree">
+        <ul className="file-tree-root">
+          {renderTreeNodes(fileTree)}
+        </ul>
+      </div>
+    );
+  };
+  
+  
   return (
     <article>
       <AspectRatio aspectRatio={12 / 5}>
@@ -51,6 +220,10 @@ function DeveloperNdibPage() {
             url("data:image/png;base64,${backgroundImage}")`,
           }}
         >
+        <div
+          onClick={() => showBgDialog()} style={{fontSize: 64, color: "magenta"}}>
+        <i className="las la-edit"></i>
+        </div>
           <div className="product-header">
             <input
               className="title-input"
@@ -81,7 +254,9 @@ function DeveloperNdibPage() {
       </AspectRatio>
 
       <section className="description">
-        <img src={`data:image/png;base64,${icon}`}/>
+        <img src={`data:image/png;base64,${icon}`} onClick={() => {
+          showIconDialog();
+        }}/>
         <h2>About</h2>
         <textarea
           className="description-input"
@@ -95,6 +270,7 @@ function DeveloperNdibPage() {
       <section className="screenshots">
         <Shelf title="Screenshots">
           {images?.map((image, index) => (
+            <div>
             <img
               src={`data:image/png;base64,${image}`}
               alt="Screenshot"
@@ -102,7 +278,25 @@ function DeveloperNdibPage() {
               key={index}
               onClick={() => setGalleryDialogOpen(true)}
             />
+
+
+          <button
+          onClick={() => {
+            const newImagesArray = productData.images.filter((_, i) => i !== index);
+            handleChange({ target: { name: "images", value: newImagesArray } });
+          }}
+          style={{color:"red"}}
+        >
+          <div>
+            <i className="las la-trash"></i>
+          </div>
+          <span>Remove</span>
+        </button>
+        </div>
           ))}
+          <img src="/img/icon.png" alt="Upload" key={images?.length} onClick={
+            () => showScreenshotDialog()
+          }/>
         </Shelf>
         <Dialog
           open={galleryDialogOpen}
@@ -184,6 +378,10 @@ function DeveloperNdibPage() {
             )}
           </div>
         </div>
+        <section className="file-tree">
+        <h2>File Tree</h2>
+        {productFilesData ? renderFileTree(productFilesData) : <p>Loading file tree...</p>}
+      </section>
 
         <div>
           <h3>System Requirements</h3>
