@@ -13,15 +13,15 @@ use crate::ndib::models::ndib_data::NdibData;
 use super::consts::{MANIFEST_CORE, MANIFEST_LINUX, MANIFEST_MAC, MANIFEST_WIN, NDIB_FOLDER};
 
 
-pub(crate) fn save_serialized_object<T: Serialize>(object: &T, file_name: &str) -> Result<(), NdibError> {
+pub(crate) fn save_serialized_ndib_object<T: Serialize>(object: &T, file_name: &str, repo_path: &str) -> Result<(), NdibError> {
     let json = serde_json::to_string_pretty(object)?;
-    let mut file = File::create(Path::new(NDIB_FOLDER).join(file_name))?;
+    let mut file = File::create(Path::new(repo_path).join(NDIB_FOLDER).join(file_name))?;
     file.write_all(json.as_bytes())?;
     Ok(())
 }
 
-pub(crate) fn read_serialized_object(file_name: &Path) -> Result<NdibData, NdibError> {
-    let file = File::open(file_name)?;
+pub(crate) fn read_serialized_ndib_object(file_name: &str, repo_path: &str) -> Result<NdibData, NdibError> {
+    let file = File::open(Path::new(repo_path).join(NDIB_FOLDER).join(file_name))?;
     let reader = BufReader::new(file);
     let data: NdibData = serde_json::from_reader(reader)?;
     Ok(data)

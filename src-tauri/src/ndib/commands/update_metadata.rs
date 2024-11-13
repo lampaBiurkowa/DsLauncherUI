@@ -6,7 +6,7 @@ use tauri::async_runtime::TokioRuntime;
 use crate::clients::launcher_client::DsLauncherClient;
 use crate::clients::ndib_client::DsNdibClient;
 use crate::ndib::error::NdibError;
-use crate::ndib::helpers::utils::{create_zip, read_serialized_object};
+use crate::ndib::helpers::utils::{create_zip, read_serialized_ndib_object};
 use crate::ndib::helpers::vec_extensions::VecStringExt;
 use crate::ndib::helpers::consts::{METADATA_FILE, METADATA_NAME, NDIB_FOLDER};
 use crate::ndib::models::ndib_data::NdibData;
@@ -14,8 +14,8 @@ use crate::session_data::keys::TOKEN_KEY;
 use crate::session_data::store::Store;
 
 #[command]
-pub(crate) fn update_metadata(store: tauri::State<'_, Store>, name: &str) -> Result<(), NdibError> {
-    let ndib_data: NdibData = read_serialized_object(&Path::new(NDIB_FOLDER).join(METADATA_FILE))?;
+pub(crate) fn update_metadata(store: tauri::State<'_, Store>, name: &str, path: &str) -> Result<(), NdibError> {
+    let ndib_data: NdibData = read_serialized_ndib_object(METADATA_FILE, path)?;
     let mut extra_paths: Vec<String> = Vec::new();
     extra_paths.add_if_non_empty(ndib_data.icon);
     extra_paths.add_if_non_empty(ndib_data.background);

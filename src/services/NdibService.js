@@ -15,3 +15,7 @@ export async function getRepositoryFiles(path) {
 export async function pullProduct(productGuid, libraryPath) {
   return await invoke("pull", { id: productGuid, path: libraryPath });
 }
+
+export async function init(name, description, productType, contentClassification, price, path) {
+  return await invoke("init", { name, description, productType, contentClassification, price, tags: "", path });
+}

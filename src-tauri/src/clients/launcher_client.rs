@@ -1,7 +1,6 @@
 use reqwest::Client;
 use reqwest::multipart;
 use serde_json::Value;
-use uuid::Uuid;
 use std::path::Path;
 use crate::configuration::env_var::EnvVar;
 use super::error::ClientError;
@@ -27,7 +26,7 @@ impl DsLauncherClient {
         get_as_text(&self.client, &url).await
     }
 
-    pub(crate) async fn upload(&self, token: &str, developer_guid: &Uuid, metadata_path: &Path) -> Result<String, ClientError> {
+    pub(crate) async fn upload(&self, token: &str, developer_guid: &str, metadata_path: &Path) -> Result<String, ClientError> {
         let url = format!("{}/Ndib/upload/{}", self.base_url, developer_guid);
         
         let (metadata_file_name, metadata_buffer) = read_file_to_buffer(metadata_path)?;

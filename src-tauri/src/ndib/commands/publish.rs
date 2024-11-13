@@ -1,12 +1,11 @@
 use std::{fs::{self, remove_file}, io::{BufRead, BufReader}, path::Path};
 use tauri::command;
-use uuid::Uuid;
 
-use crate::{clients::{launcher_client::DsLauncherClient, ndib_client::DsNdibClient}, ndib::{error::NdibError, helpers::{consts::{MANIFEST_CORE, MANIFEST_LINUX, MANIFEST_MAC, MANIFEST_WIN, METADATA_FILE, METADATA_NAME, NDIB_FOLDER}, utils::{create_zip, read_serialized_object}, vec_extensions::VecStringExt}, models::ndib_data::NdibData}, session_data::{keys::TOKEN_KEY, store::Store}};
+use crate::{clients::{launcher_client::DsLauncherClient, ndib_client::DsNdibClient}, ndib::{error::NdibError, helpers::{consts::{MANIFEST_CORE, MANIFEST_LINUX, MANIFEST_MAC, MANIFEST_WIN, METADATA_FILE, METADATA_NAME, NDIB_FOLDER}, utils::{create_zip, read_serialized_ndib_object}, vec_extensions::VecStringExt}, models::ndib_data::NdibData}, session_data::{keys::TOKEN_KEY, store::Store}};
 
 #[command]
-pub(crate) async fn publish(store: tauri::State<'_, Store>, developer: Uuid) -> Result<(), NdibError>{
-    let ndib_data: NdibData = read_serialized_object(&Path::new(NDIB_FOLDER).join(METADATA_FILE))?;
+pub(crate) async fn publish(store: tauri::State<'_, Store>, developer: &str, path: &str) -> Result<(), NdibError>{
+    let ndib_data: NdibData = read_serialized_ndib_object(METADATA_FILE, path)?;
     let mut extra_paths: Vec<String> = Vec::new();
     extra_paths.add_if_non_empty(ndib_data.icon);
     extra_paths.add_if_non_empty(ndib_data.background);
@@ -42,9 +41,9 @@ pub(crate) async fn publish(store: tauri::State<'_, Store>, developer: Uuid) -> 
     Ok(())
 }
 
-async fn upload(store: tauri::State<'_, Store>, developer: Uuid) -> Result<(), NdibError> {
+async fn upload(store: tauri::State<'_, Store>, developer: &str) -> Result<(), NdibError> {
     let launcher_api = DsLauncherClient::new();
-    let product_guid = launcher_api.upload(&store.get(TOKEN_KEY)?, &developer, Path::new(METADATA_NAME)).await?;
+    let product_guid = launcher_api.upload(&store.get(TOKEN_KEY)?, developer, Path::new(METADATA_NAME)).await?;
     let ndib_api = DsNdibClient::new();
     ndib_api.upload(&store.get(TOKEN_KEY)?, &product_guid.replace("\"", ""),
         Path::new(&format!("{}.zip", MANIFEST_CORE)),

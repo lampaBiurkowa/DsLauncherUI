@@ -4,7 +4,7 @@ use std::path::Path;
 use tauri::command;
 use crate::ndib::error::NdibError;
 use crate::ndib::helpers::consts::{MANIFEST_CORE, MANIFEST_LINUX, MANIFEST_MAC, MANIFEST_WIN, METADATA_FILE, NDIB_FOLDER};
-use crate::ndib::helpers::utils::save_serialized_object;
+use crate::ndib::helpers::utils::save_serialized_ndib_object;
 use crate::ndib::models::{ndib_data::NdibData, product_type::ProductType, content_classification::ContentClassification};
 use crate::File;
 
@@ -15,11 +15,11 @@ pub(crate) fn init(
     product_type: ProductType,
     content_classification: Option<ContentClassification>,
     price: f32,
-    tags: &str
+    tags: &str,
+    path: &str
 ) -> Result<(), NdibError> {
-    if let Err(e) = create_dir(NDIB_FOLDER) {
-        return Err(NdibError::DirectoryCreationError(e.to_string()));
-    }
+    create_dir(Path::new(path).join(name))?;
+    create_dir(Path::new(path).join(name).join(NDIB_FOLDER))?;
 
     let manifest_files = [
         MANIFEST_CORE,
@@ -29,7 +29,7 @@ pub(crate) fn init(
     ];
 
     for &manifest_file in &manifest_files {
-        let manifest_path = Path::new(NDIB_FOLDER).join(manifest_file);
+        let manifest_path = Path::new(path).join(name).join(NDIB_FOLDER).join(manifest_file);
         if let Err(e) = File::create(&manifest_path) {
             return Err(NdibError::FileCreationError(manifest_path, e));
         }
@@ -48,6 +48,6 @@ pub(crate) fn init(
         content_classification,
         ..Default::default()
     };
-    save_serialized_object(&product, METADATA_FILE)?;
+    save_serialized_ndib_object(&product, METADATA_FILE, path)?;
     Ok(())
 }
