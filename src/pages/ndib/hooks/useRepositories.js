@@ -7,9 +7,7 @@ export function useRepositories(developerLibraries) {
     useEffect(() => {
         (async () => {
             if (developerLibraries) {
-                console.log(developerLibraries);
                 var repo = await getRepositories(developerLibraries.map(x => x.Path));
-                console.log(repo);
                 setRepos(repo);
             } else {
                 setRepos([]);

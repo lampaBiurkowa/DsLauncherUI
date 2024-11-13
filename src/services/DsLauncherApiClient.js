@@ -4,7 +4,6 @@ import { SessionDataHandler } from "./SessionDataService";
 export class DsLauncherApiClient {
   constructor() {
     this.authToken = null;
-    console.log(`LAUNCH RIKLEST ${ConfigurationHandler.getLauncherApiUrl()}`);
     this.baseUrl = ConfigurationHandler.getLauncherApiUrl();
   }
 
@@ -49,6 +48,11 @@ export class DsLauncherApiClient {
 
   async getProductById(id) {
     const url = `${this.baseUrl}/Product/${id}`;
+    return this.request(url);
+  }
+
+  async getProductId(name) {
+    const url = `${this.baseUrl}/Product/get-id/${name}`;
     return this.request(url);
   }
 

@@ -8,8 +8,8 @@ async function setSessionData(key, value) {
   await invoke("set_session_value", { key, value });
 }
 
-const TOKEN_KEY = 'token';
-const CURRENT_USER_KEY = 'currentUser';
+const TOKEN_KEY = 'TOKEN';
+const CURRENT_USER_KEY = 'CURRENT_USER';
 
 class SessionDataHandlerSingleton {
     async getToken() {

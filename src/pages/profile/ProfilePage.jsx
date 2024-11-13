@@ -21,7 +21,6 @@ function ProfilePage() {
   const money = useMoney();
 
   async function uploadProfileImage(file) {
-    console.log(file);
     if (file.path) {
       const bytes = (await fs.readFile(file.path)).buffer;
       const blob = new Blob([bytes], { type: "image/jpeg" });

@@ -16,7 +16,7 @@ function DeveloperNdibPage() {
 
   const [searchParams] = useSearchParams();
   const path = searchParams.get("path");
-
+  const [selectedPlatform, setSelectedPlatform] = useState("core");
   const [productData, setRepoInfo] = useState(null);
   const { openedFiles: iconFile, showDialog: showIconDialog } = useFileDialog([
     {
@@ -105,18 +105,34 @@ function DeveloperNdibPage() {
     const { name, value } = e.target;
     setRepoFilesInfo((prevData) => ({ ...prevData, [name]: value }));
   };
+
+
+  const { openedFiles: productFile, showDialog: showProductFileDialog } = useFileDialog([
+    {
+      name: "Images",
+      extensions: ["png", "jpg"],
+    },
+  ]);
+
+  useEffect(() => {
+    if (productFile.length == 1) {
+      if (productFile[0].startsWith(path)) {
+        setRepoFilesInfo((prevFilesData) => ({
+          ...prevFilesData,
+          [selectedPlatform]: [...(prevFilesData[selectedPlatform] || []), productFile[0].substring(path.length)],
+        }));
+      } else {
+        console.error("Path is outside of the ndib repository")
+      }
+    }
+  }, [productFile]);
   const removeFile = (filePath, platform) => {
     filePath = filePath.substring(1);
-    console.log(`${filePath} ${platform}`);
     setRepoFilesInfo((prevFilesData) => {
       if (!prevFilesData[platform]) return prevFilesData; 
   
-      console.log(prevFilesData[platform]?.length);
-      console.log(prevFilesData[platform]);
       const updatedFiles = prevFilesData[platform].filter((file) => file !== filePath);
-      
-      console.log(updatedFiles?.length);
-      return {
+            return {
         ...prevFilesData,
         [platform]: updatedFiles,
       };
@@ -141,7 +157,6 @@ function DeveloperNdibPage() {
     const renderDirectoryStructure = (filePath, platform) => {
       const pathParts = filePath.split("/");
       const fileName = pathParts.pop();
-      // const subPath = pathParts.join("/");
   
       return (
         <li key={filePath} className="file-tree-item">
@@ -380,6 +395,16 @@ function DeveloperNdibPage() {
         </div>
         <section className="file-tree">
         <h2>File Tree</h2>
+        <div>
+          <label>Select Platform: </label>
+          <select value={selectedPlatform} onChange={(e) => setSelectedPlatform(e.target.value)}>
+            <option value="core">Core</option>
+            <option value="windows">Windows</option>
+            <option value="linux">Linux</option>
+            <option value="mac">Mac</option>
+          </select>
+          <button onClick={() => showProductFileDialog()}>Add File</button>
+        </div>
         {productFilesData ? renderFileTree(productFilesData) : <p>Loading file tree...</p>}
       </section>
 

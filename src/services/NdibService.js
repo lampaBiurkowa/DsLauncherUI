@@ -11,3 +11,7 @@ export async function getRepositoryMetadata(path) {
 export async function getRepositoryFiles(path) {
   return await invoke("get_repository_files", { path });
 }
+
+export async function pullProduct(productGuid, libraryPath) {
+  return await invoke("pull", { id: productGuid, path: libraryPath });
+}

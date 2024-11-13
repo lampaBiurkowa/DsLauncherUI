@@ -1,5 +1,6 @@
 use tauri::ipc::InvokeError;
 use thiserror::Error;
+use zip::result::ZipError;
 
 use crate::configuration::error::ConfigurationError;
 
@@ -13,6 +14,8 @@ pub(crate) enum ClientError {
     ProblemWithHttp(#[from] reqwest::Error),
     #[error("Problem with IO: {0}")]
     ProblemWithIO(#[from] std::io::Error),
+    #[error("Problem with zip: {0}")]
+    ProblemWithZip(#[from] ZipError),
 }
 
 impl From<ClientError> for InvokeError {

@@ -1,8 +1,9 @@
 use reqwest::{Error, Client};
 use reqwest::multipart;
+use zip::ZipArchive;
 use std::fs::File;
 use std::path::Path;
-use std::io::Read;
+use std::io::{Cursor, Read};
 use crate::configuration::env_var::EnvVar;
 use super::error::ClientError;
 use super::utils::{get_as_text, read_file_to_buffer};
@@ -98,6 +99,32 @@ impl DsNdibClient {
             .multipart(form)
             .send()
             .await?;
+
+        Ok(())
+    }
+
+    pub async fn pull(&self, token: &str, product_id: &str, target_dir: &Path) -> Result<(), ClientError> {
+        let url = format!("{}/Download/pull/{}", self.base_url, product_id);
+        let response = reqwest::Client::new()
+            .get(&url)
+            .bearer_auth(token)
+            .send().await?;
+        let bytes = response.bytes().await?;
+        let mut zip = ZipArchive::new(Cursor::new(bytes))?;
+        for i in 0..zip.len() {
+            let mut file = zip.by_index(i)?;
+            let out_path = target_dir.join(file.name());
+
+            if file.is_dir() {
+                std::fs::create_dir_all(&out_path)?;
+            } else {
+                if let Some(parent) = out_path.parent() {
+                    std::fs::create_dir_all(parent)?;
+                }
+                let mut outfile = File::create(&out_path)?;
+                std::io::copy(&mut file, &mut outfile)?;
+            }
+        }
 
         Ok(())
     }

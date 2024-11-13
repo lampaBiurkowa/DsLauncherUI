@@ -5,12 +5,13 @@ import { NavLink } from "react-router-dom";
 import ComboBox from "../combo-box/ComboBox";
 import InfoBar, { InfoBarType } from "../info-bar/InfoBar";
 import "./Installer.scss";
+import { useDeveloperLibraries } from "@/pages/settings/hooks/useDeveloperLibraries";
 
-function Installer({ productGuid, onConfirmed, onCancelled }) {
+function Installer({ productGuid, onConfirmed, onCancelled, isPull }) {
   const [selectedLib, setSelectedLib] = useState(undefined);
   const [selectedVer, setSelectedVer] = useState(undefined);
 
-  const libraries = useLibraries();
+  const libraries = isPull ? useDeveloperLibraries() : useLibraries();
   const versions = useVersions(productGuid);
 
   return (
@@ -70,7 +71,7 @@ function Installer({ productGuid, onConfirmed, onCancelled }) {
                 onConfirmed?.(libraries[selectedLib], versions[selectedVer]);
               }}
             >
-              Install
+              {isPull ? "Pull" : "Install"}
             </button>
             <button
               className="plain"

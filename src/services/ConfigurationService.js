@@ -7,7 +7,6 @@ class ConfigurationSingleton {
     remoteVars = null;
 
     async init() {
-        console.log("START");
         const [coreApiUrl, launcherApiUrl, supabaseUrl, remoteVars] = await Promise.all([
             invoke("get_env", { name: "CORE_API_URL" }),
             invoke("get_env", { name: "LAUNCHER_API_URL" }),
@@ -19,7 +18,6 @@ class ConfigurationSingleton {
         this.launcherApiUrl = launcherApiUrl;
         this.supabaseUrl = supabaseUrl;
         this.remoteVars = remoteVars;
-        console.log("META");
     }
 
     getCoreApiUrl() {

@@ -7,9 +7,6 @@ import { SessionDataHandler } from "./services/SessionDataService.js";
 import { listen } from '@tauri-apps/api/event';
 
 import "./styles/App.scss";
-import { ConfigurationHandler } from "./services/ConfigurationService";
-
-// await ConfigurationHandler.init();
 
 listen("get-credentials", (event) => {
   let args = JSON.parse(event.payload);

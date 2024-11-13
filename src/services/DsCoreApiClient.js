@@ -4,7 +4,6 @@ import { SessionDataHandler } from "./SessionDataService";
 export class DsCoreApiClient {
     constructor() {
         this.authToken = null;
-        console.log("RIKLEST");
         this.baseUrl = ConfigurationHandler.getCoreApiUrl();
     }
     

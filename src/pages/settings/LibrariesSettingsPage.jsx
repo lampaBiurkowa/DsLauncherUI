@@ -15,7 +15,6 @@ function LibrariesPage() {
   const currentLibraryProducts = useLibraryProducts(libraryDetails?.Installed);
 
   const handleLibrarySelected = () => {
-    console.log(libraryDetails);
     setSelectedLibraryDetails(libraryDetails);
   };
 
