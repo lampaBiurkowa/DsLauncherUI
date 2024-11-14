@@ -1,8 +1,6 @@
 use std::path::Path;
 
-use tauri::{async_runtime::Runtime, command};
-use tauri::async_runtime::TokioRuntime;
-
+use tauri::command;
 use crate::clients::launcher_client::DsLauncherClient;
 use crate::clients::ndib_client::DsNdibClient;
 use crate::ndib::error::NdibError;
@@ -14,7 +12,7 @@ use crate::session_data::keys::TOKEN_KEY;
 use crate::session_data::store::Store;
 
 #[command]
-pub(crate) fn update_metadata(store: tauri::State<'_, Store>, name: &str, path: &str) -> Result<(), NdibError> {
+pub(crate) async fn update_metadata(store: tauri::State<'_, Store>, name: &str, path: &str) -> Result<(), NdibError> {
     let ndib_data: NdibData = read_serialized_ndib_object(METADATA_FILE, path)?;
     let mut extra_paths: Vec<String> = Vec::new();
     extra_paths.add_if_non_empty(ndib_data.icon);
@@ -24,9 +22,7 @@ pub(crate) fn update_metadata(store: tauri::State<'_, Store>, name: &str, path: 
     }
     extra_paths.push(Path::new(NDIB_FOLDER).join(METADATA_FILE).to_string_lossy().into_owned());
     create_zip(extra_paths.into_iter().map(Ok), METADATA_NAME.to_string())?;
-    
-    let rt = Runtime::Tokio(TokioRuntime::new()?);
-    rt.block_on(handle_update(store, name))?;
+    handle_update(store, name).await?;
 
     Ok(())
 }

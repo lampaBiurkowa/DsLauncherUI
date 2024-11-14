@@ -10,7 +10,7 @@ use zip::ZipWriter;
 use crate::ndib::error::NdibError;
 use crate::ndib::models::ndib_data::NdibData;
 
-use super::consts::{MANIFEST_CORE, MANIFEST_LINUX, MANIFEST_MAC, MANIFEST_WIN, NDIB_FOLDER};
+use super::consts::NDIB_FOLDER;
 
 
 pub(crate) fn save_serialized_ndib_object<T: Serialize>(object: &T, file_name: &str, repo_path: &str) -> Result<(), NdibError> {
@@ -25,18 +25,6 @@ pub(crate) fn read_serialized_ndib_object(file_name: &str, repo_path: &str) -> R
     let reader = BufReader::new(file);
     let data: NdibData = serde_json::from_reader(reader)?;
     Ok(data)
-}
-
-pub(crate) fn get_manifest_file_name(manifest: &str) -> Result<&str, NdibError> {
-    match manifest {
-        "core" => Ok(MANIFEST_CORE),
-        "win" => Ok(MANIFEST_WIN),
-        "linux" => Ok(MANIFEST_LINUX),
-        "mac" => Ok(MANIFEST_MAC),
-        _ => {
-            Err(NdibError::ValidationError)
-        }
-    }
 }
 
 

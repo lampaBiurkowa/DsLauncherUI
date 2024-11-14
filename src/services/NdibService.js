@@ -27,3 +27,11 @@ export async function save(metadata, paths, repoPath) {
   metadata.minDiskMib = parseInt(metadata.minDiskMib);
   return await invoke("save", { metadata, paths, path: repoPath });
 }
+
+export async function publish(developerGuid, path) {
+  return await invoke("publish", { developer: developerGuid, path });
+}
+
+export async function updateMetadata(productName, path) {
+  return await invoke("update_metadata", { name: productName, path });
+}
