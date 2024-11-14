@@ -19,3 +19,11 @@ export async function pullProduct(productGuid, libraryPath) {
 export async function init(name, description, productType, contentClassification, price, path) {
   return await invoke("init", { name, description, productType, contentClassification, price, tags: "", path });
 }
+
+export async function save(metadata, paths, repoPath) {
+  //hzd :D/
+  metadata.price = parseFloat(metadata.price);
+  metadata.minRamMib = parseInt(metadata.minRamMib);
+  metadata.minDiskMib = parseInt(metadata.minDiskMib);
+  return await invoke("save", { metadata, paths, path: repoPath });
+}

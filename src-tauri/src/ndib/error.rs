@@ -8,8 +8,6 @@ use crate::{clients::error::ClientError, session_data::error::SessionDataError};
 
 #[derive(Error, Debug)]
 pub(crate) enum NdibError {
-    #[error("Failed to create directory: {0}")]
-    DirectoryCreationError(String),
     #[error("Failed to create file {0}: {1}")]
     FileCreationError(PathBuf, io::Error),
     #[error("Failed to write data to file: {0}")]

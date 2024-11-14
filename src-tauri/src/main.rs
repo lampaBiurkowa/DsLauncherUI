@@ -6,7 +6,7 @@ use std::fs::File;
 use cache::{commands::{get_item::get_item, get_items::get_items}, db::Database};
 use configuration::{commands::{get_env::get_env, get_remote_vars::get_remote_vars}, remote_vars::RemoteVars};
 use launcher_service::{commands::execute::execute, websocket_manager::connect_websocket};
-use ndib::commands::{add::add, get_repositories::get_repositories, get_repository_files::get_repository_files, get_repository_metadata::get_repository_metadata, init::init, publish::publish, pull::pull, remove::remove, update_metadata::update_metadata};
+use ndib::commands::{save::save, get_repositories::get_repositories, get_repository_files::get_repository_files, get_repository_metadata::get_repository_metadata, init::init, publish::publish, pull::pull, update_metadata::update_metadata};
 use session_data::{commands::{set_session_value::set_session_value, get_session_value::get_session_value}, store::Store};
 use utility::read_file_as_base64::read_file_as_base64;
 use tauri::Manager;
@@ -64,7 +64,7 @@ async fn main() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
-            init, add, remove, publish, update_metadata, pull, get_repositories, get_repository_metadata, get_repository_files,
+            init, save, publish, update_metadata, pull, get_repositories, get_repository_metadata, get_repository_files,
             execute,
             read_file_as_base64,
             get_item, get_items,

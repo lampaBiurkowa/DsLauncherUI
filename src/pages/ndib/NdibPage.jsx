@@ -11,7 +11,7 @@ import { init, pullProduct } from "@/services/NdibService";
 function NdibPage() {
   const developerLibraries = useDeveloperLibraries();
   const repos = useRepositories(developerLibraries);
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState(''); 
   const [productGuid, setProductGuid] = useState(null);
   const [pullDialogOpen, setPullDialogOpen] = useState(false);
   const api = new DsLauncherApiClient();

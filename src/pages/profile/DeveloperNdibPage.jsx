@@ -6,7 +6,7 @@ import Shelf from "@/components/shelf/Shelf";
 import Dialog from "@/components/dialog/Dialog";
 import Carousel from "@/components/carousel/Carousel";
 import "./DeveloperNdibPage.scss";
-import { getRepositoryFiles, getRepositoryMetadata } from "@/services/NdibService";
+import { getRepositoryFiles, getRepositoryMetadata, save } from "@/services/NdibService";
 import useBase64Image from "./hooks/useBase64Image";
 import useBase64ImageCollection from "./hooks/useBase64ImageCollection";
 import useFileDialog from "@/hooks/useFileDialog";
@@ -239,6 +239,9 @@ function DeveloperNdibPage() {
           onClick={() => showBgDialog()} style={{fontSize: 64, color: "magenta"}}>
         <i className="las la-edit"></i>
         </div>
+    <button onClick={() => {
+      save(productData, productFilesData, path);
+    }}>Save</button>
           <div className="product-header">
             <input
               className="title-input"
@@ -255,7 +258,7 @@ function DeveloperNdibPage() {
               className="price"
               type="number"
               name="price"
-              value={productData?.price || ""}
+              value={productData?.price || 0.0}
               placeholder="Price"
               onChange={handleChange}
               style={{
