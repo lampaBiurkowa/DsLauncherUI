@@ -6,7 +6,6 @@ use surrealdb::engine::local::{Db, Mem};
 use tokio::time::sleep;
 
 use crate::configuration::remote_vars::RemoteVars;
-use super::data_providers::currency_data_provider::CurrencyDataProvider;
 use super::data_providers::data_provider::DataProvider;
 use super::data_providers::developer_data_provider::DeveloperDataProvider;
 use super::data_providers::product_data_provider::ProductDataProvider;
@@ -16,7 +15,6 @@ use super::models::item::{Item, ItemType, Type};
 
 pub(crate) struct Database {
     db: Surreal<Db>,
-    currency: CurrencyDataProvider,
     user: UserDataProvider,
     developer: DeveloperDataProvider,
     product: ProductDataProvider,
@@ -30,8 +28,7 @@ const REFRESH_MINUTES: u64 = 2;
 
 impl Database {
     pub(crate) async fn try_initialize(remote_vars: RemoteVars) -> Result<Self, CacheError> {
-        let db = Self::try_connect().await?;
-        let currency = CurrencyDataProvider::new();
+        let db: Surreal<Db> = Self::try_connect().await?;
         let user = UserDataProvider::new();
         let developer = DeveloperDataProvider::new();
         let product = ProductDataProvider::new(remote_vars);
@@ -41,7 +38,6 @@ impl Database {
         
         Ok(Self {
             db,
-            currency,
             user,
             developer,
             product,
@@ -127,7 +123,6 @@ impl Database {
             Type::Developer => self.developer.get_data_as_json(id).await,
             Type::User => self.user.get_data_as_json(id).await,
             Type::Product => self.product.get_data_as_json(id).await,
-            Type::Currency => self.currency.get_data_as_json(id).await,
         }
     }
 

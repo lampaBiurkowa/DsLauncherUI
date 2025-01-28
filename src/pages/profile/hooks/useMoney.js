@@ -1,17 +1,14 @@
-import { defaultCurrency } from "@/App";
-import { DsCoreApiClient } from "@/services/DsCoreApiClient";
+import { DsNdibcoinApiClient } from "@/services/DsNdibcoinApiClient";
 import { useState, useEffect } from "react";
-import { getCurrency } from "@/services/CacheService";
 
-const api = new DsCoreApiClient();
+const api = new DsNdibcoinApiClient();
 
 function useMoney() {
   const [money, setMoney] = useState([]);
 
   useEffect(() => {
     async function fetchMoney() {
-      const currency = await getCurrency(defaultCurrency);
-      const response = await api.getMoney(currency.model.guid);
+      const response = await api.getMoney();
       setMoney(response);
     }
     fetchMoney();

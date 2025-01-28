@@ -18,8 +18,6 @@ export const globalUpdateProgress = {
   progress: 0,
 };
 
-export const defaultCurrency = "ruble";
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <div className="app">
     <TitleBar />

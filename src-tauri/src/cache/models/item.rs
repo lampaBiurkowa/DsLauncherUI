@@ -14,7 +14,6 @@ pub(crate) enum Type {
     Developer,
     User,
     Product,
-    Currency,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -29,7 +28,6 @@ impl Type {
             Type::Developer => "Developer",
             Type::User => "User",
             Type::Product => "Product",
-            Type::Currency => "Currency",
         }
     }
 }

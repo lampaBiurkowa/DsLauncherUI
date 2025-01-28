@@ -12,10 +12,6 @@ export async function getDeveloper(id) {
   return await getById("developer", id);
 }
 
-export async function getCurrency(id) {
-  return await getById("currency", id);
-}
-
 export async function getProduct(id) {
   return await getById("product", id);
 }

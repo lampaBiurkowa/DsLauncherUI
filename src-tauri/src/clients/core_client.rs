@@ -37,12 +37,7 @@ impl DsCoreClient {
         let url = format!("{}/Configuration/user-storage-folder", self.base_url);
         get_as_text(&self.client, &url).await
     }
-
-    pub(crate) async fn get_currency(&self, id: &str) -> Result<Value, ClientError> {
-        let url = format!("{}/Currency/{}", self.base_url, id);
-        get_as_json(&self.client, &url).await
-    }
-
+    
     pub(crate) async fn get_user(&self, id: &str) -> Result<Value, ClientError> {
         let url = format!("{}/User/{}", self.base_url, id);
         get_as_json(&self.client, &url).await

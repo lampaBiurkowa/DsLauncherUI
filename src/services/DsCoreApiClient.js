@@ -113,20 +113,6 @@ export class DsCoreApiClient {
         return this.request(url, options, true);
     }
 
-    async login(userId, passwordBase64) {
-        const url = `${this.baseUrl}/Auth/login/${userId}?passwordBase64=${encodeURIComponent(passwordBase64)}`;
-        const options = {
-            method: 'POST'
-        };
-        
-        const response = await fetch(url, options);
-        if (!response.ok) {
-            throw new Error('Failed to login');
-        }
-    
-        return response.text();
-    }
-
     async register(user, passwordBase64) {
         const url = `${this.baseUrl}/Auth/register?passwordBase64=${encodeURIComponent(passwordBase64)}`;
         const options = {
@@ -164,25 +150,5 @@ export class DsCoreApiClient {
             method: 'POST'
         };
         return this.request(url, options);
-    }
-    
-    async getCurrencyById(id) {
-        const url = `${this.baseUrl}/Currency/${id}`;
-        return this.request(url);
-    }
-    
-    async getCurrencyByName(name) {
-        const url = `${this.baseUrl}/Currency/name/${name}`;
-        return this.request(url);
-    }
-
-    async getCurrencies() {
-        const url = `${this.baseUrl}/Currency`;
-        return this.request(url);
-    }
-
-    async getMoney(currencyGuid) {
-        const url = `${this.baseUrl}/Billing/money/${currencyGuid}`;
-        return this.request(url);
     }
 }

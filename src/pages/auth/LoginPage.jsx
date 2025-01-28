@@ -59,21 +59,18 @@ function LoginPage() {
                 ).value;
 
                 try {
+                  console.log("2222");
                   const userId = await api.getIdByAlias(loginInput);
+                  console.log("111");
                   const passwordBase64 = btoa(passwordInput);
-                  const token = await api.login(userId, passwordBase64);
 
-                  api.getUserById(userId).then((user) => {
-                    setCurrentUser(user);
-                    navigate("/home");
-                  });
+                  console.log("0000");
 
                   executeCommand(
                     "login",
                     {
                       userId: userId,
                       passwordBase64: passwordBase64,
-                      token: token,
                     },
                     {
                       workerRepetitions: -1,
@@ -81,8 +78,18 @@ function LoginPage() {
                     }
                   );
 
-                  SessionDataHandler.setToken(token);
+                  console.log("AAA");
+
+                  while (!SessionDataHandler.getToken()) {}
+                  console.log("BBB");
                   SessionDataHandler.setUser(userId);
+                  console.log("CCC");
+
+                  api.getUserById(userId).then((user) => {
+                    console.log("DDD");
+                    setCurrentUser(user);
+                    navigate("/home");
+                  });
                 } catch {
                   setError("Please check your credentials.");
                 }

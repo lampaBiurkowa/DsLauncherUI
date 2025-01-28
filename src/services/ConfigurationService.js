@@ -3,19 +3,22 @@ import { invoke } from '@tauri-apps/api/core';
 class ConfigurationSingleton {
     coreApiUrl = null;
     launcherApiUrl = null;
+    ndibcoinApiUrl = null;
     supabaseUrl = null;
     remoteVars = null;
 
     async init() {
-        const [coreApiUrl, launcherApiUrl, supabaseUrl, remoteVars] = await Promise.all([
+        const [coreApiUrl, launcherApiUrl, ndibcoinApiUrl, supabaseUrl, remoteVars] = await Promise.all([
             invoke("get_env", { name: "CORE_API_URL" }),
             invoke("get_env", { name: "LAUNCHER_API_URL" }),
+            invoke("get_env", { name: "NDIBCOIN_API_URL" }),
             invoke("get_env", { name: "SUPABASE_URL" }),
             invoke("get_remote_vars")
         ]);
 
         this.coreApiUrl = coreApiUrl;
         this.launcherApiUrl = launcherApiUrl;
+        this.ndibcoinApiUrl = ndibcoinApiUrl;
         this.supabaseUrl = supabaseUrl;
         this.remoteVars = remoteVars;
     }
@@ -26,6 +29,10 @@ class ConfigurationSingleton {
 
     getLauncherApiUrl() {
         return this.launcherApiUrl;
+    }
+
+    getNdibcoinApiUrl() {
+        return this.ndibcoinApiUrl;
     }
 
     getSupabaseUrl() {
