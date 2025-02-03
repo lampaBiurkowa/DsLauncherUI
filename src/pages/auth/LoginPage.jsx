@@ -59,12 +59,8 @@ function LoginPage() {
                 ).value;
 
                 try {
-                  console.log("2222");
                   const userId = await api.getIdByAlias(loginInput);
-                  console.log("111");
                   const passwordBase64 = btoa(passwordInput);
-
-                  console.log("0000");
 
                   executeCommand(
                     "login",
@@ -78,15 +74,10 @@ function LoginPage() {
                     }
                   );
 
-                  console.log("AAA");
-
                   while (!SessionDataHandler.getToken()) {}
-                  console.log("BBB");
                   SessionDataHandler.setUser(userId);
-                  console.log("CCC");
 
                   api.getUserById(userId).then((user) => {
-                    console.log("DDD");
                     setCurrentUser(user);
                     navigate("/home");
                   });

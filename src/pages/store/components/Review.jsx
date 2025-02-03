@@ -36,6 +36,7 @@ function Review({ review }) {
           src={profileImage}
           alt="Profile picture"
           className="profile-picture"
+          onError={(e) => e.target.src = "/img/user.png"} 
         />
         <span className="username">
           {user?.model.name} {user?.model.surname}

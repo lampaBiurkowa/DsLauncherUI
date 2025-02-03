@@ -21,10 +21,11 @@ impl UserDataProvider {
 impl DataProvider<User> for UserDataProvider {
     async fn fetch_data(&self, id: &str) -> Result<User, CacheError> {
         let model = self.core_client.get_user(id).await?;
-        let developers = self.launcher_client.get_developer_by_user(id).await?;
         let mut is_developer = false;
-        if let Value::Array(x) = developers {
-            is_developer = !x.is_empty();
+        if let Ok(developers) = self.launcher_client.get_developer_by_user(id).await {
+            if let Value::Array(x) = developers {
+                is_developer = !x.is_empty();
+            }
         }
         
         Ok(User { model, is_developer })

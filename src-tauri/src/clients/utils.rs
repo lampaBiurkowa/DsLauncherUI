@@ -31,6 +31,6 @@ pub(crate) async fn get_as_json(client: &Client, url: &str) -> Result<Value, Cli
     let response = client.get(url)
         .send()
         .await?;
-
+    
     Ok(response.json().await?)
 }
