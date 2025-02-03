@@ -8,17 +8,22 @@ pub(crate) async fn execute(
     sender: tauri::State<'_, tokio::sync::mpsc::Sender<String>>,
     command_name: String,
     args: Option<HashMap<String, Value>>,
-    head: Option<HashMap<String, Value>>) -> Result<(), String> {
+    head: Option<HashMap<String, Value>>,
+) -> Result<(), String> {
     let mut command = format!("{}\n", command_name);
 
-    if let Some(head_args) = &head {
-        command += &format!("{}\n", format_args(head_args));
-    }
+    head.map(|x| {
+        if x.len() > 0 {
+            command += &format!("{}\n", format_args(&x));
+        }
+    });
     command += "\n";
-    if let Some(command_args) = &args {
-        command += &format!("{}\n", format_args(command_args));
-    }
- 
+    args.map(|x| {
+        if x.len() > 0 {
+            command += &format!("{}\n", format_args(&x));
+        }
+    });
+
     sender
         .send(command)
         .await
@@ -26,7 +31,6 @@ pub(crate) async fn execute(
 
     Ok(())
 }
-
 
 fn format_args(args: &HashMap<String, Value>) -> String {
     let mut arg_list = vec![];
@@ -48,6 +52,6 @@ fn format_args(args: &HashMap<String, Value>) -> String {
 fn value_to_string(value: &Value) -> String {
     match value {
         Value::String(_) => value.as_str().unwrap().to_owned(),
-        _ => value.to_string()
+        _ => value.to_string(),
     }
 }
