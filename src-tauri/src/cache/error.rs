@@ -10,9 +10,9 @@ pub(crate) enum CacheError {
     #[error("Serialization error: {0}")]
     SerializationError(#[from] serde_json::Error),
     #[error("Problem with HTTP: {0}")]
-    ProblemWithHttp(#[from] ClientError),
+    Http(#[from] ClientError),
     #[error("Problem with SurrealDB: {0}")]
-    ProblemWithSurrealDb(#[from] surrealdb::Error),
+    SurrealDb(#[from] surrealdb::Error),
     #[error("Error with tauri 😐😐😐 : {0}")]
     TauriError(#[from] tauri::Error)
 }

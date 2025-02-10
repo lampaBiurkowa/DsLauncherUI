@@ -13,9 +13,10 @@ use crate::ndib::models::ndib_data::NdibData;
 use super::consts::NDIB_FOLDER;
 
 
-pub(crate) fn save_serialized_ndib_object<T: Serialize>(object: &T, file_name: &str, repo_path: &str) -> Result<(), NdibError> {
+pub(crate) fn save_serialized_ndib_object<T: Serialize>(object: &T, file_name: &str, path: &Path) -> Result<(), NdibError> {
     let json = serde_json::to_string_pretty(object)?;
-    let mut file = File::create(Path::new(repo_path).join(NDIB_FOLDER).join(file_name))?;
+    let mut file = File::create(path.join(file_name))?;
+    println!("{:?}", path);
     file.write_all(json.as_bytes())?;
     Ok(())
 }
@@ -30,13 +31,13 @@ pub(crate) fn read_serialized_ndib_object(file_name: &str, repo_path: &str) -> R
 
 pub(crate) fn create_zip<I>(all_lines: I, zip_name: String) -> Result<(), NdibError>
 where
-    I: IntoIterator<Item = Result<String, io::Error>>,
+    I: IntoIterator<Item = String>,
 {
     let zip_file = fs::File::create(zip_name)?;
     let mut zip = ZipWriter::new(zip_file);
     let options = FileOptions::default().compression_method(zip::CompressionMethod::Stored);
 
-    for line in all_lines.into_iter().flatten() {
+    for line in all_lines.into_iter() {
         let path = Path::new(&line);
         if path.exists() {
             if let Err(e) = add_path_to_zip(&mut zip, path, &options, Path::new("")) {

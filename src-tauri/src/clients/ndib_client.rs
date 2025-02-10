@@ -73,7 +73,7 @@ impl DsNdibClient {
             }
             Err(e) => {
                 eprintln!("Failed to send request: {}", e);
-                Err(ClientError::ProblemWithHttp(e))
+                Err(ClientError::Http(e))
             }
         }
     }
@@ -110,7 +110,11 @@ impl DsNdibClient {
             .bearer_auth(token)
             .send().await?;
         let bytes = response.bytes().await?;
-        let mut zip = ZipArchive::new(Cursor::new(bytes))?;
+        let mut zip = match ZipArchive::new(Cursor::new(bytes)) {
+            Ok(x) => x,
+            Err(e) => {println!("{e}");return Err(ClientError::Zip(e));}
+        };
+
         for i in 0..zip.len() {
             let mut file = zip.by_index(i)?;
             let out_path = target_dir.join(file.name());

@@ -1,4 +1,4 @@
-use std::fs::create_dir;
+use std::fs::create_dir_all;
 use std::path::Path;
 
 use tauri::command;
@@ -18,8 +18,8 @@ pub(crate) fn init(
     tags: &str,
     path: &str
 ) -> Result<(), NdibError> {
-    create_dir(Path::new(path).join(name))?;
-    create_dir(Path::new(path).join(name).join(NDIB_FOLDER))?;
+    let path_to_ndib = Path::new(path).join(name).join(NDIB_FOLDER);
+    create_dir_all(path_to_ndib.clone())?;
 
     let manifest_files = [
         MANIFEST_CORE,
@@ -29,7 +29,7 @@ pub(crate) fn init(
     ];
 
     for &manifest_file in &manifest_files {
-        let manifest_path = Path::new(path).join(name).join(NDIB_FOLDER).join(manifest_file);
+        let manifest_path = path_to_ndib.join(manifest_file);
         if let Err(e) = File::create(&manifest_path) {
             return Err(NdibError::FileCreationError(manifest_path, e));
         }
@@ -48,6 +48,6 @@ pub(crate) fn init(
         content_classification,
         ..Default::default()
     };
-    save_serialized_ndib_object(&product, METADATA_FILE, path)?;
+    save_serialized_ndib_object(&product, METADATA_FILE, &path_to_ndib)?;
     Ok(())
 }

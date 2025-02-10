@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use tauri::command;
 use crate::ndib::error::NdibError;
 use crate::ndib::helpers::consts::{MANIFEST_CORE, MANIFEST_LINUX, MANIFEST_MAC, MANIFEST_WIN, METADATA_FILE, NDIB_FOLDER};
@@ -10,7 +10,7 @@ use crate::ndib::models::ndib_data::NdibData;
 
 #[command]
 pub(crate) async fn save(metadata: NdibData, paths: HashMap<String, Vec<String>>, path: &str) -> Result<(), NdibError> {
-    save_serialized_ndib_object(&metadata, METADATA_FILE, path)?;
+    save_serialized_ndib_object(&metadata, METADATA_FILE, &Path::new(path).join(NDIB_FOLDER))?;
     let manifest_files = [
         ("core", MANIFEST_CORE),
         ("windows", MANIFEST_WIN),
@@ -20,12 +20,12 @@ pub(crate) async fn save(metadata: NdibData, paths: HashMap<String, Vec<String>>
 
     for (key, manifest_file) in &manifest_files {
         let manifest_path = Path::new(path).join(NDIB_FOLDER).join(manifest_file);
-
         if let Some(file_list) = paths.get(*key) {
+            let unique_files: HashSet<_> = file_list.iter().collect();
             let file = File::create(&manifest_path)?;
             let mut writer = BufWriter::new(file);
 
-            for file_path in file_list {
+            for file_path in unique_files {
                 writeln!(writer, "{}", file_path)?;
             }
         }

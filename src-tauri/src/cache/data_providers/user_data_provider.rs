@@ -1,6 +1,6 @@
-use serde_json::Value;
+use serde_json::{json, Value};
 
-use crate::{cache::{error::CacheError, models::user::User}, clients::{core_client::DsCoreClient, launcher_client::DsLauncherClient}};
+use crate::{cache::{error::CacheError, models::user::User}, clients::{core_client::DsCoreClient, error::ClientError, launcher_client::DsLauncherClient}};
 
 use super::data_provider::DataProvider;
 
@@ -20,7 +20,11 @@ impl UserDataProvider {
 
 impl DataProvider<User> for UserDataProvider {
     async fn fetch_data(&self, id: &str) -> Result<User, CacheError> {
-        let model = self.core_client.get_user(id).await?;
+        let model = match self.core_client.get_user(id).await {
+            Ok(x) => x,
+            Err(ClientError::HttpStatus(_)) => return Ok(deleted_user_model(id)),
+            Err(e) => return Err(CacheError::InternalError(e.to_string()))
+        };
         let mut is_developer = false;
         if let Ok(developers) = self.launcher_client.get_developer_by_user(id).await {
             if let Value::Array(x) = developers {
@@ -29,5 +33,12 @@ impl DataProvider<User> for UserDataProvider {
         }
         
         Ok(User { model, is_developer })
+    }
+}
+
+fn deleted_user_model(id: &str) -> User {
+    User {
+        model: json!({"name":"Deleted","surname":"User","guid":id}),
+        is_developer: false
     }
 }

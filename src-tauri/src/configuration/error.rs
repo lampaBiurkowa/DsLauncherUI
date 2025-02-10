@@ -7,7 +7,7 @@ pub(crate) enum ConfigurationError {
     #[error("Failed to read environment variable: {0}")]
     FailedToReadEnvironmentVariable(#[from] VarError),
     #[error("Problem with http: {0}")]
-    ProblemWithHttp(#[from] reqwest::Error),
+    Http(#[from] reqwest::Error),
     #[error("Error with tauri 😐😐😐 : {0}")]
     TauriError(#[from] tauri::Error)
 }

@@ -21,7 +21,7 @@ pub(crate) async fn update_metadata(store: tauri::State<'_, Store>, name: &str, 
         extra_paths.add_if_non_empty(img);
     }
     extra_paths.push(Path::new(NDIB_FOLDER).join(METADATA_FILE).to_string_lossy().into_owned());
-    create_zip(extra_paths.into_iter().map(Ok), METADATA_NAME.to_string())?;
+    create_zip(extra_paths.into_iter(), METADATA_NAME.to_string())?;
     handle_update(store, name).await?;
 
     Ok(())

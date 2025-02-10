@@ -19,11 +19,11 @@ pub(crate) enum NdibError {
     #[error("Failure while trying to do sth with pattern 😐 : {0}")]
     PatternError(#[from] glob::PatternError),
     #[error("Problem with HTTP")]
-    ProblemWithHttp(#[from] ClientError),
+    Http(#[from] ClientError),
     #[error("Problem with zip")]
-    ProblemWithZip(#[from] ZipError),
+    Zip(#[from] ZipError),
     #[error("Problem with SessionData")]
-    ProblemWithSessionData(#[from] SessionDataError),
+    SessionData(#[from] SessionDataError),
     #[error("Invalid product type")]
     ValidationError,
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import AspectRatio from "@/components/aspect-ratio/AspectRatio";
@@ -6,29 +6,84 @@ import Shelf from "@/components/shelf/Shelf";
 import Dialog from "@/components/dialog/Dialog";
 import Carousel from "@/components/carousel/Carousel";
 import "./DeveloperNdibPage.scss";
-import { getRepositoryFiles, getRepositoryMetadata, save } from "@/services/NdibService";
+import { getRepositoryFiles, getRepositoryMetadata, publish, save } from "@/services/NdibService";
 import useBase64Image from "./hooks/useBase64Image";
 import useBase64ImageCollection from "./hooks/useBase64ImageCollection";
 import useFileDialog from "@/hooks/useFileDialog";
+import { UserContext } from "@/contexts/UserContextProvider";
+import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
 
+const api = new DsLauncherApiClient();
 function DeveloperNdibPage() {
+  const { currentUser } = useContext(UserContext);
   const [galleryDialogOpen, setGalleryDialogOpen] = useState(false);
 
   const [searchParams] = useSearchParams();
   const path = searchParams.get("path");
   const [selectedPlatform, setSelectedPlatform] = useState("core");
   const [productData, setRepoInfo] = useState(null);
+  const [devs, setDevs] = useState([]);
+  const [devGuid, setDevGuid] = useState('');
+  const [executables, setExecutables] = useState({});
+  const trimLeadingSlash = (path) => path.replace(/^\/+/, '');
+
+  const toggleExecutable = (filePath, platform) => {
+    setExecutables((prevExecutables) => {
+      const updatedExecutables = { ...prevExecutables };
+      if (updatedExecutables[platform] === filePath) {
+        delete updatedExecutables[platform];
+      } else {
+        updatedExecutables[platform] = filePath;
+      }
+
+      setRepoInfo((prevProductData) => {
+        if (!prevProductData) return prevProductData;
+        const updatedProductData = { ...prevProductData };
+        
+        switch (platform) {
+          case "core": //hzd todo zmienic kiedys :D/
+          case "windows":
+            updatedProductData.windowsExePath = updatedExecutables[platform] || "";
+            break;
+          case "mac":
+            updatedProductData.macExePath = updatedExecutables[platform] || "";
+            break;
+          case "linux":
+            updatedProductData.linuxExePath = updatedExecutables[platform] || "";
+            break;
+          default:
+            break;
+        }
+        return updatedProductData;
+      });
+
+      return updatedExecutables;
+    });
+  };
+
+  const handleSelectDevChange = (event) => {
+    setDevGuid(event.target.value);
+  };
+  
+  useEffect(() => {
+    (async () => {
+      setDevs(await api.getDeveloperByUser(currentUser.guid));
+    })();
+  }, []);
+  
   const { openedFiles: iconFile, showDialog: showIconDialog } = useFileDialog([
     {
       name: "Images",
       extensions: ["png", "jpg"],
-    },
-  ]);
+    }
+  ],
+  false,
+  path);
 
   useEffect(() => {
     if (iconFile.length == 1) {
       if (iconFile[0].startsWith(path)) {
-        handleChange({ target: { name: "icon", value: iconFile[0].substring(path.length) } })
+        handleChange({ target: { name: "icon", value: trimLeadingSlash(iconFile[0].substring(path.length)) } })
       } else {
         console.error("Path is outside of the ndib repository")
       }
@@ -40,12 +95,14 @@ function DeveloperNdibPage() {
       name: "Images",
       extensions: ["png", "jpg"],
     },
-  ]);
+  ],
+  false,
+  path);
 
   useEffect(() => {
     if (bgFile.length == 1) {
       if (bgFile[0].startsWith(path)) {
-        handleChange({ target: { name: "background", value: bgFile[0].substring(path.length) } })
+        handleChange({ target: { name: "background", value: trimLeadingSlash(bgFile[0].substring(path.length)) } })
       } else {
         console.error("Path is outside of the ndib repository")
       }
@@ -58,12 +115,14 @@ function DeveloperNdibPage() {
       name: "Images",
       extensions: ["png", "jpg"],
     },
-  ]);
+  ],
+  false,
+  path);
 
   useEffect(() => {
     if (screenshotFile.length == 1) {
       if (screenshotFile[0].startsWith(path)) {
-        const newImagesArray = [...productData.images, screenshotFile[0].substring(path.length)];
+        const newImagesArray = [...productData.images, trimLeadingSlash(screenshotFile[0].substring(path.length))];
         handleChange({ target: { name: "images", value: newImagesArray } });
       } else {
         console.error("Path is outside of the ndib repository")
@@ -76,6 +135,12 @@ function DeveloperNdibPage() {
       if (path) {
         const metadata = await getRepositoryMetadata(path);
         setRepoInfo(metadata);
+        setExecutables({
+          core: metadata.windowsExePath || "", 
+          windows: metadata.windowsExePath || "",
+          mac: metadata.macExePath || "",
+          linux: metadata.linuxExePath || "",
+        });
       }
     }
     fetchRepoInfo();
@@ -101,33 +166,34 @@ function DeveloperNdibPage() {
     fetchRepoInfo();
   }, [path]);
 
-  const handleFilesChange = (e) => {
-    const { name, value } = e.target;
-    setRepoFilesInfo((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-
   const { openedFiles: productFile, showDialog: showProductFileDialog } = useFileDialog([
     {
-      name: "Images",
-      extensions: ["png", "jpg"],
+      name: "Game files",
+      extensions: ["*"],
     },
-  ]);
+  ],
+  false,
+  path);
 
   useEffect(() => {
-    if (productFile.length == 1) {
-      if (productFile[0].startsWith(path)) {
+    if (productFile.length > 0) {
+      const validFiles = productFile.filter(file => file.startsWith(path));
+      
+      if (validFiles.length > 0) {
         setRepoFilesInfo((prevFilesData) => ({
           ...prevFilesData,
-          [selectedPlatform]: [...(prevFilesData[selectedPlatform] || []), productFile[0].substring(path.length)],
+          [selectedPlatform]: [
+            ...(prevFilesData[selectedPlatform] || []), 
+            ...validFiles.map(file => trimLeadingSlash(file.substring(path.length)))
+          ],
         }));
       } else {
-        console.error("Path is outside of the ndib repository")
+        console.error("All paths are outside of the ndib repository");
       }
     }
   }, [productFile]);
+  
   const removeFile = (filePath, platform) => {
-    filePath = filePath.substring(1);
     setRepoFilesInfo((prevFilesData) => {
       if (!prevFilesData[platform]) return prevFilesData; 
   
@@ -155,16 +221,19 @@ function DeveloperNdibPage() {
     };
   
     const renderDirectoryStructure = (filePath, platform) => {
-      const pathParts = filePath.split("/");
-      const fileName = pathParts.pop();
-  
+      const fileMame = filePath.split("/").pop();
       return (
         <li key={filePath} className="file-tree-item">
           <div className="file-tree-entry">
             <img src={getFileIcon(platform)} style={{height:24}} alt={platform} className="file-icon" onClick={
               () => removeFile(filePath, platform)
               } />
-            <span>{fileName}</span>
+            <span
+              style={{ color: executables[platform] === fileMame ? "green" : "inherit", cursor: "pointer" }}
+              onClick={() => toggleExecutable(fileMame, platform)}
+            >
+              {fileMame}
+            </span>
           </div>
         </li>
       );
@@ -242,6 +311,18 @@ function DeveloperNdibPage() {
     <button onClick={() => {
       save(productData, productFilesData, path);
     }}>Save</button>
+
+Devs:
+<select onChange={handleSelectDevChange}>
+      {devs.map((option, index) => (
+        <option key={index} value={option.guid}>
+          {option.name}
+        </option>
+      ))}
+    </select>
+    <button onClick={() => {
+      publish(devGuid, path);
+    }}>Publish</button>
           <div className="product-header">
             <input
               className="title-input"
@@ -332,7 +413,8 @@ function DeveloperNdibPage() {
       </section>
 
       <section className="details">
-        <h2>Details</h2>
+        {//TODO UNCOMMENT<h2>Details</h2>
+        }
 
         <div>
           <h3>Additional information</h3>

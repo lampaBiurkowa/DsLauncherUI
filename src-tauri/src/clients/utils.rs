@@ -32,5 +32,8 @@ pub(crate) async fn get_as_json(client: &Client, url: &str) -> Result<Value, Cli
         .send()
         .await?;
     
+    if !response.status().is_success() {
+        return Err(ClientError::HttpStatus(response.status().to_string()))
+    }
     Ok(response.json().await?)
 }

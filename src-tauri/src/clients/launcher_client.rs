@@ -54,7 +54,7 @@ impl DsLauncherClient {
             }
             Err(e) => {
                 eprintln!("Failed to send request: {}", e);
-                Err(ClientError::ProblemWithHttp(e))
+                Err(ClientError::Http(e))
             }
         }
     }
