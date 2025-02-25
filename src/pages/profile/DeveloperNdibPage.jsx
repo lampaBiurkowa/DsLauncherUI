@@ -62,12 +62,15 @@ function DeveloperNdibPage() {
   };
 
   const handleSelectDevChange = (event) => {
+    console.log(event.target.value);
     setDevGuid(event.target.value);
   };
   
   useEffect(() => {
     (async () => {
-      setDevs(await api.getDeveloperByUser(currentUser.guid));
+      let result = await api.getDeveloperByUser(currentUser.guid);
+      setDevs(result);
+      if (result.length == 1) setDevGuid(result[0].guid);
     })();
   }, []);
   

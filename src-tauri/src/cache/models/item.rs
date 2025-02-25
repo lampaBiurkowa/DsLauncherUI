@@ -14,6 +14,8 @@ pub(crate) enum Type {
     Developer,
     User,
     Product,
+    Tag,
+    TagGroup
 }
 
 #[derive(Serialize, Deserialize)]
@@ -28,6 +30,8 @@ impl Type {
             Type::Developer => "Developer",
             Type::User => "User",
             Type::Product => "Product",
+            Type::Tag => "Tag",
+            Type::TagGroup => "TagGroup",
         }
     }
 }
