@@ -8,6 +8,7 @@ use super::utils::get_as_json;
 use super::utils::get_as_text;
 use super::utils::read_file_to_buffer;
 
+#[derive(Clone)]
 pub(crate) struct DsLauncherClient {
     base_url: String,
     client: Client,
@@ -86,6 +87,26 @@ impl DsLauncherClient {
 
     pub(crate) async fn get_review_breakdown(&self, id: &str) -> Result<Value, ClientError> {
         let url = format!("{}/Review/product/{}/breakdown", self.base_url, id);
+        get_as_json(&self.client, &url).await
+    }
+
+    pub(crate) async fn get_tag_group(&self, id: &str) -> Result<Value, ClientError> {
+        let url = format!("{}/Taggroup/{}", self.base_url, id);
+        get_as_json(&self.client, &url).await
+    }
+
+    pub(crate) async fn get_tag_groups(&self) -> Result<Value, ClientError> {
+        let url = format!("{}/Taggroup", self.base_url);
+        get_as_json(&self.client, &url).await
+    }
+
+    pub(crate) async fn get_tags_from_group(&self, id: &str) -> Result<Value, ClientError> {
+        let url = format!("{}/Tag/group/{}", self.base_url, id);
+        get_as_json(&self.client, &url).await
+    }
+
+    pub(crate) async fn get_tag(&self, id: &str) -> Result<Value, ClientError> {
+        let url = format!("{}/Tag/{}", self.base_url, id);
         get_as_json(&self.client, &url).await
     }
 }

@@ -28,6 +28,6 @@ export async function getTagGroup(id) {
   return await getById("tagGroup", id);
 }
 
-export async function getTags(id) {
-  return await getByIds("tag", id);
+export async function getTags(ids) {
+  return await getByIds("tag", ids);
 }
