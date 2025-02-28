@@ -13,7 +13,7 @@ pub(crate) async fn connect_websocket(mut receiver: tokio::sync::mpsc::Receiver<
 
     tokio::spawn(async move {
         while let Some(msg) = receiver.recv().await {
-            _ = write.send(Message::Text(msg.clone())).await;
+            _ = write.send(Message::Text(msg.clone().into())).await;
         }
     });
 

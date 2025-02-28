@@ -12,20 +12,44 @@ import useBase64ImageCollection from "./hooks/useBase64ImageCollection";
 import useFileDialog from "@/hooks/useFileDialog";
 import { UserContext } from "@/contexts/UserContextProvider";
 import { DsLauncherApiClient } from "@/services/DsLauncherApiClient";
+import { getTagGroup, getTags } from "@/services/CacheService";
 
 const api = new DsLauncherApiClient();
 function DeveloperNdibPage() {
   const { currentUser } = useContext(UserContext);
   const [galleryDialogOpen, setGalleryDialogOpen] = useState(false);
-
   const [searchParams] = useSearchParams();
   const path = searchParams.get("path");
   const [selectedPlatform, setSelectedPlatform] = useState("core");
   const [productData, setRepoInfo] = useState(null);
   const [devs, setDevs] = useState([]);
+  const [tagGroups, setTagGroups] = useState([]);
   const [devGuid, setDevGuid] = useState('');
   const [executables, setExecutables] = useState({});
   const trimLeadingSlash = (path) => path.replace(/^\/+/, '');
+
+  useEffect(() => {
+    (async () => {
+      try {
+        console.log("MAWSZEROWAC");
+        let tagGroupsData = await api.getTagGroups();
+        console.log(tagGroupsData);
+        let fullTagGroups = await Promise.all(
+          tagGroupsData.map(async (tagGroup) => {
+            let subtagsIds = (await getTagGroup(tagGroup.guid)).tagIds;
+            console.log('ccc', subtagsIds);
+            let subtags = await getTags(subtagsIds);
+            console.log('ddd', subtags);
+            return { tags: subtags, name: tagGroup.name };
+          })
+        );
+        console.log(fullTagGroups);
+        setTagGroups(fullTagGroups);
+      } catch (error) {
+        console.error("Error fetching tag groups:", error);
+      }
+    })();
+  }, []);
 
   const toggleExecutable = (filePath, platform) => {
     setExecutables((prevExecutables) => {
@@ -62,12 +86,15 @@ function DeveloperNdibPage() {
   };
 
   const handleSelectDevChange = (event) => {
+    console.log(event.target.value);
     setDevGuid(event.target.value);
   };
   
   useEffect(() => {
     (async () => {
-      setDevs(await api.getDeveloperByUser(currentUser.guid));
+      let result = await api.getDeveloperByUser(currentUser.guid);
+      setDevs(result);
+      if (result.length == 1) setDevGuid(result[0].guid);
     })();
   }, []);
   
@@ -320,6 +347,21 @@ Devs:
         </option>
       ))}
     </select>
+
+
+{tagGroups.map((tagGroup, groupIndex) => (
+  <div key={groupIndex}>
+    <h2 style={{color: 'red'}}>{tagGroup.name}</h2>
+    <select>
+      {tagGroup.tags.map((option, optionIndex) => (
+        <option key={optionIndex} value={option.model.guid}>
+          {option.model.name}
+        </option>
+      ))}
+    </select>
+  </div>
+))}
+
     <button onClick={() => {
       publish(devGuid, path);
     }}>Publish</button>

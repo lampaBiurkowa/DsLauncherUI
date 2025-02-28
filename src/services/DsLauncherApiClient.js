@@ -455,4 +455,10 @@ export class DsLauncherApiClient {
     const url = `${this.baseUrl}/Activity/get-minutes-spent/${productId}/${userId}`;
     return this.request(url);
   }
+
+  // Tag
+  async getTagGroups() {
+    const url = `${this.baseUrl}/Taggroup`;
+    return this.request(url);
+  }
 }

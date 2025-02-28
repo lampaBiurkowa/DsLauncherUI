@@ -1,7 +1,7 @@
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use serde_json::Value;
-use surrealdb::Surreal;
+use surrealdb::{RecordId, Surreal};
 use surrealdb::engine::local::{Db, Mem};
 use tokio::time::sleep;
 
@@ -9,6 +9,8 @@ use crate::configuration::remote_vars::RemoteVars;
 use super::data_providers::data_provider::DataProvider;
 use super::data_providers::developer_data_provider::DeveloperDataProvider;
 use super::data_providers::product_data_provider::ProductDataProvider;
+use super::data_providers::tag_data_provider::TagDataProvider;
+use super::data_providers::tag_group_data_provider::TagGroupDataProvider;
 use super::data_providers::user_data_provider::UserDataProvider;
 use super::error::CacheError;
 use super::models::item::{Item, ItemType, Type};
@@ -17,6 +19,8 @@ pub(crate) struct Database {
     db: Surreal<Db>,
     user: UserDataProvider,
     developer: DeveloperDataProvider,
+    tag: TagDataProvider,
+    tag_group: TagGroupDataProvider,
     product: ProductDataProvider,
 }
 
@@ -31,6 +35,8 @@ impl Database {
         let db: Surreal<Db> = Self::try_connect().await?;
         let user = UserDataProvider::new();
         let developer = DeveloperDataProvider::new();
+        let tag = TagDataProvider::new();
+        let tag_group = TagGroupDataProvider::new();
         let product = ProductDataProvider::new(remote_vars);
 
         _ = db.import(CACHE_FILE_NAME).await;
@@ -41,6 +47,8 @@ impl Database {
             user,
             developer,
             product,
+            tag,
+            tag_group,
         })
     }
 
@@ -64,20 +72,17 @@ impl Database {
     }
 
     pub(crate) async fn get_items(&self, entity_type: Type, ids: &[&str]) -> Result<Vec<Item>, CacheError> {
-        let query = format!(
-            "SELECT * FROM {} WHERE id IN [{}]",
-            entity_type.as_str(),
-            ids.iter().map(|id| format!("'{}'", id)).collect::<Vec<_>>().join(", ")
-        );
-    
-        let mut query_result = self.db.query(query).await?;
-        let found_items: Vec<ItemType> = query_result.take(0)?;
-        let found_ids: Vec<String> = query_result.take("id")?;
+        let mut query_result = self.db.query("SELECT * FROM $ids").bind(("ids", ids.iter().map(|x| RecordId::from_table_key(entity_type.as_str(), *x)).collect::<Vec<_>>())).await?;
+        let found_items: Vec<Item> = query_result.take(0)?;
+        
+        let mut query_result = self.db.query("SELECT * FROM $ids").bind(("ids", ids.iter().map(|x| RecordId::from_table_key(entity_type.as_str(), *x)).collect::<Vec<_>>())).await?;
+        let found_ids: Vec<RecordId> = query_result.take("id")?;
+        let found_ids: Vec<String> = found_ids.iter().map(|x| x.key().to_string().trim_matches(|c| c == '⟨' || c == '⟩').to_string()).collect();
     
         let mut items_to_return = Vec::new();
         for i in 0..found_items.len() {
-            if found_items[i].item.expire > current_timestamp() {
-                items_to_return.push(found_items[i].item.clone());
+            if found_items[i].expire > current_timestamp() {
+                items_to_return.push(found_items[i].clone());
             } else if let Some(refreshed_item) = self.refresh_and_update_cache(entity_type, &found_ids[i]).await? {
                 items_to_return.push(refreshed_item);
             }
@@ -85,7 +90,7 @@ impl Database {
 
         let ids_to_fetch: Vec<&str> = ids.iter().filter(|id| !found_ids.contains(&id.to_string())).cloned().collect();
         for id in ids_to_fetch {
-            if let Ok(Some(refreshed_item)) = self.refresh_and_update_cache(entity_type, id).await {
+            if let Ok(Some(refreshed_item)) = self.fetch_and_cache_new_item(entity_type, id).await {
                 items_to_return.push(refreshed_item);
             }
         }
@@ -110,12 +115,8 @@ impl Database {
             data: model,
             expire: expiration_timestamp(EXPIRATION_MINUTES),
         };
-        let cache_item = ItemType {
-            item_type: entity_type,
-            item: new_item.clone(),
-        };
 
-        Ok(self.db.create((entity_type.as_str(), id)).content(cache_item.item).await?)
+        Ok(self.db.create((entity_type.as_str(), id)).content(new_item).await?)
     }
 
     async fn refresh(&self, item_type: &Type, id: &str) -> Result<Value, CacheError> {
@@ -123,6 +124,8 @@ impl Database {
             Type::Developer => self.developer.get_data_as_json(id).await,
             Type::User => self.user.get_data_as_json(id).await,
             Type::Product => self.product.get_data_as_json(id).await,
+            Type::Tag => self.tag.get_data_as_json(id).await,
+            Type::TagGroup => self.tag_group.get_data_as_json(id).await,
         }
     }
 
